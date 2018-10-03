@@ -1,0 +1,40 @@
+.review-card {
+	display: grid;
+	grid-template-columns: 1fr 9fr;
+	width: 100%;
+	max-width: 700px;
+	// margin: auto;
+	// overflow-y: scroll;
+	max-height: 800px;
+	// scroll-behavior: smooth;
+
+	.footer {
+		display: flex;
+		padding-top: 10px;
+
+		p {
+			margin-right: 20px;
+			cursor: pointer;
+		}
+
+		p:hover {
+			text-decoration: underline;
+		}
+
+		.danger {
+			color: red;
+		}
+
+		.reviewer-buttons {
+			display: flex;
+		}
+	}
+}
+
+#dome:last-child {
+	display: block;
+	// margin-bottom: 100px;
+}
+#hello {
+	// margin-top: 250px;
+}

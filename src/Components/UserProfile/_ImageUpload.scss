@@ -1,0 +1,30 @@
+#image-upload {
+  height: 200px;
+  border: 1px solid #dddcdc;
+  // top: 17px;
+  border-radius: 5px;
+
+  #dropzone {
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .fa-image {
+    font-size: 100px;
+    z-index: 1;
+    padding: auto;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+
+    #update-button {
+      display: block;
+      width: 140px;
+      margin-left: auto;
+    }
+  }
+}

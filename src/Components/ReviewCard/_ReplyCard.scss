@@ -1,0 +1,15 @@
+.reply-card {
+	display: grid;
+	grid-template-columns: 1fr 9fr;
+	width: 100%;
+	max-width: 800px;
+	margin: 20px 0 25px 0;
+
+	.footer {
+		display: flex;
+
+		.reviewer-buttons {
+			display: flex;
+		}
+	}
+}

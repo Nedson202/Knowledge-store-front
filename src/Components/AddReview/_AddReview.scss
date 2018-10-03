@@ -1,0 +1,22 @@
+span.add-review-footer {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 15px;
+}
+
+.submit-button,
+.cancel-button,
+.save-button,
+.login-button,
+.signup-button,
+.add-admin {
+	border-radius: 15px;
+	width: 100px;
+	margin-left: 15px;
+}
+
+.review-form {
+	-webkit-transition: width 2s; /* Safari */
+	transition: width 2s;
+}
+

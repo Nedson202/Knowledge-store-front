@@ -1,0 +1,22 @@
+.profile-update {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-gap: 30px;
+  width: 100%;
+  max-width: 800px;
+  margin: 80px auto !important;
+
+  .form-group {
+    margin-bottom: 20px;
+
+    #update-button {
+      display: block;
+      width: 140px;
+      margin-left: auto;
+    }
+  }
+
+  .skeleton-button {
+    margin-right: -10px;
+  }
+}
