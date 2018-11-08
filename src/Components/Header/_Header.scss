@@ -3,6 +3,10 @@
     display: none !important;
   }
 
+  .sidenav-collapse {
+    display: none !important;
+  }
+
   #navbarSupportedContent .bmd-form-group {
     width: 85%;
   }
@@ -31,4 +35,34 @@
 .fa-search {
   padding-right: 10px;
   color: #8a8a8a;
+}
+
+.close-icon {
+  position: relative;
+  left: -25px;
+  color: #8a8a8a;
+  cursor: pointer;
+}
+
+.sidenav-collapse {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  margin-left: 10px !important;
+  padding: 0 !important;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.sidenav-collapse:focus {
+	outline: 0;
+	box-shadow: none;
+	border-color: transparent;
+  background-color: #e0e0e0 !important;
+  color: #5a5a5a;
+}
+
+.sidenav-collapse:hover {
+  background-color: hsla(0,0%,60%,.2) !important;
+  cursor: pointer;
 }

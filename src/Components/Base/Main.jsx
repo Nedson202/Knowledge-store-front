@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 
 class Main extends Component {
   renderAuthButtons() {
@@ -9,7 +10,7 @@ class Main extends Component {
           {' '}
           <i className="fa fa-sign-in-alt" />
         </button>
-        <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#signupModal">
+        <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#SignUpFormModal">
             Signup
           {' '}
           <i className="fa fa-sign-in-alt" />
@@ -34,16 +35,25 @@ class Main extends Component {
   }
 
   render() {
+    const { isAuthenticated } = this.props;
     return (
       <div className="mdl-auth-buttons">
         <div>
           {this.renderMainContent()}
-          {this.renderAuthButtons()}
+          {!isAuthenticated && this.renderAuthButtons()}
         </div>
 
       </div>
     );
   }
 }
+
+Main.propTypes = {
+  isAuthenticated: PropTypes.bool,
+};
+
+Main.defaultProps = {
+  isAuthenticated: false,
+};
 
 export default Main;

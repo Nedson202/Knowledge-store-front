@@ -6,6 +6,7 @@
 	// margin: auto;
 	// overflow-y: scroll;
 	max-height: 800px;
+	grid-gap: 0 15px;
 	// scroll-behavior: smooth;
 
 	.footer {
@@ -15,6 +16,10 @@
 		p {
 			margin-right: 20px;
 			cursor: pointer;
+
+			.fa-thumbs-up {
+				font-size: 20px;
+			}
 		}
 
 		p:hover {
@@ -37,4 +42,15 @@
 }
 #hello {
 	// margin-top: 250px;
+}
+
+.avatar-placeholder {
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+	background: #512DA8;
+	font-size: 20px;
+	color: #fff;
+	text-align: center;
+	line-height: 45px;
 }

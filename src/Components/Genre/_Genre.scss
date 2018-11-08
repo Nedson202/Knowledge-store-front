@@ -4,6 +4,10 @@
 	}
 }
 
+.ant-select-dropdown {
+	z-index: 0 !important;
+}
+
 @media screen and (max-width: 560px) {
 	.ant-select, .ant-input {
 		// width: 100% !important;

@@ -21,6 +21,7 @@ $border_color_2: #ffaf00;
 	box-shadow: none !important;
 	padding: 0 !important;
 	z-index: 2;
+	height: 57px;
 }
 
 .dropdown-toggle:after {
@@ -31,6 +32,7 @@ $border_color_2: #ffaf00;
 	padding: .8rem 0 .8rem 1.5rem;
 	font-weight: 600;
 	color: #585757;
+	font-size: 14px;
 }
 
 .dropdown-menu {
@@ -134,7 +136,7 @@ $border_color_2: #ffaf00;
 	border-radius: 50%;
 }
 
-#LoginFormModal, #signupModal {
+#LoginFormModal, #SignUpFormModal {
 	max-width: 400px !important;
 	margin: auto;
 }
@@ -179,7 +181,7 @@ $border_color_2: #ffaf00;
 	justify-content: center;
 	padding-top: 10px;
 
-	a {
+	button {
 		padding: 7px;
     font-size: 15px;
     text-align: center;
@@ -243,4 +245,27 @@ $border_color_2: #ffaf00;
 			cursor: pointer;
 		}
 	}
+}
+
+.validation-error {
+	color: red;
+}
+
+.swal2-top-end {
+  font-weight: 100 !important;
+  color: red;
+}
+
+.pending-verification {
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	font-size: 22px;
+	background-color: #ff8d00;
+	color: white;
+}
+
+.error-action {
+	display: flex;
+	justify-content: space-between;
 }

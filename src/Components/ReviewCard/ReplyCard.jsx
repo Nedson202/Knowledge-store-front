@@ -1,15 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import image from '../../assets/got.jpeg';
 import './_ReplyCard.scss';
 import AddReview from '../AddReview/AddReview';
+import timeParser from '../../utils/timeParser';
+import Avatar from './Avatar';
 
 class ReplyCard extends Component {
-  renderReviewerImage() {
+  renderReviewerImage(picture) {
     return (
       <div>
         <img
-          src={image}
+          src={picture}
           className="rounded-circle"
           alt="Card cap"
           style={{ width: '45px', height: '45px' }}
@@ -18,69 +19,89 @@ class ReplyCard extends Component {
     );
   }
 
-  renderReplyFooter() {
-    const { handleToggleForm, handleReplyEdit } = this.props;
+  renderReplyFooter(likes, id, userId) {
+    const {
+      handleToggleForm, handleReplyEdit, reviewId, deleteReply, user
+    } = this.props;
     return (
       <div className="footer">
-        <p><i className="fas fa-thumbs-up" /></p>
-        <p onClick={handleToggleForm}>Reply</p>
+        <p>
+          <i className="fas fa-thumbs-up" />
+          <span style={{ cursor: 'default', paddingLeft: '10px' }}>{ likes !== 0 && likes}</span>
+        </p>
+        <p onClick={handleToggleForm(reviewId)}>Reply</p>
+        { user.id && user.id.match(userId) && (
         <span className="reviewer-buttons">
-          <p onClick={handleReplyEdit}>edit</p>
-          <p className="danger">delete</p>
+          <p onClick={handleReplyEdit(id)}>edit</p>
+          <p className="danger" onClick={deleteReply(id)}>delete</p>
         </span>
+        )}
       </div>
     );
   }
 
-  renderReplyTime() {
+  renderReplyTime(date) {
     return (
       <span style={{ paddingLeft: '10px' }}>
-        a few seconds ago
+        {timeParser(date)}
       </span>
     );
   }
 
-  renderReply() {
+  renderReply(userReply, setReplyToEdit) {
     const { isEditFormOpen } = this.props;
+    const {
+      replier, picture, createdAt, reply, likes, id, userId
+    } = userReply;
     return (
-      <div className="reply-card">
-        {this.renderReviewerImage()}
+      <div className="reply-card" key={id}>
+        {picture ? this.renderReviewerImage(picture) : <Avatar reviewer={replier} />}
         <div>
           <p>
-            <b>Arangue Moyo</b>
+            <b className="text-capitalize">{replier}</b>
             {' '}
-            {this.renderReplyTime()}
+            {this.renderReplyTime(createdAt)}
           </p>
-          { !isEditFormOpen && (
+          {(!isEditFormOpen || id !== setReplyToEdit) && (
           <span>
             <p>
-              @arangue are you really sure.
+              {reply}
             </p>
-            {this.renderReplyFooter()}
+            {this.renderReplyFooter(likes, id, userId)}
           </span>
           ) }
-          {this.renderReplyEditForm('@arangue are you really sure')}
+          {this.renderReplyEditForm(reply, id)}
         </div>
       </div>
     );
   }
 
-  renderReplyEditForm(message) {
-    const { isEditFormOpen, reviewType, handleReplyEdit } = this.props;
+  renderReplyEditForm(message, id) {
+    const {
+      isEditFormOpen, reviewType, handleReplyEdit,
+      setReplyToEdit
+    } = this.props;
     return (
       <AddReview
         toggleForm={isEditFormOpen}
         reviewType={reviewType}
         handleToggleForm={handleReplyEdit}
         replyToEdit={message}
+        setReplyToEdit={setReplyToEdit}
+        itemOnEdit={id}
       />
     );
   }
 
   render() {
+    const { replies, setReplyToEdit } = this.props;
     return (
       <Fragment>
-        {this.renderReply()}
+        {
+          replies.length !== 0 && replies.map(reply => (
+            this.renderReply(reply, setReplyToEdit)
+          ))
+        }
       </Fragment>
     );
   }
@@ -89,15 +110,25 @@ class ReplyCard extends Component {
 ReplyCard.propTypes = {
   handleToggleForm: PropTypes.func,
   handleReplyEdit: PropTypes.func,
+  deleteReply: PropTypes.func,
   isEditFormOpen: PropTypes.bool,
   reviewType: PropTypes.string,
+  replies: PropTypes.array,
+  reviewId: PropTypes.string,
+  setReplyToEdit: PropTypes.string,
+  user: PropTypes.object,
 };
 
 ReplyCard.defaultProps = {
   handleToggleForm: () => {},
   handleReplyEdit: () => {},
+  deleteReply: () => {},
   isEditFormOpen: false,
   reviewType: '',
+  replies: [],
+  reviewId: '',
+  setReplyToEdit: '',
+  user: {},
 };
 
 

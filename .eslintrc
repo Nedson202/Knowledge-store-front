@@ -23,7 +23,8 @@
     "toastr": true,
     "expect": true,
     "should": true,
-    "jest": true
+    "jest": true,
+    "location": true
   },
   "rules": {
     "one-var": 0,

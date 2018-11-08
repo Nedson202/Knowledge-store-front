@@ -17,6 +17,11 @@
 			.book-images {
 				height: 17rem !important
 			}
+
+			.image-error-plaeholder {
+				width: 190px !important;
+				height: 17rem !important;
+			}
 		}
 
 		.book-profile-more {
@@ -30,6 +35,11 @@
 					width: 150px !important;
 					height: 12rem !important;
 					// object-fit: contain;
+				}
+
+				.image-error-plaeholder {
+					width: 150px !important;
+					height: 13rem !important;
 				}
 			}
 		}
@@ -45,7 +55,7 @@
 				margin: 0 !important;
 
 				.ant-input {
-					padding: 0 !important;
+					padding: 11px !important;
 					width: 330px !important;
 				}
 			}
@@ -62,7 +72,7 @@
 
 		.review-card {
 			grid-column: 1 / span 2;
-			margin: auto;
+			// margin: auto;
 			// max-height: 400px;
 			// overflow: scroll;
 		}
@@ -152,7 +162,7 @@
 				margin: 0 !important;
 
 				.ant-input {
-					padding: 0 !important;
+					padding: 11px !important;
 					width: 330px !important;
 				}
 			}

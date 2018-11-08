@@ -22,20 +22,20 @@ class SideNav extends Component {
         <hr />
         <div>
           <NavLink to="/dashboard" className="dropdown-item sidebar-navlink">
-            Dashboard
             <i className="fas fa-tachometer-alt" />
+            Dashboard
           </NavLink>
         </div>
         <div>
           <NavLink to="/profile" className="dropdown-item sidebar-navlink">
-            Profile
             <i className="fa fa-sign-out-alt" />
+            Profile
           </NavLink>
         </div>
         <div>
           <NavLink to="/logout" className="dropdown-item sidebar-navlink">
-            Logout
             <i className="fa fa-sign-out-alt" />
+            Logout
           </NavLink>
         </div>
       </div>

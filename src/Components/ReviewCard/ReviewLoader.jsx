@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import ContentLoader from 'react-content-loader';
-import './_UserProfile.scss';
 
-class UpdateForm extends Component {
+class ReviewLoader extends Component {
   render() {
     return (
       <ContentLoader
@@ -22,4 +21,4 @@ class UpdateForm extends Component {
   }
 }
 
-export default UpdateForm;
+export default ReviewLoader;

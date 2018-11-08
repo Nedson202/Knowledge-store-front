@@ -27,7 +27,7 @@ class AddBook extends Component {
                   </div>
                   <div className="form-group is-filled">
                     <label htmlFor="year" className="bmd-label-floating">Year</label>
-                    <DatePicker placeholder={false} />
+                    <DatePicker placeholder="" />
                     {/* <input type="text" className="form-control" id="year" /> */}
                   </div>
                   <div className="form-group">

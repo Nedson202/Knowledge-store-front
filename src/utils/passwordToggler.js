@@ -6,12 +6,11 @@ const passwordToggler = id => () => {
   if (toggleType.type === 'password') {
     toggleType.type = 'text';
     showEyeSlashIcon.classList.remove('hide');
-    hideEyeIcon.classList.add('hide');
-  } else {
-    toggleType.type = 'password';
-    showEyeSlashIcon.classList.add('hide');
-    hideEyeIcon.classList.remove('hide');
+    return hideEyeIcon.classList.add('hide');
   }
+  toggleType.type = 'password';
+  showEyeSlashIcon.classList.add('hide');
+  return hideEyeIcon.classList.remove('hide');
 };
 
 export default passwordToggler;

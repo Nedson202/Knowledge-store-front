@@ -1,80 +1,87 @@
 import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { graphql, compose, withApollo } from 'react-apollo';
+import debounce from 'lodash.debounce';
 import { AutoComplete } from 'antd';
 import './_Genre.scss';
-
-const genres = [
-  'Science fiction',
-  'Satire',
-  'Drama',
-  'Action and Adventure',
-  'Romance',
-  'Mystery',
-  'Horror',
-  'Self help',
-  'Health',
-  'Guide',
-  'Travel',
-  'Children',
-  'Religion, Spirituality & New Age',
-  'Science',
-  'History',
-  'Math',
-  'Anthology',
-  'Poetry',
-  'Encyclopedias',
-  'Dictionaries',
-  'Comics',
-  'Art',
-  'Cookbooks',
-  'Diaries',
-  'Journals',
-  'Prayer books',
-  'Series',
-  'Trilogy',
-  'Biographies',
-  'Autobiographies',
-  'Fantasy',
-];
-
-
-// const dataSource = ['Burns Bay Road', 'Downing Street', 'Wall Street'];
+import { getGenres, bookFilter } from '../../queries/genre';
+import Spinner from '../Spinner/Spinner';
 
 class Genre extends Component {
-  onSelect(value) {
-    console.log(value);
+  state= {
+    genre: '',
+    searching: false
   }
 
-  Complete() {
+  onValueChange = (value) => {
+    this.setState({ genre: value });
+    this.searchByGenre();
+  }
+
+  searchByGenre() {
+    debounce(() => {
+      const { genre } = this.state;
+      const { client } = this.props;
+      if (genre.trim().length !== 0) {
+        this.setState({ searching: true });
+        client.query({
+          query: bookFilter,
+          variables: {
+            search: genre
+          },
+        }).then((response) => {
+          this.setState({ searching: false });
+          console.log(response.data);
+        });
+      } else this.setState({ searching: false });
+    }, 1000)();
+  }
+
+  flattenedGenres(genres) {
+    return genres && genres.map(genre => genre.genre);
+  }
+
+  Complete(genres) {
     return (
       <AutoComplete
         style={{ width: 200 }}
-        dataSource={genres}
-        onChange={this.onSelect}
+        dataSource={this.flattenedGenres(genres)}
+        onChange={this.onValueChange}
         placeholder="Type any genre to search"
         filterOption={
-          (inputValue, option) => option.props.children
-            .toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+        (inputValue, option) => option.props.children
+          .toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
       />
     );
   }
 
-  renderGenres() {
-    return genres.slice(1, 12).map(genre => (
-      genre.length < 15 && <Link key="" to={genre}>{genre}</Link>
-    ));
-  }
-
   render() {
+    const { data } = this.props;
+    const { searching } = this.state;
     return (
       <Fragment>
         <div className="genre">
           <h3>Search Genres</h3>
-          <span className="genre-search">{this.Complete()}</span>
+          <span className="genre-search">{this.Complete(data && data.getGenres)}</span>
+          { searching && <Spinner /> }
         </div>
       </Fragment>
     );
   }
 }
 
-export default Genre;
+Genre.propTypes = {
+  data: PropTypes.object,
+  client: PropTypes.object,
+};
+
+Genre.defaultProps = {
+  data: {},
+  client: {},
+};
+
+export default compose(
+  withApollo,
+  graphql(getGenres),
+  // graphql(bookFilter, { name: 'bookFilterQuery', })
+)(Genre);

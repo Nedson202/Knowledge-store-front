@@ -18,7 +18,7 @@
 }*/
 
 .admin-panel {
-  margin: 100px auto 0 auto;
+  margin: 120px auto 0 auto;
   max-width: 950px;
   width: 100%;
 
@@ -26,5 +26,41 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+  }
+
+  .ant-select, .ant-input {
+    width: 120px !important;
+    margin-right: 15px;
+    height: 36px !important;
+  }
+
+  .ant-select, .ant-input:focus {
+    outline: 0;
+    box-shadow: none;
+    border-color: transparent;
+  }
+
+  .table-spinner {
+    position: absolute;
+    max-width: 100px;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (max-width: 500px) {
+  .admin-panel {
+    width: 90% !important;
+    margin: 120px 20px 0 0px !important;
+
+    &__header {
+      width: 105%;
+
+      h3 {
+        
+      }
+    }
   }
 }

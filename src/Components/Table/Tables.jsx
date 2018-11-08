@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import './_Tables.scss';
 
 class Tables extends Component {
@@ -15,47 +16,67 @@ class Tables extends Component {
     );
   }
 
+  renderTableContent(data) {
+    const { removeAdmin } = this.props;
+    return (
+      <Fragment>
+        {data && data.map(user => (
+          <tr key={user.id}>
+            <th scope="row">{user.id}</th>
+            <td>{user.username}</td>
+            <td>{user.email}</td>
+            <td>{user.role}</td>
+            <td>
+              <i className="fa fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
+              <div className="dropdown-menu table-panel__user-delete" id="book-action-buttons">
+                <a href="/" className="dropdown-item user-profile-navlink" id="trash-icon">
+                  deactivate
+                  {' '}
+                  <i className="fa fa-trash" />
+                </a>
+                {user.role.match('admin') && (
+                <button
+                  type="button"
+                  onClick={removeAdmin('remove', user.email)}
+                  className="dropdown-item user-profile-navlink"
+                  id="trash-icon"
+                >
+                  remove
+                  {' '}
+                  <i className="fa fa-trash" />
+                </button>
+                )}
+              </div>
+            </td>
+          </tr>
+        ))}
+      </Fragment>
+    );
+  }
+
   render() {
+    const { users } = this.props;
     return (
       <div className="table-panel">
         <table className="table table-striped">
           {this.renderTableHead()}
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>
-                <i className="fa fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
-                <div className="dropdown-menu table-panel__user-delete" id="book-action-buttons">
-                  <a href="/" className="dropdown-item user-profile-navlink" id="trash-icon">
-                    delete
-                    {' '}
-                    <i className="fa fa-trash" />
-                  </a>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td><i className="fa fa-ellipsis-v" /></td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td><i className="fa fa-ellipsis-v" /></td>
-            </tr>
+            {users !== undefined && this.renderTableContent(users)}
           </tbody>
         </table>
       </div>
     );
   }
 }
+
+Tables.propTypes = {
+  users: PropTypes.array,
+  removeAdmin: PropTypes.func,
+};
+
+Tables.defaultProps = {
+  users: [],
+  removeAdmin: () => {},
+};
 
 export default Tables;

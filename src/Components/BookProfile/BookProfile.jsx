@@ -1,12 +1,41 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { compose, graphql } from 'react-apollo';
+// import { compose, withApollo, graphql } from 'react-apollo';
 import './_BookProfile.scss';
 import '../BookCatalog/_BookCatalog.scss';
 import BookCard from '../BookCard/BookCard';
 import AddReview from '../AddReview/AddReview';
 import ReviewCard from '../ReviewCard/ReviewCard';
 import Genre from '../Genre/Genre';
+import { fetchBook } from '../../queries/books';
 
 class BookProfile extends Component {
+  // state = {
+  //   book: {},
+  // };
+
+  // componentDidMount() {
+  //   this.retrieveBook();
+  // }
+
+  // retrieveBook() {
+  //   const { client } = this.props;
+  //   client.query({
+  //     query: fetchBooks,
+  //     variables: {
+  //       bookId: '4'
+  //     }
+  //   }).then((response) => {
+  //     const { data: { book } } = response;
+  //     this.setState({ book });
+  //   });
+  // }
+
+  options = () => {
+    console.log(this.props.match); /* eslint-disable-line */
+  }
+
   renderBookHeader() {
     return (
       <div className="book-profile-title">
@@ -24,21 +53,28 @@ class BookProfile extends Component {
   }
 
   renderAddReviewForm() {
+    const { fetchBooksQuery: { book } } = this.props;
+    // console.log(book && book.id);
     return (
       <div className="add-review-form">
         <AddReview
           toggleForm={false}
           reviewType="add"
+          bookId={book && book.id}
         />
       </div>
     );
   }
 
   renderReviews() {
+    const { fetchBooksQuery: { book } } = this.props;
     return (
       <div className="review-card">
-        <ReviewCard />
-        <ReviewCard />
+        <ReviewCard
+          reviews={book && book.reviews}
+          bookId={book && book.id}
+        />
+        {/* <ReviewCard /> */}
       </div>
     );
   }
@@ -88,6 +124,7 @@ class BookProfile extends Component {
   }
 
   render() {
+    // console.log(this.state.book.book); /* eslint-disable-line */
     return (
       <div className="book-profile-container">
         <div className="original-book">
@@ -124,4 +161,24 @@ class BookProfile extends Component {
   }
 }
 
-export default BookProfile;
+BookProfile.propTypes = {
+  fetchBooksQuery: PropTypes.object,
+  // match: PropTypes.object,
+};
+
+BookProfile.defaultProps = {
+  fetchBooksQuery: {},
+  // match: {},
+};
+
+export default compose(
+  // withApollo
+  graphql(fetchBook, {
+    name: 'fetchBooksQuery',
+    options: props => ({
+      variables: {
+        bookId: props.match.params.id
+      }
+    })
+  })
+)(BookProfile);

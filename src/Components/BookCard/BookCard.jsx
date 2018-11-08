@@ -2,9 +2,12 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 // import image from '../../assets/lof.jpeg';
+import { graphql } from 'react-apollo';
+// import { gql } from 'apollo-boost';
 import './_BookCard.scss';
 import Star from '../Star/Star';
 import BookImageLoader from './BookImageLoader';
+import { getBooks } from '../../queries/auth';
 
 class BookCard extends Component {
   constructor(props) {
@@ -17,6 +20,10 @@ class BookCard extends Component {
       bookImage: imageUrl || "",
       imageLoadingError: ""
     };
+  }
+
+  componentDidMount() {
+    console.log(this.props.data.loading);
   }
 
   checkImageRender = image => () => {
@@ -41,8 +48,6 @@ class BookCard extends Component {
         {imageLoadingError.length !== 0 && (
           <div
             style={{
-              // width: "190px",
-              // height: "17rem",
               paddingTop: "50%",
               border: "1px solid #d4d4d4",
               borderRadius: "4px"
@@ -58,7 +63,6 @@ class BookCard extends Component {
               src={bookImage}
               className="book-images parent"
               alt="Card cap"
-              // style={{ width: "190px", height: "17rem" }}
               id="book-image"
               onLoad={this.checkImageRender}
             />
@@ -135,4 +139,5 @@ BookCard.defaultProps = {
   imageUrl: ""
 };
 
-export default BookCard;
+// export default BookCard;
+export default graphql(getBooks)(BookCard);
