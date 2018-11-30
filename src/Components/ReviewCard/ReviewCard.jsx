@@ -10,7 +10,6 @@ import AddReview from '../AddReview/AddReview';
 import Star from '../Star/Star';
 import { addLikeOnReview, deleteReview, deleteReply } from '../../queries/reviews';
 import timeParser from '../../utils/timeParser';
-import ReviewLoader from './ReviewLoader';
 import Avatar from './Avatar';
 import { fetchBook } from '../../queries/books';
 import toaster from '../../utils/toast';
@@ -33,6 +32,7 @@ class ReviewCard extends Component {
       expanded: false,
       truncated: false,
       truncateId: '',
+      expandedItem: [],
       reviewFormId: '', /* eslint-disable-line */
     };
   }
@@ -48,7 +48,7 @@ class ReviewCard extends Component {
       if (isReplyFormOpen) {
         scrollToComponent(this.Review,
           {
-            offset: 1000, align: 'top', duration: 500
+            offset: 500, align: 'middle', duration: 500
           });
       }
     });
@@ -106,29 +106,20 @@ class ReviewCard extends Component {
     });
   }
 
-  toggleLines(id, event) {
+  toggleLines(id, showLess, event) {
     event.preventDefault();
-    console.log('event', event, id);
-    const { expanded, truncated, truncateId } = this.state;
-
-    // if(expanded) this.setState({ truncateId: '' })
-    if (truncateId && truncateId !== id) {
-      console.log(truncateId);
-      return this.setState({
-        expanded: expanded,
-        // truncated: !truncated,
-        // truncateId: id
-      });
-    }
+    const { expanded, expandedItem } = this.state;
+    if (!expandedItem.includes(id)) expandedItem.push(id);
+    if (showLess) expandedItem.splice(expandedItem.indexOf(id), 1);
     this.setState({
       expanded: !expanded,
-      // truncated: !truncated,
-      truncateId: id
+      truncateId: id,
+      expandedItem
     });
   }
 
   handleTruncate = (truncatedText, id) => () => {
-    console.log(truncatedText, 'truncated');
+    // console.log(truncatedText, 'truncated');
     const { truncated } = this.state;
     if (truncated !== truncatedText) {
       this.setState({
@@ -136,6 +127,7 @@ class ReviewCard extends Component {
         truncateId: id
       });
     }
+    // console.log(this.state);
   }
 
   refetchData(bookId) {
@@ -173,14 +165,6 @@ class ReviewCard extends Component {
     );
   }
 
-  renderInitials(reviewer) {
-    const matches = reviewer.match(/\b(\w)/g);
-    const acronym = matches.join('');
-    return (
-      <div className="avatar-placeholder">{acronym}</div>
-    );
-  }
-
   renderReviewEditForm = (message, id) => {
     const {
       isReviewEditFormOpen, reviewType, setReviewToEdit, reviewFormId
@@ -200,11 +184,11 @@ class ReviewCard extends Component {
 
   renderStars(rating) {
     return (
-      <span>
+      <div id="star-rating">
         <Star
           value={rating}
         />
-      </span>
+      </div>
     );
   }
 
@@ -216,34 +200,14 @@ class ReviewCard extends Component {
     );
   }
 
-  calculateTruncateLines(id) {
-    const {
-      expanded, truncateId, truncated
-    } = this.state;
-
-    if (expanded && truncateId === id) {
-      return 0;
-    }
-    if (expanded && truncated && truncateId !== id) {
-      return 0;
-    }
-    return 3;
-    // if (expanded && truncated && truncateId !== id) {
-    //   return 0;
-    // } else {
-    //   return 3;
-    // }
-  }
-
   renderReviewBody(userReview) {
     const {
       reviewer, createdAt, review, rating, id
     } = userReview;
     const {
-      isReviewEditFormOpen, setReviewToEdit, expanded, reviewId,
-      truncated, truncateId
+      isReviewEditFormOpen, setReviewToEdit, expanded,
+      truncateId, expandedItem
     } = this.state;
-    console.log(truncated, expanded);
     return (
       <Fragment>
         <p>
@@ -254,13 +218,13 @@ class ReviewCard extends Component {
         {(!isReviewEditFormOpen || id !== setReviewToEdit) && (
         <span id='review'>
           <Truncate key={id}
-            // lines={this.calculateTruncateLines(id)}
-            lines={expanded && truncateId === id ? 0 : 3}
+            lines={expandedItem.includes(id) ? null : 3}
+            // lines={expanded && truncateId === id ? 0 : 3}
             ellipsis={(
               <span>
                 ...
                 {' '}
-                {expanded && truncateId === id || <a href="" onClick={(e) => this.toggleLines(id, e)}>Read more</a>}
+                {expanded && truncateId === id || <a href="" onClick={(e) => this.toggleLines(id, false, e)}>Read more</a>}
               </span>
               )}
             // onClick={this.handleTruncate(1)}
@@ -268,11 +232,12 @@ class ReviewCard extends Component {
           >
             {review}
           </Truncate>
-          {!truncated && expanded && truncateId === id && (
+          {expandedItem.includes(id)&& (
+          // {!truncated && expanded && truncateId === id && (
           <span>
             ...
             {' '}
-            <a href="#" onClick={(e) => this.toggleLines(id, e)}>Show less</a>
+            <a href="#" onClick={(e) => this.toggleLines(id, true, e)}>Show less</a>
           </span>
           )}
           {this.renderStars(rating)}
@@ -320,7 +285,7 @@ class ReviewCard extends Component {
     );
   }
 
-  renderReplyForm(reviewFormId, bookId) {
+  renderReplyForm(reviewFormId, bookId, reviewer) {
     const { isReplyFormOpen, reviewType, reviewToReply } = this.state;
     return (
       <AddReview
@@ -328,7 +293,7 @@ class ReviewCard extends Component {
         toggleForm={isReplyFormOpen}
         reviewType={reviewType}
         handleToggleForm={this.toggleReplyDialog}
-        ownerOfReview="michael"
+        ownerOfReview={reviewer}
         reviewToReply={reviewToReply}
         reviewFormId={reviewFormId}
         bookId={bookId}
@@ -336,26 +301,18 @@ class ReviewCard extends Component {
   }
 
   renderAll(userReview, bookId) {
-    const { picture, id, reviewer } = userReview;
+    const { picture, id, avatarColor, reviewer } = userReview;
     return (
       <Fragment key={id}>
-        {picture.length ? this.renderReviewerImage(picture) : <Avatar reviewer={reviewer} />}
+        {picture.length ? this.renderReviewerImage(picture) : <Avatar user={reviewer} color={avatarColor} />}
         <div>
           {this.renderReviewBody(userReview)}
           {this.renderReply(userReview, id)}
           <div id="dome">
-            {this.renderReplyForm(id, bookId)}
+            {this.renderReplyForm(id, bookId, reviewer)}
           </div>
+          <div id="lastElement" />
         </div>
-      </Fragment>
-    );
-  }
-
-  renderLoader() {
-    return (
-      <Fragment>
-        <ReviewLoader />
-        <ReviewLoader />
       </Fragment>
     );
   }
@@ -366,9 +323,9 @@ class ReviewCard extends Component {
       <Fragment>
         {/* {this.renderLoader()} */}
         {
-          reviews.length ? reviews.map(review => (
+          reviews.length !== 0 && reviews.map(review => (
             this.renderAll(review, bookId)
-          )) : this.renderLoader()
+          ))
         }
       </Fragment>
     );

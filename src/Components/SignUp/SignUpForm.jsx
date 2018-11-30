@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import passwordToggler from '../../utils/passwordToggler';
+import socialAuthentication from '../../utils/socialAuthentication';
 
 class SignUpForm extends Component {
   renderForm() {
@@ -39,19 +40,28 @@ class SignUpForm extends Component {
               type="password"
               name="password"
               className="form-control"
-              id="password-signup"
+              id="signup-password"
               autoComplete="new-password"
               onChange={handleInputChange}
             />
             {password && <span className="validation-error">{password[0]}</span>}
-            <li onClick={passwordToggler('password-signup')}>
-              <i className="fa fa-eye" aria-hidden="true" id="add-hide" />
-              <i className="fa fa-eye-slash hide" aria-hidden="true" id="remove-hide" />
-            </li>
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={passwordToggler('signup-password')}
+              id="password-icon"
+            >
+              <i className="fa fa-eye hide" aria-hidden="true" id="signup-password-remove-hide" />
+              <i className="fa fa-eye-slash" aria-hidden="true" id="signup-password-add-hide" />
+            </div>
           </div>
           <div className="form-group social-login">
             <div className="text-muted text-center social-login-text">Signup with</div>
-            <button type="button" className="btn btn-primary">
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={socialAuthentication('google')}
+            >
               <i className="fab fa-google google-icon" />
             </button>
             <button type="button" className="btn btn-primary">

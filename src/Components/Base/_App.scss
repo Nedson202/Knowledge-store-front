@@ -18,14 +18,19 @@ $border_color_2: #ffaf00;
 }
 
 .navbar {
-	box-shadow: none !important;
+	// box-shadow: none !important;
 	padding: 0 !important;
 	z-index: 2;
-	height: 57px;
+	min-height: 57px;
 }
 
 .dropdown-toggle:after {
+	margin: auto auto auto 5px;
 	vertical-align: 0 !important;
+}
+
+.navbar-light .navbar-nav .nav-link {
+	display: flex !important;
 }
 
 .user-detail {
@@ -37,6 +42,11 @@ $border_color_2: #ffaf00;
 
 .dropdown-menu {
 	min-width: 11rem;
+}
+
+.notification-pane {
+	min-width: 17rem !important;
+	min-height: 17rem !important;
 }
 
 .dropdown-item:hover {
@@ -124,8 +134,17 @@ $border_color_2: #ffaf00;
 	border: none !important;
 	margin-left: 10px;
 }
-.search-bar {
-	width: 300px !important;
+
+@media screen and (min-width: 960px) {
+	.search-bar {
+		width: 400px !important;
+	}
+}
+
+@media screen and (max-width: 560px) {
+	.search-bar {
+		width: 350px !important;
+	}
 }
 
 .avatar {
@@ -229,22 +248,23 @@ $border_color_2: #ffaf00;
 }
 
 .form-group {
-	// margin: auto;
+	position: relative;
 	input:-webkit-autofill {
     box-shadow: 0 0 0 30px white inset;
     -webkit-box-shadow: 0 0 0 30px white inset;
 	}
 
-	li {
-		list-style-type: none;
-
-		i {
-			position: absolute;
-			top: 35px;
-			right: 10px;
-			cursor: pointer;
-		}
+  #password-icon {
+    position: absolute;
+    top: 34px;
+    right: 9px;
 	}
+
+  #password-icon:focus {
+    outline: 0;
+    box-shadow: none;
+    border-color: transparent;
+  }
 }
 
 .validation-error {

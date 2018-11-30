@@ -1,13 +1,52 @@
+.user-analytics {
+  display: grid;
+  grid-template-columns: repeat(4, 2fr);
+  grid-gap: 60px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto !important;
+  text-align: center;
+
+  div {
+    border-radius: 12px;
+    height: 160px;
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3), 0 2px 2px rgba(0, 0, 0, 0.2);
+
+    h4 {
+      padding-top: 20%;
+    }
+
+    span {
+      font-size: 25px;
+    }
+  }
+}
+
+.profile-details {
+  display: grid;
+  grid-gap: 30px;
+
+  h4 {
+    padding-bottom: 30px;
+  }
+
+  #edit-button {
+    display: block;
+    width: 140px;
+    margin-left: auto;
+  }
+}
+
 .profile-update {
   display: grid;
-  grid-template-columns: 1fr 3fr;
-  grid-gap: 30px;
+  grid-template-columns: 5fr 4fr;
+  grid-gap: 60px;
   width: 100%;
-  max-width: 800px;
-  margin: 80px auto !important;
+  max-width: 1200px;
+  margin: 100px auto !important;
 
   .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 
     #update-button {
       display: block;
@@ -18,5 +57,79 @@
 
   .skeleton-button {
     margin-right: -10px;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+
+  #cancel-button {
+    margin-right: 15px;
+
+    i {
+      padding-right: 10px;
+    }
+  }
+}
+
+.profile-upload {
+  display: grid;
+  grid-template-columns: 1.5fr 3fr;
+  grid-gap: 30px;
+}
+
+@media screen and (max-width: 560px) {
+  .user-analytics {
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    grid-gap: 60px 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 100px auto !important;
+    text-align: center;
+
+    h4 {
+      padding-top: 25%;
+    }
+  }
+
+  .profile-update {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 60px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 60px auto !important;
+  }
+
+  .password-update {
+    grid-column: span 1 !important;
+  }
+
+  .profile-upload {
+    display: grid;
+    grid-template-columns: 3fr;
+  }
+
+  #image-upload {
+    width: 200px !important;
+  }
+}
+
+#show-image {
+  border-radius: 50%;
+}
+
+.image-previewer {
+  img {
+    object-fit: cover;
+  }
+
+  button {
+    margin-top: 15px !important;
+    width: 120px;
+    display: block;
+    margin: auto;
   }
 }

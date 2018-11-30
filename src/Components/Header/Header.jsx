@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import avatar from '../../assets/beverage-books.jpg';
 import './_Header.scss';
+import Avatar from '../ReviewCard/Avatar';
 import { logOutUser } from '../../redux/actions/userActions';
 import toaster from '../../utils/toast';
 import Search from '../Search/Search';
@@ -84,21 +85,55 @@ class Header extends Component {
   renderUserAvatar() {
     const { user } = this.props;
     return (
-
       <li className="nav-item dropdown user-profile-nav">
         <button
           type="button"
-          className="btn btn-default nav-link dropdown-toggle text-case"
+          className="btn btn-default nav-link dropdown-toggle text-case user-toggle"
           id="navbarDropdown"
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <img src={user && user.picture} alt="Avatar" className="avatar" />
+          {user.picture && <img src={user.picture} alt="Avatar" className="avatar" />}
+          {!user.picture && <Avatar user={user.username} color={user.avatarColor} />}
         </button>
         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
           <div className="user-detail">
-            { user && `@${user.username}`}
+            {`@${user.username}`}
+          </div>
+          <div className="dropdown-divider" />
+          <Link to="/profile" className="dropdown-item user-profile-navlink">
+        Profile
+            {' '}
+            <i className="fas fa-user-circle" />
+          </Link>
+          <button type="button" className="dropdown-item user-profile-navlink" onClick={this.handleLogout}>
+        Logout
+            {' '}
+            <i className="fa fa-sign-out-alt" />
+          </button>
+        </div>
+      </li>
+    );
+  }
+
+  renderNotificationPane() {
+    const { user } = this.props;
+    return (
+      <li className="nav-item dropdown user-profile-nav">
+        <span
+          className="cart-navbar"
+          id="notificationPane"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <i className="fas fa-bell" />
+          <span>10</span>
+        </span>
+        <div className="dropdown-menu notification-pane" aria-labelledby="notificationPane">
+          <div className="user-detail">
+            {`@${user.username}`}
           </div>
           <div className="dropdown-divider" />
           <Link to="/profile" className="dropdown-item user-profile-navlink">
@@ -131,7 +166,7 @@ class Header extends Component {
             <i className="fa fa-bars" />
           </div>
           <div className="container">
-            <span className="navbar-brand">Loresters Bookstore</span>
+            <Link to="/"><span className="navbar-brand">Loresters Bookstore</span></Link>
             <button
               type="button"
               className="mobile-nav"
@@ -155,6 +190,7 @@ class Header extends Component {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <Search />
               <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+                {user.isVerified === 'true' && this.renderNotificationPane()}
                 <li className="cart-navbar">
                   <i className="fa fa-shopping-cart" />
                   <span>10</span>

@@ -1,40 +1,79 @@
 import React, { Component, Fragment } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import queryString from 'querystring';
+import { compose, graphql } from 'react-apollo';
+import { connect } from 'react-redux';
 import setQuery from 'set-query-string';
 import './_PasswordReset.scss';
 import passwordToggler from '../../utils/passwordToggler';
 import tokenDecoder from '../../utils/tokenDecoder';
-// import tokenDecoder from '../../utils/tokenDecoder';
+import { resetPassword } from '../../queries/auth';
+import toaster from '../../utils/toast';
+import { setCurrentUser } from '../../redux/actions/userActions';
 
-/* eslint-disable */
 class PasswordReset extends Component {
   state = {
-    email: '',
-    userId: ''
+    values: {
+      email: '',
+      password: '',
+      id: '',
+      token: ''
+    }
   };
 
   componentDidMount() {
-    // const { history } = this.props;
     this.getResetToken();
-    // history.push('password-reset');
-    // toastr.success('Heyey hdfh');
-    // return !localStorage.resetToken && localStorage.setItem('resetToken', token);
   }
 
   getResetToken() {
     const query = queryString.parse(window.location.search);
     const token = Object.values(query)[0];
+    if (!token) {
+      setQuery({ token: '' });
+      return localStorage.removeItem('token');
+    }
     const decodedToken = tokenDecoder(token);
     if (decodedToken) {
+      const { values } = this.state;
       const { id, email } = decodedToken;
-      this.setState({ email, userId: id })
-      setQuery({ token: ''});
-    };
+      values.email = email;
+      values.id = id;
+      values.token = `Bearer ${token}`;
+      return this.setState({ values });
+    }
+    setQuery({ token: '' });
+  }
+
+  handlePasswordChange = (event) => {
+    const { name, value } = event.target;
+    const { values } = this.state;
+    values[name] = value;
+    this.setState({ values });
+  }
+
+  resetUserPassword = () => {
+    const { resetPasswordQuery, history, dispatch } = this.props;
+    const { values, values: { email } } = this.state;
+
+    if (!email.trim()) return toaster('error', 'Check your email for password reset link');
+    resetPasswordQuery({
+      variables: {
+        ...values
+      }
+    }).then((response) => {
+      const { resetPassword: { message, token } } = response.data;
+      toaster('success', message);
+      localStorage.setItem('token', token);
+      const decodedToken = tokenDecoder(token);
+      dispatch(setCurrentUser(decodedToken));
+      setQuery({ token: '' });
+      if (decodedToken.isVerified === 'true') return history.push('/my-books');
+      history.push('/');
+    });
   }
 
   render() {
-    const { email } = this.state;
+    const { values: { email } } = this.state;
     return (
       <Fragment>
         <form className="password-reset">
@@ -47,20 +86,39 @@ class PasswordReset extends Component {
               defaultValue={email}
               className="form-control"
               id="user-email"
+              disabled
             />
           </div>
           <div className="form-group">
             <label htmlFor="exampleInputPassword1" className="bmd-label-floating">
               New Password
             </label>
-            <input type="password-reset" className="form-control" id="password-reset" />
-            <li onClick={passwordToggler('password-reset')}>
-              <i className="fa fa-eye" aria-hidden="true" id="add-hide" />
-              <i className="fa fa-eye-slash hide" aria-hidden="true" id="remove-hide" />
-            </li>
+            <input
+              type="password"
+              name="password"
+              className="form-control"
+              id="password-reset"
+              autoComplete="new-password"
+              onChange={this.handlePasswordChange}
+            />
+            <div
+              onClick={passwordToggler('password-reset')}
+              id="password-icon"
+              role="button"
+              tabIndex={0}
+            >
+              <i className="fa fa-eye hide" aria-hidden="true" id="password-reset-remove-hide" />
+              <i className="fa fa-eye-slash" aria-hidden="true" id="password-reset-add-hide" />
+            </div>
           </div>
           <div className="form-group password-reset__button">
-            <button type="button" className="btn btn-primary btn-raised text-case">Save password</button>
+            <button
+              type="button"
+              className="btn btn-primary btn-raised text-case"
+              onClick={this.resetUserPassword}
+            >
+              Save password
+            </button>
           </div>
         </form>
       </Fragment>
@@ -69,11 +127,18 @@ class PasswordReset extends Component {
 }
 
 PasswordReset.propTypes = {
-  // history: PropTypes.object
+  resetPasswordQuery: PropTypes.func,
+  dispatch: PropTypes.func,
+  history: PropTypes.object,
 };
 
 PasswordReset.defaultProps = {
-  // history: {}
+  resetPasswordQuery: () => {},
+  dispatch: () => {},
+  history: {},
 };
 
-export default PasswordReset;
+export default compose(
+  graphql(resetPassword, { name: 'resetPasswordQuery' }),
+  connect(),
+)(PasswordReset);

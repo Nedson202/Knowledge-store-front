@@ -2,11 +2,11 @@
 	display: grid;
 	grid-template-columns: 1fr 9fr;
 	width: 100%;
-	max-width: 700px;
+	// max-width: 700px;
 	// margin: auto;
 	// overflow-y: scroll;
-	max-height: 800px;
-	grid-gap: 0 15px;
+	// max-height: 800px;
+	// grid-gap: 0 15px;
 	// scroll-behavior: smooth;
 
 	.footer {
@@ -34,6 +34,10 @@
 			display: flex;
 		}
 	}
+
+	#star-rating {
+		padding-top: 15px;
+	}
 }
 
 #dome:last-child {
@@ -48,7 +52,6 @@
 	width: 45px;
 	height: 45px;
 	border-radius: 50%;
-	background: #512DA8;
 	font-size: 20px;
 	color: #fff;
 	text-align: center;

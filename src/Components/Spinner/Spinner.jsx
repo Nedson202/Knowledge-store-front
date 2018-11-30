@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 
 class Spinner extends PureComponent {
   render() {
-    const { style } = this.props;
-    const antIcon = <Icon type="loading" style={{ fontSize: style || 24 }} spin />;
+    const { spinnerStyle } = this.props;
+    const antIcon = <Icon type="loading" style={{ fontSize: spinnerStyle || 24 }} spin />;
     return (
       <Fragment>
         <Spin indicator={antIcon} />
@@ -15,11 +15,11 @@ class Spinner extends PureComponent {
 }
 
 Spinner.propTypes = {
-  style: PropTypes.number
+  spinnerStyle: PropTypes.number
 };
 
 Spinner.defaultProps = {
-  style: 24
+  spinnerStyle: 24
 };
 
 export default Spinner;

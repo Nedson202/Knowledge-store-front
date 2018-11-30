@@ -1,0 +1,132 @@
+.modal-header {
+  background-color: #efefef !important;
+}
+
+.add-book-form {
+  display: grid;
+  grid-template-columns: 2fr 6fr;
+  max-width: 800px;
+  grid-gap: 20px;
+
+  #image-upload {
+    height: 220px;
+    width: 180px;
+    border-radius: 5px;
+    border: 2px dashed;
+    margin-top: 18px;
+  }
+
+  .ant-input {
+    width: 100% !important;
+    border: none !important;
+  }
+
+  .ant-calendar-picker {
+    width: 100% !important;
+
+    .ant-input {
+      background: linear-gradient(0deg,#009688 1px,rgba(0,150,136,0) 0),
+      linear-gradient(0deg,rgba(0,0,0,.26) 1px,transparent 0);
+      border-width: 1px;
+      line-height: 1.5;
+      height: 32px;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      font-size: 15px;
+      /* border: 1px solid green !important; */
+    }
+  }
+
+  .ant-input:hover {
+    border-color: transparent !important;
+    border-right-width: 0 !important;
+  }
+
+  .ant-calendar-picker .ant-input:focus {
+    outline: 0;
+    box-shadow: none;
+    border-color: transparent;
+  }
+
+  .ant-select-selection {
+    border: none !important;
+    background: linear-gradient(0deg,#009688 1px,rgba(0,150,136,0) 0),
+    linear-gradient(0deg,rgba(0,0,0,.26) 1px,transparent 0);
+    border-width: 1px;
+    line-height: 1.5;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 15px;
+  }
+
+  .ant-select-open .ant-select-selection {
+    outline-style:none !important;
+    -webkit-box-shadow:none !important;
+    box-shadow:none !important;
+    border-color:transparent;
+  }
+
+  .ant-select-focused .ant-select-selection:focus {
+    outline-style:none !important;
+    -webkit-box-shadow:none !important;
+    box-shadow:none !important;
+    border-color:transparent;
+  }
+
+  .form-fields {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(2, 3fr);
+  }
+
+  .ant-select-dropdown {
+    z-index: 2000 !important;
+  }
+}
+
+@media screen and (max-width: 500px) {
+	.add-book-form {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr) !important;
+    max-width: 800px;
+    grid-gap: 20px;
+  }
+
+  .add-book-form {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr) !important;
+    max-width: 800px;
+    grid-gap: 20px;
+
+    .form-fields {
+      display: block;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .modal-dialog {
+    max-width: 675px !important;
+    margin: 1.75rem auto;
+  }
+
+  .add-book-form {
+    display: grid;
+    grid-template-columns: 180px 3fr !important;
+    max-width: 800px;
+    grid-gap: 40px;
+
+    .form-fields {
+      display: block;
+    }
+  }
+}
+
+.save-button {
+  width: 120px !important;
+}
+
+@media screen and (min-width: 576px) {
+  .modal-dialog {
+    max-width: 800px;
+    margin: 1.75rem auto;
+  }
+}

@@ -51,11 +51,12 @@ class ReplyCard extends Component {
   renderReply(userReply, setReplyToEdit) {
     const { isEditFormOpen } = this.props;
     const {
-      replier, picture, createdAt, reply, likes, id, userId
+      replier, picture, createdAt, reply, likes, id, userId, avatarColor
     } = userReply;
     return (
       <div className="reply-card" key={id}>
-        {picture ? this.renderReviewerImage(picture) : <Avatar reviewer={replier} />}
+        {picture ? this.renderReviewerImage(picture)
+          : <Avatar user={replier} color={avatarColor} />}
         <div>
           <p>
             <b className="text-capitalize">{replier}</b>

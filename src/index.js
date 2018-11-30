@@ -7,7 +7,8 @@ import { ApolloProvider } from 'react-apollo';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-
+// import { ApolloLink } from 'apollo-link';
+import { onError } from 'apollo-link-error';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -23,8 +24,21 @@ const store = createStore(
   enhancer
 );
 
+const serverUrl = process.env.REACT_APP_NODE_ENV.match('production')
+  ? process.env.REACT_APP_PROD_SERVER : 'http://localhost:4000';
+
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000/graphql',
+  uri: `${serverUrl}/graphql`,
+});
+
+const a = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    graphQLErrors.map(({ message, locations, path }) => console.log(
+      `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+    ));
+  }
+
+  if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
 const { token } = localStorage;
@@ -36,14 +50,12 @@ const authLink = setContext((_, { headers }) => ({
   }
 }));
 
+const authFlowLink = authLink.concat(a);
+
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: authFlowLink.concat(httpLink),
   cache: new InMemoryCache()
 });
-
-// const client = new ApolloClient({
-//   uri: 'http://localhost:4000/graphql'
-// });
 
 if (token) {
   store.dispatch(setCurrentUser(tokenDecoder(token)));

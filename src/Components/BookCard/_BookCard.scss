@@ -1,6 +1,7 @@
 .book-images {
 	// object-fit: cover;
 	border-radius: 4px;
+	margin-top: 15px;
 	// box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
@@ -83,7 +84,7 @@ i.fa.fa-ellipsis-v {
 	cursor: pointer;
 }
 
-a#trash-icon {
+button#trash-icon {
 	color: red !important;
 }
 
@@ -97,6 +98,7 @@ a#trash-icon {
 		justify-content: space-between;
 		top: 0 !important;
 		padding: 0 1rem;
+		cursor: pointer;
 
 		i {
 			top: 0 !important;

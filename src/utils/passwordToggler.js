@@ -1,7 +1,7 @@
 const passwordToggler = id => () => {
   const toggleType = document.getElementById(id);
-  const showEyeSlashIcon = document.getElementById('remove-hide');
-  const hideEyeIcon = document.getElementById('add-hide');
+  const showEyeSlashIcon = document.getElementById(`${id}-remove-hide`);
+  const hideEyeIcon = document.getElementById(`${id}-add-hide`);
 
   if (toggleType.type === 'password') {
     toggleType.type = 'text';

@@ -122,7 +122,7 @@ class Users extends Component {
       <div className="admin-panel">
         {this.renderHeader()}
         {fetchUsersQuery.loading ? <span className="table-spinner">
-          <Spinner style={45} />
+          <Spinner spinnerStyle={45} />
           </span> : this.renderTable(filteredResult)}
         <AddAdminModal
           handleInputChange={this.handleEmailChange}

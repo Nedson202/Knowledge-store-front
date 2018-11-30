@@ -1,38 +1,101 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import './_UserProfile.scss';
 import ImageUpload from './ImageUpload';
 
 class UpdateForm extends Component {
   render() {
+    const {
+      toggleEditForm, user: {
+        email: stateEmail, username: stateUsername
+      }, formValues: { username, email },
+      handleInputChange, formErrors, updateProfile, imagePreviewUrl,
+      cancelPreview, handleImageChange
+    } = this.props;
     return (
       <Fragment>
-        <ImageUpload />
-        <div>
-          <form>
-            <div className="form-group">
-              <label htmlFor="username-profile" className="bmd-label-floating">Username</label>
-              <input type="text" className="form-control" id="username-profile" />
-              <span className="bmd-help">We&apos;ll never share your email with anyone else.</span>
-            </div>
-            <div className="form-group">
-              <label htmlFor="email" className="bmd-label-floating">Email address</label>
-              <input type="email" className="form-control" id="email" />
-              <span className="bmd-help">We&apos;ll never share your email with anyone else.</span>
-            </div>
-            <div className="form-group">
-              <button
-                type="button"
-                className="btn btn-primary btn-raised text-case"
-                id="update-button"
-              >
-                Update Profile
-              </button>
-            </div>
-          </form>
+        <div className="profile-upload">
+          <ImageUpload
+            handleImageChange={handleImageChange}
+            imagePreviewUrl={imagePreviewUrl}
+            cancelPreview={cancelPreview}
+          />
+          <div>
+            <form>
+              <div className="form-group">
+                <label htmlFor="profile-name" className="bmd-label-floating">Username</label>
+                <input
+                  name="username"
+                  type="text"
+                  className="form-control"
+                  id="profile-username"
+                  onChange={handleInputChange}
+                  defaultValue={stateUsername}
+                />
+                {formErrors.username && <span className="validation-error">{formErrors.username}</span>}
+              </div>
+              <div className="form-group">
+                <label htmlFor="profile-email" className="bmd-label-floating">Email address</label>
+                <input
+                  name="email"
+                  type="email"
+                  className="form-control"
+                  id="profile-email"
+                  onChange={handleInputChange}
+                  defaultValue={stateEmail}
+                />
+                {formErrors.email && <span className="validation-error">{formErrors.email}</span>}
+              </div>
+              <div className="action-buttons">
+                <button
+                  type="button"
+                  className="btn btn-raised text-case"
+                  id="cancel-button"
+                  onClick={toggleEditForm}
+                >
+                  <i className="fas fa-arrow-left" />
+                  go back
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-raised text-case"
+                  id="update-button"
+                  disabled={!username.length || !email.length}
+                  onClick={updateProfile}
+                >
+                  Update Profile
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </Fragment>
     );
   }
 }
+
+UpdateForm.propTypes = {
+  toggleEditForm: PropTypes.func,
+  handleInputChange: PropTypes.func,
+  handleImageChange: PropTypes.func,
+  cancelPreview: PropTypes.func,
+  updateProfile: PropTypes.func,
+  user: PropTypes.object,
+  formValues: PropTypes.object,
+  formErrors: PropTypes.object,
+  imagePreviewUrl: PropTypes.string,
+};
+
+UpdateForm.defaultProps = {
+  toggleEditForm: () => {},
+  handleInputChange: () => {},
+  handleImageChange: () => {},
+  cancelPreview: () => {},
+  updateProfile: () => {},
+  user: {},
+  formValues: {},
+  imagePreviewUrl: '',
+  formErrors: {},
+};
 
 export default UpdateForm;

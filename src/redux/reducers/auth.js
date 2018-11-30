@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
     case SET_LOGGEDIN_USER: {
       return {
         ...state,
-        isAuthenticated: !isEmpty(action.user),
+        isAuthenticated: action.user.id && !isEmpty(action.user),
         user: action.user
       };
     }

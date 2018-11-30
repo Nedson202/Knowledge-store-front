@@ -1,55 +1,143 @@
 import React, { Component, Fragment } from 'react';
-import './_AddBook.scss';
-import { DatePicker } from 'antd';
+import { compose, graphql } from 'react-apollo';
+import axios from 'axios';
+import PropTypes from 'prop-types';
+import AddBookModal from './AddBookModal';
+import { getGenres } from '../../queries/genre';
+import { addBook, fetchUsersBooks } from '../../queries/books';
+import modalCloser from '../../utils/modalCloser';
+import toaster from '../../utils/toast';
 
 class AddBook extends Component {
+  state = {
+    previewUrl: '',
+    values: {
+      genre: [],
+      name: '',
+      description: '',
+      year: '',
+      image: '',
+      authors: '',
+      imageUploadStatus: false
+    },
+    genre: [],
+    authors: [],
+  }
+
+  imageChange = (event) => {
+    const { files } = event.target;
+    const file = files[0];
+
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      this.setState({ previewUrl: reader.result, imageUploadStatus: true });
+    };
+
+    reader.readAsDataURL(file);
+
+    const data = new FormData();
+    data.append('file', file);
+    data.append('folder', 'bookstore');
+    data.append('upload_preset', process.env.UPLOAD_PRESET);
+
+    return axios.post(process.env.CLOUDINARY_URL, data)
+      .then((response) => {
+        const { values } = this.state;
+        const { secure_url: picture } = response.data;
+        values.image = picture;
+        this.setState({ values, imageUploadStatus: false });
+      });
+  }
+
+  onInputChange = (event) => {
+    const { name, value } = event.target;
+    const { values, authors } = this.state;
+    values[name] = value;
+
+    if (name === 'authors') {
+      authors.push(value);
+      values[name] = authors;
+      this.setState({ authors });
+    }
+    this.setState({ values });
+  }
+
+  handleGenreChange = (value) => {
+    const { genre } = this.state;
+    genre.push(value);
+    this.setState({ genre });
+  }
+
+  dateChange = (date, dateString) => {
+    const { values } = this.state;
+    values.year = dateString;
+    this.setState({ values });
+  }
+
+  handleBookSubmission = () => {
+    const { addBookQuery } = this.props;
+    const { values, genre, values: { authors } } = this.state;
+    values.genre = genre[genre.length - 1] || [];
+    values.authors = authors[authors.length - 1].split(',');
+    addBookQuery({
+      variables: {
+        ...values,
+      },
+      refetchQueries: this.refetchQuery()
+    }).then((response) => {
+      const { addBook: { message } } = response.data;
+      modalCloser();
+      // const { }
+      toaster('success', message);
+    });
+  }
+
+  refetchQuery() {
+    return [
+      {
+        query: fetchUsersBooks,
+      }
+    ];
+  }
+
   render() {
+    const { state: { previewUrl, imageUploadStatus }, handleBookSubmission } = this;
+    const { data, editingBook, bookToEdit } = this.props;
     return (
       <Fragment>
-        <div className="modal fade" id="AddBookModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Add a Book</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <form className="add-book-form">
-                  <div className="form-group">
-                    <label htmlFor="book-title" className="bmd-label-floating">Book title</label>
-                    <input type="text" className="form-control" id="book-title" />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="author" className="bmd-label-floating">Author</label>
-                    <input type="text" className="form-control" id="author" />
-                  </div>
-                  <div className="form-group is-filled">
-                    <label htmlFor="year" className="bmd-label-floating">Year</label>
-                    <DatePicker placeholder="" />
-                    {/* <input type="text" className="form-control" id="year" /> */}
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="genre" className="bmd-label-floating">Genre</label>
-                    <input type="text" className="form-control" id="genre" />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="email-book" className="bmd-label-floating">Author Email</label>
-                    <input type="email" className="form-control" id="email-book" />
-                  </div>
-                </form>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-default btn-raised cancel-button" data-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary btn-raised text-case save-button">Save changes</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <AddBookModal
+          imagePreviewUrl={(bookToEdit && bookToEdit.image) || previewUrl}
+          imageChange={this.imageChange}
+          genres={data && data.getGenres}
+          handleInputChange={this.onInputChange}
+          handleGenreChange={this.handleGenreChange}
+          dateChange={this.dateChange}
+          imageUploadStatus={imageUploadStatus}
+          handleBookSubmission={handleBookSubmission}
+          editingBook={editingBook}
+          bookToEdit={bookToEdit}
+        />
       </Fragment>
     );
   }
 }
 
-export default AddBook;
+AddBook.propTypes = {
+  data: PropTypes.object,
+  editingBook: PropTypes.bool,
+  bookToEdit: PropTypes.object,
+  addBookQuery: PropTypes.func
+};
+
+AddBook.defaultProps = {
+  data: {},
+  editingBook: false,
+  bookToEdit: {},
+  addBookQuery: () => {}
+};
+
+export default compose(
+  graphql(getGenres),
+  graphql(addBook, { name: 'addBookQuery', })
+)(AddBook);
