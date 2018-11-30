@@ -12,11 +12,13 @@ import SideNav from './Components/SideNav/SideNav';
 import LeftSideBar from './Components/LeftSideBar/LeftSideBar';
 import PasswordReset from './Components/PasswordReset/PasswordReset';
 import EmailGenerator from './Components/EmailGenerator/EmailGenerator';
-// import AuthWrapper from './Components/Hoc/AuthWrapper';
+import Favorites from './Components/Favorites/Favorites';
+import AuthWrapper from './Components/Hoc/AuthWrapper';
 import 'antd/dist/antd.css';
 import './_index.scss';
 import MyBooks from './Components/MyBooks/MyBooks';
 import NetworkDetector from './Components/Hoc/NetworkDetector';
+import Chat from './Components/Chat/Chat';
 
 
 const Routes = () => (
@@ -28,13 +30,14 @@ const Routes = () => (
       <Route path="/" component={NetworkDetector(App)} exact />
       <Route path="/books/:id" component={NetworkDetector(BookProfile)} exact />
       <Route path="/books" component={NetworkDetector(BookCatalog)} exact />
-      <Route path="/my-books" component={NetworkDetector(MyBooks)} exact />
+      <Route path="/my-books" component={NetworkDetector(AuthWrapper(MyBooks))} exact />
       <Route path="/admin-dashboard" component={AdminPanel} exact />
-      {/* <Route path="/admin-dashboard" component={AuthWrapper(AdminPanel, true)} exact /> */}
-      <Route path="/profile" component={NetworkDetector(UserProfile)} exact />
+      <Route path="/favorites" component={NetworkDetector(AuthWrapper(Favorites))} exact />
+      <Route path="/profile" component={NetworkDetector(AuthWrapper(UserProfile))} exact />
       <Route path="/password-reset" component={NetworkDetector(PasswordReset)} exact />
       <Route path="/email" component={NetworkDetector(EmailGenerator)} exact />
-      <Route path="/users" component={NetworkDetector(Users)} exact />
+      <Route path="/users" component={NetworkDetector(AuthWrapper(Users, true))} exact />
+      <Route path="/chat" component={NetworkDetector(Chat)} exact />
       <Route component={NotFound} />
     </Switch>
     {/* <Footer /> */}

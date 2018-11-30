@@ -2,7 +2,10 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 class Main extends Component {
-  renderAuthButtons() {
+  navigateToBooks = () => window.location.replace('/books')
+
+
+  renderButtons() {
     return (
       <Fragment>
         <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#LoginFormModal">
@@ -14,6 +17,22 @@ class Main extends Component {
             Signup
           {' '}
           <i className="fa fa-sign-in-alt" />
+        </button>
+      </Fragment>
+    );
+  }
+
+  renderExploreButton() {
+    return (
+      <Fragment>
+        <button
+          type="button"
+          className="btn btn-outline-primary"
+          onClick={this.navigateToBooks}
+        >
+            Explore
+          {' '}
+          <i className="fa fa-rocket" aria-hidden="true" />
         </button>
       </Fragment>
     );
@@ -40,9 +59,9 @@ class Main extends Component {
       <div className="mdl-auth-buttons">
         <div>
           {this.renderMainContent()}
-          {!isAuthenticated && this.renderAuthButtons()}
+          {!isAuthenticated && this.renderButtons()}
+          {this.renderExploreButton()}
         </div>
-
       </div>
     );
   }
@@ -50,10 +69,12 @@ class Main extends Component {
 
 Main.propTypes = {
   isAuthenticated: PropTypes.bool,
+  // history: PropTypes.bool,
 };
 
 Main.defaultProps = {
   isAuthenticated: false,
+  // history: false,
 };
 
 export default Main;

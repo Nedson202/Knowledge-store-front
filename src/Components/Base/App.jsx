@@ -13,6 +13,7 @@ import toaster from '../../utils/toast';
 import tokenDecoder from '../../utils/tokenDecoder';
 import { setCurrentUser } from '../../redux/actions/userActions';
 import { verifyEmail } from '../../queries/auth';
+import modalCloser from '../../utils/modalCloser';
 
 class App extends Component {
   componentDidMount() {
@@ -28,6 +29,8 @@ class App extends Component {
   componentWillUnmount() {
     document.getElementById('navbar').style.display = 'flex ';
     document.getElementById('myLeftSideBar').style.display = 'block';
+    const modalOpen = document.getElementById('close');
+    return modalOpen && modalCloser();
   }
 
   socialAuthentication() {
@@ -60,11 +63,10 @@ class App extends Component {
       }).then((response) => {
         const { verifyEmail: { token, message } } = response.data;
         localStorage.setItem('token', token);
-        dispatch(setCurrentUser(decodedToken));
+        dispatch(setCurrentUser(tokenDecoder(token)));
         history.push('/my-books');
         toaster('success', message);
       });
-      // return decodedToken.isVerified === 'true' && history.push('my-books');
     }
   }
 
@@ -82,7 +84,7 @@ class App extends Component {
       <div className="pending-verification">
       You are yet to verify your email address. Check your mail box or use this
         {' '}
-        <Link to="/email?verify-email=true">Link</Link>
+        <Link to="/email?verify-email=true" style={{ color: 'black' }}>Link</Link>
       </div>
     );
   }

@@ -2,63 +2,56 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 // import image from '../../assets/lof.jpeg';
-import { graphql } from 'react-apollo';
+import Truncate from 'react-truncate';
+import { Checkbox } from 'antd';
 // import { gql } from 'apollo-boost';
 import './_BookCard.scss';
 import Star from '../Star/Star';
 import BookImageLoader from './BookImageLoader';
-import { getBooks } from '../../queries/auth';
 
 class BookCard extends Component {
   constructor(props) {
     super(props);
 
-    const { imageUrl } = this.props;
-    /* eslint-disable */
+    const { book: { image } } = this.props;
     this.state = {
       imageLoaded: false /* eslint-disable-line */,
-      bookImage: imageUrl || "",
-      imageLoadingError: ""
+      bookImage: image || '',
+      imageLoadingError: ''
     };
-  }
-
-  componentDidMount() {
-    console.log(this.props.data.loading);
   }
 
   checkImageRender = image => () => {
     this.setState({
       imageLoaded: true,
-      bookImage: image
+      bookImage: image,
+      imageLoadingError: ''
     });
   };
 
   handleImageLoadingError = () => {
     this.setState({
-      imageLoadingError: "Sorry an error occurred loading image"
+      imageLoadingError: 'Unable to fetch image'
     });
   };
 
-  renderImage = () => {
+  renderImage = (book, moreBooks) => {
+    const { image, id } = book;
     const { imageLoaded, bookImage, imageLoadingError } = this.state;
-    const { imageUrl } = this.props;
+    const link = !moreBooks ? `/books/${id}` : `${id}`;
     return (
       <Fragment>
         {!imageLoaded && imageLoadingError.length === 0 && <BookImageLoader />}
         {imageLoadingError.length !== 0 && (
           <div
-            style={{
-              paddingTop: "50%",
-              border: "1px solid #d4d4d4",
-              borderRadius: "4px"
-            }}
-            className="text-center image-error-plaeholder"
+            className="text-center"
+            id="image-error-placeholder"
           >
             {imageLoadingError}
           </div>
         )}
-        {imageLoaded && (
-          <Link to="/books/1">
+        {imageLoaded && imageLoadingError.length === 0 && (
+          <Link to={link}>
             <img
               src={bookImage}
               className="book-images parent"
@@ -69,75 +62,129 @@ class BookCard extends Component {
           </Link>
         )}
         <img
-          src={imageUrl}
+          src={image || ''}
           className="hide"
-          onLoad={this.checkImageRender(imageUrl)}
+          onLoad={this.checkImageRender(book ? image : '')}
           onError={this.handleImageLoadingError}
+          alt="userImage"
         />
       </Fragment>
     );
   };
 
   renderActionDropdown() {
-    return (
-      <Fragment>
-        <i
-          className="fa fa-ellipsis-v"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        />
-        <span className="dropdown-menu" id="book-action-buttons">
-          <a href="/" className="dropdown-item book-action-navlink">
-            edit <i className="fa fa-edit" />
-          </a>
-          <a
-            href="/"
-            className="dropdown-item book-action-navlink"
-            id="trash-icon"
-          >
-            delete <i className="fa fa-trash" />
-          </a>
-        </span>
-      </Fragment>
-    );
+    const {
+      enableEllipsis, setBookToEdit, book: { id }, book, setBookToRemove
+    } = this.props;
+    if (enableEllipsis) {
+      return (
+        <Fragment>
+          <i
+            className="fa fa-ellipsis-v"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          />
+          <span className="dropdown-menu" id="book-action-buttons">
+            <button
+              type="button"
+              data-toggle="modal"
+              data-target="#AddBookModal"
+              className="dropdown-item book-action-navlink"
+              onClick={setBookToEdit(book)}
+            >
+              edit
+              {' '}
+              <i className="fa fa-edit" />
+            </button>
+            <button
+              type="button"
+              className="dropdown-item book-action-navlink"
+              id="trash-icon"
+              onClick={setBookToRemove(id)}
+            >
+              delete
+              {' '}
+              <i className="fa fa-trash" />
+            </button>
+          </span>
+        </Fragment>
+      );
+    }
   }
 
-  renderBookFooter() {
+  renderBookFooter(book, moreBooks) {
+    const { authors, userId, id } = book;
+    const link = !moreBooks ? `/books/${id}` : `${id}`;
     return (
       <div className="book-footer">
         <span className="book-footer__link">
-          <Link to="/books/1" id="book-footer__title">
-            Javascript, the weird parts <br />{" "}
+          <Link to={link} id="book-footer__title">
+            <Truncate
+              lines={1}
+            >
+              {book.name}
+            </Truncate>
+            <br />
+            {' '}
           </Link>
-          {this.renderActionDropdown()}
+          {this.renderActionDropdown(userId)}
         </span>
-        <span className="book-author">by Sergaent Bruno</span>
+        <span className="book-author">
+          <Truncate
+            lines={1}
+          >
+            {authors && `by ${
+              authors.map(author => author)
+            }`}
+          </Truncate>
+        </span>
         <span className="react-star">
           <Star />
-          <p>4.02 avg rating</p>
+          <p>4.02</p>
         </span>
       </div>
     );
   }
 
+  renderCheckBox() {
+    const { checkBoxChange } = this.props;
+    return (
+      <Checkbox onChange={checkBoxChange}>Select</Checkbox>
+    );
+  }
+
   render() {
+    const { toggleCheckBox, book, moreBooks } = this.props;
     return (
       <div className="child-elem">
-        {this.renderImage()}
-        {this.renderBookFooter()}
+        {toggleCheckBox && this.renderCheckBox()}
+        {book && this.renderImage(book, moreBooks)}
+        {book && this.renderBookFooter(book, moreBooks)}
       </div>
     );
   }
 }
 
 BookCard.propTypes = {
-  imageUrl: PropTypes.string
+  book: PropTypes.object,
+  toggleCheckBox: PropTypes.bool,
+  enableEllipsis: PropTypes.bool,
+  moreBooks: PropTypes.bool,
+  checkBoxChange: PropTypes.func,
+  setBookToEdit: PropTypes.func,
+  setBookToRemove: PropTypes.func,
 };
 
 BookCard.defaultProps = {
-  imageUrl: ""
+  book: {},
+  toggleCheckBox: false,
+  enableEllipsis: false,
+  moreBooks: false,
+  checkBoxChange: () => {},
+  setBookToEdit: () => {},
+  setBookToRemove: () => {},
 };
 
 // export default BookCard;
-export default graphql(getBooks)(BookCard);
+export default BookCard;

@@ -1,10 +1,51 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import './_MyBooks.scss';
 import '../BookCatalog/_BookCatalog.scss';
+import { compose, graphql } from 'react-apollo';
 import BookCard from '../BookCard/BookCard';
 import AddBook from '../AddBook/AddBook';
+import { fetchUsersBooks, removeBook } from '../../queries/books';
+import BookPreloader from '../BookCatalog/BookPreloader';
+import { setBookToEdit } from '../../redux/actions/bookActions';
+import toaster from '../../utils/toast';
 
 class MyBooks extends Component {
+  state = {
+    bookId: '', //eslint-disable-line
+    editingBook: false
+  }
+
+  setBookToEdit = book => () => {
+    const { dispatch } = this.props;
+    dispatch(setBookToEdit(book));
+    this.setState({ bookId: book.id, editingBook: true }); //eslint-disable-line
+  }
+
+  setBookToRemove = id => () => {
+    this.setState({ bookId: id }, () => { //eslint-disable-line
+      const { removeBookQuery } = this.props;
+      removeBookQuery({
+        variables: {
+          bookId: id
+        },
+        refetchQueries: this.refetchQueries()
+      }).then((response) => {
+        const { deleteBook: { message } } = response.data;
+        toaster('success', message);
+      });
+    });
+  }
+
+  refetchQueries() {
+    return [
+      {
+        query: fetchUsersBooks
+      }
+    ];
+  }
+
   renderPageHeader() {
     return (
       <div className="user-books__header">
@@ -21,23 +62,70 @@ class MyBooks extends Component {
     );
   }
 
-  render() {
+  renderBooks(books) {
     return (
       <Fragment>
-        <AddBook />
+        {books.map(book => (
+          <BookCard
+            key={book.id}
+            book={book}
+            enableEllipsis
+            setBookToEdit={this.setBookToEdit}
+            setBookToRemove={this.setBookToRemove}
+          />
+        ))}
+      </Fragment>
+    );
+  }
+
+  render404() {
+    return (
+      <div className="book-retrieve-error">
+        <h4>You are yet to add a book</h4>
+      </div>
+    );
+  }
+
+  render() {
+    const { fetchUsersBooksQuery: { usersBooks, loading }, bookToEdit } = this.props;
+    const { editingBook } = this.state;
+    return (
+      <Fragment>
+        <AddBook
+          bookToEdit={bookToEdit}
+          editingBook={editingBook}
+        />
         {this.renderPageHeader()}
         <div className="container-content" id="main">
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard />
+          {usersBooks && this.renderBooks(usersBooks)}
+          {loading && <BookPreloader loadingBook={loading} />}
+          {!loading && usersBooks && usersBooks.length === 0 && this.render404()}
         </div>
       </Fragment>
     );
   }
 }
 
-export default MyBooks;
+MyBooks.propTypes = {
+  fetchUsersBooksQuery: PropTypes.object,
+  bookToEdit: PropTypes.object,
+  removeBookQuery: PropTypes.func,
+  dispatch: PropTypes.func,
+};
+
+MyBooks.defaultProps = {
+  fetchUsersBooksQuery: {},
+  bookToEdit: {},
+  removeBookQuery: {},
+  dispatch: {},
+};
+
+const mapStateToProps = state => ({
+  bookToEdit: state.books.bookToEdit
+});
+
+export default compose(
+  graphql(fetchUsersBooks, { name: 'fetchUsersBooksQuery', }),
+  graphql(removeBook, { name: 'removeBookQuery', }),
+  connect(mapStateToProps)
+)(MyBooks);

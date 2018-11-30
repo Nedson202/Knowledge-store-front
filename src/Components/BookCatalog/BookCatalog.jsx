@@ -1,17 +1,22 @@
 import React, { Component, Fragment } from 'react';
-import scrollToComponent from 'react-scroll-to-component';
 import PropTypes from 'prop-types';
-import { withApollo, compose, graphql } from 'react-apollo';
+import { connect } from 'react-redux';
+import { withApollo, compose } from 'react-apollo';
+import queryString from 'querystring';
 import './_BookCatalog.scss';
 import BookCard from '../BookCard/BookCard';
-// import Spinner from '../Spinner/Spinner';
 import BackToTop from '../BackToTop/BackToTop';
-import { fetchAllBooks } from '../../queries/books';
+import { setRetrievedBooks } from '../../redux/actions/bookActions';
+import { bookFilter } from '../../queries/genre';
+import Spinner from '../Spinner/Spinner';
+import BookPreloader from './BookPreloader';
 
 class BookCatalog extends Component {
   state = {
-    isNewContentLoading: false, /* eslint-disable-line */
+    isNewContentLoading: false,
     displayBackToTop: false,
+    randomDigit: 0,
+    // networkError: '',
   };
 
   componentDidMount() {
@@ -20,8 +25,9 @@ class BookCatalog extends Component {
       passive: true
     });
     if (!window.location.search) {
-      this.retrieveBook();
+      this.retrieveBook('');
     }
+    this.setInputFromQuery();
   }
 
   componentWillUnmount() {
@@ -31,144 +37,127 @@ class BookCatalog extends Component {
     });
   }
 
-  handlePageScroll = () => {
-    const scrollHeight = window.innerHeight + window.scrollY;
-    if (scrollHeight >= 900) {
-      this.setState({ displayBackToTop: true });
+  setInputFromQuery() {
+    const { dispatch } = this.props;
+    const query = queryString.parse(window.location.search);
+    if (Object.keys(query)[0] && Object.keys(query)[0] === '?search') {
+      dispatch(setRetrievedBooks([], true));
+      const queryValue = Object.values(query)[0];
+      document.getElementById('searchBox').value = queryValue;
+      this.retrieveBook(queryValue);
     }
-    if (scrollHeight < 900) {
+  }
+
+  handlePageScroll = () => {
+    const { isNewContentLoading, randomDigit } = this.state;
+    const { books } = this.props;
+    const { scrollHeight } = document.body;
+    const totalHeight = window.scrollY + window.innerHeight;
+
+    if (document.body.scrollTop < 20 || document.documentElement.scrollTop < 20) {
       this.setState({ displayBackToTop: false });
     }
-    if (scrollHeight >= document.body.offsetHeight + 500) {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      this.setState({ displayBackToTop: true });
+    }
+    if (isNewContentLoading) return;
+    if (
+      !window.location.search && totalHeight >= scrollHeight && books.length
+    ) {
       this.setState({
-        isNewContentLoading: true, /* eslint-disable-line */
+        isNewContentLoading: true,
+      }, () => {
+        document.getElementById('hey').scrollIntoView();
+        const { client, dispatch } = this.props;
+        client.query({
+          query: bookFilter,
+          variables: {
+            search: '',
+            from: randomDigit,
+            size: books.length + 20
+          }
+        }).then((response) => {
+          const { data: { searchBooks } } = response;
+          dispatch(setRetrievedBooks(searchBooks, false));
+          this.setState({ isNewContentLoading: false });
+        });
       });
+    } else {
+      this.setState({ isNewContentLoading: false });
     }
   };
 
-  backToTopMethod = () => scrollToComponent(this.backToTop, {
-    offset: 0,
-    align: 'top',
-    duration: 500
-  });
-
-  retrieveBook() {
-    const { client } = this.props;
+  retrieveBook(queryValue) {
+    const { client, dispatch } = this.props;
+    const randomDigit = Math.floor(Math.random() * (20 - 10) + 10);
+    this.setState({ randomDigit });
+    dispatch(setRetrievedBooks([], true));
     client.query({
-      query: fetchAllBooks,
+      query: bookFilter,
       variables: {
-        bookId: '4'
+        search: queryValue || '',
+        from: randomDigit,
+        size: 20
       }
-    }).then((response) => {
-      const { data: { books } } = response;
-      // this.setState({ book });
-      console.log(books);
-    });
+    })
+      .then((response) => {
+        const { data: { searchBooks } } = response;
+        dispatch(setRetrievedBooks(searchBooks, false));
+      }).catch((error) => {
+        const { message: networkError } = error;
+        dispatch(setRetrievedBooks([], false));
+        this.setState({ networkError });
+        return error;
+      });
+  }
+
+  renderBooks(books) {
+    return (
+      <Fragment>
+        {
+          books.map(book => <BookCard key={book.id} book={book} enableEllipsis={false} />)
+        }
+      </Fragment>
+    );
+  }
+
+  renderPageHeader() {
+    const { totalSearchResult } = this.props;
+    const message = totalSearchResult !== 0 ? `${totalSearchResult} item(s) retrieved` : '';
+    return (
+      <div className="user-books__header" ref={(section) => { this.backToTop = section; }}>
+        <h4>{window.location.search ? `Search result(s):: ${message}` : 'All Books'}</h4>
+      </div>
+    );
+  }
+
+  render404Message() {
+    const { networkError } = this.state;
+    return (
+      <div>
+        <h2 className="text-center fetch-error">
+          {networkError || 'The content you seek is unavailable'}
+        </h2>
+      </div>
+    );
   }
 
   render() {
-    const { displayBackToTop } = this.state;
+    const { displayBackToTop, isNewContentLoading } = this.state;
+    const { books, loadingBook } = this.props;
+
     return (
       <Fragment>
-        <div className="user-books__header" ref={(section) => { this.backToTop = section; }}>
-          <h4>All Books</h4>
-        </div>
+        {this.renderPageHeader()}
+        {!loadingBook && books && books.length === 0 && this.render404Message()}
         <div className="container-content" id="main">
-          <BookCard imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcXllacYqB7Mb7bS0GEv47ojAfw64qLy9cfhi2UeNdFPbbtlqF" />
-          <BookCard imageUrl="" />
-          <BookCard imageUrl="https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/DaVinciCode.jpg/220px-DaVinciCode.jpg" />
-          {/* <BookCard />
-          <BookCard />
-          <BookCard />
-          <BookCard /> */}
-          <BookCard imageUrl="https://cdn.shopify.com/s/files/1/1465/9410/products/A.jpg?v=1512357326" />
-          <BookCard imageUrl="http://t2.gstatic.com/images?q=tbn:ANd9GcRB16KR7ttg2VetlP7eYwmr4x8eIVWam4f1MkEhzrTNtX8oJY34" />
-          <BookCard />
-          <BookCard imageUrl="https://images-na.ssl-images-amazon.com/images/I/519DnNpKA7L._SX319_BO1,204,203,200_.jpg" />
-          <BookCard imageUrl="https://images-na.ssl-images-amazon.com/images/I/51vp6JxnI3L._SX331_BO1,204,203,200_.jpg" />
-          <BookCard imageUrl="https://images-na.ssl-images-amazon.com/images/I/41J1JskPTuL._SX331_BO1,204,203,200_.jpg" />
-          <BookCard imageUrl="https://upload.wikimedia.org/wikipedia/en/thumb/b/bb/Inferno-cover.jpg/200px-Inferno-cover.jpg" />
-          <BookCard imageUrl="https://images-na.ssl-images-amazon.com/images/I/51ycO52en5L._SX289_BO1,204,203,200_.jpg" />
-          {/* {isNewContentLoading && (
-          <BookCard
-            imageUrl="https://m.media-amazon.com/images/M/MV5BOGQ1OTUwODUtMzg1MS00NzBkLWIxM2MtYjBmMDdmZWM1NThiXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg"
-          />
-          )}
-          {isNewContentLoading && (
-          <BookCard
-            imageUrl="https://m.media-amazon.com/images/M/MV5BOGQ1OTUwODUtMzg1MS00NzBkLWIxM2MtYjBmMDdmZWM1NThiXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg"
-          />
-          )}
-          {isNewContentLoading && (
-          <BookCard
-            imageUrl="https://m.media-amazon.com/images/M/MV5BOGQ1OTUwODUtMzg1MS00NzBkLWIxM2MtYjBmMDdmZWM1NThiXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg"
-          />
-          )}
-          {isNewContentLoading && (
-          <BookCard
-            imageUrl="https://m.media-amazon.com/images/M/MV5BOGQ1OTUwODUtMzg1MS00NzBkLWIxM2MtYjBmMDdmZWM1NThiXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg"
-          />
-          )}
-          {isNewContentLoading && (
-          <BookCard
-            imageUrl="https://m.media-amazon.com/images/M/MV5BOGQ1OTUwODUtMzg1MS00NzBkLWIxM2MtYjBmMDdmZWM1NThiXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg"
-          />
-          )}
-          {isNewContentLoading && (
-          <BookCard
-            imageUrl="https://m.media-amazon.com/images/M/MV5BOGQ1OTUwODUtMzg1MS00NzBkLWIxM2MtYjBmMDdmZWM1NThiXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg"
-          />
-          )}
-          {isNewContentLoading && (
-          <BookCard
-            imageUrl="https://m.media-amazon.com/images/M/MV5BOGQ1OTUwODUtMzg1MS00NzBkLWIxM2MtYjBmMDdmZWM1NThiXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg"
-          />
-          )}
-          {isNewContentLoading && (
-          <BookCard
-            imageUrl="https://m.media-amazon.com/images/M/MV5BOGQ1OTUwODUtMzg1MS00NzBkLWIxM2MtYjBmMDdmZWM1NThiXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg"
-          />
-          )}
-          {isNewContentLoading && (
-          <BookCard
-            imageUrl="https://m.media-amazon.com/images/M/MV5BOGQ1OTUwODUtMzg1MS00NzBkLWIxM2MtYjBmMDdmZWM1NThiXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg"
-          />
-          )}
-          {isNewContentLoading && (
-          <BookCard
-            imageUrl="https://m.media-amazon.com/images/M/MV5BOGQ1OTUwODUtMzg1MS00NzBkLWIxM2MtYjBmMDdmZWM1NThiXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg"
-          />
-          )}
-          {isNewContentLoading && (
-          <BookCard
-            imageUrl="https://m.media-amazon.com/images/M/MV5BOGQ1OTUwODUtMzg1MS00NzBkLWIxM2MtYjBmMDdmZWM1NThiXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg"
-          />
-          )}
-          {isNewContentLoading && (
-          <BookCard
-            imageUrl="https://m.media-amazon.com/images/M/MV5BOGQ1OTUwODUtMzg1MS00NzBkLWIxM2MtYjBmMDdmZWM1NThiXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg"
-          />
-          )}
-          {isNewContentLoading && (
-          <BookCard
-            imageUrl="https://m.media-amazon.com/images/M/MV5BOGQ1OTUwODUtMzg1MS00NzBkLWIxM2MtYjBmMDdmZWM1NThiXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg"
-          />
-          )}
-          {isNewContentLoading && (
-          <BookCard
-            imageUrl="https://m.media-amazon.com/images/M/MV5BOGQ1OTUwODUtMzg1MS00NzBkLWIxM2MtYjBmMDdmZWM1NThiXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg"
-          />
-          )}
-          {isNewContentLoading && (
-          <BookCard
-            imageUrl="https://m.media-amazon.com/images/M/MV5BOGQ1OTUwODUtMzg1MS00NzBkLWIxM2MtYjBmMDdmZWM1NThiXkEyXkFqcGdeQXVyNDkzNTM2ODg@._V1_.jpg"
-          />
-          )} */}
-          {/* <BookCard /> */}
+          {!loadingBook && books.length !== 0 && this.renderBooks(books)}
+          {loadingBook && <BookPreloader loadingBook={loadingBook} />}
         </div>
-        {/* <div className="text-center">{isNewContentLoading && <Spinner />}</div> */}
+        <div className="text-center" style={{ marginBottom: '20px' }} id="hey">
+          {isNewContentLoading && <Spinner spinnerStyle={45} />}
+        </div>
         <BackToTop
-          backToTopMethod={this.backToTopMethod}
           displayBackToTop={displayBackToTop}
         />
       </Fragment>
@@ -178,13 +167,27 @@ class BookCatalog extends Component {
 
 BookCatalog.propTypes = {
   client: PropTypes.object,
+  dispatch: PropTypes.func,
+  books: PropTypes.array,
+  loadingBook: PropTypes.bool,
+  totalSearchResult: PropTypes.number,
 };
 
 BookCatalog.defaultProps = {
   client: {},
+  dispatch: () => {},
+  books: [],
+  loadingBook: false,
+  totalSearchResult: 0,
 };
+
+const mapStateToProps = state => ({
+  books: state.books.books,
+  loadingBook: state.books.isBookLoading,
+  totalSearchResult: state.books.totalSearchResult,
+});
 
 export default compose(
   withApollo,
-  graphql(fetchAllBooks, { name: 'fetchAllBooksQuery' })
+  connect(mapStateToProps),
 )(BookCatalog);

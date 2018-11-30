@@ -1,45 +1,34 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 class Avatar extends Component {
-  arrayShuffler = (array) => {
-    let currentIndex = array.length, temporaryValue, randomIndex;
-    // While there remain elements to shuffle...
-    while (currentIndex) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-    return array[0];
-  }
-
-  renderInitials(reviewer) {
-    const matches = reviewer.match(/\b(\w)/g);
+  renderInitials(user) {
+    const matches = user.match(/\b(\w)/g);
     const acronym = matches.join('');
-    const color = this.arrayShuffler(['red', 'green', 'blue', 'white']);
+    const { color } = this.props;
     return (
-      <div className="avatar-placeholder" style={{ backgroundColor: color }}>{acronym}</div>
+      <div className="avatar-placeholder text-capitalize" style={{ backgroundColor: color }}>{acronym}</div>
     );
   }
 
   render() {
-    const { reviewer } = this.props;
+    const { user } = this.props;
     return (
-      <div>
-        {this.renderInitials(reviewer)}
-      </div>
+      <Fragment>
+        {this.renderInitials(user)}
+      </Fragment>
     );
   }
 }
 
 Avatar.propTypes = {
-  reviewer: PropTypes.func,
+  user: PropTypes.string,
+  color: PropTypes.string
 };
 
 Avatar.defaultProps = {
-  reviewer: '',
+  user: '',
+  color: ''
 };
 
 export default Avatar;

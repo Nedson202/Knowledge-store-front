@@ -1,0 +1,26 @@
+.favorite-books {
+  &__header {
+    .save {
+      margin-right: 15px;
+    }
+
+    .remove-favorites {
+      background-color: #e62a2a !important;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .admin-panel {
+    width: 90% !important;
+    margin: 120px 20px 0 0px !important;
+
+    &__header {
+      width: 105%;
+
+      h3 {
+        
+      }
+    }
+  }
+}

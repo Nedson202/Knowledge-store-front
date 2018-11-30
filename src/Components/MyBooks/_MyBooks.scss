@@ -1,8 +1,16 @@
-.user-books {
+.user-books, .favorite-books {
 	&__header {
 		display: flex;
 		justify-content: space-between;
 		max-width: 1150px;
-		margin: 105px auto -40px auto;
+		margin:	105px auto -40px auto;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.user-books, .favorite-books {
+		&__header {
+			margin:	105px 20px -40px 20px;
+		}
 	}
 }

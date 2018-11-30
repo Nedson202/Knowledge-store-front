@@ -18,21 +18,25 @@ const editGenre = gql`
 `;
 
 const bookFilter = gql`
-  query($search: String) {
-    filterBooks(search: $search) {
-      id,
-      name,
-      genre,
-      author,
-      year
+  query($search: String, $from: ID, $size: ID) {
+    searchBooks(searchQuery: $search, from: $from, size: $size) {
+      id
+      name
+      genre
+      authors
       averageRating
+      googleAverageRating
+      year
+      image
+      userId
+      downloadable
     }
   }
 `;
 // const bookFilter = gql`
-//   query($name: String, $genre: String) {
-//     filterBooks(name: $name, genre: $genre) {
-//       id,
+//   query($name: String $genre: String) {
+//     filterBooks(name: $name genre: $genre) {
+//       id
 //       name,
 //       genre,
 //       author,

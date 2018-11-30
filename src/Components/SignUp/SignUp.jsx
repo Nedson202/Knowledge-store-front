@@ -63,9 +63,9 @@ class SignUp extends Component {
     }).then((response) => {
       const { token } = response.data.addUser;
       const decodedToken = tokenDecoder(token);
-      localStorage.setItem('token', decodedToken);
+      localStorage.setItem('token', token);
       modalCloser();
-      dispatch(setCurrentUser(tokenDecoder(token)));
+      dispatch(setCurrentUser(decodedToken));
       if (decodedToken.isVerified === 'true') history.push('/my-books');
       toaster('success', 'Signed up successfully');
     }).catch((error) => {

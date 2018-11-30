@@ -8,19 +8,19 @@ import {
 } from '../../queries/reviews';
 import toaster from '../../utils/toast';
 import { fetchBook } from '../../queries/books';
-/* eslint-disable */
 import errorHandler from '../../utils/errorHandler';
+
 class AddReview extends Component {
   constructor(props) {
     super(props);
     const {
-      ownerOfReview, replyToEdit, reviewToEdit, reviewFormId, bookId, setReplyToEdit
+      ownerOfReview, replyToEdit, reviewToEdit, reviewFormId, bookId,
     } = this.props;
     this.state = {
       values: {
         review: '', /* eslint-disable-line */
         rating: null,
-        bookId: bookId,
+        bookId,
         reviewId: reviewFormId,
         replyId: '',
         reply: ownerOfReview.length ? `@${ownerOfReview}` : '',
@@ -69,11 +69,14 @@ class AddReview extends Component {
           bookId
         }
       }
-    ]
+    ];
   }
 
   addReview(value) {
     const { addReviewQuery, bookId } = this.props;
+    const { rating, review } = value;
+    if (!review.trim()) return toaster('error', 'Please leave a review');
+    if (!rating) return toaster('error', 'Please leave a rating');
     addReviewQuery({
       variables: {
         ...value,
@@ -83,6 +86,8 @@ class AddReview extends Component {
     }).then(() => {
       window.addEventListener('reset', this.handleClearForm());
       toaster('success', 'Review added successfully');
+      const lastElement = document.getElementById('lastElement');
+      return lastElement && lastElement.scrollIntoView();
     }).catch((error) => {
       const messages = errorHandler(error);
       messages.forEach(message => toaster('error', message));
@@ -138,8 +143,8 @@ class AddReview extends Component {
     values.review = null;
     values.rating = null;
 
-    if (!reviewType.match('add')) handleToggleForm(values.reviewId)()
-    return this.setState({ values });;
+    if (!reviewType.match('add')) handleToggleForm(values.reviewId)();
+    return this.setState({ values });
   }
 
   fixControlledValue(value) {
@@ -170,19 +175,19 @@ class AddReview extends Component {
         return reviewType.match('reply')
         && toggleForm
         && reviewFormId === reviewToReply
-        ? 'block' : 'none';
+          ? 'block' : 'none';
 
       case 'replyEdit':
         return reviewType.match('replyEdit')
         && toggleForm
         && setReplyToEdit === itemOnEdit
-        ? 'block' : 'none';
+          ? 'block' : 'none';
 
       case 'reviewEdit':
         return reviewType.match('reviewEdit')
         && toggleForm
         && setReviewToEdit === itemOnEdit
-        ? 'block' : 'none';
+          ? 'block' : 'none';
 
       default:
         return 'block';
@@ -192,7 +197,7 @@ class AddReview extends Component {
   renderStars() {
     const { reviewType } = this.props;
     const { values: { rating } } = this.state;
-    const starOptions = ['reply', 'replyEdit']
+    const starOptions = ['reply', 'replyEdit'];
     return (
       <span>
         { !starOptions.includes(reviewType) && (
@@ -237,24 +242,28 @@ class AddReview extends Component {
   }
 
   renderForm() {
-    const { values: { reply, review, replyEdit, reviewToEdit } } = this.state;
+    const {
+      values: {
+        reply, review, replyEdit, reviewToEdit
+      }
+    } = this.state;
     const { reviewType } = this.props;
     const inputName = this.calculateInputName();
     return (
       <form
         className="review-form"
         style={{ display: `${this.toggleForm()}` }}
-        >
+      >
         <div
           className="form-group"
           style={{
             paddingTop: `${(reviewType.toLowerCase().includes('edit')) && 0}`
           }}
-          >
+        >
           { ['add'].includes(reviewType) && (
             <label htmlFor="exampleFormControlTextarea1">
             Leave a review
-          </label>
+            </label>
           )}
           <textarea
             name={inputName[`${reviewType}`]}

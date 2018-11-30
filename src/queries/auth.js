@@ -33,6 +33,33 @@ const forgotPassword = gql`
   }
 `;
 
+const resetPassword = gql`
+  mutation($id: String!, $email: String!, $password: String!, $token: String!) {
+    resetPassword(id: $id, email: $email, password: $password, token: $token) {
+      message
+      token
+    }
+  }
+`;
+
+const editProfile = gql`
+  mutation($username: String, $email: String, $picture: String) {
+    editProfile(username: $username, email: $email, picture: $picture) {
+      token
+      message
+    }
+  }
+`;
+
+const changePassword = gql`
+  mutation($oldPassword: String!, $newPassword: String!) {
+    changePassword(oldPassword: $oldPassword, newPassword: $newPassword) {
+      token
+      message
+    }
+  }
+`;
+
 const loginUser = gql`
 mutation($username: String!, $password: String!) {
   loginUser(username: $username, password: $password) {
@@ -47,7 +74,7 @@ const getBooks = gql`
   {
     books {
       name,
-      author,
+      authors,
       genre,
       year
     }
@@ -55,5 +82,7 @@ const getBooks = gql`
 `;
 
 export {
-  addUser, loginUser, getBooks, verifyEmail, sendVerificationEmail, forgotPassword
+  addUser, loginUser, getBooks, changePassword,
+  verifyEmail, sendVerificationEmail,
+  forgotPassword, resetPassword, editProfile
 };

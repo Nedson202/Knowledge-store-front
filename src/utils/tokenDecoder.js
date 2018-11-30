@@ -5,7 +5,9 @@ const tokenDecoder = (token) => {
   try {
     return jwt.verify(token, process.env.SECRET);
   } catch (error) {
-    toaster('error', 'Token is invalid');
+    toaster('error', 'Token has expired or is invalid');
+    localStorage.removeItem('token');
+    return error;
   }
 };
 

@@ -1,50 +1,92 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
-// import { compose, withApollo, graphql } from 'react-apollo';
 import './_BookProfile.scss';
 import '../BookCatalog/_BookCatalog.scss';
 import BookCard from '../BookCard/BookCard';
 import AddReview from '../AddReview/AddReview';
 import ReviewCard from '../ReviewCard/ReviewCard';
-import Genre from '../Genre/Genre';
-import { fetchBook } from '../../queries/books';
+import { fetchBook, addToFavorites } from '../../queries/books';
+import ProfilePreloader from './ProfilePreloader';
+import toaster from '../../utils/toast';
+import errorHandler from '../../utils/errorHandler';
+import BackToTop from '../BackToTop/BackToTop';
 
 class BookProfile extends Component {
-  // state = {
-  //   book: {},
-  // };
+  state = {
+    displayBackToTop: false
+  };
 
-  // componentDidMount() {
-  //   this.retrieveBook();
-  // }
-
-  // retrieveBook() {
-  //   const { client } = this.props;
-  //   client.query({
-  //     query: fetchBooks,
-  //     variables: {
-  //       bookId: '4'
-  //     }
-  //   }).then((response) => {
-  //     const { data: { book } } = response;
-  //     this.setState({ book });
-  //   });
-  // }
-
-  options = () => {
-    console.log(this.props.match); /* eslint-disable-line */
+  componentDidMount() {
+    window.addEventListener('scroll', this.handlePageScroll, {
+      capture: true,
+      passive: true
+    });
   }
 
-  renderBookHeader() {
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handlePageScroll, {
+      capture: true,
+      passive: true
+    });
+  }
+
+  handlePageScroll = () => {
+    if (document.body.scrollTop < 20 || document.documentElement.scrollTop < 20) {
+      this.setState({ displayBackToTop: false });
+    }
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      this.setState({ displayBackToTop: true });
+    }
+  };
+
+  addBookToFavorite = id => () => {
+    const { addToFavoritesQuery } = this.props;
+    addToFavoritesQuery({
+      variables: {
+        bookId: id
+      },
+      refetchQueries: this.refetchQuery()
+    }).then((response) => {
+      const { addFavorite: { message } } = response.data;
+      toaster('success', message);
+    }).catch((error) => {
+      const messages = errorHandler(error);
+      messages.forEach(message => toaster('error', message));
+    });
+  }
+
+  refetchQuery() {
+    const { props: { match: { params: { id } } } } = this;
+    return [
+      {
+        query: fetchBook,
+        variables: {
+          bookId: id
+        }
+      }
+    ];
+  }
+
+  renderBookHeader(book) {
     return (
       <div className="book-profile-title">
-        <h2>The great reckoning</h2>
-        <h5>by, Barbara Oakley</h5>
-
+        <h2>{book && book.name}</h2>
+        <h5>
+          {book && book.authors.length ? `by, ${
+            book.authors.map(author => author)
+          }` : 'author unavailable'}
+        </h5>
         <div className="book-meta">
-          <span className="genre-badge">Poetry</span>
-          <span className="genre-badge">Poetry</span>
+          <span className="genre-badge">
+            {book && (
+            <span>
+              <b>Genre:</b>
+              {' '}
+              {book.genre.map(genre => genre)}
+            </span>
+            )}
+          </span>
           <p>202 reviews</p>
           <p>20 stars</p>
         </div>
@@ -54,7 +96,6 @@ class BookProfile extends Component {
 
   renderAddReviewForm() {
     const { fetchBooksQuery: { book } } = this.props;
-    // console.log(book && book.id);
     return (
       <div className="add-review-form">
         <AddReview
@@ -66,24 +107,17 @@ class BookProfile extends Component {
     );
   }
 
-  renderReviews() {
-    const { fetchBooksQuery: { book } } = this.props;
+  renderReviews(book) {
+    const { fetchBooksQuery: { loading } } = this.props;
     return (
       <div className="review-card">
+        {this.renderAddReviewForm()}
         <ReviewCard
           reviews={book && book.reviews}
           bookId={book && book.id}
         />
-        {/* <ReviewCard /> */}
+        {loading && this.renderLoader()}
       </div>
-    );
-  }
-
-  renderBookGenres() {
-    return (
-      <Fragment>
-        <Genre />
-      </Fragment>
     );
   }
 
@@ -104,71 +138,135 @@ class BookProfile extends Component {
     );
   }
 
-  renderMoreBooks() {
+  renderMoreBooks(books) {
     return (
-      <div className="book-profile-more">
-        <BookCard
-          imageUrl="https://images.penguinrandomhouse.com/cover/9780679722762"
-        />
-        <BookCard
-          imageUrl="https://images.penguinrandomhouse.com/cover/9781594631931"
-        />
-        <BookCard
-          imageUrl="https://jamesclear.com/wp-content/uploads/2015/09/StumblingOnHappiness-by-DanielGilbert.jpg"
-        />
-        <BookCard
-          imageUrl="https://jamesclear.com/wp-content/uploads/2018/08/9780735211292_AtomicHabits_3D.png?x83440"
-        />
+      <div>
+        <h2>Other helpful books</h2>
+        <hr />
+        <div className="book-profile-more">
+          {
+          books && books.length !== 0 && books.map(book => (
+            <BookCard
+              key={book.id}
+              enableEllipsis={false}
+              book={book}
+              moreBooks
+            />
+          ))
+        }
+          {/* {books && !books.length && <h4>Nothing similar found</h4>} */}
+        </div>
+      </div>
+    );
+  }
+
+  renderBookMarkOption() {
+
+  }
+
+  renderAll(book) {
+    const { moreBooks, id, isFavorite } = book;
+    const favoriteOption = isFavorite
+      ? <p className="pointer">Remove from Favorites</p>
+      : <p className="pointer" onClick={this.addBookToFavorite(id)}>Add to Favorites</p>;
+
+    return (
+      <Fragment>
+        <div className="original-book">
+          <BookCard
+            book={book}
+            enableEllipsis={false}
+          />
+          <div className="favorite-option">
+            <i className="fas fa-bookmark" style={{ color: isFavorite && 'green' }} />
+            {favoriteOption}
+          </div>
+        </div>
+        <div className="book-profile">
+          {this.renderBookHeader(book)}
+          <hr />
+          <p>
+            {book && book.description}
+          </p>
+          {book && !book.description && <h4>No description available for this book</h4>}
+        </div>
+        {this.renderMoreBooks(moreBooks)}
+        {this.renderReviews(book)}
+        <div>
+          {this.renderAuthorInfo()}
+        </div>
+      </Fragment>
+    );
+  }
+
+  renderBookError() {
+    return (
+      <div className="book-retrieve-error">
+        <h3>The book you seek is not available</h3>
+        <h5>
+          You could make use of our search functionality
+          <br />
+          to retrieve books by
+          {' '}
+          <b>name</b>
+            ,
+          {' '}
+          <b>genre</b>
+            ,
+          {' '}
+          <b>description</b>
+            ,
+          {' '}
+          <b>authors</b>
+          {' '}
+          <b>year</b>
+          {' '}
+            etc...
+        </h5>
+        <label
+          htmlFor="searchBox"
+          className="btn btn-raised"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+        >
+          Click Me and Type
+        </label>
       </div>
     );
   }
 
   render() {
-    // console.log(this.state.book.book); /* eslint-disable-line */
+    const { fetchBooksQuery: { book, loading } } = this.props;
+    const { displayBackToTop } = this.state;
     return (
-      <div className="book-profile-container">
-        <div className="original-book">
-          <BookCard
-            imageUrl="https://images.penguinrandomhouse.com/cover/9780679437222"
+      <Fragment>
+        {!loading && !book && this.renderBookError()}
+        <div className="book-profile-container">
+          {loading && (
+          <ProfilePreloader
+            reviewLoader={this.renderReviews}
           />
+          )}
+          {!loading && book && this.renderAll(book)}
         </div>
-        <div className="book-profile">
-          {this.renderBookHeader()}
-          <hr />
-          <p>
-            Aliquam eu nunc. In turpis. Nulla sit amet est. Phasellus volutpat, metus eget
-            egestas mollis, lacus lacus blandit dui, id egestas quam mauris ut lacus. Vestibulum
-            fringilla pede sit amet augue.Curabitur ullamcorper ultricies nisi. Quisque malesuada
-            placerat nisl. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi.
-            Praesent vestibulum dapibus nibh. Aliquam lobortis.Fusce egestas elit eget lorem
-            Nullam cursus lacinia erat. Vivamus quis mi. Vestibulum
-            ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce
-            id purus. Nunc interdum lacus sit amet orci.Aenean commodo ligula eget dolor.
-            Sed augue ipsum, egestas nec, vestibulum et, malesuada adipiscing, dui. Vivamus
-            euismod mauris. Cras risus ipsum, faucibus ut, ullamcorper id, varius ac, leo.
-            Suspendisse eu ligula.
-          </p>
-        </div>
-        {this.renderMoreBooks()}
-        {this.renderAddReviewForm()}
-        {this.renderReviews()}
-        <div id="hello">
-          {this.renderBookGenres()}
-          {this.renderAuthorInfo()}
-        </div>
-      </div>
+        <BackToTop
+          displayBackToTop={displayBackToTop}
+        />
+      </Fragment>
     );
   }
 }
 
 BookProfile.propTypes = {
   fetchBooksQuery: PropTypes.object,
-  // match: PropTypes.object,
+  match: PropTypes.object,
+  addToFavoritesQuery: PropTypes.func,
 };
 
 BookProfile.defaultProps = {
   fetchBooksQuery: {},
-  // match: {},
+  match: {},
+  addToFavoritesQuery: () => {},
 };
 
 export default compose(
@@ -180,5 +278,8 @@ export default compose(
         bookId: props.match.params.id
       }
     })
-  })
+  }),
+  graphql(addToFavorites, {
+    name: 'addToFavoritesQuery',
+  }),
 )(BookProfile);

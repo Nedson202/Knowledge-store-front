@@ -3,12 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import passwordToggler from '../../utils/passwordToggler';
 import modalCloser from '../../utils/modalCloser';
+import socialAuthentication from '../../utils/socialAuthentication';
 
 class LoginForm extends Component {
-  socialAuthentication = type => () => {
-    window.location.replace(`http://localhost:4000/auth/${type}`);
-  }
-
   render() {
     const { onInputChange, confirmLogin, formErrors } = this.props;
     const { username, password } = formErrors;
@@ -48,17 +45,22 @@ class LoginForm extends Component {
                       autoComplete="new-password"
                     />
                     {password && <span className="validation-error">{password[0]}</span>}
-                    <li onClick={passwordToggler('password-login')}>
-                      <i className="fa fa-eye" aria-hidden="true" id="add-hide" />
-                      <i className="fa fa-eye-slash hide" aria-hidden="true" id="remove-hide" />
-                    </li>
+                    <div
+                      role="button"
+                      tabIndex={0}
+                      onClick={passwordToggler('password-login')}
+                      id="password-icon"
+                    >
+                      <i className="fa fa-eye hide" aria-hidden="true" id="password-login-remove-hide" />
+                      <i className="fa fa-eye-slash" aria-hidden="true" id="password-login-add-hide" />
+                    </div>
                   </div>
                   <div className="form-group social-login">
                     <div className="text-muted text-center social-login-text">Login with</div>
-                    <button type="button" onClick={this.socialAuthentication('google')} className="btn btn-primary">
+                    <button type="button" onClick={socialAuthentication('google')} className="btn btn-primary">
                       <i className="fab fa-google google-icon" />
                     </button>
-                    <button type="button" onClick={this.socialAuthentication('facebook')} className="btn btn-primary">
+                    <button type="button" onClick={socialAuthentication('facebook')} className="btn btn-primary">
                       <i className="fab fa-facebook-f facebook-icon" />
                     </button>
                   </div>

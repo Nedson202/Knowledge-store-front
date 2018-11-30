@@ -5,7 +5,6 @@ import debounce from 'lodash.debounce';
 import { connect } from 'react-redux';
 import { compose, withApollo } from 'react-apollo';
 import { singleFieldValidation, allFieldsValidation } from '../../utils/validator/validator';
-import './_EmailGenerator.scss';
 import tokenDecoder from '../../utils/tokenDecoder';
 import { sendVerificationEmail, forgotPassword } from '../../queries/auth';
 import errorHandler from '../../utils/errorHandler';
@@ -101,8 +100,8 @@ class EmailGenerator extends Component {
             email
           }
         }).then((response) => {
-          const { data } = response;
-          toaster('success', data.sendVerificationEmail[0].message);
+          const { sendVerificationEmail: { message } } = response.data;
+          toaster('success', message);
         }).catch((error) => {
           const messages = errorHandler(error);
           messages.forEach(message => toaster('error', message));
