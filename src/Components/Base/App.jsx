@@ -42,7 +42,7 @@ class App extends Component {
       const decodedToken = tokenDecoder(token);
       dispatch(setCurrentUser(decodedToken));
       setQuery({ token: '' });
-      toaster('success', 'Login successful');
+      toaster('success', 'Authentication successful');
       return decodedToken.isVerified === 'true' && history.push('my-books');
     }
   }
