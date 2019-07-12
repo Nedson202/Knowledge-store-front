@@ -1,0 +1,42 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "env": {
+    "NODE_ENV": {
+      "required": true
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "required": true
+    },
+    "REACT_APP_NODE_ENV": {
+      "required": true
+    },
+    "REACT_APP_PROD_SERVER": {
+      "required": true
+    },
+    "REACT_APP_SECRET": {
+      "required": true
+    },
+    "REACT_APP_URL": {
+      "required": true
+    },
+    "TOOL_NODE_FLAGS": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "name": "Knowledge-store-front",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
