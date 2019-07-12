@@ -18,8 +18,6 @@ import 'antd/dist/antd.css';
 import './_index.scss';
 import MyBooks from './Components/MyBooks/MyBooks';
 import NetworkDetector from './Components/Hoc/NetworkDetector';
-import Chat from './Components/Chat/Chat';
-
 
 const Routes = () => (
   <div>
@@ -37,10 +35,8 @@ const Routes = () => (
       <Route path="/password-reset" component={NetworkDetector(PasswordReset)} exact />
       <Route path="/email" component={NetworkDetector(EmailGenerator)} exact />
       <Route path="/users" component={NetworkDetector(AuthWrapper(Users, true))} exact />
-      <Route path="/chat" component={NetworkDetector(Chat)} exact />
       <Route component={NotFound} />
     </Switch>
-    {/* <Footer /> */}
   </div>
 );
 
