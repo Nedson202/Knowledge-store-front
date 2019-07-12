@@ -7,7 +7,6 @@ import { ApolloProvider } from 'react-apollo';
 import { createHttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-// import { ApolloLink } from 'apollo-link';
 import { onError } from 'apollo-link-error';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';

@@ -40,21 +40,17 @@
 		.book-profile-more {
 			display: grid;
 			grid-template-columns: 150px 150px;
-			// grid-template-rows: 1fr 1fr;
 			grid-gap: 0 20px;
-			// max-height: 550px;
 
 			.child-elem {
 				.book-images {
 					width: 150px !important;
 					height: 12rem !important;
-					// object-fit: contain;
 				}
 
 				.book-footer {
 					width: 150px !important;
 					height: 7rem !important;
-					// object-fit: contain;
 				}
 
 				#image-error-placeholder {
@@ -68,7 +64,6 @@
 		}
 
 		.genre {
-			// width: 320px;
 			grid-column: 3 / span 1;
 			grid-row: 3 / span 1;
 			display: inline;
@@ -90,14 +85,10 @@
 
 		.add-review-form {
 			grid-column: span 2;
-			// margin-top: -200px;
 		}
 
 		.review-card {
 			grid-column: 1 / span 2;
-			// margin: auto;
-			// max-height: 400px;
-			// overflow: scroll;
 		}
 	}
 }
@@ -136,14 +127,12 @@
 	.book-profile-more {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		// margin: 50px auto;
 		grid-gap: 0 20px !important;
 
 		.child-elem {
 			.book-images, .book-footer {
 				width: 150px !important;
 				height: 12rem !important;
-				// object-fit: contain;
 			}
 		}
 	}
@@ -179,7 +168,6 @@
 		}
 
 		.genre {
-			// width: 320px;
 			grid-column: 3 / span 1;
 			grid-row: 3 / span 1;
 			display: inline;
@@ -265,6 +253,6 @@
 	text-align: center;
 }
 
-.pointer {
+.favorite-action-button {
 	cursor: pointer;
 }

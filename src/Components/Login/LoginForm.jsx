@@ -55,6 +55,10 @@ class LoginForm extends Component {
                       <i className="fa fa-eye-slash" aria-hidden="true" id="password-login-add-hide" />
                     </div>
                   </div>
+                  <div className="error-action">
+                    <Link onClick={() => modalCloser()} to="/email?reset-password=true">forgot password?</Link>
+                    <Link onClick={() => modalCloser()} to="/email?verify-email=true">verify email?</Link>
+                  </div>
                   <div className="form-group social-login">
                     <div className="text-muted text-center social-login-text">Login with</div>
                     <button type="button" onClick={socialAuthentication('google')} className="btn btn-primary">
@@ -63,10 +67,6 @@ class LoginForm extends Component {
                     <button type="button" onClick={socialAuthentication('facebook')} className="btn btn-primary">
                       <i className="fab fa-facebook-f facebook-icon" />
                     </button>
-                  </div>
-                  <div className="error-action">
-                    <Link onClick={() => modalCloser()} to="/email?reset-password=true">forgot password?</Link>
-                    <Link onClick={() => modalCloser()} to="/email?verify-email=true">verify email?</Link>
                   </div>
                 </form>
               </div>

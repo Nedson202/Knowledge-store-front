@@ -56,7 +56,7 @@ class MyBooks extends Component {
           data-toggle="modal"
           data-target="#AddBookModal"
         >
-            Add Book
+          Add Book
         </button>
       </div>
     );

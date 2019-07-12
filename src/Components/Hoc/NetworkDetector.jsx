@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import toast from '../../utils/toast';
 import toaster from '../../utils/toast';
 
 export default function (ComposedComponent) {

@@ -1,10 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-// import image from '../../assets/lof.jpeg';
 import Truncate from 'react-truncate';
 import { Checkbox } from 'antd';
-// import { gql } from 'apollo-boost';
 import './_BookCard.scss';
 import Star from '../Star/Star';
 import BookImageLoader from './BookImageLoader';
@@ -181,10 +179,9 @@ BookCard.defaultProps = {
   toggleCheckBox: false,
   enableEllipsis: false,
   moreBooks: false,
-  checkBoxChange: () => {},
-  setBookToEdit: () => {},
-  setBookToRemove: () => {},
+  checkBoxChange: () => { },
+  setBookToEdit: () => { },
+  setBookToRemove: () => { },
 };
 
-// export default BookCard;
 export default BookCard;

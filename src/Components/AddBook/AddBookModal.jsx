@@ -54,7 +54,6 @@ class AddBookModal extends Component {
         <button
           type="button"
           className="btn btn-raised"
-          // onClick={cancelPreview}
         >
           cancel preview
         </button>
@@ -71,7 +70,6 @@ class AddBookModal extends Component {
       }
     } = this.props;
 
-    // const defaultValue = editingBook ? moment('2015-11-24', 'YYYY-MM-DD') : '';
     return (
       <Fragment>
         <div
@@ -126,12 +124,8 @@ class AddBookModal extends Component {
                       placeholder=""
                       onChange={dateChange}
                       defaultValue={editingBook && year ? moment(year, 'YYYY-MM-DD') : null}
-                      // defaultValue={moment('2015-12-24'.replace(/[-]/g, '/'), 'YYYY-MM-DD')}
-                      // moment('2015-12-24'.replace(/[-]/g, '/'), 'YYYY/MM/DD')
                       format="YYYY-MM-DD"
-                      // value={editingBook && year}
                     />
-                    {/* <input type="text" className="form-control" id="year" /> */}
                   </div>
                   <div className="form-group is-filled">
                     <label htmlFor="genre">Genre</label>
@@ -139,7 +133,6 @@ class AddBookModal extends Component {
                       mode="tags"
                       style={{ width: '100%' }}
                       onChange={handleGenreChange}
-                      // value={editingBook && genre}
                     >
                       {this.renderChildren(genres)}
                     </Select>
@@ -173,14 +166,14 @@ class AddBookModal extends Component {
                   className="btn btn-default btn-raised cancel-button"
                   data-dismiss="modal"
                 >
-                Close
+                  Close
                 </button>
                 <button
                   type="button"
                   className="btn btn-primary btn-raised text-case save-button"
                   onClick={handleBookSubmission}
                 >
-                Save changes
+                  Save changes
                 </button>
               </div>
             </div>
@@ -207,11 +200,11 @@ AddBookModal.propTypes = {
 AddBookModal.defaultProps = {
   imagePreviewUrl: '',
   imageUploadStatus: false,
-  imageChange: () => {},
-  handleInputChange: () => {},
-  handleGenreChange: () => {},
-  handleBookSubmission: () => {},
-  dateChange: () => {},
+  imageChange: () => { },
+  handleInputChange: () => { },
+  handleGenreChange: () => { },
+  handleBookSubmission: () => { },
+  dateChange: () => { },
   genres: [],
   editingBook: false,
   bookToEdit: {},

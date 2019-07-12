@@ -16,7 +16,6 @@ class BookCatalog extends Component {
     isNewContentLoading: false,
     displayBackToTop: false,
     randomDigit: 0,
-    // networkError: '',
   };
 
   componentDidMount() {

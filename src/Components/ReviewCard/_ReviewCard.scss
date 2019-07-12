@@ -2,12 +2,6 @@
 	display: grid;
 	grid-template-columns: 1fr 9fr;
 	width: 100%;
-	// max-width: 700px;
-	// margin: auto;
-	// overflow-y: scroll;
-	// max-height: 800px;
-	// grid-gap: 0 15px;
-	// scroll-behavior: smooth;
 
 	.footer {
 		display: flex;
@@ -42,10 +36,6 @@
 
 #dome:last-child {
 	display: block;
-	// margin-bottom: 100px;
-}
-#hello {
-	// margin-top: 250px;
 }
 
 .avatar-placeholder {

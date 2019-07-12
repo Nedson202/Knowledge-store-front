@@ -82,7 +82,7 @@ class App extends Component {
   emailConfirmationNote() {
     return (
       <div className="pending-verification">
-      You are yet to verify your email address. Check your mail box or use this
+        You are yet to verify your email address. Check your mail box or use this
         {' '}
         <Link to="/email?verify-email=true" style={{ color: 'black' }}>Link</Link>
       </div>
@@ -94,7 +94,7 @@ class App extends Component {
     return (
       <div>
         {isAuthenticated && user.isVerified === 'false' && this.emailConfirmationNote()}
-        <div id="demo-layout-transparent" />
+        <div id="background-layout" />
         <Main
           isAuthenticated={isAuthenticated}
         />
@@ -114,8 +114,8 @@ App.propTypes = {
 App.defaultProps = {
   auth: {},
   history: {},
-  dispatch: () => {},
-  verifyEmailQuery: () => {},
+  dispatch: () => { },
+  verifyEmailQuery: () => { },
 };
 
 const mapStateToProps = state => ({

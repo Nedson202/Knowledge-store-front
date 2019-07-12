@@ -10,7 +10,7 @@ $border_color_2: #ffaf00;
 }
 
 .bg-light {
-  background-color: #e0e0e0 !important;
+  background-color: #ffffff !important;
 }
 
 .hide {
@@ -18,10 +18,10 @@ $border_color_2: #ffaf00;
 }
 
 .navbar {
-	// box-shadow: none !important;
 	padding: 0 !important;
 	z-index: 2;
 	min-height: 57px;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px, rgba(0, 0, 0, 0.1) 0px 4px 30px;
 }
 
 .dropdown-toggle:after {
@@ -53,14 +53,13 @@ $border_color_2: #ffaf00;
 	background-color: #efefef !important;
 }
 
-#demo-layout-transparent {
+#background-layout {
 	background: url('../../assets/beverage-books.jpg') no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 	height: 100%;
-	// overflow: hidden;
 	position: fixed;
 	left: -50%;
 	width: 200%;
@@ -74,7 +73,7 @@ $border_color_2: #ffaf00;
 	color: white;
 }
 
-.mdl-auth-buttons {
+.auth-buttons {
 	display: grid;
 	grid-template-columns: 1fr;
 	color: $color_1;
@@ -86,11 +85,17 @@ $border_color_2: #ffaf00;
 	-ms-transform: translate(-50%, -50%);
 	left: 10%;
 	top: 50%;
+
 	button {
 		color: white !important;
 		margin: 20px 15px 0 0;
 		border: 1px solid white !important;
 		border-radius: 5px;
+		
+		&:hover {
+			border: none !important;
+			background-color: #005C97 !important;
+		}
 	}
 }
 
@@ -121,6 +126,7 @@ $border_color_2: #ffaf00;
 		font-size: 3em;
 	}
 }
+
 .search-button {
 	border-color: $border_color_1;
 	color: #868282 !important;
@@ -145,6 +151,35 @@ $border_color_2: #ffaf00;
 	.search-bar {
 		width: 350px !important;
 	}
+
+	.product-title {
+		font-size: 30px;
+		font-weight: bold;
+	}
+
+	.auth-buttons {
+		left: 0;
+		margin: auto 20px;
+
+		div {
+			display: flex;
+			flex-direction: column;
+			
+			button {
+				width: 100%;
+				max-width: 250px;
+				margin: 10px auto;
+			}
+		}
+
+		.auth-action-buttons {
+			margin-top: 30px;
+		}
+	}
+
+	.quotation {
+		font-size: 25px;
+	}
 }
 
 .avatar {
@@ -156,13 +191,20 @@ $border_color_2: #ffaf00;
 }
 
 #LoginFormModal, #SignUpFormModal {
-	max-width: 400px !important;
+	max-width: 350px !important;
 	margin: auto;
 }
 
-.modal-header {
-  background: #efefef !important;
-  padding-bottom: 10px !important;
+.modal .modal-content .modal-header {
+  background-color: #ffffff !important;
+	padding-bottom: 10px !important;
+	border-bottom: 1px solid #efeeee !important;
+	border-top-left-radius: 15px !important;
+	border-top-right-radius: 15px !important;
+}
+
+.modal-content {
+	border-radius: 15px !important;
 }
 
 .nav-link {
@@ -198,7 +240,7 @@ $border_color_2: #ffaf00;
 .social-login {
 	display: flex;
 	justify-content: center;
-	padding-top: 10px;
+	margin: 20px auto -10px auto;
 
 	button {
 		padding: 7px;
@@ -288,4 +330,23 @@ $border_color_2: #ffaf00;
 .error-action {
 	display: flex;
 	justify-content: space-between;
+	margin-top: 20px;
+
+	a {
+		color: #005C97;
+	}
+}
+
+.custom-file-control,
+.form-control,
+.is-focused
+.custom-file-control,
+.is-focused
+.form-control {
+	background-image: linear-gradient(0deg, #005C97 2px,rgba(0,150,136,0) 0),linear-gradient(0deg,rgba(0,0,0,.2) 1px,transparent 0);
+}
+
+.is-focused [class*=bmd-label],
+.is-focused[class^=bmd-label] {
+	color: #005C97 !important;
 }

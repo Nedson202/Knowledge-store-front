@@ -94,9 +94,9 @@ Login.propTypes = {
 };
 
 Login.defaultProps = {
-  loginUserQuery: () => {},
+  loginUserQuery: () => { },
   history: {},
-  dispatch: () => {},
+  dispatch: () => { },
 };
 
 export default withRouter(compose(

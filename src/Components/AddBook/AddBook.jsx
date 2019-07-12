@@ -88,7 +88,6 @@ class AddBook extends Component {
     }).then((response) => {
       const { addBook: { message } } = response.data;
       modalCloser();
-      // const { }
       toaster('success', message);
     });
   }
@@ -134,7 +133,7 @@ AddBook.defaultProps = {
   data: {},
   editingBook: false,
   bookToEdit: {},
-  addBookQuery: () => {}
+  addBookQuery: () => { }
 };
 
 export default compose(

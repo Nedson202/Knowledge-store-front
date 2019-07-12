@@ -119,7 +119,6 @@ class ReviewCard extends Component {
   }
 
   handleTruncate = (truncatedText, id) => () => {
-    // console.log(truncatedText, 'truncated');
     const { truncated } = this.state;
     if (truncated !== truncatedText) {
       this.setState({
@@ -127,7 +126,6 @@ class ReviewCard extends Component {
         truncateId: id
       });
     }
-    // console.log(this.state);
   }
 
   refetchData(bookId) {
@@ -216,33 +214,31 @@ class ReviewCard extends Component {
           {this.renderTimeReviewed(createdAt)}
         </p>
         {(!isReviewEditFormOpen || id !== setReviewToEdit) && (
-        <span id='review'>
-          <Truncate key={id}
-            lines={expandedItem.includes(id) ? null : 3}
-            // lines={expanded && truncateId === id ? 0 : 3}
-            ellipsis={(
+          <span id='review'>
+            <Truncate key={id}
+              lines={expandedItem.includes(id) ? null : 3}
+              // lines={expanded && truncateId === id ? 0 : 3}
+              ellipsis={(
+                <span>
+                  ...
+                {' '}
+                  {expanded && truncateId === id || <a href="" onClick={(e) => this.toggleLines(id, false, e)}>Read more</a>}
+                </span>
+              )}
+              onTruncate={this.handleTruncate}
+            >
+              {review}
+            </Truncate>
+            {expandedItem.includes(id) && (
               <span>
                 ...
-                {' '}
-                {expanded && truncateId === id || <a href="" onClick={(e) => this.toggleLines(id, false, e)}>Read more</a>}
-              </span>
-              )}
-            // onClick={this.handleTruncate(1)}
-            onTruncate={this.handleTruncate}
-          >
-            {review}
-          </Truncate>
-          {expandedItem.includes(id)&& (
-          // {!truncated && expanded && truncateId === id && (
-          <span>
-            ...
             {' '}
-            <a href="#" onClick={(e) => this.toggleLines(id, true, e)}>Show less</a>
+                <a href="#" onClick={(e) => this.toggleLines(id, true, e)}>Show less</a>
+              </span>
+            )}
+            {this.renderStars(rating)}
+            {this.renderReviewFooter(userReview)}
           </span>
-          )}
-          {this.renderStars(rating)}
-          {this.renderReviewFooter(userReview)}
-        </span>
         )}
         {this.renderReviewEditForm(review, id)}
       </Fragment>
@@ -255,7 +251,7 @@ class ReviewCard extends Component {
     return (
       <div className="footer">
         <p onClick={this.setReviewToLike(id)}>
-          <i className="fas fa-thumbs-up" style={{ color: likes && 'green' }} />
+          <i className="fas fa-thumbs-up" style={{ color: likes && '#005C97' }} />
           <span style={{ cursor: 'default', paddingLeft: '10px' }}>{likes !== 0 && likes}</span>
         </p>
         <p onClick={this.toggleReplyDialog(id)}>Reply</p>
@@ -348,9 +344,9 @@ ReviewCard.propTypes = {
 };
 
 ReviewCard.defaultProps = {
-  addLikeQuery: () => {},
-  deleteReviewQuery: () => {},
-  deleteReplyQuery: () => {},
+  addLikeQuery: () => { },
+  deleteReviewQuery: () => { },
+  deleteReplyQuery: () => { },
   reviews: [],
   user: {},
   bookId: '',

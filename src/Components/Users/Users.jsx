@@ -123,7 +123,7 @@ class Users extends Component {
         {this.renderHeader()}
         {fetchUsersQuery.loading ? <span className="table-spinner">
           <Spinner spinnerStyle={45} />
-          </span> : this.renderTable(filteredResult)}
+        </span> : this.renderTable(filteredResult)}
         <AddAdminModal
           handleInputChange={this.handleEmailChange}
           addAmin={this.handleToggleAdmin}
@@ -142,7 +142,7 @@ Users.propTypes = {
 Users.defaultProps = {
   client: {},
   fetchUsersQuery: {},
-  toggleAdminQuery: () => {},
+  toggleAdminQuery: () => { },
 };
 
 export default compose(

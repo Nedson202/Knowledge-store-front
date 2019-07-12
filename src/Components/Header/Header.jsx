@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import avatar from '../../assets/beverage-books.jpg';
 import './_Header.scss';
 import Avatar from '../ReviewCard/Avatar';
 import { logOutUser } from '../../redux/actions/userActions';
@@ -30,12 +29,11 @@ class Header extends Component {
     if (isSideBarOpen) {
       localStorage.setItem('sideBarStatus', 'open');
       document.getElementById('myLeftSideBar').style.width = '250px';
-      // mainContent ? mainContent.style.marginLeft = '250px' : null; {/* eslint-disable-line */}
       this.toggleSidebarText('block');
     } else {
       localStorage.setItem('sideBarStatus', 'closed');
       document.getElementById('myLeftSideBar').style.width = '70px';
-      mainContent ? mainContent.style.marginLeft = 'auto' : null; {/* eslint-disable-line */}
+      mainContent ? mainContent.style.marginLeft = 'auto' : null; {/* eslint-disable-line */ }
       this.toggleSidebarText('none');
     }
     this.setState(prevState => ({
@@ -103,12 +101,12 @@ class Header extends Component {
           </div>
           <div className="dropdown-divider" />
           <Link to="/profile" className="dropdown-item user-profile-navlink">
-        Profile
+            Profile
             {' '}
             <i className="fas fa-user-circle" />
           </Link>
           <button type="button" className="dropdown-item user-profile-navlink" onClick={this.handleLogout}>
-        Logout
+            Logout
             {' '}
             <i className="fa fa-sign-out-alt" />
           </button>
@@ -137,12 +135,12 @@ class Header extends Component {
           </div>
           <div className="dropdown-divider" />
           <Link to="/profile" className="dropdown-item user-profile-navlink">
-        Profile
+            Profile
             {' '}
             <i className="fas fa-user-circle" />
           </Link>
           <button type="button" className="dropdown-item user-profile-navlink" onClick={this.handleLogout}>
-        Logout
+            Logout
             {' '}
             <i className="fa fa-sign-out-alt" />
           </button>
@@ -216,7 +214,7 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
-  dispatch: () => {},
+  dispatch: () => { },
   history: {},
   user: {},
 };

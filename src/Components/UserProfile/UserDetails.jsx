@@ -11,7 +11,6 @@ class UserDetails extends Component {
           <div>
             <img
               src={user.picture}
-                // className="hide"
               id="show-image"
               height="200px"
               width="200px"
@@ -45,7 +44,7 @@ UserDetails.propTypes = {
 };
 
 UserDetails.defaultProps = {
-  toggleEditForm: () => {},
+  toggleEditForm: () => { },
   user: {},
 };
 

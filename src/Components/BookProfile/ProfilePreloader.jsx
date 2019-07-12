@@ -18,7 +18,6 @@ class ProfilePreloader extends PureComponent {
   }
 
   renderPreloader() {
-    // const { reviewLoader } = this.props;
     return (
       <Fragment>
         <div className="original-book">
@@ -85,13 +84,5 @@ class ProfilePreloader extends PureComponent {
     );
   }
 }
-
-// ProfilePreloader.propTypes = {
-//   reviewLoader: PropTypes.func,
-// };
-
-// ProfilePreloader.defaultProps = {
-//   reviewLoader: () => {},
-// };
 
 export default ProfilePreloader;
