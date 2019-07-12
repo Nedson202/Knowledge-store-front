@@ -1,4 +1,3 @@
-/* The side navigation menu */
 .sidenav {
   height: 100%;
   width: 0;
@@ -8,13 +7,12 @@
   left: 0;
   background-color: #F5F5F5;
   overflow-x: hidden;
-  padding-top: 60px;
+  padding-top: 50px;
   transition: 0.5s;
   z-index: 10;
 
-/* The navigation menu links */
   div {
-    padding: 8px 8px 8px 32px;
+    padding: 8px 8px 8px 5px;
     text-decoration: none;
     font-size: 20px;
     color: #5a5a5a !important;
@@ -24,14 +22,11 @@
 
     .sidebar-navlink i {
       cursor: pointer;
-      // display: flex;
-      // justify-content: space-between;
       padding-right: 20px;
-
     }
 
     a {
-      color: #5a5a5a !important;
+      color: #313030 !important;
     }
   }
 
@@ -44,23 +39,30 @@
     }
   }
 
-  /* When you mouse over the navigation links, change their color */
   div:hover {
     background-color: #eaeaea;
-    border-left: 5px solid green;
+    border-left: 5px solid #005C97;
     border-bottom-left-radius: 10px;
-    // border-top-left-radius: 10px;
   }
 }
 
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
   transition: margin-left .5s;
   padding: 20px;
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav div {font-size: 18px;}
+@media screen and (max-width: 560px) {
+  .sidenav {
+    padding-top: 15px;
+
+    div {
+      font-size: 18px;
+    }
+
+    .dropdown-item.active {
+      border-left: 2px solid #005C97;
+      background-color: #F5F5F5 !important;
+      color: #020202;
+    }    
+  }
 }

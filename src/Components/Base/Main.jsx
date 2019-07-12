@@ -9,12 +9,12 @@ class Main extends Component {
     return (
       <Fragment>
         <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#LoginFormModal">
-            Login to get started
+          Login to get started
           {' '}
           <i className="fa fa-sign-in-alt" />
         </button>
         <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#SignUpFormModal">
-            Signup
+          Signup
           {' '}
           <i className="fa fa-sign-in-alt" />
         </button>
@@ -30,7 +30,7 @@ class Main extends Component {
           className="btn btn-outline-primary"
           onClick={this.navigateToBooks}
         >
-            Explore
+          Explore
           {' '}
           <i className="fa fa-rocket" aria-hidden="true" />
         </button>
@@ -44,8 +44,8 @@ class Main extends Component {
         <h2 className="product-title">The Knowledge Store</h2>
         <blockquote>
           <p className="quotation">
-              Wisdom is not a product of schooling
-              but of the lifelong attempt to acquire it.
+            Wisdom is not a product of schooling
+            but of the lifelong attempt to acquire it.
           </p>
           <footer>― Albert Einstein</footer>
         </blockquote>
@@ -56,11 +56,13 @@ class Main extends Component {
   render() {
     const { isAuthenticated } = this.props;
     return (
-      <div className="mdl-auth-buttons">
+      <div className="auth-buttons">
         <div>
           {this.renderMainContent()}
-          {!isAuthenticated && this.renderButtons()}
-          {this.renderExploreButton()}
+          <div className="auth-action-buttons">
+            {this.renderExploreButton()}
+            {!isAuthenticated && this.renderButtons()}
+          </div>
         </div>
       </div>
     );
@@ -69,12 +71,10 @@ class Main extends Component {
 
 Main.propTypes = {
   isAuthenticated: PropTypes.bool,
-  // history: PropTypes.bool,
 };
 
 Main.defaultProps = {
   isAuthenticated: false,
-  // history: false,
 };
 
 export default Main;

@@ -1,5 +1,5 @@
 {
-  "name": "Lorester-bookstore",
+  "name": "Lorester-Bookstore",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -54,8 +54,6 @@
     "react": "^16.7.0",
     "react-apollo": "^2.2.4",
     "react-content-loader": "^3.2.0",
-    "react-datepicker": "^1.6.0",
-    "react-day-picker": "^7.2.4",
     "react-dev-utils": "^5.0.2",
     "react-dom": "^16.7.0",
     "react-redux": "^5.0.7",
@@ -71,7 +69,6 @@
     "resolve": "1.6.0",
     "serve": "^10.1.1",
     "set-query-string": "^2.2.0",
-    "socket.io-client": "^2.2.0",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
     "sweetalert2": "^7.28.11",
@@ -147,6 +144,6 @@
     "event-stream": "^4.0.1"
   },
   "engines": {
-    "node": "10.x"
+    "node": "11.x"
   }
 }

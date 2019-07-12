@@ -10,18 +10,15 @@ export default function (ComposedComponent, admin) {
       const { history, user: { isAuthenticated, user } } = this.props;
       if (!tokenDecoder(localStorage.token).id) {
         toaster('error', 'Access denied, you need to login');
-        // this.props.logout();
         return history.push('/');
       }
 
       if (isAuthenticated && user.isVerified !== 'true') {
-        // this.props.logout();
         toaster('error', 'Kindly verify your account');
         return history.goBack();
       }
 
       if (!isAuthenticated) {
-        // this.props.logout();
         toaster('error', 'Access denied, you need to login');
         history.push('/');
       }
@@ -30,11 +27,6 @@ export default function (ComposedComponent, admin) {
         toaster('error', 'Access denied, operation is unathorised');
         history.goBack();
       }
-
-      // if (admin && isAuthenticated && user.username !== process.env.ADMIN) {
-      //   toaster('error', 'Access denied, you are not an admin');
-      //   history.push('/');
-      // }
     }
 
     componentWillUpdate(nextProps) {
@@ -52,13 +44,15 @@ export default function (ComposedComponent, admin) {
   }
 
   AuthWrapper.propTypes = {
-    // isAuthenticated: PropTypes.bool,
+    isAuthenticated: PropTypes.bool,
     history: PropTypes.object,
+    user: PropTypes.object,
   };
 
   AuthWrapper.defaultProps = {
-    // isAuthenticated: false,
+    isAuthenticated: false,
     history: {},
+    user: {},
   };
 
   const mapStateToProps = state => ({

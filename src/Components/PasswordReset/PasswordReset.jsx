@@ -133,8 +133,8 @@ PasswordReset.propTypes = {
 };
 
 PasswordReset.defaultProps = {
-  resetPasswordQuery: () => {},
-  dispatch: () => {},
+  resetPasswordQuery: () => { },
+  dispatch: () => { },
   history: {},
 };
 

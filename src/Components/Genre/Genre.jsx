@@ -8,7 +8,7 @@ import { getGenres, bookFilter } from '../../queries/genre';
 import Spinner from '../Spinner/Spinner';
 
 class Genre extends Component {
-  state= {
+  state = {
     genre: '',
     searching: false
   }
@@ -49,8 +49,8 @@ class Genre extends Component {
         onChange={this.onValueChange}
         placeholder="Type any genre to search"
         filterOption={
-        (inputValue, option) => option.props.children
-          .toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+          (inputValue, option) => option.props.children
+            .toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
       />
     );
   }
@@ -63,7 +63,7 @@ class Genre extends Component {
         <div className="genre">
           <h3>Search Genres</h3>
           <span className="genre-search">{this.Complete(data && data.getGenres)}</span>
-          { searching && <Spinner /> }
+          {searching && <Spinner />}
         </div>
       </Fragment>
     );
@@ -83,5 +83,4 @@ Genre.defaultProps = {
 export default compose(
   withApollo,
   graphql(getGenres),
-  // graphql(bookFilter, { name: 'bookFilterQuery', })
 )(Genre);

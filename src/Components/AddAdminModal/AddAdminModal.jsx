@@ -52,8 +52,8 @@ AddAddminModal.propTypes = {
 };
 
 AddAddminModal.defaultProps = {
-  handleInputChange: () => {},
-  addAmin: () => {},
+  handleInputChange: () => { },
+  addAmin: () => { },
 };
 
 export default AddAddminModal;

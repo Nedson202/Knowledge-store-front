@@ -35,26 +35,24 @@
 .cart-navbar {
   margin-top: 17px;
   padding-right: 28px;
-  color: #868282 !important;
   cursor: pointer;
 
   span {
     position: absolute;
-    top: 5px;
+    top: 10px;
     font-size: 14px;
-    color: #000;
   }
 }
 
 .fa-search {
   padding-right: 10px;
-  color: #8a8a8a;
+  color: #000000;
 }
 
 .close-icon {
   position: relative;
   left: -25px;
-  color: #8a8a8a;
+  color: #000000;
   cursor: pointer;
 }
 
@@ -78,12 +76,11 @@
 	outline: 0;
 	box-shadow: none;
 	border-color: transparent;
-  background-color: #e0e0e0 !important;
-  color: #5a5a5a;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px, rgba(0, 0, 0, 0.1) 0px 4px 30px;
 }
 
 .sidenav-collapse:hover {
-  background-color: hsla(0,0%,60%,.2) !important;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px, rgba(0, 0, 0, 0.1) 0px 4px 30px;
   cursor: pointer;
 }
 

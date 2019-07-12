@@ -64,13 +64,13 @@ class Favorites extends Component {
         <h3>My Favorites</h3>
         <div>
           {itemsToRemove.length !== 0 && (
-          <button
-            type="button"
-            className="btn btn-primary btn-raised save"
-            onClick={this.removeFavorites}
-          >
-            Save
-          </button>
+            <button
+              type="button"
+              className="btn btn-primary btn-raised save"
+              onClick={this.removeFavorites}
+            >
+              Save
+            </button>
           )}
           <button
             type="button"
@@ -131,7 +131,7 @@ Favorites.propTypes = {
 };
 
 Favorites.defaultProps = {
-  removeFavoritesQuery: () => {},
+  removeFavoritesQuery: () => { },
   getFavoritesQuery: {},
 };
 

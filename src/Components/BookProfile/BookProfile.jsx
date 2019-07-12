@@ -80,11 +80,11 @@ class BookProfile extends Component {
         <div className="book-meta">
           <span className="genre-badge">
             {book && (
-            <span>
-              <b>Genre:</b>
-              {' '}
-              {book.genre.map(genre => genre)}
-            </span>
+              <span>
+                <b>Genre:</b>
+                {' '}
+                {book.genre.map(genre => genre)}
+              </span>
             )}
           </span>
           <p>202 reviews</p>
@@ -126,14 +126,14 @@ class BookProfile extends Component {
       <div className="about-author">
         <h3>About the Author</h3>
         <hr />
-    placerat nisl. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi.
-    Praesent vestibulum dapibus nibh. Aliquam lobortis.Fusce egestas elit eget lorem
-    Nullam cursus lacinia erat. Vivamus quis mi. Vestibulum
-    ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce
-    id purus. Nunc interdum lacus sit amet orci.Aenean commodo ligula eget dolor.
-    Sed augue ipsum, egestas nec, vestibulum et, malesuada adipiscing, dui. Vivamus
-    euismod mauris. Cras risus ipsum, faucibus ut, ullamcorper id, varius ac, leo.
-    Suspendisse eu ligula.
+        placerat nisl. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi.
+        Praesent vestibulum dapibus nibh. Aliquam lobortis.Fusce egestas elit eget lorem
+        Nullam cursus lacinia erat. Vivamus quis mi. Vestibulum
+        ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce
+        id purus. Nunc interdum lacus sit amet orci.Aenean commodo ligula eget dolor.
+        Sed augue ipsum, egestas nec, vestibulum et, malesuada adipiscing, dui. Vivamus
+        euismod mauris. Cras risus ipsum, faucibus ut, ullamcorper id, varius ac, leo.
+        Suspendisse eu ligula.
       </div>
     );
   }
@@ -145,16 +145,15 @@ class BookProfile extends Component {
         <hr />
         <div className="book-profile-more">
           {
-          books && books.length !== 0 && books.map(book => (
-            <BookCard
-              key={book.id}
-              enableEllipsis={false}
-              book={book}
-              moreBooks
-            />
-          ))
-        }
-          {/* {books && !books.length && <h4>Nothing similar found</h4>} */}
+            books && books.length !== 0 && books.map(book => (
+              <BookCard
+                key={book.id}
+                enableEllipsis={false}
+                book={book}
+                moreBooks
+              />
+            ))
+          }
         </div>
       </div>
     );
@@ -167,8 +166,8 @@ class BookProfile extends Component {
   renderAll(book) {
     const { moreBooks, id, isFavorite } = book;
     const favoriteOption = isFavorite
-      ? <p className="pointer">Remove from Favorites</p>
-      : <p className="pointer" onClick={this.addBookToFavorite(id)}>Add to Favorites</p>;
+      ? <p className="favorite-action-button">Remove from Favorites</p>
+      : <p className="favorite-action-button" onClick={this.addBookToFavorite(id)}>Add to Favorites</p>;
 
     return (
       <Fragment>
@@ -178,7 +177,7 @@ class BookProfile extends Component {
             enableEllipsis={false}
           />
           <div className="favorite-option">
-            <i className="fas fa-bookmark" style={{ color: isFavorite && 'green' }} />
+            <i className="fas fa-bookmark" style={{ color: isFavorite && '#005C97' }} />
             {favoriteOption}
           </div>
         </div>
@@ -209,19 +208,19 @@ class BookProfile extends Component {
           to retrieve books by
           {' '}
           <b>name</b>
-            ,
+          ,
           {' '}
           <b>genre</b>
-            ,
+          ,
           {' '}
           <b>description</b>
-            ,
+          ,
           {' '}
           <b>authors</b>
           {' '}
           <b>year</b>
           {' '}
-            etc...
+          etc...
         </h5>
         <label
           htmlFor="searchBox"
@@ -243,9 +242,9 @@ class BookProfile extends Component {
         {!loading && !book && this.renderBookError()}
         <div className="book-profile-container">
           {loading && (
-          <ProfilePreloader
-            reviewLoader={this.renderReviews}
-          />
+            <ProfilePreloader
+              reviewLoader={this.renderReviews}
+            />
           )}
           {!loading && book && this.renderAll(book)}
         </div>
@@ -266,11 +265,10 @@ BookProfile.propTypes = {
 BookProfile.defaultProps = {
   fetchBooksQuery: {},
   match: {},
-  addToFavoritesQuery: () => {},
+  addToFavoritesQuery: () => { },
 };
 
 export default compose(
-  // withApollo
   graphql(fetchBook, {
     name: 'fetchBooksQuery',
     options: props => ({

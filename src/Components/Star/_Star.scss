@@ -10,14 +10,13 @@
 		}
 
 		.ant-select-auto-complete.ant-select .ant-input {
-			background: linear-gradient(0deg,#009688 1px,rgba(0,150,136,0) 0),
+			background: linear-gradient(0deg,#005C97 1px,rgba(0,150,136,0) 0),
 			linear-gradient(0deg,rgba(0,0,0,.26) 1px,transparent 0);
 			border-width: 1px;
 			line-height: 1.5;
 			height: 32px;
 			font-family: Georgia, 'Times New Roman', Times, serif;
 			font-size: 15px;
-			/* border: 1px solid green !important; */
 		}
 
 		.ant-select-auto-complete.ant-select .ant-input:focus {
@@ -25,6 +24,7 @@
 			box-shadow:none;
 			border-color:transparent;
 		}
+
 		a {
 			display: inline-block;
 			width: 100%;

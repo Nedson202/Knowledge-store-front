@@ -173,20 +173,20 @@ class AddReview extends Component {
     switch (reviewType) {
       case 'reply':
         return reviewType.match('reply')
-        && toggleForm
-        && reviewFormId === reviewToReply
+          && toggleForm
+          && reviewFormId === reviewToReply
           ? 'block' : 'none';
 
       case 'replyEdit':
         return reviewType.match('replyEdit')
-        && toggleForm
-        && setReplyToEdit === itemOnEdit
+          && toggleForm
+          && setReplyToEdit === itemOnEdit
           ? 'block' : 'none';
 
       case 'reviewEdit':
         return reviewType.match('reviewEdit')
-        && toggleForm
-        && setReviewToEdit === itemOnEdit
+          && toggleForm
+          && setReviewToEdit === itemOnEdit
           ? 'block' : 'none';
 
       default:
@@ -200,14 +200,14 @@ class AddReview extends Component {
     const starOptions = ['reply', 'replyEdit'];
     return (
       <span>
-        { !starOptions.includes(reviewType) && (
-        <ReactStars
-          count={5}
-          size={17}
-          color2="#ffaf00"
-          onChange={this.ratingChanged}
-          value={rating}
-        />
+        {!starOptions.includes(reviewType) && (
+          <ReactStars
+            count={5}
+            size={17}
+            color2="#ffaf00"
+            onChange={this.ratingChanged}
+            value={rating}
+          />
         )}
       </span>
     );
@@ -220,22 +220,22 @@ class AddReview extends Component {
     const allReviewType = ['reply', 'replyEdit', 'reviewEdit'];
     return (
       <div>
-        { allReviewType.includes(reviewType) && (
-        <button
-          id="cancelButton"
-          type="button"
-          className="btn btn-default btn-raised cancel-button"
-          onClick={handleToggleForm(reviewToReply)}
-        >
-        Cancel
-        </button>
-        ) }
+        {allReviewType.includes(reviewType) && (
+          <button
+            id="cancelButton"
+            type="button"
+            className="btn btn-default btn-raised cancel-button"
+            onClick={handleToggleForm(reviewToReply)}
+          >
+            Cancel
+          </button>
+        )}
         <button
           type="button"
           className="btn btn-primary btn-raised submit-button"
           onClick={this.handleFormSubmission()}
         >
-        Submit
+          Submit
         </button>
       </div>
     );
@@ -260,9 +260,9 @@ class AddReview extends Component {
             paddingTop: `${(reviewType.toLowerCase().includes('edit')) && 0}`
           }}
         >
-          { ['add'].includes(reviewType) && (
+          {['add'].includes(reviewType) && (
             <label htmlFor="exampleFormControlTextarea1">
-            Leave a review
+              Leave a review
             </label>
           )}
           <textarea
@@ -314,11 +314,11 @@ AddReview.propTypes = {
 AddReview.defaultProps = {
   toggleForm: false,
   reviewType: '',
-  handleToggleForm: () => {},
-  addReviewQuery: () => {},
-  addReplyQuery: () => {},
-  editReplyQuery: () => {},
-  editReviewQuery: () => {},
+  handleToggleForm: () => { },
+  addReviewQuery: () => { },
+  addReplyQuery: () => { },
+  editReplyQuery: () => { },
+  editReviewQuery: () => { },
   ownerOfReview: '',
   replyToEdit: '',
   reviewToEdit: '',
