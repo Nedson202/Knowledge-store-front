@@ -126,7 +126,7 @@ class Search extends PureComponent {
         <input
           className="form-control mr-sm-2 search-bar"
           type="search"
-          placeholder="Search by name, author, year, genre"
+          placeholder="Search by name, author, year, genre..."
           aria-label="Search"
           name="value"
           id="searchBox"

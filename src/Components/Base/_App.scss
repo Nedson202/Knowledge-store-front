@@ -74,23 +74,26 @@ $border_color_2: #ffaf00;
 }
 
 .auth-buttons {
-	display: grid;
-	grid-template-columns: 1fr;
-	color: $color_1;
-	max-width: 600px;
-	margin: 0 auto;
-	grid-gap: 20px;
+	color: white;
 	position: absolute;
-  transform: translate(0%, -50%);
+	-webkit-transform: translate(0%, -50%);
+	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
-	left: 10%;
+	left: 50%;
 	top: 50%;
+	width: 100%;
+	text-align: center;
 
 	button {
 		color: white !important;
 		margin: 20px 15px 0 0;
 		border: 1px solid white !important;
 		border-radius: 5px;
+		min-width: 150px;
+
+		.fa {
+			margin-right: 15px;
+		}
 		
 		&:hover {
 			border: none !important;
@@ -147,6 +150,15 @@ $border_color_2: #ffaf00;
 	}
 }
 
+.pending-verification {
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	font-size: 22px;
+	background-color: #ff8d00;
+	color: white;
+}
+
 @media screen and (max-width: 560px) {
 	.search-bar {
 		width: 350px !important;
@@ -158,9 +170,6 @@ $border_color_2: #ffaf00;
 	}
 
 	.auth-buttons {
-		left: 0;
-		margin: auto 20px;
-
 		div {
 			display: flex;
 			flex-direction: column;
@@ -169,6 +178,8 @@ $border_color_2: #ffaf00;
 				width: 100%;
 				max-width: 250px;
 				margin: 10px auto;
+				padding: 15px 0;
+				font-size: 17px;
 			}
 		}
 
@@ -178,7 +189,17 @@ $border_color_2: #ffaf00;
 	}
 
 	.quotation {
-		font-size: 25px;
+		font-size: 22px;
+	}
+
+	.pending-verification {
+		height: unset;
+		text-align: center;
+		line-height: unset;
+		font-size: 17px;
+		background-color: #ff8d00;
+		color: white;
+		padding: 10px 0;
 	}
 }
 
@@ -205,6 +226,10 @@ $border_color_2: #ffaf00;
 
 .modal-content {
 	border-radius: 15px !important;
+}
+
+.modal .modal-content .modal-footer {
+	margin-bottom: 10px;
 }
 
 .nav-link {
@@ -249,7 +274,7 @@ $border_color_2: #ffaf00;
     text-decoration: none;
     margin: 5px 5px -px 2px;
 		border-radius: 50%;
-		margin-right: 10px;
+		background-color: unset !important;
 
 		i {
 			box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -316,15 +341,6 @@ $border_color_2: #ffaf00;
 .swal2-top-end {
   font-weight: 100 !important;
   color: red;
-}
-
-.pending-verification {
-	height: 50px;
-	text-align: center;
-	line-height: 50px;
-	font-size: 22px;
-	background-color: #ff8d00;
-	color: white;
 }
 
 .error-action {

@@ -69,6 +69,8 @@ class BookProfile extends Component {
   }
 
   renderBookHeader(book) {
+    const { reviews } = book;
+    const numberOfReviews = reviews.length || 0;
     return (
       <div className="book-profile-title">
         <h2>{book && book.name}</h2>
@@ -87,8 +89,11 @@ class BookProfile extends Component {
               </span>
             )}
           </span>
-          <p>202 reviews</p>
-          <p>20 stars</p>
+          <p>
+            {numberOfReviews}
+            {' '}
+            review(s)
+          </p>
         </div>
       </div>
     );
@@ -117,23 +122,6 @@ class BookProfile extends Component {
           bookId={book && book.id}
         />
         {loading && this.renderLoader()}
-      </div>
-    );
-  }
-
-  renderAuthorInfo() {
-    return (
-      <div className="about-author">
-        <h3>About the Author</h3>
-        <hr />
-        placerat nisl. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi.
-        Praesent vestibulum dapibus nibh. Aliquam lobortis.Fusce egestas elit eget lorem
-        Nullam cursus lacinia erat. Vivamus quis mi. Vestibulum
-        ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Fusce
-        id purus. Nunc interdum lacus sit amet orci.Aenean commodo ligula eget dolor.
-        Sed augue ipsum, egestas nec, vestibulum et, malesuada adipiscing, dui. Vivamus
-        euismod mauris. Cras risus ipsum, faucibus ut, ullamcorper id, varius ac, leo.
-        Suspendisse eu ligula.
       </div>
     );
   }
@@ -191,9 +179,6 @@ class BookProfile extends Component {
         </div>
         {this.renderMoreBooks(moreBooks)}
         {this.renderReviews(book)}
-        <div>
-          {this.renderAuthorInfo()}
-        </div>
       </Fragment>
     );
   }

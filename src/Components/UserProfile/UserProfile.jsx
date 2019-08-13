@@ -183,31 +183,31 @@ class UserProfile extends Component {
       <div>
         <div className="profile-update" id="main">
           {!isEditFormOpen && (
-          <UserDetails
-            toggleEditForm={this.toggleEditForm}
-            user={user}
-          />
+            <UserDetails
+              toggleEditForm={this.toggleEditForm}
+              user={user}
+            />
           )}
           {isEditFormOpen && (
-          <UpdateForm
-            toggleEditForm={this.toggleEditForm}
-            user={user}
-            imagePreviewUrl={imagePreviewUrl}
-            formValues={values}
-            handleInputChange={this.onInputChange}
-            handleImageChange={this.onImageChange}
-            updateProfile={this.updateProfile}
-            formErrors={formErrors}
-            cancelPreview={this.cancelPreview}
-          />
+            <UpdateForm
+              toggleEditForm={this.toggleEditForm}
+              user={user}
+              imagePreviewUrl={imagePreviewUrl}
+              formValues={values}
+              handleInputChange={this.onInputChange}
+              handleImageChange={this.onImageChange}
+              updateProfile={this.updateProfile}
+              formErrors={formErrors}
+              cancelPreview={this.cancelPreview}
+            />
           )}
           {isEditFormOpen && (
-          <UpdatePassword
-            handleInputChange={this.onInputChange}
-            updatePassword={this.updatePassword}
-            formErrors={formErrors}
-            formValues={values}
-          />
+            <UpdatePassword
+              handleInputChange={this.onInputChange}
+              updatePassword={this.updatePassword}
+              formErrors={formErrors}
+              formValues={values}
+            />
           )}
         </div>
         {this.renderAnalytica()}
@@ -228,9 +228,9 @@ UserProfile.propTypes = {
 };
 
 UserProfile.defaultProps = {
-  editProfileQuery: () => {},
-  changePasswordQuery: () => {},
-  dispatch: () => {},
+  editProfileQuery: () => { },
+  changePasswordQuery: () => { },
+  dispatch: () => { },
   user: {},
 };
 

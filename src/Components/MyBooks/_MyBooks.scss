@@ -11,6 +11,15 @@
 	.user-books, .favorite-books {
 		&__header {
 			margin:	105px 20px -40px 20px;
+			justify-content: center;
+		}
+	}
+}
+
+@media screen and (min-width: 760px) and (max-width: 959px) {
+	.user-books, .favorite-books {
+		&__header {
+			margin:	105px 116px -40px;
 		}
 	}
 }

@@ -165,34 +165,32 @@ class Header extends Component {
           </div>
           <div className="container">
             <Link to="/"><span className="navbar-brand">Loresters Bookstore</span></Link>
-            <button
-              type="button"
-              className="mobile-nav"
-              data-toggle="collapse"
-              data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Search icon"
-            >
-              <i className="fas fa-search" />
-            </button>
-            <button
-              type="button"
-              className="mobile-nav"
-              aria-label="Toggle navigation"
-              onClick={this.toggleSideBar}
-            >
-              <i className="fas fa-bars" />
-            </button>
+            <div>
+              <button
+                type="button"
+                className="mobile-nav"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Search icon"
+              >
+                <i className="fas fa-search" />
+              </button>
+              <button
+                type="button"
+                className="mobile-nav"
+                aria-label="Toggle navigation"
+                onClick={this.toggleSideBar}
+              >
+                <i className="fas fa-bars" />
+              </button>
+            </div>
 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <Search />
               <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
                 {user.isVerified === 'true' && this.renderNotificationPane()}
-                <li className="cart-navbar">
-                  <i className="fa fa-shopping-cart" />
-                  <span>10</span>
-                </li>
                 {user.isVerified === 'true' && this.renderUserAvatar()}
               </ul>
             </div>

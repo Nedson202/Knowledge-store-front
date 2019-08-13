@@ -33,17 +33,6 @@ const bookFilter = gql`
     }
   }
 `;
-// const bookFilter = gql`
-//   query($name: String $genre: String) {
-//     filterBooks(name: $name genre: $genre) {
-//       id
-//       name,
-//       genre,
-//       author,
-//       year
-//     }
-//   }
-// `;
 
 export {
   getGenres, editGenre, bookFilter
