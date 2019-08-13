@@ -1,6 +1,14 @@
 @media (max-width: 500px) {
-  .navbar-collapse ul {
-    display: none !important;
+  .navbar-collapse {
+    ul {
+      display: none !important;
+    }
+
+    form {
+      .fa-search {
+        margin-right: 10px;
+      }
+    }
   }
 
   .sidenav-collapse {
@@ -45,14 +53,20 @@
 }
 
 .fa-search {
-  padding-right: 10px;
-  color: #000000;
+  font-size: 20px;
+  margin-right: 10px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.fa-bars {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.65);
 }
 
 .close-icon {
   position: relative;
   left: -25px;
-  color: #000000;
+  color: rgba(0, 0, 0, 0.65);
   cursor: pointer;
 }
 

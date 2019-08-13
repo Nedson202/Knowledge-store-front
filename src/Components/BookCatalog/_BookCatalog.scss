@@ -1,12 +1,27 @@
+
+
+#image-error-placeholder {
+	width: 170px !important;
+	height: 13rem !important;
+	line-height: 13rem;
+	border: 1px solid #d4d4d4;
+	border-radius: 4px;
+	margin-top: 15px;
+}
+
 @media screen and (min-width: 960px) {
 	.container-content {
-		display: grid;
-		grid-template-columns: repeat(5, 190px);
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
 		max-width: 1200px;
 		margin: 110px auto 20px auto;
-		grid-gap: 50px;
+		justify-content: space-between;
 
 		.child-elem {
+			width: calc(1/5*100% - (1 - 1/5)*47px);
+			margin-bottom: 50px;
+
 			#image-error-placeholder {
 				width: 190px !important;
 				height: 17rem !important;
@@ -30,11 +45,17 @@
 
 @media screen and (min-width: 760px) and (max-width: 959px) {
 	.container-content {
-		display: grid;
-		grid-template-columns: repeat(3, 200px);
+		display: flex;
+		flex-direction: row;
 		max-width: 959px;
-		margin: 110px 30px;
-		grid-gap: 50px 80px;
+		margin: 30px 100px !important;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		
+		.child-elem {
+			width: calc(1/3*100% - (1 - 1/3)*50px);
+			margin-bottom: 30px;
+		}
 	}
 }
 
@@ -78,14 +99,18 @@
 		}
 	}
 
+	#main {
+		padding: unset;
+		margin-top: unset;
+	}
+
 	.container-content {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		max-width: 560px;
-		width: 100%;
-		margin: 60px 0 0 0 !important;
-		grid-row-gap: -10px;
-		grid-column-gap: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+		justify-content: space-around;
+		margin-top: 50px;
 
 		.child-elem {
 			.book-images {

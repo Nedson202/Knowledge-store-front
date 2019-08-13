@@ -9,14 +9,14 @@ class Main extends Component {
     return (
       <Fragment>
         <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#LoginFormModal">
+          <i className="fa fa-sign-in-alt" />
           Login to get started
           {' '}
-          <i className="fa fa-sign-in-alt" />
         </button>
         <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#SignUpFormModal">
+          <i className="fa fa-sign-in-alt" />
           Signup
           {' '}
-          <i className="fa fa-sign-in-alt" />
         </button>
       </Fragment>
     );
@@ -30,9 +30,9 @@ class Main extends Component {
           className="btn btn-outline-primary"
           onClick={this.navigateToBooks}
         >
-          Explore
-          {' '}
           <i className="fa fa-rocket" aria-hidden="true" />
+          {' '}
+          Explore
         </button>
       </Fragment>
     );

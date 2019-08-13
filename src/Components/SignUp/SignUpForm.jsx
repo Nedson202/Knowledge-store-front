@@ -16,9 +16,9 @@ class SignUpForm extends Component {
               type="text"
               name="username"
               className="form-control"
-              id="username-SignUpForm"
-              autoComplete="new-password"
+              id="username-signup"
               onChange={handleInputChange}
+              autoComplete="new-password"
             />
             {username && <span className="validation-error">{username[0]}</span>}
           </div>
@@ -28,7 +28,7 @@ class SignUpForm extends Component {
               type="email"
               name="email"
               className="form-control"
-              id="email-SignUpForm"
+              id="email-signup"
               autoComplete="new-password"
               onChange={handleInputChange}
             />
@@ -40,15 +40,15 @@ class SignUpForm extends Component {
               type="password"
               name="password"
               className="form-control"
-              id="signup-password"
-              autoComplete="new-password"
+              id="password-signup"
               onChange={handleInputChange}
+              autoComplete="new-password"
             />
             {password && <span className="validation-error">{password[0]}</span>}
             <div
               role="button"
               tabIndex={0}
-              onClick={passwordToggler('signup-password')}
+              onClick={passwordToggler('password-signup')}
               id="password-icon"
             >
               <i className="fa fa-eye hide" aria-hidden="true" id="signup-password-remove-hide" />
@@ -82,14 +82,14 @@ class SignUpForm extends Component {
           className="btn btn-default btn-raised cancel-button"
           data-dismiss="modal"
         >
-        Close
+          Close
         </button>
         <button
           type="button"
           className="btn btn-primary btn-raised text-case signup-button"
           onClick={confirmSignup}
         >
-        Signup
+          Signup
         </button>
       </Fragment>
     );

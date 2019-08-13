@@ -130,9 +130,20 @@ class EmailGenerator extends Component {
   }
 
   renderForm() {
-    const { values: { email }, formErrors } = this.state;
+    const { values: { email }, formErrors, actionType } = this.state;
+    const requestType = actionType.match('verify-email') ? 'verification' : 'password reset';
     return (
       <form className="password-reset">
+        <div className="password-reset__label">
+          <h5>
+            A
+            {' '}
+            {requestType}
+            {' '}
+            link will be sent to the email address you provide.
+            {' '}
+          </h5>
+        </div>
         <div className="form-group">
           <label htmlFor="reset-email" className="bmd-label-floating">
             Email
@@ -146,7 +157,13 @@ class EmailGenerator extends Component {
             id="reset-email"
             autoComplete="new-password"
           />
-          {formErrors.email && <span className="validation-error">{formErrors.email}</span>}
+          {formErrors.email
+            && (
+              <span className="validation-error">
+                {formErrors.email}
+              </span>
+            )
+          }
           {this.renderButton()}
         </div>
       </form>

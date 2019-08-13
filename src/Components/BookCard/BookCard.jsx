@@ -112,7 +112,9 @@ class BookCard extends Component {
   }
 
   renderBookFooter(book, moreBooks) {
-    const { authors, userId, id } = book;
+    const {
+      authors, userId, id, averageRating
+    } = book;
     const link = !moreBooks ? `/books/${id}` : `${id}`;
     return (
       <div className="book-footer">
@@ -138,8 +140,9 @@ class BookCard extends Component {
           </Truncate>
         </span>
         <span className="react-star">
-          <Star />
-          <p>4.02</p>
+          <Star
+            value={averageRating}
+          />
         </span>
       </div>
     );

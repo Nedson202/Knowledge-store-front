@@ -66,7 +66,7 @@ class BookCatalog extends Component {
       this.setState({
         isNewContentLoading: true,
       }, () => {
-        document.getElementById('hey').scrollIntoView();
+        document.getElementById('scrollToElement').scrollIntoView();
         const { client, dispatch } = this.props;
         client.query({
           query: bookFilter,
@@ -114,7 +114,13 @@ class BookCatalog extends Component {
     return (
       <Fragment>
         {
-          books.map(book => <BookCard key={book.id} book={book} enableEllipsis={false} />)
+          books.map(book => (
+            <BookCard
+              key={book.id}
+              book={book}
+              enableEllipsis={false}
+            />
+          ))
         }
       </Fragment>
     );
@@ -153,7 +159,7 @@ class BookCatalog extends Component {
           {!loadingBook && books.length !== 0 && this.renderBooks(books)}
           {loadingBook && <BookPreloader loadingBook={loadingBook} />}
         </div>
-        <div className="text-center" style={{ marginBottom: '20px' }} id="hey">
+        <div className="text-center" style={{ marginBottom: '20px' }} id="scrollToElement">
           {isNewContentLoading && <Spinner spinnerStyle={45} />}
         </div>
         <BackToTop
@@ -174,7 +180,7 @@ BookCatalog.propTypes = {
 
 BookCatalog.defaultProps = {
   client: {},
-  dispatch: () => {},
+  dispatch: () => { },
   books: [],
   loadingBook: false,
   totalSearchResult: 0,

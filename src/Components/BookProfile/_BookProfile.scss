@@ -151,11 +151,21 @@
 		grid-gap: 50px;
 
 		.original-book {
+			display: block;
+			margin: 0 auto;
 			width: 210px !important;
 
 			.book-images {
 				width: 210px !important;
 				height: 17rem !important;
+			}
+
+			.favorite-option {
+				justify-content: center;
+			}
+
+			.react-star {
+				justify-content: center;
 			}
 
 			#image-error-placeholder {
