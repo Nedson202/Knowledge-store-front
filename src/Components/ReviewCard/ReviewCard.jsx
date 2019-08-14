@@ -14,6 +14,7 @@ import Avatar from './Avatar';
 import { fetchBook } from '../../queries/books';
 import toaster from '../../utils/toast';
 import errorHandler from '../../utils/errorHandler';
+import toHTTPS from '../../utils/toHTTPS';
 
 /* eslint-disable */
 class ReviewCard extends Component {
@@ -154,7 +155,7 @@ class ReviewCard extends Component {
     return (
       <div>
         <img
-          src={image}
+          src={toHTTPS(image)}
           className="rounded-circle"
           alt="Card cap"
           style={{ width: '45px', height: '45px' }}
