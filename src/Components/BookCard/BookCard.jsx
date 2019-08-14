@@ -6,6 +6,7 @@ import { Checkbox } from 'antd';
 import './_BookCard.scss';
 import Star from '../Star/Star';
 import BookImageLoader from './BookImageLoader';
+import toHTTPS from '../../utils/toHTTPS';
 
 class BookCard extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ class BookCard extends Component {
         {imageLoaded && imageLoadingError.length === 0 && (
           <Link to={link}>
             <img
-              src={bookImage}
+              src={toHTTPS(bookImage)}
               className="book-images parent"
               alt="Card cap"
               id="book-image"
@@ -60,7 +61,7 @@ class BookCard extends Component {
           </Link>
         )}
         <img
-          src={image || ''}
+          src={toHTTPS(image) || ''}
           className="hide"
           onLoad={this.checkImageRender(book ? image : '')}
           onError={this.handleImageLoadingError}
