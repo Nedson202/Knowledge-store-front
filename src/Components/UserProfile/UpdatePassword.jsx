@@ -12,7 +12,6 @@ class UpdatePassword extends Component {
     return (
       <Fragment>
         <div className="password-update">
-          <h5>Update Password</h5>
           <form>
             <div className="form-group">
               <label htmlFor="old-password" className="bmd-label-floating">
@@ -87,8 +86,8 @@ UpdatePassword.propTypes = {
 };
 
 UpdatePassword.defaultProps = {
-  handleInputChange: () => {},
-  updatePassword: () => {},
+  handleInputChange: () => { },
+  updatePassword: () => { },
   formValues: {},
   formErrors: {},
 };

@@ -129,7 +129,7 @@ class BookProfile extends Component {
   renderMoreBooks(books) {
     return (
       <div>
-        <h2>Other helpful books</h2>
+        <h3>Recommended</h3>
         <hr />
         <div className="book-profile-more">
           {

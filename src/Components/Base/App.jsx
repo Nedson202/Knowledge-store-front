@@ -28,7 +28,10 @@ class App extends Component {
 
   componentWillUnmount() {
     document.getElementById('navbar').style.display = 'flex ';
-    document.getElementById('myLeftSideBar').style.display = 'block';
+
+    if (typeof window.orientation === 'undefined') {
+      document.getElementById('myLeftSideBar').style.display = 'block';
+    }
     const modalOpen = document.getElementById('close');
     return modalOpen && modalCloser();
   }
@@ -53,12 +56,10 @@ class App extends Component {
     const { history, dispatch } = this.props;
     if (Object.keys(query)[0] === '?verify-email') {
       const userToken = Object.values(query)[0];
-      const decodedToken = tokenDecoder(userToken);
-      const { id } = decodedToken;
       setQuery({ token: '' });
       verifyEmailQuery({
         variables: {
-          id
+          token: `Bearer ${userToken}`,
         }
       }).then((response) => {
         const { verifyEmail: { token, message } } = response.data;
@@ -82,9 +83,11 @@ class App extends Component {
   emailConfirmationNote() {
     return (
       <div className="pending-verification">
-        You are yet to verify your email address. Check your mail box or use this
+        A verification link has been sent to your mail box. Click on the link or use this
         {' '}
         <Link to="/email?verify-email=true" style={{ color: 'black' }}>Link</Link>
+        {' '}
+        to request for a new verification mail.
       </div>
     );
   }

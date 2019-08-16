@@ -4,6 +4,7 @@ import moment from 'moment';
 import './_AddBookModal.scss';
 import { DatePicker, Select } from 'antd';
 import Spinner from '../Spinner/Spinner';
+import toHTTPS from '../../utils/toHTTPS';
 
 const { Option } = Select;
 
@@ -44,7 +45,7 @@ class AddBookModal extends Component {
     return (
       <div className="image-previewer">
         <img
-          src={imagePreviewUrl}
+          src={toHTTPS(imagePreviewUrl)}
           id="image-upload"
           height="220px"
           width="180px"
@@ -66,14 +67,14 @@ class AddBookModal extends Component {
       imagePreviewUrl, genres, handleInputChange, handleGenreChange,
       dateChange, handleBookSubmission, editingBook,
       bookToEdit: {
-        name, authors, year
+        name, authors, year, description
       }
     } = this.props;
 
     return (
       <Fragment>
         <div
-          className="modal fade"
+          className="modal fade add-book-modal"
           id="AddBookModal"
           tabIndex="-1"
           role="dialog"
@@ -103,7 +104,7 @@ class AddBookModal extends Component {
                       id="book-title"
                       name="name"
                       onChange={handleInputChange}
-                      value={editingBook && name}
+                      defaultValue={editingBook ? name : ''}
                     />
                   </div>
                   <div className="form-group">
@@ -115,7 +116,7 @@ class AddBookModal extends Component {
                       name="authors"
                       placeholder="e.g paul max, smith mill..."
                       onChange={handleInputChange}
-                      value={editingBook && authors}
+                      defaultValue={editingBook ? authors : ''}
                     />
                   </div>
                   <div className="form-group is-filled">
@@ -123,7 +124,7 @@ class AddBookModal extends Component {
                     <DatePicker
                       placeholder=""
                       onChange={dateChange}
-                      defaultValue={editingBook && year ? moment(year, 'YYYY-MM-DD') : null}
+                      defaultdefaultValue={editingBook && year ? moment(year, 'YYYY-MM-DD') : null}
                       format="YYYY-MM-DD"
                     />
                   </div>
@@ -156,6 +157,7 @@ class AddBookModal extends Component {
                       id="description"
                       name="description"
                       onChange={handleInputChange}
+                      defaultValue={editingBook ? description : ''}
                     />
                   </div>
                 </form>

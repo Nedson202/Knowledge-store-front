@@ -3,17 +3,17 @@
 }
 
 .add-book-form {
-  display: grid;
-  grid-template-columns: 2fr 6fr;
+  display: flex;
+  flex-direction: row;
   max-width: 800px;
-  grid-gap: 20px;
 
   #image-upload {
     height: 220px;
     width: 180px;
     border-radius: 5px;
-    border: 2px dashed;
+    border: 1px dashed;
     margin-top: 18px;
+    margin-right: 30px;
   }
 
   .ant-input {
@@ -72,33 +72,18 @@
   }
 
   .form-fields {
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(2, 3fr);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .form-group {
+			width: calc(1/2*100% - (1 - 1/2)*30px);
+    }
   }
 
   .ant-select-dropdown {
     z-index: 2000 !important;
-  }
-}
-
-@media screen and (max-width: 500px) {
-	.add-book-form {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr) !important;
-    max-width: 800px;
-    grid-gap: 20px;
-  }
-
-  .add-book-form {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr) !important;
-    max-width: 800px;
-    grid-gap: 20px;
-
-    .form-fields {
-      display: block;
-    }
   }
 }
 
@@ -128,5 +113,22 @@
   .modal-dialog {
     max-width: 800px;
     margin: 1.75rem auto;
+  }
+}
+
+
+@media screen and (max-width: 560px) {
+  .add-book-modal {
+    margin: auto 15px;
+  }
+
+  .add-book-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    
+    .form-fields .form-group {
+      width: 100%;
+    }
   }
 }

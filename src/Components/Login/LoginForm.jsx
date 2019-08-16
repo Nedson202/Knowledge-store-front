@@ -56,8 +56,8 @@ class LoginForm extends Component {
                     </div>
                   </div>
                   <div className="error-action">
-                    <Link onClick={() => modalCloser()} to="/email?reset-password=true">forgot password?</Link>
-                    <Link onClick={() => modalCloser()} to="/email?verify-email=true">verify email?</Link>
+                    <Link onClick={() => modalCloser()} to="/email?reset-password=true">Forgot password?</Link>
+                    <Link onClick={() => modalCloser()} to="/email?verify-email=true">Verify email</Link>
                   </div>
                   <div className="form-group social-login">
                     <div className="text-muted text-center social-login-text">Login with</div>

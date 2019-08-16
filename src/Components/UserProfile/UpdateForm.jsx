@@ -20,7 +20,7 @@ class UpdateForm extends Component {
             imagePreviewUrl={imagePreviewUrl}
             cancelPreview={cancelPreview}
           />
-          <div>
+          <div className="update-form">
             <form>
               <div className="form-group">
                 <label htmlFor="profile-name" className="bmd-label-floating">Username</label>
@@ -87,11 +87,11 @@ UpdateForm.propTypes = {
 };
 
 UpdateForm.defaultProps = {
-  toggleEditForm: () => {},
-  handleInputChange: () => {},
-  handleImageChange: () => {},
-  cancelPreview: () => {},
-  updateProfile: () => {},
+  toggleEditForm: () => { },
+  handleInputChange: () => { },
+  handleImageChange: () => { },
+  cancelPreview: () => { },
+  updateProfile: () => { },
   user: {},
   formValues: {},
   imagePreviewUrl: '',

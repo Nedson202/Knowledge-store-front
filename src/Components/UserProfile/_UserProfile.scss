@@ -1,16 +1,19 @@
 .user-analytics {
-  display: grid;
-  grid-template-columns: repeat(4, 2fr);
-  grid-gap: 60px;
+  display: flex;
+  flex-direction: row;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto !important;
   text-align: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 
   div {
     border-radius: 12px;
     height: 160px;
-    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.3), 0 2px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.1);
+    width: calc(1/3 * 100% - (1 - 1/3) * 100px);
+    margin-bottom: 30px;
 
     h4 {
       padding-top: 20%;
@@ -23,8 +26,10 @@
 }
 
 .profile-details {
-  display: grid;
-  grid-gap: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
 
   h4 {
     padding-bottom: 30px;
@@ -35,15 +40,44 @@
     width: 140px;
     margin-left: auto;
   }
+
+  &__image {
+    margin: 20px auto;
+  }
+
+  &__info {
+    width: 500px;
+  }
 }
 
 .profile-update {
-  display: grid;
-  grid-template-columns: 5fr 4fr;
-  grid-gap: 60px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   width: 100%;
   max-width: 1200px;
   margin: 100px auto !important;
+  justify-content: space-between;
+
+  .profile-upload {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    #image-upload {
+      width: 60%;
+      margin-right: 30px;
+    }
+
+    .update-form {
+      width: 140%;
+    }
+  }
+
+  .password-update {
+    width: 45%;
+  }
 
   .form-group {
     margin-bottom: 30px;
@@ -73,38 +107,38 @@
   }
 }
 
-.profile-upload {
-  display: grid;
-  grid-template-columns: 1.5fr 3fr;
-  grid-gap: 30px;
-}
-
 @media screen and (max-width: 560px) {
   .user-analytics {
-    display: grid;
-    grid-template-columns: repeat(2, 2fr);
-    grid-gap: 60px 20px;
+    display: flex;
+    flex-direction: row;
     width: 100%;
     max-width: 1200px;
-    margin: 100px auto !important;
+    margin: 50px auto !important;
     text-align: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 
-    h4 {
-      padding-top: 25%;
+    &__child {
+      width: 45%;
+      margin-bottom: 30px;
+
+      h4 {
+        padding-top: 25%;
+      }
     }
+
   }
 
   .profile-update {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-gap: 60px;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     max-width: 1200px;
     margin: 60px auto !important;
   }
 
   .password-update {
-    grid-column: span 1 !important;
+    margin-top: 30px;
   }
 
   .profile-upload {

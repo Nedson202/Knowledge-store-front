@@ -13,7 +13,6 @@ import { editProfile, changePassword } from '../../queries/auth';
 import toaster from '../../utils/toast';
 import { setCurrentUser } from '../../redux/actions/userActions';
 import tokenDecoder from '../../utils/tokenDecoder';
-import UserAnalyticsLoader from './UserAnalyticsLoader';
 import errorHandler from '../../utils/errorHandler';
 
 class UserProfile extends Component {
@@ -143,30 +142,27 @@ class UserProfile extends Component {
   renderAnalytica() {
     return (
       <div className="user-analytics" id="main">
-        <div>
-          <UserAnalyticsLoader />
-        </div>
-        <div>
+        <div className="user-analytics__child">
           <h4>Date Joined</h4>
           <span>10-12-2018</span>
         </div>
-        <div>
+        <div className="user-analytics__child">
           <h4>Total Books</h4>
           <span>10</span>
         </div>
-        <div>
+        <div className="user-analytics__child">
           <h4>Total Reviews</h4>
           <span>10</span>
         </div>
-        <div>
+        <div className="user-analytics__child">
           <h4>Favorite Books</h4>
           <span>10</span>
         </div>
-        <div>
+        <div className="user-analytics__child">
           <h4>Books Rated</h4>
           <span>10</span>
         </div>
-        <div>
+        <div className="user-analytics__child">
           <h4>Downloaded</h4>
           <span>10</span>
         </div>

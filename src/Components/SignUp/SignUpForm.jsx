@@ -51,8 +51,8 @@ class SignUpForm extends Component {
               onClick={passwordToggler('password-signup')}
               id="password-icon"
             >
-              <i className="fa fa-eye hide" aria-hidden="true" id="signup-password-remove-hide" />
-              <i className="fa fa-eye-slash" aria-hidden="true" id="signup-password-add-hide" />
+              <i className="fa fa-eye hide" aria-hidden="true" id="password-signup-remove-hide" />
+              <i className="fa fa-eye-slash" aria-hidden="true" id="password-signup-add-hide" />
             </div>
           </div>
           <div className="form-group social-login">

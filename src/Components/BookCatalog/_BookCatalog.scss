@@ -2,11 +2,13 @@
 
 #image-error-placeholder {
 	width: 170px !important;
-	height: 13rem !important;
-	line-height: 13rem;
+	height: 15rem !important;
+	line-height: 15rem;
 	border: 1px solid #d4d4d4;
 	border-radius: 4px;
 	margin-top: 15px;
+	display: block;
+	margin: auto;
 }
 
 @media screen and (min-width: 960px) {
@@ -19,16 +21,18 @@
 		justify-content: space-between;
 
 		.child-elem {
-			width: calc(1/5*100% - (1 - 1/5)*47px);
+			width: calc(1/5*100% - (1 - 1/5)*40px);
 			margin-bottom: 50px;
 
 			#image-error-placeholder {
 				width: 190px !important;
-				height: 17rem !important;
-				line-height: 17rem;
+				height: 15rem;
+				line-height: 15rem;
 				border: 1px solid #d4d4d4;
 				border-radius: 4px;
 				margin-top: 15px;
+				display: block;
+				margin: auto;
 			}
 		}
 	}
@@ -130,6 +134,8 @@
 				border: 1px solid #d4d4d4;
 				border-radius: 4px;
 				margin-top: 15px;
+				display: block;
+				margin: auto;
 			}
 		}
 	}

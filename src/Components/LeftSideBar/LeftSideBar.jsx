@@ -1,19 +1,27 @@
 import React, { Component, Fragment } from 'react';
-import ReactTooltip from 'react-tooltip';
 import { NavLink } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import './_LeftSideBar.scss';
 
 class LeftSideBar extends Component {
-  renderAdminNavlinks = () => (
-    <Fragment>
-      <div data-tip="Users">
-        <NavLink to="/users" className="dropdown-item sidebar-navlink">
-          <i className="fa fa-users" />
-          <span id="sideBarText">Users</span>
-        </NavLink>
-      </div>
-    </Fragment>
-  );
+  renderAdminNavlinks = () => {
+    const { user: { role } } = this.props;
+    if (role === 'user') {
+      return;
+    }
+    return (
+      <Fragment>
+        <div data-tip="Users">
+          <NavLink to="/users" className="dropdown-item sidebar-navlink">
+            <i className="fa fa-users" />
+            <span id="sideBarText">Users</span>
+          </NavLink>
+        </div>
+      </Fragment>
+    );
+  }
 
   render() {
     return (
@@ -43,12 +51,6 @@ class LeftSideBar extends Component {
             <span id="sideBarText">Profile</span>
           </NavLink>
         </div>
-        <div data-tip="Analytics">
-          <NavLink to="/analytics" className="dropdown-item sidebar-navlink">
-            <i className="far fa-chart-bar" />
-            <span id="sideBarText">Analytics</span>
-          </NavLink>
-        </div>
         <div data-tip="My Cart">
           <NavLink to="/cart" className="dropdown-item sidebar-navlink">
             <i className="fas fa-shopping-cart" />
@@ -61,4 +63,16 @@ class LeftSideBar extends Component {
   }
 }
 
-export default LeftSideBar;
+LeftSideBar.propTypes = {
+  user: PropTypes.object,
+};
+
+LeftSideBar.defaultProps = {
+  user: {},
+};
+
+const mapStateToProps = ({ auth }) => ({
+  user: auth.user
+});
+
+export default connect(mapStateToProps)(LeftSideBar);
