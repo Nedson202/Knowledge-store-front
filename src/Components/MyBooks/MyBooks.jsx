@@ -13,14 +13,19 @@ import toaster from '../../utils/toast';
 
 class MyBooks extends Component {
   state = {
-    bookId: '', //eslint-disable-line
     editingBook: false
   }
 
   setBookToEdit = book => () => {
     const { dispatch } = this.props;
     dispatch(setBookToEdit(book));
-    this.setState({ bookId: book.id, editingBook: true }); //eslint-disable-line
+    this.setState({ editingBook: true });
+  }
+
+  unSetBookToEdit = () => {
+    const { dispatch } = this.props;
+    dispatch(setBookToEdit({}));
+    this.setState({ editingBook: false });
   }
 
   setBookToRemove = id => () => {
@@ -55,6 +60,7 @@ class MyBooks extends Component {
           className="btn btn-primary btn-raised add-book"
           data-toggle="modal"
           data-target="#AddBookModal"
+          onClick={this.unSetBookToEdit}
         >
           Add Book
         </button>

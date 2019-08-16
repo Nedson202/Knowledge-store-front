@@ -2,8 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 class Main extends Component {
-  navigateToBooks = () => window.location.replace('/books')
-
+  navigateToBooks = () => window.location.replace('/books');
 
   renderButtons() {
     return (

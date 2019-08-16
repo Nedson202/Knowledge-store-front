@@ -8,7 +8,7 @@ class UserDetails extends Component {
     return (
       <Fragment>
         <div className="profile-details">
-          <div>
+          <div className="profile-details__image">
             <img
               src={user.picture}
               id="show-image"
@@ -17,7 +17,7 @@ class UserDetails extends Component {
               alt="Avatar"
             />
           </div>
-          <div>
+          <div className="profile-details__info">
             <span>Username</span>
             <h4>{user.username}</h4>
             <span>Email</span>

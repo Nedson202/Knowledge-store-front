@@ -69,7 +69,7 @@ class Favorites extends Component {
               className="btn btn-primary btn-raised save"
               onClick={this.removeFavorites}
             >
-              Save
+              Remove
             </button>
           )}
           <button

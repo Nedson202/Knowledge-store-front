@@ -136,12 +136,23 @@ class BookCatalog extends Component {
     );
   }
 
-  render404Message() {
+  render404Message = () => {
+    const { books, loadingBook } = this.props;
     const { networkError } = this.state;
+    let message = 'The content you seek is unavailable';
+
+    if (!loadingBook && books.length) {
+      return;
+    }
+
+    if (networkError) {
+      message = 'Unable to retrieve books from the server please try again';
+    }
+
     return (
       <div>
         <h2 className="text-center fetch-error">
-          {networkError || 'The content you seek is unavailable'}
+          {message}
         </h2>
       </div>
     );
@@ -154,11 +165,11 @@ class BookCatalog extends Component {
     return (
       <Fragment>
         {this.renderPageHeader()}
-        {!loadingBook && books && books.length === 0 && this.render404Message()}
         <div className="container-content" id="main">
           {!loadingBook && books.length !== 0 && this.renderBooks(books)}
           {loadingBook && <BookPreloader loadingBook={loadingBook} />}
         </div>
+        {!loadingBook && this.render404Message()}
         <div className="text-center" style={{ marginBottom: '20px' }} id="scrollToElement">
           {isNewContentLoading && <Spinner spinnerStyle={45} />}
         </div>

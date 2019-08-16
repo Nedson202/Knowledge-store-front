@@ -154,7 +154,7 @@ $border_color_2: #ffaf00;
 	height: 50px;
 	text-align: center;
 	line-height: 50px;
-	font-size: 22px;
+	font-size: 18px;
 	background-color: #ff8d00;
 	color: white;
 }
@@ -194,12 +194,12 @@ $border_color_2: #ffaf00;
 
 	.pending-verification {
 		height: unset;
-		text-align: center;
-		line-height: unset;
-		font-size: 17px;
-		background-color: #ff8d00;
-		color: white;
-		padding: 10px 0;
+    text-align: center;
+    line-height: unset;
+    font-size: 17px;
+    background-color: #ff8d00;
+    color: white;
+    padding: 10px 15px;
 	}
 }
 

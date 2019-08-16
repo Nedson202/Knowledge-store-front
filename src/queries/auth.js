@@ -9,8 +9,8 @@ const addUser = gql`
 `;
 
 const verifyEmail = gql`
-  mutation($id: String!) {
-    verifyEmail(id: $id) {
+  mutation($token: String!) {
+    verifyEmail(token: $token) {
       token,
       message
     }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -7,6 +7,8 @@ import Avatar from '../ReviewCard/Avatar';
 import { logOutUser } from '../../redux/actions/userActions';
 import toaster from '../../utils/toast';
 import Search from '../Search/Search';
+import Login from '../Login/Login';
+import SignUp from '../SignUp/SignUp';
 
 class Header extends Component {
   state = {
@@ -48,16 +50,17 @@ class Header extends Component {
     }
   };
 
-  toggleSideBar = () => {
+  toggleMobileNav = () => {
     const { isSideNavOpen } = this.state;
+    const sideNavEL = document.getElementById('mySidenav');
     if (!isSideNavOpen) {
       document.addEventListener('click', this.handleOutsideClick, false);
-      document.getElementById('mySidenav').style.width = '270px';
-      document.getElementById('mySidenav').style.boxShadow = '0 1px 1px 100vw rgba(0, 0, 0, 0.6)';
+      sideNavEL.style.width = '270px';
+      sideNavEL.style.boxShadow = '0 1px 1px 100vw rgba(0, 0, 0, 0.6)';
     } else {
       document.removeEventListener('click', this.handleOutsideClick, false);
-      document.getElementById('mySidenav').style.width = '0';
-      document.getElementById('mySidenav').style.boxShadow = 'none';
+      sideNavEL.style.width = '0';
+      sideNavEL.style.boxShadow = 'none';
     }
 
     this.setState(prevState => ({
@@ -70,7 +73,7 @@ class Header extends Component {
       return;
     }
 
-    this.toggleSideBar();
+    this.toggleMobileNav();
   }
 
   handleLogout = () => {
@@ -78,6 +81,28 @@ class Header extends Component {
     dispatch(logOutUser());
     history.push('/');
     toaster('success', 'You logged out successfully');
+  }
+
+  authenticationForms() {
+    return (
+      <Fragment>
+        <Login />
+        <SignUp />
+      </Fragment>
+    );
+  }
+
+  renderAuthButtons() {
+    return (
+      <Fragment>
+        <button type="button" className="btn btn-default btn-raised cancel-button btn" data-toggle="modal" data-target="#LoginFormModal">
+          Login
+        </button>
+        <button type="button" className="btn btn-primary btn-raised text-case login-button" data-toggle="modal" data-target="#SignUpFormModal">
+          Signup
+        </button>
+      </Fragment>
+    );
   }
 
   renderUserAvatar() {
@@ -181,7 +206,7 @@ class Header extends Component {
                 type="button"
                 className="mobile-nav"
                 aria-label="Toggle navigation"
-                onClick={this.toggleSideBar}
+                onClick={this.toggleMobileNav}
               >
                 <i className="fas fa-bars" />
               </button>
@@ -193,16 +218,19 @@ class Header extends Component {
                 {user.isVerified === 'true' && this.renderNotificationPane()}
                 {user.isVerified === 'true' && this.renderUserAvatar()}
               </ul>
+              {user.isVerified !== 'true' && this.renderAuthButtons()}
             </div>
           </div>
         </nav>
+        {this.authenticationForms()}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.auth.user
+const mapStateToProps = ({ auth }) => ({
+  isAuthenticated: auth.isAuthenticated,
+  user: auth.user
 });
 
 Header.propTypes = {
