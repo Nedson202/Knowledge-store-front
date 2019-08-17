@@ -18,7 +18,7 @@
 
   .ant-input {
     width: 100% !important;
-    border: none !important;
+    border: 1px solid transparent !important;
   }
 
   .ant-calendar-picker {
@@ -48,7 +48,7 @@
   }
 
   .ant-select-selection {
-    border: none !important;
+    border: 1px solid transparent !important;
     background: linear-gradient(0deg,#005C97 1px,rgba(0,150,136,0) 0),
     linear-gradient(0deg,rgba(0,0,0,.26) 1px,transparent 0);
     border-width: 1px;

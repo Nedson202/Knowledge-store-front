@@ -1,6 +1,5 @@
 .book-images {
 	border-radius: 4px;
-	margin-top: 15px;
 }
 
 .parent {
@@ -59,27 +58,6 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
-}
-
-#read-more {
-	text-decoration: none !important;
-	color: white !important;
-	display: block;
-	width: 120px;
-	margin: 0 auto;
-}
-
-#read-more:hover {
-	text-decoration: none;
-}
-
-.read-more-section {
-	display: flex;
-	margin-right: 10px;}
-
-i.fa.fa-ellipsis-v {
-	padding-top: 7px;
-	cursor: pointer;
 }
 
 button#trash-icon {

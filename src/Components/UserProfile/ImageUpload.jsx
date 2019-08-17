@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import './_ImageUpload.scss';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner';
 
 class ImageUpload extends Component {
   renderDropzone() {

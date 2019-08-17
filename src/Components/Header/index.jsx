@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import './_Header.scss';
 import Avatar from '../ReviewCard/Avatar';
 import { logOutUser } from '../../redux/actions/userActions';
-import Search from '../Search/Search';
+import Search from '../Search';
 import Login from '../Login';
 import SignUp from '../SignUp';
 

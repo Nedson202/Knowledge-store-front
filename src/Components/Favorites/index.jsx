@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
 import './_Favorites.scss';
-import BookCard from '../BookCard/BookCard';
+import BookCard from '../BookCard';
 import toaster from '../../utils/toast';
 import { removeFavorites, getFavorites } from '../../queries/books';
 import BookPreloader from '../BookCatalog/BookPreloader';

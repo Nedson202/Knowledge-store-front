@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import './_ReplyCard.scss';
-import AddReview from '../AddReview/AddReview';
+import AddReview from '../AddReview';
 import timeParser from '../../utils/timeParser';
 import Avatar from './Avatar';
 

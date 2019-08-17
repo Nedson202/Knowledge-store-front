@@ -148,6 +148,6 @@
     "event-stream": "^4.0.1"
   },
   "engines": {
-    "node": "10.x"
+    "node": "11.x"
   }
 }

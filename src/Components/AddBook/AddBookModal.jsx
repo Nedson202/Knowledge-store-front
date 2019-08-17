@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import './_AddBookModal.scss';
 import { DatePicker, Select } from 'antd';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner';
 import toHTTPS from '../../utils/toHTTPS';
 
 const { Option } = Select;

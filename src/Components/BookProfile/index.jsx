@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
 import './_BookProfile.scss';
 import '../BookCatalog/_BookCatalog.scss';
-import BookCard from '../BookCard/BookCard';
-import AddReview from '../AddReview/AddReview';
-import ReviewCard from '../ReviewCard/ReviewCard';
+import BookCard from '../BookCard';
+import AddReview from '../AddReview';
+import ReviewCard from '../ReviewCard';
 import { fetchBook, addToFavorites } from '../../queries/books';
 import ProfilePreloader from './ProfilePreloader';
 import toaster from '../../utils/toast';
 import errorHandler from '../../utils/errorHandler';
-import BackToTop from '../BackToTop/BackToTop';
+import BackToTop from '../BackToTop';
 
 class BookProfile extends Component {
   state = {
@@ -75,9 +75,11 @@ class BookProfile extends Component {
       <div className="book-profile-title">
         <h2>{book && book.name}</h2>
         <h5>
-          {book && book.authors.length ? `by, ${
-            book.authors.map(author => author)
-            }` : 'author unavailable'}
+          {book && book.authors.length
+            ? `by, ${
+              book.authors.map(author => author)
+            }`
+            : 'author unavailable'}
         </h5>
         <div className="book-meta">
           <span className="genre-badge">
