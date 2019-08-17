@@ -4,7 +4,13 @@ import PropTypes from 'prop-types';
 
 const Spinner = (props) => {
   const { spinnerStyle } = props;
-  const antIcon = <Icon type="loading" style={{ fontSize: spinnerStyle || 24, color: '#005C97' }} spin />;
+  const antIcon = (
+    <Icon
+      type="loading"
+      style={{ fontSize: spinnerStyle, color: '#005C97' }}
+      spin
+    />
+  );
   return (
     <Fragment>
       <Spin indicator={antIcon} />

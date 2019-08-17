@@ -11,7 +11,14 @@ class LoginForm extends Component {
     const { username, password } = formErrors;
     return (
       <div>
-        <div className="modal fade" id="LoginFormModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div
+          className="modal fade"
+          id="LoginFormModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
@@ -51,27 +58,62 @@ class LoginForm extends Component {
                       onClick={passwordToggler('password-login')}
                       id="password-icon"
                     >
-                      <i className="fa fa-eye hide" aria-hidden="true" id="password-login-remove-hide" />
-                      <i className="fa fa-eye-slash" aria-hidden="true" id="password-login-add-hide" />
+                      <i
+                        className="fa fa-eye hide"
+                        aria-hidden="true"
+                        id="password-login-remove-hide"
+                      />
+                      <i
+                        className="fa fa-eye-slash"
+                        aria-hidden="true"
+                        id="password-login-add-hide"
+                      />
                     </div>
                   </div>
                   <div className="error-action">
-                    <Link onClick={() => modalCloser('close-login')} to="/email?reset-password=true">Forgot password?</Link>
-                    <Link onClick={() => modalCloser('close-login')} to="/email?verify-email=true">Verify email</Link>
+                    <Link
+                      onClick={() => modalCloser('close-login')}
+                      to="/email?reset-password=true"
+                    >
+                      Forgot password?
+
+                    </Link>
+                    <Link
+                      onClick={() => modalCloser('close-login')}
+                      to="/email?verify-email=true"
+                    >
+                      Verify email
+
+                    </Link>
                   </div>
                   <div className="form-group social-login">
                     <div className="text-muted text-center social-login-text">Login with</div>
-                    <button type="button" onClick={socialAuthentication('google')} className="btn btn-primary">
+                    <button
+                      type="button"
+                      onClick={socialAuthentication('google')}
+                      className="btn btn-primary"
+                    >
                       <i className="fab fa-google google-icon" />
                     </button>
-                    <button type="button" onClick={socialAuthentication('facebook')} className="btn btn-primary">
+                    <button
+                      type="button"
+                      onClick={socialAuthentication('facebook')}
+                      className="btn btn-primary"
+                    >
                       <i className="fab fa-facebook-f facebook-icon" />
                     </button>
                   </div>
                 </form>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-default btn-raised cancel-button" data-dismiss="modal">Close</button>
+                <button
+                  type="button"
+                  className="btn btn-default btn-raised cancel-button"
+                  data-dismiss="modal"
+                >
+                  Close
+
+                </button>
                 <button
                   type="button"
                   className="btn btn-primary btn-raised text-case login-button"

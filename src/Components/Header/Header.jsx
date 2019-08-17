@@ -35,7 +35,10 @@ class Header extends Component {
     } else {
       localStorage.setItem('sideBarStatus', 'closed');
       document.getElementById('myLeftSideBar').style.width = '70px';
-      mainContent ? mainContent.style.marginLeft = 'auto' : null; {/* eslint-disable-line */ }
+
+      if (mainContent) {
+        mainContent.style.marginLeft = 'auto';
+      }
       this.toggleSidebarText('none');
     }
     this.setState(prevState => ({
@@ -80,7 +83,7 @@ class Header extends Component {
     const { dispatch, history } = this.props;
     dispatch(logOutUser());
     history.push('/');
-    toaster('success', 'You logged out successfully');
+    toaster('success', 'You have been logged out');
   }
 
   authenticationForms() {
@@ -95,10 +98,20 @@ class Header extends Component {
   renderAuthButtons() {
     return (
       <Fragment>
-        <button type="button" className="btn btn-default btn-raised cancel-button btn" data-toggle="modal" data-target="#LoginFormModal">
+        <button
+          type="button"
+          className="btn btn-default btn-raised cancel-button btn"
+          data-toggle="modal"
+          data-target="#LoginFormModal"
+        >
           Login
         </button>
-        <button type="button" className="btn btn-primary btn-raised text-case login-button" data-toggle="modal" data-target="#SignUpFormModal">
+        <button
+          type="button"
+          className="btn btn-primary btn-raised text-case login-button"
+          data-toggle="modal"
+          data-target="#SignUpFormModal"
+        >
           Signup
         </button>
       </Fragment>
@@ -164,7 +177,11 @@ class Header extends Component {
             {' '}
             <i className="fas fa-user-circle" />
           </Link>
-          <button type="button" className="dropdown-item user-profile-navlink" onClick={this.handleLogout}>
+          <button
+            type="button"
+            className="dropdown-item user-profile-navlink"
+            onClick={this.handleLogout}
+          >
             Logout
             {' '}
             <i className="fa fa-sign-out-alt" />

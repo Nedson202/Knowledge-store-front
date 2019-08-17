@@ -17,7 +17,6 @@ export default function (ComposedComponent) {
       });
     }
 
-
     updateOnlineStatus = () => {
       const condition = navigator.onLine ? 'online' : 'offline';
       if (condition === 'online') {

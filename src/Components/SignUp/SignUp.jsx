@@ -51,7 +51,7 @@ class SignUp extends Component {
     event.preventDefault();
     const { values } = this.state;
     const { isValid, errors } = allFieldsValidation(values);
-    const { addUserQuery, dispatch, history } = this.props;
+    const { addUserQuery, dispatch, } = this.props;
     if (!isValid) {
       return this.setState({ formErrors: errors });
     }
@@ -68,7 +68,7 @@ class SignUp extends Component {
       localStorage.setItem('token', token);
       modalCloser('close-signup');
       dispatch(setCurrentUser(decodedToken));
-      if (decodedToken.isVerified === 'true') history.push('/my-books');
+      if (decodedToken.isVerified === 'true') window.location.replace('/my-books');
       toaster('success', 'Signed up successfully');
     } catch (error) {
       const messages = errorHandler(error);
@@ -94,13 +94,11 @@ class SignUp extends Component {
 SignUp.propTypes = {
   addUserQuery: PropTypes.func,
   dispatch: PropTypes.func,
-  history: PropTypes.object,
 };
 
 SignUp.defaultProps = {
   addUserQuery: () => { },
   dispatch: () => { },
-  history: {},
 };
 
 export default withRouter(compose(

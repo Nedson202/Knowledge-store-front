@@ -1,6 +1,5 @@
 import React, { PureComponent, Fragment } from 'react';
 import ContentLoader from 'react-content-loader';
-// import PropTypes from 'prop-types';
 import './_BookProfile.scss';
 import '../BookCatalog/_BookCatalog.scss';
 import BookImageLoader from '../BookCard/BookImageLoader';

@@ -55,7 +55,9 @@ class PasswordReset extends Component {
     const { resetPasswordQuery, history, dispatch } = this.props;
     const { values, values: { email } } = this.state;
 
-    if (!email.trim()) return toaster('error', 'Check your email for password reset link');
+    if (!email.trim()) {
+      return toaster('error', 'Check your email for password reset link');
+    }
     resetPasswordQuery({
       variables: {
         ...values
@@ -107,8 +109,16 @@ class PasswordReset extends Component {
               role="button"
               tabIndex={0}
             >
-              <i className="fa fa-eye hide" aria-hidden="true" id="password-reset-remove-hide" />
-              <i className="fa fa-eye-slash" aria-hidden="true" id="password-reset-add-hide" />
+              <i
+                className="fa fa-eye hide"
+                aria-hidden="true"
+                id="password-reset-remove-hide"
+              />
+              <i
+                className="fa fa-eye-slash"
+                aria-hidden="true"
+                id="password-reset-add-hide"
+              />
             </div>
           </div>
           <div className="form-group password-reset__button">

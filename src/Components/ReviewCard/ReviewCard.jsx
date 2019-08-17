@@ -16,7 +16,6 @@ import toaster from '../../utils/toast';
 import errorHandler from '../../utils/errorHandler';
 import toHTTPS from '../../utils/toHTTPS';
 
-/* eslint-disable */
 class ReviewCard extends Component {
   constructor(props) {
     super(props);
@@ -55,7 +54,7 @@ class ReviewCard extends Component {
     });
   }
 
-  toggleReplyEditForm = (id) => () => {
+  toggleReplyEditForm = id => () => {
     this.setState(prevState => ({
       isEditFormOpen: !prevState.isEditFormOpen,
       reviewType: 'replyEdit',
@@ -107,6 +106,16 @@ class ReviewCard extends Component {
     });
   }
 
+  handleTruncate = (truncatedText, id) => () => {
+    const { truncated } = this.state;
+    if (truncated !== truncatedText) {
+      this.setState({
+        truncated,
+        truncateId: id
+      });
+    }
+  }
+
   toggleLines(id, showLess, event) {
     event.preventDefault();
     const { expanded, expandedItem } = this.state;
@@ -117,16 +126,6 @@ class ReviewCard extends Component {
       truncateId: id,
       expandedItem
     });
-  }
-
-  handleTruncate = (truncatedText, id) => () => {
-    const { truncated } = this.state;
-    if (truncated !== truncatedText) {
-      this.setState({
-        truncated,
-        truncateId: id
-      });
-    }
   }
 
   refetchData(bookId) {
@@ -215,15 +214,18 @@ class ReviewCard extends Component {
           {this.renderTimeReviewed(createdAt)}
         </p>
         {(!isReviewEditFormOpen || id !== setReviewToEdit) && (
-          <span id='review'>
-            <Truncate key={id}
+          <span id="review">
+            <Truncate
+              key={id}
               lines={expandedItem.includes(id) ? null : 3}
-              // lines={expanded && truncateId === id ? 0 : 3}
               ellipsis={(
                 <span>
                   ...
-                {' '}
-                  {expanded && truncateId === id || <a href="" onClick={(e) => this.toggleLines(id, false, e)}>Read more</a>}
+                  {' '}
+                  {expanded
+                    ? truncateId === id
+                    // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                    : <a href="" onClick={e => this.toggleLines(id, false, e)}>Read more</a>}
                 </span>
               )}
               onTruncate={this.handleTruncate}
@@ -233,8 +235,9 @@ class ReviewCard extends Component {
             {expandedItem.includes(id) && (
               <span>
                 ...
-            {' '}
-                <a href="#" onClick={(e) => this.toggleLines(id, true, e)}>Show less</a>
+                {' '}
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a href="#" onClick={e => this.toggleLines(id, true, e)}>Show less</a>
               </span>
             )}
             {this.renderStars(rating)}
@@ -256,11 +259,14 @@ class ReviewCard extends Component {
           <span style={{ cursor: 'default', paddingLeft: '10px' }}>{likes !== 0 && likes}</span>
         </p>
         <p onClick={this.toggleReplyDialog(id)}>Reply</p>
-        {user.id && user.id.match(userId) && <span className="reviewer-buttons">
-          <p onClick={this.toggleReviewEditForm(id)}>edit</p>
-          <p className="danger" onClick={this.deleteReview(id)}>delete</p>
-        </span>}
-      </div>);
+        {user.id && user.id.match(userId) && (
+          <span className="reviewer-buttons">
+            <p onClick={this.toggleReviewEditForm(id)}>edit</p>
+            <p className="danger" onClick={this.deleteReview(id)}>delete</p>
+          </span>
+        )}
+      </div>
+    );
   }
 
   renderReply(userReview) {
@@ -294,14 +300,21 @@ class ReviewCard extends Component {
         reviewToReply={reviewToReply}
         reviewFormId={reviewFormId}
         bookId={bookId}
-      />);
+      />
+    );
   }
 
   renderAll(userReview, bookId) {
-    const { picture, id, avatarColor, reviewer } = userReview;
+    const {
+      picture, id, avatarColor, reviewer
+    } = userReview;
     return (
       <Fragment key={id}>
-        {picture.length ? this.renderReviewerImage(picture) : <Avatar user={reviewer} color={avatarColor} />}
+        {
+          picture.length
+            ? this.renderReviewerImage(picture)
+            : <Avatar user={reviewer} color={avatarColor} />
+        }
         <div>
           {this.renderReviewBody(userReview)}
           {this.renderReply(userReview, id)}
@@ -318,7 +331,6 @@ class ReviewCard extends Component {
     const { reviews, bookId } = this.props;
     return (
       <Fragment>
-        {/* {this.renderLoader()} */}
         {
           reviews.length !== 0 && reviews.map(review => (
             this.renderAll(review, bookId)
@@ -329,11 +341,9 @@ class ReviewCard extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.auth.user
-  }
-}
+const mapStateToProps = state => ({
+  user: state.auth.user
+});
 
 ReviewCard.propTypes = {
   addLikeQuery: PropTypes.func,

@@ -170,7 +170,11 @@ class BookCatalog extends Component {
           {loadingBook && <BookPreloader loadingBook={loadingBook} />}
         </div>
         {!loadingBook && this.render404Message()}
-        <div className="text-center" style={{ marginBottom: '20px' }} id="scrollToElement">
+        <div
+          className="text-center"
+          style={{ marginBottom: '20px' }}
+          id="scrollToElement"
+        >
           {isNewContentLoading && <Spinner spinnerStyle={45} />}
         </div>
         <BackToTop

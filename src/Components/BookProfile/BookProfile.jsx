@@ -155,7 +155,15 @@ class BookProfile extends Component {
     const { moreBooks, id, isFavorite } = book;
     const favoriteOption = isFavorite
       ? <p className="favorite-action-button">Remove from Favorites</p>
-      : <p className="favorite-action-button" onClick={this.addBookToFavorite(id)}>Add to Favorites</p>;
+      : (
+        <p
+          className="favorite-action-button"
+          onClick={this.addBookToFavorite(id)}
+        >
+          Add to Favorites
+
+        </p>
+      );
 
     return (
       <Fragment>
@@ -165,7 +173,10 @@ class BookProfile extends Component {
             enableEllipsis={false}
           />
           <div className="favorite-option">
-            <i className="fas fa-bookmark" style={{ color: isFavorite && '#005C97' }} />
+            <i
+              className="fas fa-bookmark"
+              style={{ color: isFavorite && '#005C97' }}
+            />
             {favoriteOption}
           </div>
         </div>
@@ -175,7 +186,9 @@ class BookProfile extends Component {
           <p>
             {book && book.description}
           </p>
-          {book && !book.description && <h4>No description available for this book</h4>}
+          {book
+            && !book.description
+            && <h4>No description available for this book</h4>}
         </div>
         {this.renderMoreBooks(moreBooks)}
         {this.renderReviews(book)}

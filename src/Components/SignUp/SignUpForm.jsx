@@ -51,8 +51,16 @@ class SignUpForm extends Component {
               onClick={passwordToggler('password-signup')}
               id="password-icon"
             >
-              <i className="fa fa-eye hide" aria-hidden="true" id="password-signup-remove-hide" />
-              <i className="fa fa-eye-slash" aria-hidden="true" id="password-signup-add-hide" />
+              <i
+                className="fa fa-eye hide"
+                aria-hidden="true"
+                id="password-signup-remove-hide"
+              />
+              <i
+                className="fa fa-eye-slash"
+                aria-hidden="true"
+                id="password-signup-add-hide"
+              />
             </div>
           </div>
           <div className="form-group social-login">
@@ -98,12 +106,24 @@ class SignUpForm extends Component {
   renderModal() {
     return (
       <Fragment>
-        <div className="modal fade" id="SignUpFormModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div
+          className="modal fade"
+          id="SignUpFormModal"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLongTitle">Signup</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
                   <span id="close-signup" aria-hidden="true">&times;</span>
                 </button>
               </div>

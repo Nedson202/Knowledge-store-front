@@ -29,9 +29,8 @@ class Genre extends Component {
           variables: {
             search: genre
           },
-        }).then((response) => {
+        }).then(() => {
           this.setState({ searching: false });
-          console.log(response.data);
         });
       } else this.setState({ searching: false });
     }, 1000)();
