@@ -27,24 +27,36 @@ class Tables extends Component {
             <td>{user.email}</td>
             <td>{user.role}</td>
             <td>
-              <i className="fa fa-ellipsis-v" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
-              <div className="dropdown-menu table-panel__user-delete" id="book-action-buttons">
-                <a href="/" className="dropdown-item user-profile-navlink" id="trash-icon">
+              <i
+                className="fa fa-ellipsis-v"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              />
+              <div
+                className="dropdown-menu table-panel__user-delete"
+                id="book-action-buttons"
+              >
+                <a
+                  href="/"
+                  className="dropdown-item user-profile-navlink"
+                  id="trash-icon"
+                >
                   deactivate
                   {' '}
                   <i className="fa fa-trash" />
                 </a>
                 {user.role.match('admin') && (
-                <button
-                  type="button"
-                  onClick={removeAdmin('remove', user.email)}
-                  className="dropdown-item user-profile-navlink"
-                  id="trash-icon"
-                >
-                  remove
-                  {' '}
-                  <i className="fa fa-trash" />
-                </button>
+                  <button
+                    type="button"
+                    onClick={removeAdmin('remove', user.email)}
+                    className="dropdown-item user-profile-navlink"
+                    id="trash-icon"
+                  >
+                    remove
+                    {' '}
+                    <i className="fa fa-trash" />
+                  </button>
                 )}
               </div>
             </td>
@@ -76,7 +88,7 @@ Tables.propTypes = {
 
 Tables.defaultProps = {
   users: [],
-  removeAdmin: () => {},
+  removeAdmin: () => { },
 };
 
 export default Tables;

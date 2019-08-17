@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
 import './_BookProfile.scss';
 import '../BookCatalog/_BookCatalog.scss';
-import BookCard from '../BookCard/BookCard';
-import AddReview from '../AddReview/AddReview';
-import ReviewCard from '../ReviewCard/ReviewCard';
+import BookCard from '../BookCard';
+import AddReview from '../AddReview';
+import ReviewCard from '../ReviewCard';
 import { fetchBook, addToFavorites } from '../../queries/books';
 import ProfilePreloader from './ProfilePreloader';
 import toaster from '../../utils/toast';
 import errorHandler from '../../utils/errorHandler';
-import BackToTop from '../BackToTop/BackToTop';
+import BackToTop from '../BackToTop';
 
 class BookProfile extends Component {
   state = {
@@ -75,9 +75,11 @@ class BookProfile extends Component {
       <div className="book-profile-title">
         <h2>{book && book.name}</h2>
         <h5>
-          {book && book.authors.length ? `by, ${
-            book.authors.map(author => author)
-          }` : 'author unavailable'}
+          {book && book.authors.length
+            ? `by, ${
+              book.authors.map(author => author)
+            }`
+            : 'author unavailable'}
         </h5>
         <div className="book-meta">
           <span className="genre-badge">
@@ -113,16 +115,11 @@ class BookProfile extends Component {
   }
 
   renderReviews(book) {
-    const { fetchBooksQuery: { loading } } = this.props;
     return (
-      <div className="review-card">
-        {this.renderAddReviewForm()}
-        <ReviewCard
-          reviews={book && book.reviews}
-          bookId={book && book.id}
-        />
-        {loading && this.renderLoader()}
-      </div>
+      <ReviewCard
+        reviews={book && book.reviews}
+        bookId={book && book.id}
+      />
     );
   }
 
@@ -147,15 +144,21 @@ class BookProfile extends Component {
     );
   }
 
-  renderBookMarkOption() {
-
-  }
-
-  renderAll(book) {
+  renderAll(book, loading) {
+    if (loading) {
+      return;
+    }
     const { moreBooks, id, isFavorite } = book;
     const favoriteOption = isFavorite
       ? <p className="favorite-action-button">Remove from Favorites</p>
-      : <p className="favorite-action-button" onClick={this.addBookToFavorite(id)}>Add to Favorites</p>;
+      : (
+        <p
+          className="favorite-action-button"
+          onClick={this.addBookToFavorite(id)}
+        >
+          Add to Favorites
+        </p>
+      );
 
     return (
       <Fragment>
@@ -165,19 +168,24 @@ class BookProfile extends Component {
             enableEllipsis={false}
           />
           <div className="favorite-option">
-            <i className="fas fa-bookmark" style={{ color: isFavorite && '#005C97' }} />
+            <i
+              className="fas fa-bookmark"
+              style={{ color: isFavorite && '#005C97' }}
+            />
             {favoriteOption}
           </div>
         </div>
-        <div className="book-profile">
+        <div className="book-profile-details">
           {this.renderBookHeader(book)}
           <hr />
           <p>
             {book && book.description}
           </p>
-          {book && !book.description && <h4>No description available for this book</h4>}
+          {book
+            && !book.description && <h4>No description available for this book</h4>}
         </div>
         {this.renderMoreBooks(moreBooks)}
+        {this.renderAddReviewForm()}
         {this.renderReviews(book)}
       </Fragment>
     );
@@ -222,16 +230,15 @@ class BookProfile extends Component {
   render() {
     const { fetchBooksQuery: { book, loading } } = this.props;
     const { displayBackToTop } = this.state;
+
     return (
       <Fragment>
         {!loading && !book && this.renderBookError()}
         <div className="book-profile-container">
           {loading && (
-            <ProfilePreloader
-              reviewLoader={this.renderReviews}
-            />
+            <ProfilePreloader />
           )}
-          {!loading && book && this.renderAll(book)}
+          {this.renderAll(book, loading)}
         </div>
         <BackToTop
           displayBackToTop={displayBackToTop}

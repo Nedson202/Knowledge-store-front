@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './_MainContent.scss';
 import '../BookCard/_BookCard.scss';
-import BookCard from '../BookCard/BookCard';
+import BookCard from '../BookCard';
 
 class MainContent extends Component {
   render() {

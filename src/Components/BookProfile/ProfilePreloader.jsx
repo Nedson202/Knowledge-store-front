@@ -1,11 +1,9 @@
 import React, { PureComponent, Fragment } from 'react';
 import ContentLoader from 'react-content-loader';
-// import PropTypes from 'prop-types';
 import './_BookProfile.scss';
 import '../BookCatalog/_BookCatalog.scss';
 import BookImageLoader from '../BookCard/BookImageLoader';
 import ReviewLoader from '../ReviewCard/ReviewLoader';
-import AddReview from '../AddReview/AddReview';
 
 class ProfilePreloader extends PureComponent {
   renderLoader() {
@@ -23,7 +21,7 @@ class ProfilePreloader extends PureComponent {
         <div className="original-book">
           <BookImageLoader />
         </div>
-        <div className="book-profile">
+        <div className="book-profile-details">
           <ContentLoader
             rtl
             height={160}
@@ -47,12 +45,6 @@ class ProfilePreloader extends PureComponent {
           </div>
         </div>
         <div className="review-card">
-          <div className="add-review-form">
-            <AddReview
-              toggleForm={false}
-              reviewType="add"
-            />
-          </div>
           <ReviewLoader />
           <ReviewLoader />
         </div>

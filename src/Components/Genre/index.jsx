@@ -5,7 +5,7 @@ import debounce from 'lodash.debounce';
 import { AutoComplete } from 'antd';
 import './_Genre.scss';
 import { getGenres, bookFilter } from '../../queries/genre';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner';
 
 class Genre extends Component {
   state = {
@@ -29,9 +29,8 @@ class Genre extends Component {
           variables: {
             search: genre
           },
-        }).then((response) => {
+        }).then(() => {
           this.setState({ searching: false });
-          console.log(response.data);
         });
       } else this.setState({ searching: false });
     }, 1000)();

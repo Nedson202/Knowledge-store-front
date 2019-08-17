@@ -41,18 +41,19 @@ class UserProfile extends Component {
       imagePreviewUrl: '',
       formErrors: {},
       isEditFormOpen: false,
+      uploadingImage: false,
     };
   }
 
   onInputChange = (event) => {
     const { name, value } = event.target;
     const { values } = this.state;
-    values[name] = value;
+    values[name] = value.trim();
     this.setState({ values });
     this.debounceSingleFieldValidation({ name, value });
   }
 
-  onImageChange = (event) => {
+  onImageChange = async (event) => {
     const { files } = event.target;
     const file = files[0];
 
@@ -60,8 +61,8 @@ class UserProfile extends Component {
       return toaster('error', 'Only a jpeg, jpg or png image is supported');
     }
 
-    if (file && file.size > 1000000) {
-      return toaster('error', 'Image size cannot be more than 2mb');
+    if (file && file.size > 5000000) {
+      return toaster('error', 'Image size cannot be more than 5mb');
     }
 
     if (file) {
@@ -69,7 +70,8 @@ class UserProfile extends Component {
 
       reader.onloadend = () => {
         this.setState({
-          imagePreviewUrl: reader.result
+          imagePreviewUrl: reader.result,
+          uploadingImage: true,
         });
       };
 
@@ -78,16 +80,18 @@ class UserProfile extends Component {
       const data = new FormData();
       data.append('file', file);
       data.append('folder', 'bookstore');
-      data.append('upload_preset', process.env.UPLOAD_PRESET);
+      data.append('upload_preset', process.env.REACT_APP_UPLOAD_PRESET);
 
-      return axios.post(process.env.CLOUDINARY_URL, data)
-        .then((response) => {
-          const { values } = this.state;
-          const { secure_url: picture } = response.data;
-          values.picture = picture;
-          this.setState({ values });
-          this.updateProfile(true);
-        });
+      try {
+        const uploadHandler = await axios.post(process.env.REACT_APP_CLOUDINARY_URL, data);
+        const { values } = this.state;
+        const { secure_url: picture } = uploadHandler.data;
+        values.picture = picture;
+        this.setState({ values, uploadingImage: false, });
+        await this.updateProfile('upload');
+      } catch (error) {
+        console.error(error);
+      }
     }
   }
 
@@ -103,40 +107,65 @@ class UserProfile extends Component {
     }));
   }
 
-  updateProfile = (upload) => {
-    const { editProfileQuery, dispatch } = this.props;
+  updateProfile = async (type) => {
+    const { editProfileQuery, dispatch, user } = this.props;
     const { values } = this.state;
-    editProfileQuery({
-      variables: {
-        ...values
-      }
-    }).then((response) => {
-      const { editProfile: { token, message } } = response.data;
+    const newUser = {
+      username: values.username,
+      email: values.email,
+    };
+
+    const oldUser = {
+      username: user.username,
+      email: user.email,
+    };
+
+    if (JSON.stringify(newUser) === JSON.stringify(oldUser) && type !== 'upload') {
+      return;
+    }
+
+    try {
+      const editProfileHandler = await editProfileQuery({
+        variables: {
+          ...values
+        }
+      });
+      const { editProfile: { token, message }, } = editProfileHandler.data;
       localStorage.setItem('token', token);
-      dispatch(setCurrentUser(tokenDecoder(token)));
-      toaster('success', upload ? 'Image uploaded successfully' : message);
-      if (upload) return this.setState({ imagePreviewUrl: '' });
-      this.setState({ isEditFormOpen: false });
-    });
+      toaster('success', message);
+      this.setState({
+        imagePreviewUrl: '',
+        isEditFormOpen: false,
+      });
+      return dispatch(setCurrentUser(tokenDecoder(token)));
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  updatePassword = () => {
-    const { values } = this.state;
+  updatePassword = async () => {
+    const { values, values: { oldPassword, newPassword } } = this.state;
     const { changePasswordQuery } = this.props;
-    changePasswordQuery({
-      variables: {
-        ...values
-      }
-    }).then((response) => {
-      const { changePassword: { message } } = response.data;
+
+    if (!oldPassword || !newPassword) {
+      return toaster.error('Fill the password fields to continue');
+    }
+
+    try {
+      const changePasswordHandler = await changePasswordQuery({
+        variables: {
+          ...values
+        }
+      });
+      const { changePassword: { message } } = changePasswordHandler.data;
       toaster('success', message);
       values.newPassword = '';
       values.oldPassword = '';
       this.setState({ values });
-    }).catch((error) => {
+    } catch (error) {
       const messages = errorHandler(error);
       messages.forEach(message => toaster('error', message));
-    });
+    }
   }
 
   renderAnalytica() {
@@ -172,7 +201,8 @@ class UserProfile extends Component {
 
   render() {
     const {
-      isEditFormOpen, values, formErrors, imagePreviewUrl
+      isEditFormOpen, values, formErrors, imagePreviewUrl,
+      uploadingImage,
     } = this.state;
     const { user } = this.props;
     return (
@@ -195,6 +225,7 @@ class UserProfile extends Component {
               updateProfile={this.updateProfile}
               formErrors={formErrors}
               cancelPreview={this.cancelPreview}
+              uploadingImage={uploadingImage}
             />
           )}
           {isEditFormOpen && (

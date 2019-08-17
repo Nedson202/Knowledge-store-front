@@ -2,12 +2,11 @@ import React, { Component, Fragment } from 'react';
 import scrollToComponent from 'react-scroll-to-component';
 import { compose, graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
-import Truncate from 'react-truncate';
 import { connect } from 'react-redux';
 import './_ReviewCard.scss';
 import ReplyCard from './ReplyCard';
-import AddReview from '../AddReview/AddReview';
-import Star from '../Star/Star';
+import AddReview from '../AddReview';
+import Star from '../Star';
 import { addLikeOnReview, deleteReview, deleteReply } from '../../queries/reviews';
 import timeParser from '../../utils/timeParser';
 import Avatar from './Avatar';
@@ -16,7 +15,6 @@ import toaster from '../../utils/toast';
 import errorHandler from '../../utils/errorHandler';
 import toHTTPS from '../../utils/toHTTPS';
 
-/* eslint-disable */
 class ReviewCard extends Component {
   constructor(props) {
     super(props);
@@ -30,10 +28,6 @@ class ReviewCard extends Component {
       reviewToReply: '',
       setReviewToEdit: '',
       setReplyToEdit: '',
-      expanded: false,
-      truncated: false,
-      truncateId: '',
-      expandedItem: [],
       reviewFormId: '', /* eslint-disable-line */
     };
   }
@@ -55,7 +49,7 @@ class ReviewCard extends Component {
     });
   }
 
-  toggleReplyEditForm = (id) => () => {
+  toggleReplyEditForm = id => () => {
     this.setState(prevState => ({
       isEditFormOpen: !prevState.isEditFormOpen,
       reviewType: 'replyEdit',
@@ -105,28 +99,6 @@ class ReviewCard extends Component {
       const messages = errorHandler(error);
       messages.forEach(message => toaster('error', message));
     });
-  }
-
-  toggleLines(id, showLess, event) {
-    event.preventDefault();
-    const { expanded, expandedItem } = this.state;
-    if (!expandedItem.includes(id)) expandedItem.push(id);
-    if (showLess) expandedItem.splice(expandedItem.indexOf(id), 1);
-    this.setState({
-      expanded: !expanded,
-      truncateId: id,
-      expandedItem
-    });
-  }
-
-  handleTruncate = (truncatedText, id) => () => {
-    const { truncated } = this.state;
-    if (truncated !== truncatedText) {
-      this.setState({
-        truncated,
-        truncateId: id
-      });
-    }
   }
 
   refetchData(bookId) {
@@ -203,10 +175,7 @@ class ReviewCard extends Component {
     const {
       reviewer, createdAt, review, rating, id
     } = userReview;
-    const {
-      isReviewEditFormOpen, setReviewToEdit, expanded,
-      truncateId, expandedItem
-    } = this.state;
+    const { isReviewEditFormOpen, setReviewToEdit, } = this.state;
     return (
       <Fragment>
         <p>
@@ -215,28 +184,8 @@ class ReviewCard extends Component {
           {this.renderTimeReviewed(createdAt)}
         </p>
         {(!isReviewEditFormOpen || id !== setReviewToEdit) && (
-          <span id='review'>
-            <Truncate key={id}
-              lines={expandedItem.includes(id) ? null : 3}
-              // lines={expanded && truncateId === id ? 0 : 3}
-              ellipsis={(
-                <span>
-                  ...
-                {' '}
-                  {expanded && truncateId === id || <a href="" onClick={(e) => this.toggleLines(id, false, e)}>Read more</a>}
-                </span>
-              )}
-              onTruncate={this.handleTruncate}
-            >
-              {review}
-            </Truncate>
-            {expandedItem.includes(id) && (
-              <span>
-                ...
-            {' '}
-                <a href="#" onClick={(e) => this.toggleLines(id, true, e)}>Show less</a>
-              </span>
-            )}
+          <span id="review">
+            {review}
             {this.renderStars(rating)}
             {this.renderReviewFooter(userReview)}
           </span>
@@ -256,11 +205,14 @@ class ReviewCard extends Component {
           <span style={{ cursor: 'default', paddingLeft: '10px' }}>{likes !== 0 && likes}</span>
         </p>
         <p onClick={this.toggleReplyDialog(id)}>Reply</p>
-        {user.id && user.id.match(userId) && <span className="reviewer-buttons">
-          <p onClick={this.toggleReviewEditForm(id)}>edit</p>
-          <p className="danger" onClick={this.deleteReview(id)}>delete</p>
-        </span>}
-      </div>);
+        {user.id && user.id.match(userId) && (
+          <span className="reviewer-buttons">
+            <p onClick={this.toggleReviewEditForm(id)}>edit</p>
+            <p className="danger" onClick={this.deleteReview(id)}>delete</p>
+          </span>
+        )}
+      </div>
+    );
   }
 
   renderReply(userReview) {
@@ -294,15 +246,24 @@ class ReviewCard extends Component {
         reviewToReply={reviewToReply}
         reviewFormId={reviewFormId}
         bookId={bookId}
-      />);
+      />
+    );
   }
 
   renderAll(userReview, bookId) {
-    const { picture, id, avatarColor, reviewer } = userReview;
+    const {
+      picture, id, avatarColor, reviewer
+    } = userReview;
     return (
-      <Fragment key={id}>
-        {picture.length ? this.renderReviewerImage(picture) : <Avatar user={reviewer} color={avatarColor} />}
-        <div>
+      <div className="review-card" key={id}>
+        <div className="review-avatar">
+          {
+            picture.length
+              ? this.renderReviewerImage(picture)
+              : <Avatar user={reviewer} color={avatarColor} />
+          }
+        </div>
+        <div className="review-details">
           {this.renderReviewBody(userReview)}
           {this.renderReply(userReview, id)}
           <div id="dome">
@@ -310,7 +271,7 @@ class ReviewCard extends Component {
           </div>
           <div id="lastElement" />
         </div>
-      </Fragment>
+      </div>
     );
   }
 
@@ -318,7 +279,6 @@ class ReviewCard extends Component {
     const { reviews, bookId } = this.props;
     return (
       <Fragment>
-        {/* {this.renderLoader()} */}
         {
           reviews.length !== 0 && reviews.map(review => (
             this.renderAll(review, bookId)
@@ -329,11 +289,9 @@ class ReviewCard extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.auth.user
-  }
-}
+const mapStateToProps = state => ({
+  user: state.auth.user
+});
 
 ReviewCard.propTypes = {
   addLikeQuery: PropTypes.func,

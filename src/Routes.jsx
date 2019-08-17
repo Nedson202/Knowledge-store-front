@@ -1,23 +1,23 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import App from './Components/Base/App';
-import Header from './Components/Header/Header';
-import BookProfile from './Components/BookProfile/BookProfile';
-import BookCatalog from './Components/BookCatalog/BookCatalog';
-import NotFound from './Components/NotFound/NotFound';
-import AdminPanel from './Components/AdminPanel/AdminPanel';
-import Users from './Components/Users/Users';
-import UserProfile from './Components/UserProfile/UserProfile';
-import SideNav from './Components/SideNav/SideNav';
-import LeftSideBar from './Components/LeftSideBar/LeftSideBar';
-import PasswordReset from './Components/PasswordReset/PasswordReset';
-import EmailGenerator from './Components/EmailGenerator/EmailGenerator';
-import Favorites from './Components/Favorites/Favorites';
+import App from './Components/Base';
+import Header from './Components/Header';
+import BookProfile from './Components/BookProfile';
+import BookCatalog from './Components/BookCatalog';
+import NotFound from './Components/NotFound';
+import AdminPanel from './Components/AdminPanel';
+import Users from './Components/Users';
+import UserProfile from './Components/UserProfile';
+import SideNav from './Components/SideNav';
+import LeftSideBar from './Components/LeftSideBar';
+import PasswordReset from './Components/PasswordReset';
+import EmailGenerator from './Components/EmailGenerator';
+import Favorites from './Components/Favorites';
+import MyBooks from './Components/MyBooks';
+import NetworkDetector from './Components/Hoc/NetworkDetector';
 import AuthWrapper from './Components/Hoc/AuthWrapper';
 import 'antd/dist/antd.css';
 import './_index.scss';
-import MyBooks from './Components/MyBooks/MyBooks';
-import NetworkDetector from './Components/Hoc/NetworkDetector';
 
 const Routes = () => (
   <div>

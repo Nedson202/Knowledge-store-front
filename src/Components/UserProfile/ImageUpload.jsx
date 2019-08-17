@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import './_ImageUpload.scss';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner';
 
 class ImageUpload extends Component {
   renderDropzone() {
@@ -30,17 +30,16 @@ class ImageUpload extends Component {
   }
 
   renderPreview(imagePreviewUrl) {
-    const { cancelPreview } = this.props;
+    const { cancelPreview, uploadingImage } = this.props;
     return (
       <div className="image-previewer">
         <img
           src={imagePreviewUrl}
           id="show-image"
-          height="200px"
-          width="200px"
+          className="rounded-circle"
           alt="Avatar"
         />
-        <Spinner />
+        {uploadingImage && <Spinner />}
         <button
           type="button"
           className="btn btn-raised"
@@ -67,12 +66,14 @@ ImageUpload.propTypes = {
   handleImageChange: PropTypes.func,
   imagePreviewUrl: PropTypes.string,
   cancelPreview: PropTypes.func,
+  uploadingImage: PropTypes.bool,
 };
 
 ImageUpload.defaultProps = {
-  handleImageChange: () => {},
+  handleImageChange: () => { },
   imagePreviewUrl: '',
-  cancelPreview: () => {},
+  cancelPreview: () => { },
+  uploadingImage: false,
 };
 
 export default ImageUpload;

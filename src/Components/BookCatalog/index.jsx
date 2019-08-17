@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { withApollo, compose } from 'react-apollo';
 import queryString from 'querystring';
 import './_BookCatalog.scss';
-import BookCard from '../BookCard/BookCard';
-import BackToTop from '../BackToTop/BackToTop';
+import BookCard from '../BookCard';
+import BackToTop from '../BackToTop';
 import { setRetrievedBooks } from '../../redux/actions/bookActions';
 import { bookFilter } from '../../queries/genre';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner';
 import BookPreloader from './BookPreloader';
 
 class BookCatalog extends Component {
@@ -170,7 +170,11 @@ class BookCatalog extends Component {
           {loadingBook && <BookPreloader loadingBook={loadingBook} />}
         </div>
         {!loadingBook && this.render404Message()}
-        <div className="text-center" style={{ marginBottom: '20px' }} id="scrollToElement">
+        <div
+          className="text-center"
+          style={{ marginBottom: '20px' }}
+          id="scrollToElement"
+        >
           {isNewContentLoading && <Spinner spinnerStyle={45} />}
         </div>
         <BackToTop

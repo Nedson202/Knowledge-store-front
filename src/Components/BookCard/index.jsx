@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Truncate from 'react-truncate';
 import { Checkbox } from 'antd';
 import './_BookCard.scss';
-import Star from '../Star/Star';
+import Star from '../Star';
 import BookImageLoader from './BookImageLoader';
 import toHTTPS from '../../utils/toHTTPS';
 
@@ -135,9 +135,10 @@ class BookCard extends Component {
           <Truncate
             lines={1}
           >
-            {authors && `by ${
-              authors.map(author => author)
-            }`}
+            {authors
+              && `by ${
+                authors.map(author => author)
+              }`}
           </Truncate>
         </span>
         <span className="react-star">

@@ -17,13 +17,12 @@ export default function (ComposedComponent) {
       });
     }
 
-
     updateOnlineStatus = () => {
       const condition = navigator.onLine ? 'online' : 'offline';
       if (condition === 'online') {
         return toaster('success', 'You are back online');
       }
-      return toaster('error', 'You went offline');
+      return toaster('error', 'You are no longer online');
     }
 
     render() {

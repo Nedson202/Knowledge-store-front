@@ -8,12 +8,16 @@ const errorParser = (message) => {
 
 const errorHandler = (response) => {
   const errorResponse = JSON.stringify(response);
-  const { message } = JSON.parse(errorResponse).graphQLErrors[0];
+  const gqlErrors = JSON.parse(errorResponse).graphQLErrors[0];
 
-  const formatMessage = JSON.stringify(message);
-  const newMessage = JSON.parse(formatMessage);
-  const errorParsedStatus = errorParser(newMessage);
-  return errorParsedStatus ? Object.values(JSON.parse(newMessage)) : [newMessage];
+  if (gqlErrors) {
+    const { message } = gqlErrors;
+    const formatMessage = JSON.stringify(message);
+    const newMessage = JSON.parse(formatMessage);
+    const errorParsedStatus = errorParser(newMessage);
+    return errorParsedStatus ? Object.values(JSON.parse(newMessage)) : [newMessage];
+  }
+  return ['There\'s an issue with the server, please try again'];
 };
 
 export default errorHandler;

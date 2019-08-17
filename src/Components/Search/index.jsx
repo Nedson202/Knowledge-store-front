@@ -1,6 +1,6 @@
+import queryString from 'querystring';
 import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
-import queryString from 'querystring';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import setQuery from 'set-query-string';
@@ -38,7 +38,6 @@ class Search extends PureComponent {
 
   componentDidMount() {
     this.setInputFromQuery();
-    // this.handleSearch();
   }
 
   setInputFromQuery() {
@@ -55,12 +54,16 @@ class Search extends PureComponent {
   onInputChange = (event) => {
     event.preventDefault();
     const { name, value } = event.target;
-    const { history } = this.props;
+    const { history, history: { location } } = this.props;
     if (value.trim().length === 1) {
       history.push({
         ...history.location,
         pathname: '/books',
       });
+
+      if (location.pathname !== '/books') {
+        localStorage.setItem('previousLocation', location.pathname);
+      }
     }
     this.setState({ [name]: value, }, () => {
       const { value: searchQuery } = this.state;
@@ -82,31 +85,29 @@ class Search extends PureComponent {
     localStorage.removeItem('previousLocation');
   }
 
-  handleInputFocus = () => {
-    const { history: { location } } = this.props;
-    if (location.pathname !== '/books') {
-      localStorage.setItem('previousLocation', location.pathname);
-    }
-  }
-
   handleReset = () => {
     const { history } = this.props;
     const { value } = this.state;
+    const { previousLocation } = localStorage;
     if (!value.trim()) {
       setQuery({ search: null });
+    }
+
+    if (previousLocation) {
       history.push(localStorage.previousLocation);
     }
   }
 
   handleDataPaste = (event) => {
     const { clipboardData } = event;
-    const { history } = this.props;
+    const { history, history: { location } } = this.props;
     const query = clipboardData.getData('text/plain');
     if (query.trim().length) {
       history.push({
         ...history.location,
         pathname: '/books',
       });
+      localStorage.setItem('previousLocation', location.pathname);
       return this.debounceSearch(query);
     }
   }
@@ -131,20 +132,19 @@ class Search extends PureComponent {
           name="value"
           id="searchBox"
           onChange={this.onInputChange}
-          onFocus={this.handleInputFocus}
           onBlur={this.handleReset}
           autoComplete="off"
           onPaste={this.handleDataPaste}
           value={value}
         />
-        { toggleCloseIcon && (
-        <i
-          role="button"
-          tabIndex={0}
-          className="fas fa-times close-icon"
-          onClick={this.clearSearchQuery}
-        />
-        ) }
+        {toggleCloseIcon && (
+          <i
+            role="button"
+            tabIndex={0}
+            className="fas fa-times close-icon"
+            onClick={this.clearSearchQuery}
+          />
+        )}
       </form>
     );
   }
@@ -157,11 +157,10 @@ Search.propTypes = {
 };
 
 Search.defaultProps = {
-  dispatch: () => {},
+  dispatch: () => { },
 };
 
 export default withRouter(compose(
   withApollo,
-  // graphql(bookFilter, { name: 'bookFilterQuery' }),
   connect()
 )(Search));

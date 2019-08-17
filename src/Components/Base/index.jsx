@@ -1,14 +1,14 @@
+import queryString from 'querystring';
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import queryString from 'querystring';
 import setQuery from 'set-query-string';
 import { compose, withApollo, graphql } from 'react-apollo';
 import './_App.scss';
-import Login from '../Login/Login';
+import Login from '../Login';
 import Main from './Main';
-import SignUp from '../SignUp/SignUp';
+import SignUp from '../SignUp';
 import toaster from '../../utils/toast';
 import tokenDecoder from '../../utils/tokenDecoder';
 import { setCurrentUser } from '../../redux/actions/userActions';
@@ -32,8 +32,8 @@ class App extends Component {
     if (typeof window.orientation === 'undefined') {
       document.getElementById('myLeftSideBar').style.display = 'block';
     }
-    const modalOpen = document.getElementById('close');
-    return modalOpen && modalCloser();
+    const modalEL = document.getElementById('close');
+    return modalEL && modalCloser();
   }
 
   socialAuthentication() {

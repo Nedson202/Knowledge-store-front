@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { graphql, compose } from 'react-apollo';
+import { graphql, compose, } from 'react-apollo';
 import debounce from 'lodash.debounce';
 import LoginForm from './LoginForm';
 import { loginUser } from '../../queries/auth';
@@ -13,7 +13,6 @@ import errorHandler from '../../utils/errorHandler';
 import toaster from '../../utils/toast';
 import modalCloser from '../../utils/modalCloser';
 
-/* eslint-disable */
 const waitTime = 1000;
 class Login extends Component {
   debounceSingleFieldValidation = debounce(({ name, value }) => {
@@ -50,27 +49,30 @@ class Login extends Component {
     event.preventDefault();
     const { values } = this.state;
     const { isValid, errors } = allFieldsValidation(values, ['email']);
-    const { loginUserQuery, dispatch, history } = this.props;
+    const { loginUserQuery, dispatch, } = this.props;
     if (!isValid) {
       return this.setState({ formErrors: errors });
     }
 
-    loginUserQuery({
-      variables: {
-        ...values
-      }
-    }).then((response) => {
-      const { token } = response.data.loginUser;
+    try {
+      const loginHandler = await loginUserQuery({
+        variables: {
+          ...values
+        }
+      });
+
+      const { data: { loginUser: { token } } = {} } = loginHandler;
+
       localStorage.setItem('token', token);
       const decodedToken = tokenDecoder(token);
-      modalCloser();
+      modalCloser('close-login');
       dispatch(setCurrentUser(decodedToken));
-      if (decodedToken.isVerified === 'true') history.push('/my-books');
+      if (decodedToken.isVerified === 'true') window.location.replace('/my-books');
       toaster('success', 'Signed in successfully');
-    }).catch((error) => {
+    } catch (error) {
       const messages = errorHandler(error);
       messages.forEach(message => toaster('error', message));
-    });
+    }
   }
 
   render() {
@@ -89,13 +91,11 @@ class Login extends Component {
 
 Login.propTypes = {
   loginUserQuery: PropTypes.func,
-  history: PropTypes.object,
   dispatch: PropTypes.func,
 };
 
 Login.defaultProps = {
   loginUserQuery: () => { },
-  history: {},
   dispatch: () => { },
 };
 

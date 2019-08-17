@@ -7,7 +7,13 @@ class Avatar extends Component {
     const acronym = matches.join('');
     const { color } = this.props;
     return (
-      <div className="avatar-placeholder text-capitalize" style={{ backgroundColor: color }}>{acronym}</div>
+      <div
+        className="avatar-placeholder text-capitalize"
+        style={{ backgroundColor: color }}
+      >
+        {acronym}
+
+      </div>
     );
   }
 

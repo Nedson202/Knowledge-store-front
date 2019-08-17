@@ -1,5 +1,5 @@
-const modalCloser = () => {
-  const modal = document.getElementById('close');
+const modalCloser = (element) => {
+  const modal = document.getElementById(element);
   modal.click();
 };
 

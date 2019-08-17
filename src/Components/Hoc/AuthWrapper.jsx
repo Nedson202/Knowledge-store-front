@@ -6,11 +6,25 @@ import toaster from '../../utils/toast';
 
 export default function (ComposedComponent, admin) {
   class AuthWrapper extends Component {
-    componentWillMount() {
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillUpdate(nextProps) {
+      const { history } = this.props;
+      if (!nextProps.user.isAuthenticated) {
+        history.goBack();
+      }
+    }
+
+    // eslint-disable-next-line camelcase
+    UNSAFE_componentWillMount() {
       const { history, user: { isAuthenticated, user } } = this.props;
+      if (admin && isAuthenticated && user.role === 'user') {
+        toaster('error', 'Access denied, operation is unathorised');
+        return history.goBack();
+      }
+
       if (!tokenDecoder(localStorage.token).id) {
         toaster('error', 'Access denied, you need to login');
-        return history.push('/');
+        return history.goBack();
       }
 
       if (isAuthenticated && user.isVerified !== 'true') {
@@ -20,19 +34,7 @@ export default function (ComposedComponent, admin) {
 
       if (!isAuthenticated) {
         toaster('error', 'Access denied, you need to login');
-        history.push('/');
-      }
-
-      if (admin && isAuthenticated && user.role !== 'super') {
-        toaster('error', 'Access denied, operation is unathorised');
-        history.goBack();
-      }
-    }
-
-    componentWillUpdate(nextProps) {
-      const { history } = this.props;
-      if (!nextProps.isAuthenticated) {
-        history.push('/');
+        return history.goBack();
       }
     }
 
@@ -44,13 +46,11 @@ export default function (ComposedComponent, admin) {
   }
 
   AuthWrapper.propTypes = {
-    isAuthenticated: PropTypes.bool,
     history: PropTypes.object,
     user: PropTypes.object,
   };
 
   AuthWrapper.defaultProps = {
-    isAuthenticated: false,
     history: {},
     user: {},
   };

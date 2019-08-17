@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import './_AddBookModal.scss';
 import { DatePicker, Select } from 'antd';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../Spinner';
 import toHTTPS from '../../utils/toHTTPS';
 
 const { Option } = Select;
@@ -11,7 +11,12 @@ const { Option } = Select;
 class AddBookModal extends Component {
   renderChildren(genres) {
     if (genres) {
-      return genres.map(genre => <Option key={genre.genre}>{genre.genre}</Option>);
+      return genres.map(genre => (
+        <Option key={genre.genre}>
+          {genre.genre}
+
+        </Option>
+      ));
     }
   }
 
@@ -51,7 +56,9 @@ class AddBookModal extends Component {
           width="180px"
           alt="Avatar"
         />
-        <span style={{ marginTop: '15px' }}>{imageUploadStatus && <Spinner />}</span>
+        <span style={{ marginTop: '15px' }}>
+          {imageUploadStatus && <Spinner />}
+        </span>
         <button
           type="button"
           className="btn btn-raised"
@@ -82,12 +89,21 @@ class AddBookModal extends Component {
           aria-hidden="true"
           data-keyboard="false"
         >
-          <div className="modal-dialog modal-dialog-centered" role="document">
+          <div
+            className="modal-dialog modal-dialog-centered"
+            role="document"
+          >
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">{editingBook ? 'Edit book' : 'Add a Book'}</h5>
+                <h5
+                  className="modal-title"
+                  id="exampleModalLongTitle"
+                >
+                  {editingBook ? 'Edit book' : 'Add a Book'}
+
+                </h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true" id="close">&times;</span>
+                  <span aria-hidden="true" id="close-book">&times;</span>
                 </button>
               </div>
               <div className="modal-body add-book-form">
@@ -124,7 +140,8 @@ class AddBookModal extends Component {
                     <DatePicker
                       placeholder=""
                       onChange={dateChange}
-                      defaultdefaultValue={editingBook && year ? moment(year, 'YYYY-MM-DD') : null}
+                      defaultdefaultValue={editingBook
+                        && year ? moment(year, 'YYYY-MM-DD') : null}
                       format="YYYY-MM-DD"
                     />
                   </div>

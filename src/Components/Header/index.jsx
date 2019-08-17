@@ -5,10 +5,9 @@ import { connect } from 'react-redux';
 import './_Header.scss';
 import Avatar from '../ReviewCard/Avatar';
 import { logOutUser } from '../../redux/actions/userActions';
-import toaster from '../../utils/toast';
-import Search from '../Search/Search';
-import Login from '../Login/Login';
-import SignUp from '../SignUp/SignUp';
+import Search from '../Search';
+import Login from '../Login';
+import SignUp from '../SignUp';
 
 class Header extends Component {
   state = {
@@ -35,7 +34,10 @@ class Header extends Component {
     } else {
       localStorage.setItem('sideBarStatus', 'closed');
       document.getElementById('myLeftSideBar').style.width = '70px';
-      mainContent ? mainContent.style.marginLeft = 'auto' : null; {/* eslint-disable-line */ }
+
+      if (mainContent) {
+        mainContent.style.marginLeft = 'auto';
+      }
       this.toggleSidebarText('none');
     }
     this.setState(prevState => ({
@@ -79,8 +81,7 @@ class Header extends Component {
   handleLogout = () => {
     const { dispatch, history } = this.props;
     dispatch(logOutUser());
-    history.push('/');
-    toaster('success', 'You logged out successfully');
+    history.push('/books');
   }
 
   authenticationForms() {
@@ -95,10 +96,20 @@ class Header extends Component {
   renderAuthButtons() {
     return (
       <Fragment>
-        <button type="button" className="btn btn-default btn-raised cancel-button btn" data-toggle="modal" data-target="#LoginFormModal">
+        <button
+          type="button"
+          className="btn btn-default btn-raised cancel-button btn"
+          data-toggle="modal"
+          data-target="#LoginFormModal"
+        >
           Login
         </button>
-        <button type="button" className="btn btn-primary btn-raised text-case login-button" data-toggle="modal" data-target="#SignUpFormModal">
+        <button
+          type="button"
+          className="btn btn-primary btn-raised text-case login-button"
+          data-toggle="modal"
+          data-target="#SignUpFormModal"
+        >
           Signup
         </button>
       </Fragment>
@@ -164,7 +175,11 @@ class Header extends Component {
             {' '}
             <i className="fas fa-user-circle" />
           </Link>
-          <button type="button" className="dropdown-item user-profile-navlink" onClick={this.handleLogout}>
+          <button
+            type="button"
+            className="dropdown-item user-profile-navlink"
+            onClick={this.handleLogout}
+          >
             Logout
             {' '}
             <i className="fa fa-sign-out-alt" />
@@ -215,7 +230,6 @@ class Header extends Component {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <Search />
               <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-                {user.isVerified === 'true' && this.renderNotificationPane()}
                 {user.isVerified === 'true' && this.renderUserAvatar()}
               </ul>
               {user.isVerified !== 'true' && this.renderAuthButtons()}
