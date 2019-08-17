@@ -1,23 +1,23 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import App from './Components/Base/App';
-import Header from './Components/Header/Header';
-import BookProfile from './Components/BookProfile/BookProfile';
-import BookCatalog from './Components/BookCatalog/BookCatalog';
-import NotFound from './Components/NotFound/NotFound';
-import AdminPanel from './Components/AdminPanel/AdminPanel';
-import Users from './Components/Users/Users';
-import UserProfile from './Components/UserProfile/UserProfile';
-import SideNav from './Components/SideNav/SideNav';
-import LeftSideBar from './Components/LeftSideBar/LeftSideBar';
-import PasswordReset from './Components/PasswordReset/PasswordReset';
-import EmailGenerator from './Components/EmailGenerator/EmailGenerator';
-import Favorites from './Components/Favorites/Favorites';
-import AuthWrapper from './Components/Hoc/AuthWrapper';
+import App from './components/Base/App';
+import Header from './components/Header';
+import BookProfile from './components/BookProfile';
+import BookCatalog from './components/BookCatalog';
+import NotFound from './components/NotFound';
+import AdminPanel from './components/AdminPanel';
+import Users from './components/Users';
+import UserProfile from './components/UserProfile';
+import SideNav from './components/SideNav';
+import LeftSideBar from './components/LeftSideBar';
+import PasswordReset from './components/PasswordReset';
+import EmailGenerator from './components/EmailGenerator';
+import Favorites from './components/Favorites';
+import MyBooks from './components/MyBooks';
+import NetworkDetector from './components/Hoc/NetworkDetector';
+import AuthWrapper from './components/Hoc/AuthWrapper';
 import 'antd/dist/antd.css';
 import './_index.scss';
-import MyBooks from './Components/MyBooks/MyBooks';
-import NetworkDetector from './Components/Hoc/NetworkDetector';
 
 const Routes = () => (
   <div>

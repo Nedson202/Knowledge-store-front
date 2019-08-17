@@ -1,6 +1,6 @@
+import queryString from 'querystring';
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'querystring';
 import { compose, graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import setQuery from 'set-query-string';

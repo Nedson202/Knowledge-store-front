@@ -27,14 +27,14 @@ class ReplyCard extends Component {
       <div className="footer">
         <p>
           <i className="fas fa-thumbs-up" />
-          <span style={{ cursor: 'default', paddingLeft: '10px' }}>{ likes !== 0 && likes}</span>
+          <span style={{ cursor: 'default', paddingLeft: '10px' }}>{likes !== 0 && likes}</span>
         </p>
         <p onClick={handleToggleForm(reviewId)}>Reply</p>
-        { user.id && user.id.match(userId) && (
-        <span className="reviewer-buttons">
-          <p onClick={handleReplyEdit(id)}>edit</p>
-          <p className="danger" onClick={deleteReply(id)}>delete</p>
-        </span>
+        {user.id && user.id.match(userId) && (
+          <span className="reviewer-buttons">
+            <p onClick={handleReplyEdit(id)}>edit</p>
+            <p className="danger" onClick={deleteReply(id)}>delete</p>
+          </span>
         )}
       </div>
     );
@@ -64,13 +64,13 @@ class ReplyCard extends Component {
             {this.renderReplyTime(createdAt)}
           </p>
           {(!isEditFormOpen || id !== setReplyToEdit) && (
-          <span>
-            <p>
-              {reply}
-            </p>
-            {this.renderReplyFooter(likes, id, userId)}
-          </span>
-          ) }
+            <span>
+              <p>
+                {reply}
+              </p>
+              {this.renderReplyFooter(likes, id, userId)}
+            </span>
+          )}
           {this.renderReplyEditForm(reply, id)}
         </div>
       </div>
@@ -121,9 +121,9 @@ ReplyCard.propTypes = {
 };
 
 ReplyCard.defaultProps = {
-  handleToggleForm: () => {},
-  handleReplyEdit: () => {},
-  deleteReply: () => {},
+  handleToggleForm: () => { },
+  handleReplyEdit: () => { },
+  deleteReply: () => { },
   isEditFormOpen: false,
   reviewType: '',
   replies: [],

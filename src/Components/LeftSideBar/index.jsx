@@ -14,7 +14,7 @@ class LeftSideBar extends Component {
     return (
       <Fragment>
         <div data-tip="Users">
-          <NavLink to="/users" className="dropdown-item sidebar-navlink">
+          <NavLink exact to="/users" className="dropdown-item sidebar-navlink">
             <i className="fa fa-users" />
             <span id="sideBarText">Users</span>
           </NavLink>
@@ -28,25 +28,25 @@ class LeftSideBar extends Component {
       <div id="myLeftSideBar" className="leftSideBar">
         <ReactTooltip effect="solid" place="right" />
         <div data-tip="My Books">
-          <NavLink to="/my-books" className="dropdown-item sidebar-navlink">
+          <NavLink exact to="/my-books" className="dropdown-item sidebar-navlink">
             <i className="fa fa-book" />
             <span id="sideBarText">My Books</span>
           </NavLink>
         </div>
         <div data-tip="All Books">
-          <NavLink to="/books" className="dropdown-item sidebar-navlink">
+          <NavLink exact to="/books" className="dropdown-item sidebar-navlink">
             <i className="fab fa-accusoft" />
             <span id="sideBarText">All Books</span>
           </NavLink>
         </div>
         <div data-tip="My Favorites">
-          <NavLink to="/favorites" className="dropdown-item sidebar-navlink">
+          <NavLink exact to="/favorites" className="dropdown-item sidebar-navlink">
             <i className="fas fa-bookmark" />
             <span id="sideBarText">My Favorites</span>
           </NavLink>
         </div>
         <div data-tip="Profile">
-          <NavLink to="/profile" className="dropdown-item sidebar-navlink">
+          <NavLink exact to="/profile" className="dropdown-item sidebar-navlink">
             <i className="fa fa-user-circle" />
             <span id="sideBarText">Profile</span>
           </NavLink>

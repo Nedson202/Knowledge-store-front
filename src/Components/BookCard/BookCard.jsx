@@ -137,7 +137,7 @@ class BookCard extends Component {
           >
             {authors && `by ${
               authors.map(author => author)
-            }`}
+              }`}
           </Truncate>
         </span>
         <span className="react-star">

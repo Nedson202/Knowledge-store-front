@@ -77,7 +77,7 @@ class BookProfile extends Component {
         <h5>
           {book && book.authors.length ? `by, ${
             book.authors.map(author => author)
-          }` : 'author unavailable'}
+            }` : 'author unavailable'}
         </h5>
         <div className="book-meta">
           <span className="genre-badge">
@@ -113,16 +113,11 @@ class BookProfile extends Component {
   }
 
   renderReviews(book) {
-    const { fetchBooksQuery: { loading } } = this.props;
     return (
-      <div className="review-card">
-        {this.renderAddReviewForm()}
-        <ReviewCard
-          reviews={book && book.reviews}
-          bookId={book && book.id}
-        />
-        {loading && this.renderLoader()}
-      </div>
+      <ReviewCard
+        reviews={book && book.reviews}
+        bookId={book && book.id}
+      />
     );
   }
 
@@ -147,11 +142,10 @@ class BookProfile extends Component {
     );
   }
 
-  renderBookMarkOption() {
-
-  }
-
-  renderAll(book) {
+  renderAll(book, loading) {
+    if (loading) {
+      return;
+    }
     const { moreBooks, id, isFavorite } = book;
     const favoriteOption = isFavorite
       ? <p className="favorite-action-button">Remove from Favorites</p>
@@ -161,7 +155,6 @@ class BookProfile extends Component {
           onClick={this.addBookToFavorite(id)}
         >
           Add to Favorites
-
         </p>
       );
 
@@ -180,17 +173,17 @@ class BookProfile extends Component {
             {favoriteOption}
           </div>
         </div>
-        <div className="book-profile">
+        <div className="book-profile-details">
           {this.renderBookHeader(book)}
           <hr />
           <p>
             {book && book.description}
           </p>
           {book
-            && !book.description
-            && <h4>No description available for this book</h4>}
+            && !book.description && <h4>No description available for this book</h4>}
         </div>
         {this.renderMoreBooks(moreBooks)}
+        {this.renderAddReviewForm()}
         {this.renderReviews(book)}
       </Fragment>
     );
@@ -235,16 +228,15 @@ class BookProfile extends Component {
   render() {
     const { fetchBooksQuery: { book, loading } } = this.props;
     const { displayBackToTop } = this.state;
+
     return (
       <Fragment>
         {!loading && !book && this.renderBookError()}
         <div className="book-profile-container">
           {loading && (
-            <ProfilePreloader
-              reviewLoader={this.renderReviews}
-            />
+            <ProfilePreloader />
           )}
-          {!loading && book && this.renderAll(book)}
+          {this.renderAll(book, loading)}
         </div>
         <BackToTop
           displayBackToTop={displayBackToTop}

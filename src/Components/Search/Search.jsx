@@ -1,6 +1,6 @@
+import queryString from 'querystring';
 import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
-import queryString from 'querystring';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import setQuery from 'set-query-string';

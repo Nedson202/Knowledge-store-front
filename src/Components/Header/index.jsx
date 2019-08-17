@@ -5,10 +5,9 @@ import { connect } from 'react-redux';
 import './_Header.scss';
 import Avatar from '../ReviewCard/Avatar';
 import { logOutUser } from '../../redux/actions/userActions';
-import toaster from '../../utils/toast';
 import Search from '../Search/Search';
-import Login from '../Login/Login';
-import SignUp from '../SignUp/SignUp';
+import Login from '../Login';
+import SignUp from '../SignUp';
 
 class Header extends Component {
   state = {
@@ -82,8 +81,7 @@ class Header extends Component {
   handleLogout = () => {
     const { dispatch, history } = this.props;
     dispatch(logOutUser());
-    history.push('/');
-    toaster('success', 'You have been logged out');
+    history.push('/books');
   }
 
   authenticationForms() {
@@ -232,7 +230,6 @@ class Header extends Component {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <Search />
               <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-                {user.isVerified === 'true' && this.renderNotificationPane()}
                 {user.isVerified === 'true' && this.renderUserAvatar()}
               </ul>
               {user.isVerified !== 'true' && this.renderAuthButtons()}

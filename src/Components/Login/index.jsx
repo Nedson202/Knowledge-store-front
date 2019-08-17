@@ -37,6 +37,10 @@ class Login extends Component {
     };
   }
 
+  componentWillMount() {
+    console.log('sdhdhdhdshds');
+  }
+
   onInputChange = (event) => {
     const { name, value } = event.target;
     const { values } = this.state;

@@ -47,7 +47,7 @@ class UserProfile extends Component {
   onInputChange = (event) => {
     const { name, value } = event.target;
     const { values } = this.state;
-    values[name] = value;
+    values[name] = value.trim();
     this.setState({ values });
     this.debounceSingleFieldValidation({ name, value });
   }
@@ -86,7 +86,7 @@ class UserProfile extends Component {
           const { secure_url: picture } = response.data;
           values.picture = picture;
           this.setState({ values });
-          this.updateProfile(true);
+          this.updateProfile();
         });
     }
   }
@@ -103,9 +103,23 @@ class UserProfile extends Component {
     }));
   }
 
-  updateProfile = async (upload) => {
-    const { editProfileQuery, dispatch } = this.props;
+  updateProfile = async (event) => {
+    event.preventDefault();
+    const { editProfileQuery, dispatch, user } = this.props;
     const { values } = this.state;
+    const newUser = {
+      username: values.username,
+      email: values.email,
+    };
+
+    const oldUser = {
+      username: user.username,
+      email: user.email,
+    };
+
+    if (JSON.stringify(newUser) === JSON.stringify(oldUser)) {
+      return;
+    }
 
     try {
       const editProfileHandler = await editProfileQuery({
@@ -116,9 +130,11 @@ class UserProfile extends Component {
       const { editProfile: { token, message } } = editProfileHandler.data;
       localStorage.setItem('token', token);
       dispatch(setCurrentUser(tokenDecoder(token)));
-      toaster('success', upload ? 'Image uploaded successfully' : message);
-      if (upload) return this.setState({ imagePreviewUrl: '' });
-      this.setState({ isEditFormOpen: false });
+      toaster('success', message);
+      return this.setState({
+        imagePreviewUrl: '',
+        isEditFormOpen: false,
+      });
     } catch (error) {
       console.log(error);
     }

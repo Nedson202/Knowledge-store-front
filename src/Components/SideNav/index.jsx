@@ -6,22 +6,22 @@ import './_SideNav.scss';
 const SideNav = () => (
   <div id="mySidenav" className="sidenav">
     <div>
-      <NavLink to="/my-books" className="dropdown-item sidebar-navlink">
+      <NavLink exact to="/my-books" className="dropdown-item sidebar-navlink">
         My books
       </NavLink>
     </div>
     <div>
-      <NavLink to="/books" className="dropdown-item sidebar-navlink">
+      <NavLink exact to="/books" className="dropdown-item sidebar-navlink">
         All books
       </NavLink>
     </div>
     <div>
-      <NavLink to="/profile" className="dropdown-item sidebar-navlink">
+      <NavLink exact to="/profile" className="dropdown-item sidebar-navlink">
         Profile
       </NavLink>
     </div>
     <div>
-      <NavLink to="/logout" className="dropdown-item sidebar-navlink">
+      <NavLink exact to="/logout" className="dropdown-item sidebar-navlink">
         Logout
       </NavLink>
     </div>

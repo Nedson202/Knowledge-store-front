@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import scrollToComponent from 'react-scroll-to-component';
 import { compose, graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
-import Truncate from 'react-truncate';
 import { connect } from 'react-redux';
 import './_ReviewCard.scss';
 import ReplyCard from './ReplyCard';
@@ -29,10 +28,6 @@ class ReviewCard extends Component {
       reviewToReply: '',
       setReviewToEdit: '',
       setReplyToEdit: '',
-      expanded: false,
-      truncated: false,
-      truncateId: '',
-      expandedItem: [],
       reviewFormId: '', /* eslint-disable-line */
     };
   }
@@ -103,28 +98,6 @@ class ReviewCard extends Component {
     }).catch((error) => {
       const messages = errorHandler(error);
       messages.forEach(message => toaster('error', message));
-    });
-  }
-
-  handleTruncate = (truncatedText, id) => () => {
-    const { truncated } = this.state;
-    if (truncated !== truncatedText) {
-      this.setState({
-        truncated,
-        truncateId: id
-      });
-    }
-  }
-
-  toggleLines(id, showLess, event) {
-    event.preventDefault();
-    const { expanded, expandedItem } = this.state;
-    if (!expandedItem.includes(id)) expandedItem.push(id);
-    if (showLess) expandedItem.splice(expandedItem.indexOf(id), 1);
-    this.setState({
-      expanded: !expanded,
-      truncateId: id,
-      expandedItem
     });
   }
 
@@ -202,10 +175,7 @@ class ReviewCard extends Component {
     const {
       reviewer, createdAt, review, rating, id
     } = userReview;
-    const {
-      isReviewEditFormOpen, setReviewToEdit, expanded,
-      truncateId, expandedItem
-    } = this.state;
+    const { isReviewEditFormOpen, setReviewToEdit, } = this.state;
     return (
       <Fragment>
         <p>
@@ -215,31 +185,7 @@ class ReviewCard extends Component {
         </p>
         {(!isReviewEditFormOpen || id !== setReviewToEdit) && (
           <span id="review">
-            <Truncate
-              key={id}
-              lines={expandedItem.includes(id) ? null : 3}
-              ellipsis={(
-                <span>
-                  ...
-                  {' '}
-                  {expanded
-                    ? truncateId === id
-                    // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                    : <a href="" onClick={e => this.toggleLines(id, false, e)}>Read more</a>}
-                </span>
-              )}
-              onTruncate={this.handleTruncate}
-            >
-              {review}
-            </Truncate>
-            {expandedItem.includes(id) && (
-              <span>
-                ...
-                {' '}
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a href="#" onClick={e => this.toggleLines(id, true, e)}>Show less</a>
-              </span>
-            )}
+            {review}
             {this.renderStars(rating)}
             {this.renderReviewFooter(userReview)}
           </span>
@@ -309,13 +255,15 @@ class ReviewCard extends Component {
       picture, id, avatarColor, reviewer
     } = userReview;
     return (
-      <Fragment key={id}>
-        {
-          picture.length
-            ? this.renderReviewerImage(picture)
-            : <Avatar user={reviewer} color={avatarColor} />
-        }
-        <div>
+      <div className="review-card" key={id}>
+        <div className="review-avatar">
+          {
+            picture.length
+              ? this.renderReviewerImage(picture)
+              : <Avatar user={reviewer} color={avatarColor} />
+          }
+        </div>
+        <div className="review-details">
           {this.renderReviewBody(userReview)}
           {this.renderReply(userReview, id)}
           <div id="dome">
@@ -323,7 +271,7 @@ class ReviewCard extends Component {
           </div>
           <div id="lastElement" />
         </div>
-      </Fragment>
+      </div>
     );
   }
 
