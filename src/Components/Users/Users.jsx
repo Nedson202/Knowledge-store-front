@@ -13,7 +13,6 @@ import modalCloser from '../../utils/modalCloser';
 
 const { Option } = Select;
 
-/* eslint-disable */
 class Users extends Component {
   state = {
     filteredUsers: [],
@@ -40,7 +39,6 @@ class Users extends Component {
   }
 
   handleToggleAdmin = (adminAction, userEmail) => () => {
-    // event.preventDefault();
     const { toggleAdminQuery } = this.props;
     const { email } = this.state;
     toggleAdminQuery({
@@ -51,13 +49,13 @@ class Users extends Component {
       refetchQueries: this.refetchQuery()
     }).then((response) => {
       const { toggleAdmin: { message } } = response.data;
-      modalCloser();
+      modalCloser('close-user');
       this.setState({ email: '' });
       toaster('success', message);
     }).catch((error) => {
       const messages = errorHandler(error);
       messages.forEach(message => toaster('error', message));
-    })
+    });
   }
 
   refetchQuery() {
@@ -68,7 +66,7 @@ class Users extends Component {
           type: 'all'
         }
       }
-    ]
+    ];
   }
 
   renderSelectField() {
@@ -121,9 +119,11 @@ class Users extends Component {
     return (
       <div className="admin-panel">
         {this.renderHeader()}
-        {fetchUsersQuery.loading ? <span className="table-spinner">
-          <Spinner spinnerStyle={45} />
-        </span> : this.renderTable(filteredResult)}
+        {fetchUsersQuery.loading ? (
+          <span className="table-spinner">
+            <Spinner spinnerStyle={45} />
+          </span>
+        ) : this.renderTable(filteredResult)}
         <AddAdminModal
           handleInputChange={this.handleEmailChange}
           addAmin={this.handleToggleAdmin}

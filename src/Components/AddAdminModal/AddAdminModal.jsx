@@ -11,7 +11,7 @@ class AddAddminModal extends Component {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLongTitle">Add Admin</h5>
-                <button type="button" id="close" className="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" id="close-user" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>

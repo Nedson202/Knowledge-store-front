@@ -17,7 +17,7 @@ class LoginForm extends Component {
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLongTitle">Login</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span id="close" aria-hidden="true">&times;</span>
+                  <span id="close-login" aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div className="modal-body">
@@ -56,8 +56,8 @@ class LoginForm extends Component {
                     </div>
                   </div>
                   <div className="error-action">
-                    <Link onClick={() => modalCloser()} to="/email?reset-password=true">Forgot password?</Link>
-                    <Link onClick={() => modalCloser()} to="/email?verify-email=true">Verify email</Link>
+                    <Link onClick={() => modalCloser('close-login')} to="/email?reset-password=true">Forgot password?</Link>
+                    <Link onClick={() => modalCloser('close-login')} to="/email?verify-email=true">Verify email</Link>
                   </div>
                   <div className="form-group social-login">
                     <div className="text-muted text-center social-login-text">Login with</div>

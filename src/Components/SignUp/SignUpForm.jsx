@@ -104,7 +104,7 @@ class SignUpForm extends Component {
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLongTitle">Signup</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span id="close" aria-hidden="true">&times;</span>
+                  <span id="close-signup" aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div className="modal-body">

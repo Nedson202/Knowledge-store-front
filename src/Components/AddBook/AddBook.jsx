@@ -87,7 +87,7 @@ class AddBook extends Component {
       refetchQueries: this.refetchQuery()
     }).then((response) => {
       const { addBook: { message } } = response.data;
-      modalCloser();
+      modalCloser('close-book');
       toaster('success', message);
     });
   }

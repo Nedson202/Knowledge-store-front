@@ -36,8 +36,7 @@ class ImageUpload extends Component {
         <img
           src={imagePreviewUrl}
           id="show-image"
-          height="200px"
-          width="200px"
+          className="rounded-circle"
           alt="Avatar"
         />
         <Spinner />
@@ -70,9 +69,9 @@ ImageUpload.propTypes = {
 };
 
 ImageUpload.defaultProps = {
-  handleImageChange: () => {},
+  handleImageChange: () => { },
   imagePreviewUrl: '',
-  cancelPreview: () => {},
+  cancelPreview: () => { },
 };
 
 export default ImageUpload;

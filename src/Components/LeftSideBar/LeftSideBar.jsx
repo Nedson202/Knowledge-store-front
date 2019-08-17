@@ -51,12 +51,6 @@ class LeftSideBar extends Component {
             <span id="sideBarText">Profile</span>
           </NavLink>
         </div>
-        <div data-tip="My Cart">
-          <NavLink to="/cart" className="dropdown-item sidebar-navlink">
-            <i className="fas fa-shopping-cart" />
-            <span id="sideBarText">My Cart</span>
-          </NavLink>
-        </div>
         {this.renderAdminNavlinks()}
       </div>
     );

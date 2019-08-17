@@ -8,9 +8,14 @@ export default function (ComposedComponent, admin) {
   class AuthWrapper extends Component {
     componentWillMount() {
       const { history, user: { isAuthenticated, user } } = this.props;
+      if (admin && isAuthenticated && user.role === 'user') {
+        toaster('error', 'Access denied, operation is unathorised');
+        return history.goBack();
+      }
+
       if (!tokenDecoder(localStorage.token).id) {
         toaster('error', 'Access denied, you need to login');
-        return history.push('/');
+        return history.goBack();
       }
 
       if (isAuthenticated && user.isVerified !== 'true') {
@@ -20,19 +25,14 @@ export default function (ComposedComponent, admin) {
 
       if (!isAuthenticated) {
         toaster('error', 'Access denied, you need to login');
-        history.push('/');
-      }
-
-      if (admin && isAuthenticated && user.role !== 'super') {
-        toaster('error', 'Access denied, operation is unathorised');
-        history.goBack();
+        return history.goBack();
       }
     }
 
     componentWillUpdate(nextProps) {
       const { history } = this.props;
       if (!nextProps.isAuthenticated) {
-        history.push('/');
+        history.goBack();
       }
     }
 

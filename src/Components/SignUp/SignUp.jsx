@@ -47,7 +47,7 @@ class SignUp extends Component {
     this.debounceSingleFieldValidation({ name, value });
   }
 
-  confirmSignup = (event) => {
+  confirmSignup = async (event) => {
     event.preventDefault();
     const { values } = this.state;
     const { isValid, errors } = allFieldsValidation(values);
@@ -56,22 +56,24 @@ class SignUp extends Component {
       return this.setState({ formErrors: errors });
     }
 
-    addUserQuery({
-      variables: {
-        ...values
-      }
-    }).then((response) => {
-      const { token } = response.data.addUser;
+    try {
+      const signupHandler = await addUserQuery({
+        variables: {
+          ...values
+        }
+      });
+
+      const { data: { addUser: { token } } = {} } = signupHandler;
       const decodedToken = tokenDecoder(token);
       localStorage.setItem('token', token);
-      modalCloser();
+      modalCloser('close-signup');
       dispatch(setCurrentUser(decodedToken));
       if (decodedToken.isVerified === 'true') history.push('/my-books');
       toaster('success', 'Signed up successfully');
-    }).catch((error) => {
+    } catch (error) {
       const messages = errorHandler(error);
       messages.forEach(message => toaster('error', message));
-    });
+    }
   }
 
   render() {
@@ -96,8 +98,8 @@ SignUp.propTypes = {
 };
 
 SignUp.defaultProps = {
-  addUserQuery: () => {},
-  dispatch: () => {},
+  addUserQuery: () => { },
+  dispatch: () => { },
   history: {},
 };
 

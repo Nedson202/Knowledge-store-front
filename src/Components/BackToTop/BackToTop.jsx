@@ -21,7 +21,7 @@ class BackToTop extends PureComponent {
             className="btn btn-secondary bmd-btn-fab back-to-top"
             onClick={this.scrollToTop}
           >
-            <i className="fas fa-arrow-up" />
+            <i className="fas fa-caret-up" />
           </button>
         )}
       </Fragment>

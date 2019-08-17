@@ -32,8 +32,8 @@ class App extends Component {
     if (typeof window.orientation === 'undefined') {
       document.getElementById('myLeftSideBar').style.display = 'block';
     }
-    const modalOpen = document.getElementById('close');
-    return modalOpen && modalCloser();
+    const modalEL = document.getElementById('close');
+    return modalEL && modalCloser();
   }
 
   socialAuthentication() {

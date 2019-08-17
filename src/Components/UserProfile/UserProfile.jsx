@@ -78,9 +78,9 @@ class UserProfile extends Component {
       const data = new FormData();
       data.append('file', file);
       data.append('folder', 'bookstore');
-      data.append('upload_preset', process.env.UPLOAD_PRESET);
+      data.append('upload_preset', process.env.REACT_APP_UPLOAD_PRESET);
 
-      return axios.post(process.env.CLOUDINARY_URL, data)
+      return axios.post(process.env.REACT_APP_CLOUDINARY_URL, data)
         .then((response) => {
           const { values } = this.state;
           const { secure_url: picture } = response.data;
@@ -103,40 +103,46 @@ class UserProfile extends Component {
     }));
   }
 
-  updateProfile = (upload) => {
+  updateProfile = async (upload) => {
     const { editProfileQuery, dispatch } = this.props;
     const { values } = this.state;
-    editProfileQuery({
-      variables: {
-        ...values
-      }
-    }).then((response) => {
-      const { editProfile: { token, message } } = response.data;
+
+    try {
+      const editProfileHandler = await editProfileQuery({
+        variables: {
+          ...values
+        }
+      });
+      const { editProfile: { token, message } } = editProfileHandler.data;
       localStorage.setItem('token', token);
       dispatch(setCurrentUser(tokenDecoder(token)));
       toaster('success', upload ? 'Image uploaded successfully' : message);
       if (upload) return this.setState({ imagePreviewUrl: '' });
       this.setState({ isEditFormOpen: false });
-    });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  updatePassword = () => {
+  updatePassword = async () => {
     const { values } = this.state;
     const { changePasswordQuery } = this.props;
-    changePasswordQuery({
-      variables: {
-        ...values
-      }
-    }).then((response) => {
-      const { changePassword: { message } } = response.data;
+
+    try {
+      const changePasswordHandler = await changePasswordQuery({
+        variables: {
+          ...values
+        }
+      });
+      const { changePassword: { message } } = changePasswordHandler.data;
       toaster('success', message);
       values.newPassword = '';
       values.oldPassword = '';
       this.setState({ values });
-    }).catch((error) => {
+    } catch (error) {
       const messages = errorHandler(error);
       messages.forEach(message => toaster('error', message));
-    });
+    }
   }
 
   renderAnalytica() {

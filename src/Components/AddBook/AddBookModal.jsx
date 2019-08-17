@@ -87,7 +87,7 @@ class AddBookModal extends Component {
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLongTitle">{editingBook ? 'Edit book' : 'Add a Book'}</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true" id="close">&times;</span>
+                  <span aria-hidden="true" id="close-book">&times;</span>
                 </button>
               </div>
               <div className="modal-body add-book-form">
