@@ -40,7 +40,6 @@ class UserProfile extends Component {
       },
       imagePreviewUrl: '',
       formErrors: {},
-      isEditFormOpen: false,
       uploadingImage: false,
     };
   }
@@ -101,12 +100,6 @@ class UserProfile extends Component {
     });
   }
 
-  toggleEditForm = () => {
-    this.setState(prevState => ({
-      isEditFormOpen: !prevState.isEditFormOpen
-    }));
-  }
-
   updateProfile = async (type) => {
     const { editProfileQuery, dispatch, user } = this.props;
     const { values } = this.state;
@@ -135,7 +128,6 @@ class UserProfile extends Component {
       toaster('success', message);
       this.setState({
         imagePreviewUrl: '',
-        isEditFormOpen: false,
       });
       return dispatch(setCurrentUser(tokenDecoder(token)));
     } catch (error) {
@@ -168,76 +160,34 @@ class UserProfile extends Component {
     }
   }
 
-  renderAnalytica() {
-    return (
-      <div className="user-analytics" id="main">
-        <div className="user-analytics__child">
-          <h4>Date Joined</h4>
-          <span>10-12-2018</span>
-        </div>
-        <div className="user-analytics__child">
-          <h4>Total Books</h4>
-          <span>10</span>
-        </div>
-        <div className="user-analytics__child">
-          <h4>Total Reviews</h4>
-          <span>10</span>
-        </div>
-        <div className="user-analytics__child">
-          <h4>Favorite Books</h4>
-          <span>10</span>
-        </div>
-        <div className="user-analytics__child">
-          <h4>Books Rated</h4>
-          <span>10</span>
-        </div>
-        <div className="user-analytics__child">
-          <h4>Downloaded</h4>
-          <span>10</span>
-        </div>
-      </div>
-    );
-  }
-
   render() {
     const {
-      isEditFormOpen, values, formErrors, imagePreviewUrl,
+      values, formErrors, imagePreviewUrl,
       uploadingImage,
     } = this.state;
     const { user } = this.props;
     return (
-      <div>
-        <div className="profile-update" id="main">
-          {!isEditFormOpen && (
-            <UserDetails
-              toggleEditForm={this.toggleEditForm}
-              user={user}
-            />
-          )}
-          {isEditFormOpen && (
-            <UpdateForm
-              toggleEditForm={this.toggleEditForm}
-              user={user}
-              imagePreviewUrl={imagePreviewUrl}
-              formValues={values}
-              handleInputChange={this.onInputChange}
-              handleImageChange={this.onImageChange}
-              updateProfile={this.updateProfile}
-              formErrors={formErrors}
-              cancelPreview={this.cancelPreview}
-              uploadingImage={uploadingImage}
-            />
-          )}
-          {isEditFormOpen && (
-            <UpdatePassword
-              handleInputChange={this.onInputChange}
-              updatePassword={this.updatePassword}
-              formErrors={formErrors}
-              formValues={values}
-            />
-          )}
-        </div>
-        {this.renderAnalytica()}
+      <div className="profile-update" id="main">
+        <UserDetails
+          user={user}
+        />
+        <UpdateForm
+          user={user}
+          imagePreviewUrl={imagePreviewUrl}
+          formValues={values}
+          handleInputChange={this.onInputChange}
+          handleImageChange={this.onImageChange}
+          updateProfile={this.updateProfile}
+          formErrors={formErrors}
+          cancelPreview={this.cancelPreview}
+          uploadingImage={uploadingImage}
+        />
+        <UpdatePassword
+          handleInputChange={this.onInputChange}
+          updatePassword={this.updatePassword}
+          formErrors={formErrors}
+          formValues={values}
+        />
       </div>
     );
   }

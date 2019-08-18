@@ -16,12 +16,18 @@
   .sidebar-navlink {
     padding-right: 25px;
     padding-top: 25px;
-    display: grid;
-    grid-template-columns: 20% 80%;
-    grid-gap: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    i {
+      width: 20%;
+      margin-right: 20px;
+    }
 
     #sideBarText {
       margin-top: -6px;
+      width: 80%;
     }
   }
 

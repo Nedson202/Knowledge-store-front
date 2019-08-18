@@ -11,6 +11,7 @@ class LeftSideBar extends Component {
     if (role === 'user') {
       return;
     }
+
     return (
       <Fragment>
         <div data-tip="Users">
