@@ -1,27 +1,33 @@
-.user-analytics {
+.action-buttons {
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto !important;
-  text-align: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  justify-content: flex-end;
 
-  div {
-    border-radius: 12px;
-    height: 160px;
-    box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2), 0 2px 2px rgba(0, 0, 0, 0.1);
-    width: calc(1/3 * 100% - (1 - 1/3) * 100px);
-    margin-bottom: 30px;
+  #cancel-button {
+    margin-right: 15px;
 
-    h4 {
-      padding-top: 20%;
+    i {
+      padding-right: 10px;
     }
+  }
+}
 
-    span {
-      font-size: 25px;
-    }
+#show-image {
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+  margin-right: 20px;
+}
+
+.image-previewer {
+  img {
+    object-fit: cover;
+  }
+
+  button {
+    margin-top: 15px !important;
+    width: 120px;
+    display: block;
+    margin: auto;
   }
 }
 
@@ -30,6 +36,9 @@
   flex-direction: column;
   justify-content: center;
   margin: 0 auto;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 50px;
 
   h4 {
     padding-bottom: 30px;
@@ -56,7 +65,7 @@
   flex-wrap: wrap;
   width: 100%;
   max-width: 1200px;
-  margin: 100px auto !important;
+  margin: 100px auto 0 auto !important;
   justify-content: space-between;
 
   .profile-upload {
@@ -94,79 +103,59 @@
   }
 }
 
-.action-buttons {
-  display: flex;
-  justify-content: flex-end;
-
-  #cancel-button {
-    margin-right: 15px;
-
-    i {
-      padding-right: 10px;
-    }
-  }
-}
-
 @media screen and (max-width: 560px) {
-  .user-analytics {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    max-width: 1200px;
-    margin: 50px auto !important;
-    text-align: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-
-    &__child {
-      width: 45%;
-      margin-bottom: 30px;
-
-      h4 {
-        padding-top: 25%;
-      }
-    }
-
-  }
-
   .profile-update {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 1200px;
+    max-width: 600px;
     margin: 60px auto !important;
+
+    .profile-details {
+      width: 100%;
+      flex-direction: column;
+
+      &__image {
+        width: 100%;
+        margin: 20px auto;
+
+        #show-image {
+          margin: 0 auto;
+          display: block;
+        }
+      }
+
+      &__info {
+        width: 100%;
+        max-width: 500px;
+      }
+    }
+
+    .profile-upload {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+      #image-upload {
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .update-form {
+        width: 100%;
+      }
+    }
+
+    .password-update {
+      width: 100%;
+    }
   }
 
   .password-update {
     margin-top: 30px;
   }
 
-  .profile-upload {
-    display: grid;
-    grid-template-columns: 3fr;
-  }
-
   #image-upload {
     width: 200px !important;
-  }
-}
-
-#show-image {
-  border-radius: 50%;
-  width: 180px;
-  height: 180px;
-  margin-right: 20px;
-}
-
-.image-previewer {
-  img {
-    object-fit: cover;
-  }
-
-  button {
-    margin-top: 15px !important;
-    width: 120px;
-    display: block;
-    margin: auto;
   }
 }
