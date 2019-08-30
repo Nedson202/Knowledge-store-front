@@ -17,7 +17,7 @@
 	.book-profile-container {
 		display: flex;
     flex-direction: row;
-    max-width: 1100px;
+    max-width: 1150px;
     margin: 90px auto 20px;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -46,11 +46,16 @@
 		}
 
 		.book-profile-more {
-			display: grid;
-			grid-template-columns: 150px 150px;
-			grid-gap: 0 20px;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			width: 100%;
+			max-width: 350px !important;
 
 			.child-elem {
+				width: calc(1/2*100% - (1 - 1/2)*50px);
+			
 				.book-images {
 					width: 150px !important;
 					height: 12rem !important;
@@ -174,35 +179,6 @@
 	}
 }
 
-@media screen and (min-width: 960px) and (max-width: 1200px) {
-	.book-profile-container {
-		display: grid;
-		grid-template-columns: 230px 2fr 1fr;
-		max-width: 1000px;
-		margin: 90px auto 20px auto;
-		grid-gap: 50px;
-	}
-}
-
-@media screen and (max-width: 375px) {
-	.book-profile-more {
-		display: flex;
-		flex-direction: column;
-		grid-gap: 0 20px !important;
-
-		.child-elem {
-			.book-images, .book-footer {
-				width: 150px !important;
-				height: 12rem !important;
-			}
-		}
-	}
-
-	.add-review-form {
-		margin-top: -80px !important;
-	}
-}
-
 @media screen and (max-width: 560px) {
 	.book-profile-container {
 		display: flex;
@@ -272,10 +248,11 @@
 	}
 
 	.book-profile-more {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		margin: auto;
-		grid-gap: 0 55px;
+	  display: flex;
+    flex-direction: row;
+    margin: auto;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
 		.child-elem {
 			.book-images {
@@ -308,10 +285,6 @@
 		margin-top: -30px !important;
 		grid-column: span 2;
 	}
-
-	.review-action-buttons {
-
-	}
 }
 
 .book-meta {
@@ -329,6 +302,7 @@
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 	text-align: center;
+	letter-spacing: 1px;
 }
 
 .favorite-action-button {
