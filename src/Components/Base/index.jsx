@@ -20,8 +20,10 @@ class App extends Component {
     const { auth, auth: { user }, history } = this.props;
     document.getElementById('navbar').style.display = 'none';
     document.getElementById('myLeftSideBar').style.display = 'none';
+
     this.socialAuthentication();
     this.verifyUserEmail();
+
     return auth.isAuthenticated
       && user.isVerified === 'true' && history.push('/my-books');
   }
@@ -32,13 +34,14 @@ class App extends Component {
     if (typeof window.orientation === 'undefined') {
       document.getElementById('myLeftSideBar').style.display = 'block';
     }
+
     const modalEL = document.getElementById('close');
     return modalEL && modalCloser();
   }
 
   socialAuthentication() {
     const query = queryString.parse(window.location.search);
-    const { history, dispatch } = this.props;
+    const { dispatch } = this.props;
     if (Object.keys(query)[0] === '?token') {
       const token = Object.values(query)[0];
       localStorage.setItem('token', token);
@@ -46,14 +49,15 @@ class App extends Component {
       dispatch(setCurrentUser(decodedToken));
       setQuery({ token: '' });
       toaster('success', 'Authentication successful');
-      return decodedToken.isVerified === 'true' && history.push('my-books');
+
+      return decodedToken.isVerified === 'true' && window.location.replace('/my-books');
     }
   }
 
   verifyUserEmail() {
     const { verifyEmailQuery } = this.props;
     const query = queryString.parse(window.location.search);
-    const { history, dispatch } = this.props;
+    const { dispatch } = this.props;
     if (Object.keys(query)[0] === '?verify-email') {
       const userToken = Object.values(query)[0];
       setQuery({ token: '' });
@@ -65,7 +69,7 @@ class App extends Component {
         const { verifyEmail: { token, message } } = response.data;
         localStorage.setItem('token', token);
         dispatch(setCurrentUser(tokenDecoder(token)));
-        history.push('/my-books');
+        window.location.replace('/my-books');
         toaster('success', message);
       });
     }

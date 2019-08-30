@@ -144,11 +144,18 @@ class BookProfile extends Component {
     );
   }
 
-  renderAll(book, loading) {
+  renderAll(book = {}, loading) {
     if (loading) {
       return;
     }
-    const { moreBooks, id, isFavorite } = book;
+
+    const hasProperty = Object.keys(book).length;
+
+    if (!loading && !hasProperty) {
+      return <div />;
+    }
+
+    const { moreBooks = [], id, isFavorite } = book;
     const favoriteOption = isFavorite
       ? <p className="favorite-action-button">Remove from Favorites</p>
       : (
