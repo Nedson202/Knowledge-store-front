@@ -258,13 +258,19 @@ $border_color_2: #ffaf00;
 	border-radius: 50%;
 }
 
-#LoginFormModal, #SignUpFormModal {
+#LoginFormModal, #SignUpForm, #AddBookModal {
 	margin: auto;
 	width: 100%;
 }
 
 .modal-dialog {
 	max-width: 350px !important;
+}
+
+#AddBookModal {
+	.modal-dialog {
+		max-width: 700px !important;
+	}
 }
 
 .modal .modal-content .modal-header {
