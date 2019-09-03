@@ -191,10 +191,12 @@ class Header extends Component {
 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               <Search />
-              <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-                {user.isVerified === 'true' && this.renderUserAvatar()}
-              </ul>
-              {user.isVerified !== 'true' && this.renderAuthButtons()}
+              <div className="auth-header">
+                <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+                  {user.isVerified === 'true' && this.renderUserAvatar()}
+                </ul>
+                {user.isVerified !== 'true' && this.renderAuthButtons()}
+              </div>
             </div>
           </div>
         </nav>
