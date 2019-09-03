@@ -31,14 +31,13 @@ const UpdatePassword = (props) => {
             onClick={passwordToggler('old-password')}
             id="password-icon"
           >
-            <i
-              className="fa fa-eye hide"
-              aria-hidden="true"
+            <ion-icon
+              class="hide"
+              name="eye-off"
               id="old-password-remove-hide"
             />
-            <i
-              className="fa fa-eye-slash"
-              aria-hidden="true"
+            <ion-icon
+              name="eye"
               id="old-password-add-hide"
             />
           </div>
@@ -63,14 +62,13 @@ const UpdatePassword = (props) => {
             onClick={passwordToggler('new-password')}
             id="password-icon"
           >
-            <i
-              className="fa fa-eye hide"
-              aria-hidden="true"
+            <ion-icon
+              class="hide"
+              name="eye-off"
               id="new-password-remove-hide"
             />
-            <i
-              className="fa fa-eye-slash"
-              aria-hidden="true"
+            <ion-icon
+              name="eye"
               id="new-password-add-hide"
             />
           </div>

@@ -40,7 +40,7 @@ class BookProfile extends Component {
     }
   };
 
-  addBookToFavorite = id => () => {
+  toggleFavorites = id => () => {
     const { addToFavoritesQuery } = this.props;
     addToFavoritesQuery({
       variables: {
@@ -124,21 +124,25 @@ class BookProfile extends Component {
   }
 
   renderMoreBooks(books) {
+    let moreBooks = 'Not Available';
+
+    if (books.length) {
+      moreBooks = books && books.length !== 0 && books.map(book => (
+        <BookCard
+          key={book.id}
+          enableEllipsis={false}
+          book={book}
+          moreBooks
+        />
+      ));
+    }
+
     return (
-      <div>
+      <div className="book-recommendation">
         <h3>Recommended</h3>
         <hr />
         <div className="book-profile-more">
-          {
-            books && books.length !== 0 && books.map(book => (
-              <BookCard
-                key={book.id}
-                enableEllipsis={false}
-                book={book}
-                moreBooks
-              />
-            ))
-          }
+          {moreBooks}
         </div>
       </div>
     );
@@ -156,16 +160,8 @@ class BookProfile extends Component {
     }
 
     const { moreBooks = [], id, isFavorite } = book;
-    const favoriteOption = isFavorite
-      ? <p className="favorite-action-button">Remove from Favorites</p>
-      : (
-        <p
-          className="favorite-action-button"
-          onClick={this.addBookToFavorite(id)}
-        >
-          Add to Favorites
-        </p>
-      );
+    const favoriteOptionLabel = isFavorite
+      ? 'Remove from Favorites' : 'Add to Favorites';
 
     return (
       <Fragment>
@@ -175,11 +171,16 @@ class BookProfile extends Component {
             enableEllipsis={false}
           />
           <div className="favorite-option">
-            <i
-              className="fas fa-bookmark"
+            <ion-icon
+              name="bookmark"
               style={{ color: isFavorite && '#005C97' }}
             />
-            {favoriteOption}
+            <p
+              className="favorite-action-button"
+              onClick={this.toggleFavorites(id)}
+            >
+              {favoriteOptionLabel}
+            </p>
           </div>
         </div>
         <div className="book-profile-details">

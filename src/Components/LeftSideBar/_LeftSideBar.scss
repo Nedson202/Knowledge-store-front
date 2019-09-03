@@ -3,7 +3,7 @@
   width: 250px;
   position: fixed;
   z-index: 2;
-  top: 57px;
+  top: 60px;
   left: 0;
   overflow-x: hidden;
   -webkit-transition: 0.5s;
@@ -15,20 +15,19 @@
 
   .sidebar-navlink {
     padding-right: 25px;
-    padding-top: 25px;
+    padding-top: 15px;
     margin-top: 25px;
+    padding-bottom: 15px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 
-    i {
-      width: 20%;
-      margin-right: 20px;
+    ion-icon {
+      font-size: 25px;
     }
 
     #sideBarText {
-      margin-top: -6px;
-      width: 80%;
+      width: 70%;
     }
   }
 
@@ -38,7 +37,6 @@
   }
 
   a {
-    padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 15px;
     display: block;
@@ -69,6 +67,10 @@
       color: #005C97;
     }
   }
+
+  ion-icon {
+    font-size: 35px;
+  }
 }
 
 #main {
@@ -89,7 +91,7 @@
 
 .dropdown-item.active {
   border-left: 3px solid #005C97;
-  background-color: #F5F5F5 !important;
+  background-color: transparent;
   color: #020202;
 }
 

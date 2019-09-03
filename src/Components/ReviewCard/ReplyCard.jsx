@@ -26,7 +26,9 @@ class ReplyCard extends Component {
     return (
       <div className="footer">
         <p>
-          <i className="fas fa-thumbs-up" />
+          <ion-icon
+            name="thumbs-up"
+          />
           <span style={{ cursor: 'default', paddingLeft: '10px' }}>{likes !== 0 && likes}</span>
         </p>
         <p onClick={handleToggleForm(reviewId)}>Reply</p>

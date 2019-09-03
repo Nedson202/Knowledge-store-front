@@ -109,14 +109,13 @@ class PasswordReset extends Component {
               role="button"
               tabIndex={0}
             >
-              <i
-                className="fa fa-eye hide"
-                aria-hidden="true"
+              <ion-icon
+                class="hide"
+                name="eye-off"
                 id="password-reset-remove-hide"
               />
-              <i
-                className="fa fa-eye-slash"
-                aria-hidden="true"
+              <ion-icon
+                name="eye"
                 id="password-reset-add-hide"
               />
             </div>

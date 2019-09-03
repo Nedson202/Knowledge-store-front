@@ -14,8 +14,8 @@ class ImageUpload extends Component {
         >
           <div>
             <div id="dropzone">
-              <i className="far fa-image text-center" aria-hidden="true" />
-              <p>choose image</p>
+              <ion-icon name="image" class="text-center" />
+              <p>Select image</p>
             </div>
           </div>
           <input

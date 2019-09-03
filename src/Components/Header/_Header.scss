@@ -1,51 +1,25 @@
-.navbar-brand {
-  margin-left: -3.4rem;
+.navbar {
+  justify-content: space-between !important;
+
+  .container {
+    margin: 0;
+    max-width: 100%;
+  }
+
+  &-brand {
+    margin-left: 0.5rem;
+  }
+
+  .dropdown-menu {
+    left: unset !important;
+    right: 10%;
+  }
 }
 
 @media (min-width: 600px) {
   .container .mobile-nav {
     display: none !important;
   }
-}
-
-@media (max-width: 768px) {
-  .dropdown-menu {
-    padding: 0;
-  }
-
-  .navbar-brand {
-    margin-left: 3.4rem;
-  }
-}
-
-.cart-navbar {
-  margin-top: 17px;
-  padding-right: 28px;
-  cursor: pointer;
-
-  span {
-    position: absolute;
-    top: 10px;
-    font-size: 14px;
-  }
-}
-
-.fa-search {
-  font-size: 20px;
-  margin-right: 10px;
-  color: #212529;
-}
-
-.fa-bars {
-  font-size: 20px;
-  color: #212529;
-}
-
-.close-icon {
-  position: relative;
-  left: -25px;
-  color: #212529;
-  cursor: pointer;
 }
 
 @media screen and (max-width: 758px) {
@@ -57,12 +31,6 @@
     ul {
       display: none !important;
     }
-
-    form {
-      .fa-search {
-        margin-right: 10px;
-      }
-    }
   }
 
   .sidenav-collapse {
@@ -70,11 +38,16 @@
   }
 
   #navbarSupportedContent .bmd-form-group {
-    width: 85%;
+    width: 100%;
   }
 
-  .navbar-brand {
-    margin-left: 0 !important;
+  .navbar {
+    padding: 1rem 1rem !important;
+    
+    &-brand {
+      margin-left: 0 !important;
+      padding-top: 0;
+    }
   }
 }
 
@@ -85,19 +58,33 @@
   margin-left: 10px !important;
   padding: 0 !important;
   border-radius: 50%;
-  text-align: center;
-}
-
-.sidenav-collapse:focus {
-	outline: 0;
-	box-shadow: none;
-	border-color: transparent;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px, rgba(0, 0, 0, 0.1) 0px 4px 30px;
-}
-
-.sidenav-collapse:hover {
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px, rgba(0, 0, 0, 0.1) 0px 4px 30px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-icon {
+    font-size: 25px;
+  }
+
+  &:focus {
+    outline: 0;
+    box-shadow: none;
+    border-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px, rgba(0, 0, 0, 0.1) 0px 4px 30px;
+  }
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px, rgba(0, 0, 0, 0.1) 0px 4px 30px;
+    cursor: pointer;
+  }
+}
+
+.user-detail {
+	padding: .8rem 0 .8rem 1.5rem;
+	font-weight: 600;
+	color: rgba(0, 0, 0, .8);
+	font-size: 14px;
 }
 
 .user-toggle {
@@ -107,8 +94,4 @@
     line-height: 30px;
     font-size: 15px;
   }
-}
-
-#searchBox {
-  padding-right: 25px;
 }
