@@ -1,8 +1,8 @@
-$color_1: white;
+$color_1: #ffffff;
 $color_2: #ccc;
 $color_3: #ffaf00;
 $font_family_1: georgia, sans-serif;
-$border_color_1: white;
+$border_color_1: $color_1;
 $border_color_2: #ffaf00;
 
 * {
@@ -10,7 +10,7 @@ $border_color_2: #ffaf00;
 }
 
 .bg-light {
-  background-color: #ffffff !important;
+  background-color: $color_1 !important;
 }
 
 .hide {
@@ -20,7 +20,7 @@ $border_color_2: #ffaf00;
 .navbar {
 	padding: 0 !important;
 	z-index: 2;
-	min-height: 57px;
+	min-height: 60px;
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px, rgba(0, 0, 0, 0.1) 0px 4px 30px;
 }
 
@@ -31,13 +31,6 @@ $border_color_2: #ffaf00;
 
 .navbar-light .navbar-nav .nav-link {
 	display: flex !important;
-}
-
-.user-detail {
-	padding: .8rem 0 .8rem 1.5rem;
-	font-weight: 600;
-	color: #585757;
-	font-size: 14px;
 }
 
 .dropdown-menu {
@@ -70,11 +63,11 @@ $border_color_2: #ffaf00;
 .product-title {
 	font-size: 50px;
 	margin-bottom: 15px;
-	color: white;
+	color: $color_1;
 }
 
 .auth-buttons {
-	color: white;
+	color: $color_1;
 	position: absolute;
 	-webkit-transform: translate(0%, -50%);
 	transform: translate(-50%, -50%);
@@ -85,14 +78,19 @@ $border_color_2: #ffaf00;
 	text-align: center;
 
 	button {
-		color: white !important;
+		color: $color_1 !important;
 		margin: 20px 15px 0 0;
-		border: 1px solid white !important;
+		border: 1px solid $color_1 !important;
 		border-radius: 5px;
 		min-width: 150px;
+		padding-top: 10px;
+		padding-bottom: 10px;
 
-		.fa {
+		ion-icon {
 			margin-right: 15px;
+			font-size: 18px;
+			color: $color_1;
+			vertical-align: sub;
 		}
 		
 		&:hover {
@@ -144,9 +142,40 @@ $border_color_2: #ffaf00;
 	margin-left: 10px;
 }
 
-@media screen and (min-width: 960px) {
-	.search-bar {
-		width: 400px !important;
+.search {
+	margin-left: 20%;
+
+	.form-input {
+		width: 350px;
+		outline: none;
+		height: 40px;
+		border: 1px solid #4c4c4c;
+		border-radius: 20px;
+		padding-left: 15px;
+		padding-right: 25px;
+		justify-content: center;
+		color: #4c4c4c;
+		font-size: 16px;
+
+		&::placeholder {
+			color: #4c4c4c;
+		}
+	}
+
+	.close-icon {
+		position: relative;
+		left: -35px;
+		color: #212529;
+		cursor: pointer;
+		font-size: 22px;
+		text-decoration: none;
+		background: transparent;
+		border: none;
+		padding-right: 10px;
+
+		&:hover {
+			color: #212529;
+		}
 	}
 }
 
@@ -156,12 +185,30 @@ $border_color_2: #ffaf00;
 	line-height: 50px;
 	font-size: 18px;
 	background-color: #ff8d00;
-	color: white;
+	color: $color_1;
 }
 
 @media screen and (max-width: 560px) {
-	.search-bar {
-		width: 350px !important;
+	.search {
+		margin: 15px 0;
+		display: flex;
+		flex-direction: row;
+
+		.form-input {
+			width: 100%;
+
+			&:focus {
+				width: 100% !important;
+			}
+
+			&:not(:focus) {
+				width: 100% !important;
+			}
+		}
+
+		.close-icon {
+			left: 0;
+		}
 	}
 
 	.product-title {
@@ -198,7 +245,7 @@ $border_color_2: #ffaf00;
     line-height: unset;
     font-size: 17px;
     background-color: #ff8d00;
-    color: white;
+    color: $color_1;
     padding: 10px 15px;
 	}
 }
@@ -211,13 +258,19 @@ $border_color_2: #ffaf00;
 	border-radius: 50%;
 }
 
-#LoginFormModal, #SignUpFormModal {
+#LoginFormModal, #SignUpForm, #AddBookModal {
 	margin: auto;
 	width: 100%;
 }
 
 .modal-dialog {
 	max-width: 350px !important;
+}
+
+#AddBookModal {
+	.modal-dialog {
+		max-width: 700px !important;
+	}
 }
 
 .modal .modal-content .modal-header {
@@ -247,15 +300,14 @@ $border_color_2: #ffaf00;
 
 .user-profile-nav {
 	display: flex;
+
+	.user-profile-icon {
+		margin-right: 20px;
+	}
 }
 
 .modal-footer button {
 	margin-right: 10px !important;
-}
-
-.user-profile-navlink {
-	display: flex;
-	justify-content: space-between;
 }
 
 .checkbox {
@@ -291,12 +343,12 @@ $border_color_2: #ffaf00;
 
 		.fa-google {
 			background: #dd4b39;
-			color: white;
+			color: $color_1;
 		}
 
 		.fa-facebook-f {
 			background: #3a4d84;
-			color: white;
+			color: $color_1;
 		}
 
 		.google-icon {
@@ -322,14 +374,15 @@ $border_color_2: #ffaf00;
 .form-group {
 	position: relative;
 	input:-webkit-autofill {
-    box-shadow: 0 0 0 30px white inset;
-    -webkit-box-shadow: 0 0 0 30px white inset;
+    box-shadow: 0 0 0 30px $color_1 inset;
+    -webkit-box-shadow: 0 0 0 30px $color_1 inset;
 	}
 
   #password-icon {
     position: absolute;
     top: 34px;
-    right: 9px;
+		right: 9px;
+		cursor: pointer;
 	}
 
   #password-icon:focus {

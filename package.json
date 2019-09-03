@@ -93,7 +93,7 @@
   },
   "devDependencies": {
     "eslint-plugin-jest": "^21.26.2",
-    "node-sass": "^4.9.3",
+    "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0"
   },
   "jest": {
@@ -148,6 +148,6 @@
     "event-stream": "^4.0.1"
   },
   "engines": {
-    "node": "11.x"
+    "node": "10.x"
   }
 }

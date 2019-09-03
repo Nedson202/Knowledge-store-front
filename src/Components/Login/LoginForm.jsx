@@ -58,14 +58,13 @@ class LoginForm extends Component {
                       onClick={passwordToggler('password-login')}
                       id="password-icon"
                     >
-                      <i
-                        className="fa fa-eye hide"
-                        aria-hidden="true"
+                      <ion-icon
+                        class="hide"
+                        name="eye-off"
                         id="password-login-remove-hide"
                       />
-                      <i
-                        className="fa fa-eye-slash"
-                        aria-hidden="true"
+                      <ion-icon
+                        name="eye"
                         id="password-login-add-hide"
                       />
                     </div>

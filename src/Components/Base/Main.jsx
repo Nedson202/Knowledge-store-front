@@ -8,12 +8,12 @@ class Main extends Component {
     return (
       <Fragment>
         <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#LoginFormModal">
-          <i className="fa fa-sign-in-alt" />
+          <ion-icon name="log-in" />
           Login to get started
           {' '}
         </button>
         <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#SignUpFormModal">
-          <i className="fa fa-sign-in-alt" />
+          <ion-icon name="log-in" />
           Signup
           {' '}
         </button>
@@ -29,7 +29,7 @@ class Main extends Component {
           className="btn btn-outline-primary"
           onClick={this.navigateToBooks}
         >
-          <i className="fa fa-rocket" aria-hidden="true" />
+          <ion-icon name="paper-plane" />
           {' '}
           Explore
         </button>

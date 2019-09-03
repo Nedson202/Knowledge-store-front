@@ -80,6 +80,13 @@ class Search extends PureComponent {
   clearSearchQuery = () => {
     this.setState({ value: '', toggleCloseIcon: false });
     setQuery({ search: '' });
+
+    const searchInput = document.getElementById('searchBox');
+    if (searchInput) {
+      searchInput.style.width = '350px';
+      searchInput.style.transition = '0.6s';
+    }
+
     const { history } = this.props;
     history.push(localStorage.previousLocation);
     localStorage.removeItem('previousLocation');
@@ -112,38 +119,48 @@ class Search extends PureComponent {
     }
   }
 
+  handleSearchFocus = () => {
+    const searchInput = document.getElementById('searchBox');
+    if (searchInput) {
+      searchInput.style.width = '450px';
+      searchInput.style.transition = '0.6s';
+    }
+  }
+
   render() {
     const { value, toggleCloseIcon } = this.state;
     return (
       <form
-        className="form-inline my-2 my-lg-0 ml-auto mt-2 mt-lg-0"
+        className="search"
         onKeyPress={(event) => {
           if (event.which === 13 /* Enter */) {
             event.preventDefault();
           }
         }}
       >
-        <i className="fa fa-search" />
         <input
-          className="form-control mr-sm-2 search-bar"
+          className="form-input"
           type="search"
-          placeholder="Search by name, author, year, genre..."
+          placeholder="Search by name, author, year, genre, description"
           aria-label="Search"
           name="value"
           id="searchBox"
           onChange={this.onInputChange}
+          onFocus={this.handleSearchFocus}
           onBlur={this.handleReset}
           autoComplete="off"
           onPaste={this.handleDataPaste}
           value={value}
         />
         {toggleCloseIcon && (
-          <i
-            role="button"
-            tabIndex={0}
-            className="fas fa-times close-icon"
+          <button
+            type="button"
             onClick={this.clearSearchQuery}
-          />
+            tabIndex={0}
+            className="close-icon"
+          >
+            &times;
+          </button>
         )}
       </form>
     );

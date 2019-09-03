@@ -7,16 +7,16 @@ import './_LeftSideBar.scss';
 
 class LeftSideBar extends Component {
   renderAdminNavlinks = () => {
-    const { user: { role } } = this.props;
-    if (role === 'user') {
+    const { user: { role }, isAuthenticated } = this.props;
+    if (!isAuthenticated || role === 'user') {
       return;
     }
 
     return (
       <Fragment>
         <div data-tip="Users">
-          <NavLink exact to="/users" className="dropdown-item sidebar-navlink">
-            <i className="fa fa-users" />
+          <NavLink to="/users" className="dropdown-item sidebar-navlink">
+            <ion-icon name="people" />
             <span id="sideBarText">Users</span>
           </NavLink>
         </div>
@@ -29,26 +29,26 @@ class LeftSideBar extends Component {
       <div id="myLeftSideBar" className="leftSideBar">
         <ReactTooltip effect="solid" place="right" />
         <div data-tip="My Books">
-          <NavLink exact to="/my-books" className="dropdown-item sidebar-navlink">
-            <i className="fa fa-book" />
+          <NavLink to="/my-books" className="dropdown-item sidebar-navlink">
+            <ion-icon name="book" />
             <span id="sideBarText">My Books</span>
           </NavLink>
         </div>
         <div data-tip="All Books">
-          <NavLink exact to="/books" className="dropdown-item sidebar-navlink">
-            <i className="fab fa-accusoft" />
+          <NavLink to="/books" className="dropdown-item sidebar-navlink">
+            <ion-icon name="bookmarks" />
             <span id="sideBarText">All Books</span>
           </NavLink>
         </div>
         <div data-tip="My Favorites">
-          <NavLink exact to="/favorites" className="dropdown-item sidebar-navlink">
-            <i className="fas fa-bookmark" />
+          <NavLink to="/favorites" className="dropdown-item sidebar-navlink">
+            <ion-icon name="bookmark" />
             <span id="sideBarText">My Favorites</span>
           </NavLink>
         </div>
         <div data-tip="Profile">
-          <NavLink exact to="/profile" className="dropdown-item sidebar-navlink">
-            <i className="fa fa-user-circle" />
+          <NavLink to="/profile" className="dropdown-item sidebar-navlink">
+            <ion-icon name="person" />
             <span id="sideBarText">Profile</span>
           </NavLink>
         </div>
@@ -60,13 +60,16 @@ class LeftSideBar extends Component {
 
 LeftSideBar.propTypes = {
   user: PropTypes.object,
+  isAuthenticated: PropTypes.bool,
 };
 
 LeftSideBar.defaultProps = {
   user: {},
+  isAuthenticated: false,
 };
 
 const mapStateToProps = ({ auth }) => ({
+  isAuthenticated: auth.isAuthenticated,
   user: auth.user
 });
 

@@ -45,6 +45,10 @@
 			width: 550px;
 		}
 
+		.book-recommendation {
+			min-width: 300px;
+		}
+
 		.book-profile-more {
 			display: flex;
 			flex-direction: row;
@@ -123,10 +127,6 @@
 
 			.favorite-option {
 				justify-content: center;
-
-				.fa-bookmark {
-					margin-top: 5px;
-				}
 			}
 
 			.react-star {

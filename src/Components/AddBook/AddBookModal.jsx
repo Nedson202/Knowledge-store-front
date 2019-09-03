@@ -30,8 +30,8 @@ class AddBookModal extends Component {
         >
           <div>
             <div id="dropzone">
-              <i className="far fa-image text-center" aria-hidden="true" />
-              <p>add book cover</p>
+              <ion-icon name="image" class="text-center" />
+              <p>Add book cover</p>
             </div>
           </div>
           <input
@@ -100,7 +100,6 @@ class AddBookModal extends Component {
                   id="exampleModalLongTitle"
                 >
                   {editingBook ? 'Edit book' : 'Add a Book'}
-
                 </h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true" id="close-book">&times;</span>

@@ -201,7 +201,10 @@ class ReviewCard extends Component {
     return (
       <div className="footer">
         <p onClick={this.setReviewToLike(id)}>
-          <i className="fas fa-thumbs-up" style={{ color: likes && '#005C97' }} />
+          <ion-icon
+            name="thumbs-up"
+            style={{ color: likes && '#005C97' }}
+          />
           <span style={{ cursor: 'default', paddingLeft: '10px' }}>{likes !== 0 && likes}</span>
         </p>
         <p onClick={this.toggleReplyDialog(id)}>Reply</p>

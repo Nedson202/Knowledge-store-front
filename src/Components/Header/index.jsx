@@ -117,7 +117,7 @@ class Header extends Component {
   }
 
   renderUserAvatar() {
-    const { user } = this.props;
+    const { user: { username, picture, avatarColor, } = {} } = this.props;
     return (
       <li className="nav-item dropdown user-profile-nav">
         <button
@@ -128,61 +128,23 @@ class Header extends Component {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          {user.picture && <img src={user.picture} alt="Avatar" className="avatar" />}
-          {!user.picture && <Avatar user={user.username} color={user.avatarColor} />}
+          {picture && <img src={picture} alt="Avatar" className="avatar" />}
+          {!picture && <Avatar user={username} color={avatarColor} />}
         </button>
         <div className="dropdown-menu" aria-labelledby="navbarDropdown">
           <div className="user-detail">
-            {`@${user.username}`}
+            {username}
           </div>
           <div className="dropdown-divider" />
-          <Link to="/profile" className="dropdown-item user-profile-navlink">
+          <Link to="/profile" className="dropdown-item">
+            <ion-icon class="user-profile-icon" name="person" />
+            {' '}
             Profile
-            {' '}
-            <i className="fas fa-user-circle" />
           </Link>
-          <button type="button" className="dropdown-item user-profile-navlink" onClick={this.handleLogout}>
+          <button type="button" className="dropdown-item" onClick={this.handleLogout}>
+            <ion-icon class="user-profile-icon" name="log-out" />
+            {' '}
             Logout
-            {' '}
-            <i className="fa fa-sign-out-alt" />
-          </button>
-        </div>
-      </li>
-    );
-  }
-
-  renderNotificationPane() {
-    const { user } = this.props;
-    return (
-      <li className="nav-item dropdown user-profile-nav">
-        <span
-          className="cart-navbar"
-          id="notificationPane"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <i className="fas fa-bell" />
-          <span>10</span>
-        </span>
-        <div className="dropdown-menu notification-pane" aria-labelledby="notificationPane">
-          <div className="user-detail">
-            {`@${user.username}`}
-          </div>
-          <div className="dropdown-divider" />
-          <Link to="/profile" className="dropdown-item user-profile-navlink">
-            Profile
-            {' '}
-            <i className="fas fa-user-circle" />
-          </Link>
-          <button
-            type="button"
-            className="dropdown-item user-profile-navlink"
-            onClick={this.handleLogout}
-          >
-            Logout
-            {' '}
-            <i className="fa fa-sign-out-alt" />
           </button>
         </div>
       </li>
@@ -201,7 +163,7 @@ class Header extends Component {
             role="button"
             tabIndex={0}
           >
-            <i className="fa fa-bars" />
+            <ion-icon name="menu" />
           </div>
           <div className="container">
             <Link to="/"><span className="navbar-brand">Loresters Bookstore</span></Link>
@@ -215,7 +177,7 @@ class Header extends Component {
                 aria-expanded="false"
                 aria-label="Search icon"
               >
-                <i className="fas fa-search" />
+                <ion-icon name="search" />
               </button>
               <button
                 type="button"
@@ -223,7 +185,7 @@ class Header extends Component {
                 aria-label="Toggle navigation"
                 onClick={this.toggleMobileNav}
               >
-                <i className="fas fa-bars" />
+                <ion-icon name="menu" />
               </button>
             </div>
 

@@ -39,7 +39,10 @@ class MyBooks extends Component {
       }).then((response) => {
         const { deleteBook: { message } } = response.data;
         toaster('success', message);
-      });
+      })
+        .catch((error) => {
+          console.log(error);
+        });
     });
   }
 
@@ -69,6 +72,10 @@ class MyBooks extends Component {
   }
 
   renderBooks(books) {
+    if (!books.length) {
+      return;
+    }
+
     return (
       <Fragment>
         {books.map(book => (
@@ -85,6 +92,12 @@ class MyBooks extends Component {
   }
 
   render404() {
+    const { fetchUsersBooksQuery: { usersBooks = [] } } = this.props;
+
+    if (usersBooks.length) {
+      return;
+    }
+
     return (
       <div className="book-retrieve-error">
         <h4>You are yet to add a book</h4>
@@ -93,7 +106,7 @@ class MyBooks extends Component {
   }
 
   render() {
-    const { fetchUsersBooksQuery: { usersBooks, loading }, bookToEdit } = this.props;
+    const { fetchUsersBooksQuery: { usersBooks = [], loading }, bookToEdit } = this.props;
     const { editingBook } = this.state;
     return (
       <Fragment>
@@ -105,8 +118,8 @@ class MyBooks extends Component {
         <div className="container-content" id="main">
           {usersBooks && this.renderBooks(usersBooks)}
           {loading && <BookPreloader loadingBook={loading} />}
-          {!loading && usersBooks && usersBooks.length === 0 && this.render404()}
         </div>
+        {!loading && this.render404()}
       </Fragment>
     );
   }
