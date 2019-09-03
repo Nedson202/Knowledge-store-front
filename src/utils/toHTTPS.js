@@ -1,8 +1,8 @@
-const stripEdge = resource => resource.replace('&edge=curl', '');
-
 const toHTTPS = (resource) => {
   const newResource = resource && resource.replace('http://', 'https://');
-  return stripEdge(newResource);
+
+  const stripEdge = newResource && newResource.replace('&edge=curl', '');
+  return stripEdge;
 };
 
 export default toHTTPS;
