@@ -1,17 +1,23 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import passwordToggler from '../../utils/passwordToggler';
 import socialAuthentication from '../../utils/socialAuthentication';
 
-class SignUpForm extends Component {
-  renderForm() {
-    const { handleInputChange, formErrors } = this.props;
+const SignUpForm = (props) => {
+  const { handleInputChange, formErrors, confirmSignup } = props;
+
+  const renderForm = () => {
     const { username, email, password } = formErrors;
     return (
       <Fragment>
         <form autoComplete="false">
           <div className="form-group">
-            <label htmlFor="username" className="bmd-label-floating">Userame</label>
+            <label
+              htmlFor="username"
+              className="bmd-label-floating"
+            >
+              Userame
+            </label>
             <input
               type="text"
               name="username"
@@ -20,10 +26,21 @@ class SignUpForm extends Component {
               onChange={handleInputChange}
               autoComplete="new-password"
             />
-            {username && <span className="validation-error">{username[0]}</span>}
+            {username && (
+              <span
+                className="validation-error"
+              >
+                {username[0]}
+              </span>
+            )}
           </div>
           <div className="form-group">
-            <label htmlFor="email" className="bmd-label-floating">Email address</label>
+            <label
+              htmlFor="email"
+              className="bmd-label-floating"
+            >
+              Email address
+            </label>
             <input
               type="email"
               name="email"
@@ -35,7 +52,9 @@ class SignUpForm extends Component {
             {email && <span className="validation-error">{email[0]}</span>}
           </div>
           <div className="form-group">
-            <label htmlFor="password-signup" className="bmd-label-floating">Password</label>
+            <label htmlFor="password-signup" className="bmd-label-floating">
+              Password
+            </label>
             <input
               type="password"
               name="password"
@@ -44,7 +63,11 @@ class SignUpForm extends Component {
               onChange={handleInputChange}
               autoComplete="new-password"
             />
-            {password && <span className="validation-error">{password[0]}</span>}
+            {password && (
+              <span className="validation-error">
+                {password[0]}
+              </span>
+            )}
             <div
               role="button"
               tabIndex={0}
@@ -63,7 +86,9 @@ class SignUpForm extends Component {
             </div>
           </div>
           <div className="form-group social-login">
-            <div className="text-muted text-center social-login-text">Signup with</div>
+            <div className="text-muted text-center social-login-text">
+              Signup with
+            </div>
             <button
               type="button"
               className="btn btn-primary"
@@ -78,75 +103,70 @@ class SignUpForm extends Component {
         </form>
       </Fragment>
     );
-  }
+  };
 
-  renderFormButtons() {
-    const { confirmSignup } = this.props;
-    return (
-      <Fragment>
-        <button
-          type="button"
-          className="btn btn-default btn-raised cancel-button"
-          data-dismiss="modal"
-        >
-          Close
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary btn-raised text-case signup-button"
-          onClick={confirmSignup}
-        >
-          Signup
-        </button>
-      </Fragment>
-    );
-  }
+  const renderFormButtons = () => (
+    <Fragment>
+      <button
+        type="button"
+        className="btn btn-default btn-raised cancel-button"
+        data-dismiss="modal"
+      >
+        Close
+      </button>
+      <button
+        type="button"
+        className="btn btn-primary btn-raised text-case signup-button"
+        onClick={confirmSignup}
+      >
+        Signup
+      </button>
+    </Fragment>
+  );
 
-  renderModal() {
-    return (
-      <Fragment>
-        <div
-          className="modal fade"
-          id="SignUpFormModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalCenterTitle"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog modal-dialog-centered" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLongTitle">Signup</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span id="close-signup" aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                {this.renderForm()}
-              </div>
-              <div className="modal-footer">
-                {this.renderFormButtons()}
-              </div>
+  const renderModal = () => (
+    <Fragment>
+      <div
+        className="modal fade"
+        id="SignUpFormModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLongTitle">
+                Signup
+              </h5>
+              <button
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span id="close-signup" aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              {renderForm()}
+            </div>
+            <div className="modal-footer">
+              {renderFormButtons()}
             </div>
           </div>
         </div>
-      </Fragment>
-    );
-  }
-
-  render() {
-    return (
-      <div>
-        {this.renderModal()}
       </div>
-    );
-  }
-}
+    </Fragment>
+  );
+
+  return (
+    <div>
+      {renderModal()}
+    </div>
+  );
+};
 
 SignUpForm.propTypes = {
   handleInputChange: PropTypes.func.isRequired,

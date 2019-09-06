@@ -1,4 +1,7 @@
-import { SET_BOOKS, SET_LOADER, SET_BOOK_TO_EDIT } from '../constants/actionTypes';
+import {
+  SET_BOOKS, SET_LOADER,
+  SET_BOOK_TO_EDIT
+} from '../constants/actionTypes';
 
 const setRetrievedBooks = (books, state, total) => ({
   type: SET_BOOKS,

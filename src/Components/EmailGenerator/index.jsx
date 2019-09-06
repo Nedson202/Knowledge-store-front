@@ -4,11 +4,17 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import { connect } from 'react-redux';
 import { compose, withApollo } from 'react-apollo';
-import { singleFieldValidation, allFieldsValidation } from '../../utils/validator/validator';
+import {
+  singleFieldValidation, allFieldsValidation
+} from '../../utils/validator/validator';
 import tokenDecoder from '../../utils/tokenDecoder';
 import { sendVerificationEmail, forgotPassword } from '../../queries/auth';
 import errorHandler from '../../utils/errorHandler';
 import toaster from '../../utils/toast';
+import {
+  RESET_PASSWORD, VERIFY_EMAIL, SUCCESS, TOASTR_ERROR,
+  VERIFICATION_MESSAGE, RESET_MESSAGE, VERIFICATION, PASSWORD_RESET
+} from '../../defaults';
 
 const waitTime = 1000;
 
@@ -46,12 +52,12 @@ class EmailGenerator extends Component {
     };
 
     switch (type) {
-      case 'reset-password':
+      case RESET_PASSWORD:
         setValues('', type);
 
         break;
 
-      case 'verify-email':
+      case VERIFY_EMAIL:
         setValues((decodedToken && decodedToken.email) || '', type);
 
         break;
@@ -69,43 +75,50 @@ class EmailGenerator extends Component {
     this.debounceSingleFieldValidation({ name, value });
   }
 
-  sendEmail = type => () => {
+  sendEmail = type => async () => {
     const { values, values: { email } } = this.state;
     const { client } = this.props;
-    const { isValid, errors } = allFieldsValidation(values, ['username', 'password']);
+    const { isValid, errors } = allFieldsValidation(
+      values, ['username', 'password']
+    );
     if (!isValid) {
       return this.setState({ formErrors: errors });
     }
 
     switch (type) {
-      case 'reset-password':
-        client.query({
-          query: forgotPassword,
-          variables: {
-            email
-          }
-        }).then((response) => {
+      case RESET_PASSWORD:
+        try {
+          const response = await client.query({
+            query: forgotPassword,
+            variables: {
+              email
+            }
+          });
+
           const { forgotPassword: { message } } = response.data;
-          toaster('success', message);
-        }).catch((error) => {
+
+          toaster(SUCCESS, message);
+        } catch (error) {
           const messages = errorHandler(error);
-          messages.forEach(message => toaster('error', message));
-        });
+          messages.forEach(message => toaster(TOASTR_ERROR, message));
+        }
         break;
 
-      case 'verify-email':
-        client.query({
-          query: sendVerificationEmail,
-          variables: {
-            email
-          }
-        }).then((response) => {
+      case VERIFY_EMAIL:
+        try {
+          const response = await client.query({
+            query: sendVerificationEmail,
+            variables: {
+              email
+            }
+          });
+
           const { sendVerificationEmail: { message } } = response.data;
-          toaster('success', message);
-        }).catch((error) => {
+          toaster(SUCCESS, message);
+        } catch (error) {
           const messages = errorHandler(error);
-          messages.forEach(message => toaster('error', message));
-        });
+          messages.forEach(message => toaster(TOASTR_ERROR, message));
+        }
 
         break;
 
@@ -123,7 +136,8 @@ class EmailGenerator extends Component {
           onClick={this.sendEmail(actionType)}
           className="btn btn-primary btn-raised text-case"
         >
-          {actionType.match('verify-email') ? 'Send verification Mail' : 'Send reset mail'}
+          {actionType.match('verify-email')
+            ? VERIFICATION_MESSAGE : RESET_MESSAGE}
         </button>
       </div>
     );
@@ -131,7 +145,8 @@ class EmailGenerator extends Component {
 
   renderForm() {
     const { values: { email }, formErrors, actionType } = this.state;
-    const requestType = actionType.match('verify-email') ? 'verification' : 'password reset';
+    const requestType = actionType.match(VERIFY_EMAIL)
+      ? VERIFICATION : PASSWORD_RESET;
     return (
       <form className="password-reset">
         <div className="password-reset__label">

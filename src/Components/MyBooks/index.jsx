@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import './_MyBooks.scss';
 import '../BookCatalog/_BookCatalog.scss';
 import { compose, graphql } from 'react-apollo';
+import { ReactTitle } from 'react-meta-tags';
 import BookCard from '../BookCard';
 import AddBook from '../AddBook';
 import { fetchUsersBooks, removeBook } from '../../queries/books';
 import BookPreloader from '../BookCatalog/BookPreloader';
 import { setBookToEdit } from '../../redux/actions/bookActions';
 import toaster from '../../utils/toast';
+import { FETCH_USERS_BOOKS_QUERY, REMOVE_BOOK_QUERY, SUCCESS } from '../../defaults';
 
 class MyBooks extends Component {
   state = {
@@ -29,20 +31,23 @@ class MyBooks extends Component {
   }
 
   setBookToRemove = id => () => {
-    this.setState({ bookId: id }, () => { //eslint-disable-line
+    this.setState({ bookId: id }, async () => { //eslint-disable-line
       const { removeBookQuery } = this.props;
-      removeBookQuery({
-        variables: {
-          bookId: id
-        },
-        refetchQueries: this.refetchQueries()
-      }).then((response) => {
-        const { deleteBook: { message } } = response.data;
-        toaster('success', message);
-      })
-        .catch((error) => {
-          console.log(error);
+
+      try {
+        const response = await removeBookQuery({
+          variables: {
+            bookId: id
+          },
+          refetchQueries: this.refetchQueries()
         });
+
+        const { deleteBook: { message } } = response.data;
+
+        toaster(SUCCESS, message);
+      } catch (error) {
+        console.error(error);
+      }
     });
   }
 
@@ -110,6 +115,8 @@ class MyBooks extends Component {
     const { editingBook } = this.state;
     return (
       <Fragment>
+        <ReactTitle title="My Books" />
+
         <AddBook
           bookToEdit={bookToEdit}
           editingBook={editingBook}
@@ -144,7 +151,7 @@ const mapStateToProps = state => ({
 });
 
 export default compose(
-  graphql(fetchUsersBooks, { name: 'fetchUsersBooksQuery', }),
-  graphql(removeBook, { name: 'removeBookQuery', }),
+  graphql(fetchUsersBooks, { name: FETCH_USERS_BOOKS_QUERY, }),
+  graphql(removeBook, { name: REMOVE_BOOK_QUERY, }),
   connect(mapStateToProps)
 )(MyBooks);

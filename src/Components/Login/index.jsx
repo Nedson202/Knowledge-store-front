@@ -12,6 +12,9 @@ import tokenDecoder from '../../utils/tokenDecoder';
 import errorHandler from '../../utils/errorHandler';
 import toaster from '../../utils/toast';
 import modalCloser from '../../utils/modalCloser';
+import {
+  SUCCESS, TOASTR_ERROR, MY_BOOKS_PATH, CLOSE_LOGIN, LOGIN_USER_QUERY, TOKEN
+} from '../../defaults';
 
 const waitTime = 1000;
 class Login extends Component {
@@ -63,15 +66,16 @@ class Login extends Component {
 
       const { data: { loginUser: { token } } = {} } = loginHandler;
 
-      localStorage.setItem('token', token);
+      localStorage.setItem(TOKEN, token);
       const decodedToken = tokenDecoder(token);
-      modalCloser('close-login');
+      modalCloser(CLOSE_LOGIN);
       dispatch(setCurrentUser(decodedToken));
-      if (decodedToken.isVerified === 'true') window.location.replace('/my-books');
-      toaster('success', 'Signed in successfully');
+      if (decodedToken.isVerified === 'true') window.location.replace(MY_BOOKS_PATH);
+
+      toaster(SUCCESS, 'Signed in successfully');
     } catch (error) {
       const messages = errorHandler(error);
-      messages.forEach(message => toaster('error', message));
+      messages.forEach(message => toaster(TOASTR_ERROR, message));
     }
   }
 
@@ -100,6 +104,6 @@ Login.defaultProps = {
 };
 
 export default withRouter(compose(
-  graphql(loginUser, { name: 'loginUserQuery' }),
+  graphql(loginUser, { name: LOGIN_USER_QUERY }),
   connect(),
 )(Login));

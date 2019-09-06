@@ -10,6 +10,9 @@ import toaster from '../../utils/toast';
 import Spinner from '../Spinner';
 import errorHandler from '../../utils/errorHandler';
 import modalCloser from '../../utils/modalCloser';
+import {
+  SUCCESS, CLOSE_USER, ADD, TOASTR_ERROR, FETCH_USERS_QUERY, TOGGLE_ADMIN_QUERY
+} from '../../defaults';
 
 const { Option } = Select;
 
@@ -21,16 +24,21 @@ class Users extends Component {
 
   handleChange = async (value) => {
     const { client } = this.props;
-    client.query({
-      query: filterUsers,
-      variables: {
-        type: value.toLowerCase()
-      }
-    }).then((response) => {
+
+    try {
+      const response = await client.query({
+        query: filterUsers,
+        variables: {
+          type: value.toLowerCase()
+        }
+      });
+
       const { fetchUsers } = response.data;
-      if (fetchUsers.length === 0) toaster('error', 'Sorry no match was found');
+      if (fetchUsers.length === 0) toaster(TOASTR_ERROR, 'Sorry no match was found');
       this.setState({ filteredUsers: fetchUsers || [] });
-    });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   handleEmailChange = (event) => {
@@ -38,24 +46,27 @@ class Users extends Component {
     this.setState({ email: value });
   }
 
-  handleToggleAdmin = (adminAction, userEmail) => () => {
+  handleToggleAdmin = (adminAction, userEmail) => async () => {
     const { toggleAdminQuery } = this.props;
     const { email } = this.state;
-    toggleAdminQuery({
-      variables: {
-        email: adminAction.match('add') ? email : userEmail,
-        adminAction
-      },
-      refetchQueries: this.refetchQuery()
-    }).then((response) => {
+
+    try {
+      const response = await toggleAdminQuery({
+        variables: {
+          email: adminAction.match(ADD) ? email : userEmail,
+          adminAction
+        },
+        refetchQueries: this.refetchQuery()
+      });
+
       const { toggleAdmin: { message } } = response.data;
-      modalCloser('close-user');
+      modalCloser(CLOSE_USER);
       this.setState({ email: '' });
-      toaster('success', message);
-    }).catch((error) => {
+      toaster(SUCCESS, message);
+    } catch (error) {
       const messages = errorHandler(error);
-      messages.forEach(message => toaster('error', message));
-    });
+      messages.forEach(message => toaster(TOASTR_ERROR, message));
+    }
   }
 
   refetchQuery() {
@@ -114,7 +125,8 @@ class Users extends Component {
   render() {
     const { fetchUsersQuery } = this.props;
     const { filteredUsers } = this.state;
-    const users = fetchUsersQuery.fetchUsers !== undefined ? fetchUsersQuery.fetchUsers : [];
+    const users = fetchUsersQuery.fetchUsers !== undefined
+      ? fetchUsersQuery.fetchUsers : [];
     const filteredResult = filteredUsers.length ? filteredUsers : users;
     return (
       <div className="admin-panel">
@@ -148,7 +160,7 @@ Users.defaultProps = {
 export default compose(
   withApollo,
   graphql(filterUsers, {
-    name: 'fetchUsersQuery',
+    name: FETCH_USERS_QUERY,
     options: () => ({
       variables: {
         type: 'all'
@@ -156,6 +168,6 @@ export default compose(
     })
   }),
   graphql(toggleAdmin, {
-    name: 'toggleAdminQuery'
+    name: TOGGLE_ADMIN_QUERY
   })
 )(Users);

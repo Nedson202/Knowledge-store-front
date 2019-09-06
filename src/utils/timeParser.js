@@ -1,8 +1,18 @@
-import moment from 'moment';
+import { parseISO, formatDistance, } from 'date-fns';
 
 const timeParser = (date) => {
-  const timeCreated = moment(date).format('MM/DD/YYYY @ h:mm a');
-  return moment(timeCreated).fromNow();
+  try {
+    const convertedTime = formatDistance(parseISO(date), new Date(), {
+      addPrefix: false,
+      addSuffix: true,
+    });
+
+    const stripAboutPrefix = convertedTime.replace('about ', '');
+
+    return stripAboutPrefix;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export default timeParser;

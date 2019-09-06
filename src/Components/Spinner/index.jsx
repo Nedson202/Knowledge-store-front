@@ -11,6 +11,7 @@ const Spinner = (props) => {
       spin
     />
   );
+
   return (
     <Fragment>
       <Spin indicator={antIcon} />

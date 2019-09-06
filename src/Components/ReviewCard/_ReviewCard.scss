@@ -30,7 +30,13 @@
 
 		p:hover {
 			text-decoration: underline;
-		}
+    }
+
+    .like-count {
+      cursor: default;
+      padding-left: 10px;
+      vertical-align: top;
+    }
 
 		.danger {
 			color: red;

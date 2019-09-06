@@ -8,6 +8,7 @@ const UpdatePassword = (props) => {
     handleInputChange, updatePassword, formErrors,
     formValues: { oldPassword, newPassword }
   } = props;
+
   return (
     <div className="password-update">
       <form>
@@ -24,7 +25,11 @@ const UpdatePassword = (props) => {
             onChange={handleInputChange}
             autoComplete="new-password"
           />
-          {formErrors.password && <span className="validation-error">{formErrors.password}</span>}
+          {formErrors.password && (
+            <span className="validation-error">
+              {formErrors.password}
+            </span>
+          )}
           <div
             role="button"
             tabIndex={0}
@@ -55,7 +60,11 @@ const UpdatePassword = (props) => {
             onChange={handleInputChange}
             autoComplete="new-password"
           />
-          {formErrors.password && <span className="validation-error">{formErrors.password}</span>}
+          {formErrors.password && (
+            <span className="validation-error">
+              {formErrors.password}
+            </span>
+          )}
           <div
             role="button"
             tabIndex={0}

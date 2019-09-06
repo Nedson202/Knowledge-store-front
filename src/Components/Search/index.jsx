@@ -10,24 +10,31 @@ import { bookFilter } from '../../queries/genre';
 import { setRetrievedBooks } from '../../redux/actions/bookActions';
 
 class Search extends PureComponent {
-  debounceSearch = debounce((value) => {
+  debounceSearch = debounce(async (value) => {
     const { client, dispatch } = this.props;
+
     if (value.trim().length > 1) {
       dispatch(setRetrievedBooks([], true));
-      client.query({
-        query: bookFilter,
-        variables: {
-          search: value,
-          from: 0,
-          size: 20
-        }
-      }).then((response) => {
+
+      try {
+        const response = await client.query({
+          query: bookFilter,
+          variables: {
+            search: value,
+            from: 0,
+            size: 20
+          }
+        });
+
         const { searchBooks } = response.data;
-        dispatch(setRetrievedBooks(searchBooks, false, searchBooks && searchBooks.length));
-      }).catch((error) => {
+
+        dispatch(setRetrievedBooks(
+          searchBooks, false, searchBooks && searchBooks.length
+        ));
+      } catch (error) {
         dispatch(setRetrievedBooks([], false));
         return error;
-      });
+      }
     }
   }, 1000);
 
@@ -46,7 +53,10 @@ class Search extends PureComponent {
     if (Object.keys(query)[0] && Object.keys(query)[0] === '?search') {
       dispatch(setRetrievedBooks([], true));
       const queryValue = Object.values(query)[0];
-      this.setState({ value: queryValue || '', toggleCloseIcon: queryValue && true });
+      this.setState({
+        value: queryValue || '',
+        toggleCloseIcon: queryValue && true
+      });
       if (queryValue.trim().length) return this.debounceSearch(queryValue);
     }
   }
