@@ -47,7 +47,7 @@ $border_color_2: #ffaf00;
 }
 
 #background-layout {
-	background: url('../../assets/beverage-books.jpg') no-repeat center center fixed;
+	background: url('../../assets/knowledge-centric.jpg') no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -92,7 +92,7 @@ $border_color_2: #ffaf00;
 			color: $color_1;
 			vertical-align: sub;
 		}
-		
+
 		&:hover {
 			border: 1px solid transparent !important;
 			background-color: #005C97 !important;
@@ -143,7 +143,7 @@ $border_color_2: #ffaf00;
 }
 
 .search {
-	margin-left: 20%;
+	margin-left: auto;
 
 	.form-input {
 		width: 350px;
@@ -220,7 +220,7 @@ $border_color_2: #ffaf00;
 		div {
 			display: flex;
 			flex-direction: column;
-			
+
 			button {
 				width: 100%;
 				max-width: 250px;

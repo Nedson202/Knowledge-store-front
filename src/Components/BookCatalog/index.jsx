@@ -10,16 +10,19 @@ import { setRetrievedBooks } from '../../redux/actions/bookActions';
 import { bookFilter } from '../../queries/genre';
 import Spinner from '../Spinner';
 import BookPreloader from './BookPreloader';
+import {
+  SCROLL, NO_CONTENT, BOOK_SERVER_ERROR, SCROLL_TO_ELEMENT,
+  ALL_BOOKS, SEARCH_BOX
+} from '../../defaults';
 
 class BookCatalog extends Component {
   state = {
     isNewContentLoading: false,
     displayBackToTop: false,
-    randomDigit: 0,
   };
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handlePageScroll, {
+    window.addEventListener(SCROLL, this.handlePageScroll, {
       capture: true,
       passive: true
     });
@@ -30,7 +33,7 @@ class BookCatalog extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handlePageScroll, {
+    window.removeEventListener(SCROLL, this.handlePageScroll, {
       capture: true,
       passive: true
     });
@@ -42,13 +45,13 @@ class BookCatalog extends Component {
     if (Object.keys(query)[0] && Object.keys(query)[0] === '?search') {
       dispatch(setRetrievedBooks([], true));
       const queryValue = Object.values(query)[0];
-      document.getElementById('searchBox').value = queryValue;
+      document.getElementById(SEARCH_BOX).value = queryValue;
       this.retrieveBook(queryValue);
     }
   }
 
   handlePageScroll = () => {
-    const { isNewContentLoading, randomDigit } = this.state;
+    const { isNewContentLoading } = this.state;
     const { books } = this.props;
     const { scrollHeight } = document.body;
     const totalHeight = window.scrollY + window.innerHeight;
@@ -65,49 +68,56 @@ class BookCatalog extends Component {
     ) {
       this.setState({
         isNewContentLoading: true,
-      }, () => {
-        document.getElementById('scrollToElement').scrollIntoView();
+      }, async () => {
+        document.getElementById(SCROLL_TO_ELEMENT).scrollIntoView();
         const { client, dispatch } = this.props;
-        client.query({
-          query: bookFilter,
-          variables: {
-            search: '',
-            from: randomDigit,
-            size: books.length + 20
-          }
-        }).then((response) => {
+
+        try {
+          const response = await client.query({
+            query: bookFilter,
+            variables: {
+              search: '',
+              from: books.length + 1,
+              size: books.length + 20
+            }
+          });
+
           const { data: { searchBooks } } = response;
           dispatch(setRetrievedBooks(searchBooks, false));
+
           this.setState({ isNewContentLoading: false });
-        });
+        } catch (error) {
+          console.error(error);
+        }
       });
     } else {
       this.setState({ isNewContentLoading: false });
     }
   };
 
-  retrieveBook(queryValue) {
-    const { client, dispatch } = this.props;
-    const randomDigit = Math.floor(Math.random() * (20 - 10) + 10);
-    this.setState({ randomDigit });
+  retrieveBook = async (queryValue) => {
+    const { client, dispatch, } = this.props;
     dispatch(setRetrievedBooks([], true));
-    client.query({
-      query: bookFilter,
-      variables: {
-        search: queryValue || '',
-        from: randomDigit,
-        size: 20
-      }
-    })
-      .then((response) => {
-        const { data: { searchBooks } } = response;
-        dispatch(setRetrievedBooks(searchBooks, false));
-      }).catch((error) => {
-        const { message: networkError } = error;
-        dispatch(setRetrievedBooks([], false));
-        this.setState({ networkError });
-        return error;
+
+    try {
+      const response = await client.query({
+        query: bookFilter,
+        variables: {
+          search: queryValue || '',
+          from: 0,
+          size: 20
+        }
       });
+
+      const { data: { searchBooks } } = response;
+
+      dispatch(setRetrievedBooks(searchBooks, false));
+    } catch (error) {
+      const { message: networkError } = error;
+      dispatch(setRetrievedBooks([], false));
+      this.setState({ networkError });
+      return error;
+    }
   }
 
   renderBooks(books) {
@@ -128,10 +138,18 @@ class BookCatalog extends Component {
 
   renderPageHeader() {
     const { totalSearchResult } = this.props;
-    const message = totalSearchResult !== 0 ? `${totalSearchResult} item(s) retrieved` : '';
+    const message = totalSearchResult !== 0
+      ? `${totalSearchResult} item(s) retrieved` : '';
     return (
-      <div className="user-books__header" ref={(section) => { this.backToTop = section; }}>
-        <h4>{window.location.search ? `Search result(s):: ${message}` : 'All Books'}</h4>
+      <div
+        className="user-books__header"
+        ref={(section) => { this.backToTop = section; }}
+      >
+        <h4>
+          {window.location.search ? `Search result(s):: ${message}`
+            : ALL_BOOKS
+          }
+        </h4>
       </div>
     );
   }
@@ -139,14 +157,14 @@ class BookCatalog extends Component {
   render404Message = () => {
     const { books, loadingBook } = this.props;
     const { networkError } = this.state;
-    let message = 'The content you seek is unavailable';
+    let message = NO_CONTENT;
 
     if (!loadingBook && books.length) {
       return;
     }
 
     if (networkError) {
-      message = 'Unable to retrieve books from the server please try again';
+      message = BOOK_SERVER_ERROR;
     }
 
     return (

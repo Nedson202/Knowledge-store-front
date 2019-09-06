@@ -7,6 +7,10 @@ import { getGenres } from '../../queries/genre';
 import { addBook, fetchUsersBooks } from '../../queries/books';
 import modalCloser from '../../utils/modalCloser';
 import toaster from '../../utils/toast';
+import {
+  FILE, FOLDER, UPLOAD_PRESET, BOOK_STORE, AUTHORS, CLOSE_BOOK,
+  SUCCESS, ADD_BOOK_QUERY
+} from '../../defaults';
 
 class AddBook extends Component {
   state = {
@@ -24,7 +28,7 @@ class AddBook extends Component {
     authors: [],
   }
 
-  imageChange = (event) => {
+  imageChange = async (event) => {
     const { files } = event.target;
     const file = files[0];
 
@@ -37,17 +41,21 @@ class AddBook extends Component {
     reader.readAsDataURL(file);
 
     const data = new FormData();
-    data.append('file', file);
-    data.append('folder', 'bookstore');
-    data.append('upload_preset', process.env.UPLOAD_PRESET);
+    data.append(FILE, file);
+    data.append(FOLDER, BOOK_STORE);
+    data.append(UPLOAD_PRESET, process.env.UPLOAD_PRESET);
 
-    return axios.post(process.env.CLOUDINARY_URL, data)
-      .then((response) => {
-        const { values } = this.state;
-        const { secure_url: picture } = response.data;
-        values.image = picture;
-        this.setState({ values, imageUploadStatus: false });
-      });
+    try {
+      const response = await axios.post(process.env.CLOUDINARY_URL, data);
+
+      const { values } = this.state;
+      const { secure_url: picture } = response.data;
+
+      values.image = picture;
+      this.setState({ values, imageUploadStatus: false });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   onInputChange = (event) => {
@@ -55,7 +63,7 @@ class AddBook extends Component {
     const { values, authors } = this.state;
     values[name] = value;
 
-    if (name === 'authors') {
+    if (name === AUTHORS) {
       authors.push(value);
       values[name] = authors;
       this.setState({ authors });
@@ -75,21 +83,26 @@ class AddBook extends Component {
     this.setState({ values });
   }
 
-  handleBookSubmission = () => {
+  handleBookSubmission = async () => {
     const { addBookQuery } = this.props;
     const { values, genre, values: { authors } } = this.state;
     values.genre = genre[genre.length - 1] || [];
     values.authors = authors[authors.length - 1].split(',');
-    addBookQuery({
-      variables: {
-        ...values,
-      },
-      refetchQueries: this.refetchQuery()
-    }).then((response) => {
+
+    try {
+      const response = await addBookQuery({
+        variables: {
+          ...values,
+        },
+        refetchQueries: this.refetchQuery()
+      });
+
       const { addBook: { message } } = response.data;
-      modalCloser('close-book');
-      toaster('success', message);
-    });
+      modalCloser(CLOSE_BOOK);
+      toaster(SUCCESS, message);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   refetchQuery() {
@@ -101,7 +114,10 @@ class AddBook extends Component {
   }
 
   render() {
-    const { state: { previewUrl, imageUploadStatus }, handleBookSubmission } = this;
+    const {
+      state: { previewUrl, imageUploadStatus },
+      handleBookSubmission
+    } = this;
     const { data, editingBook, bookToEdit } = this.props;
     return (
       <Fragment>
@@ -138,5 +154,5 @@ AddBook.defaultProps = {
 
 export default compose(
   graphql(getGenres),
-  graphql(addBook, { name: 'addBookQuery', })
+  graphql(addBook, { name: ADD_BOOK_QUERY, })
 )(AddBook);

@@ -1,10 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import { format } from 'date-fns';
 import './_AddBookModal.scss';
 import { DatePicker, Select } from 'antd';
 import Spinner from '../Spinner';
 import toHTTPS from '../../utils/toHTTPS';
+import {
+  ADD_BOOK_COVER, CANCEL_PREVIEW, BOOK_TITLE, YEAR_PUBLISHED,
+  DOWNLOAD_URL, DESCRIPTION, CLOSE, SAVE_CHANGES, GENRE, ADD_BOOK,
+  EDIT_BOOK, AUTHORS_LABEL
+} from '../../defaults';
 
 const { Option } = Select;
 
@@ -14,7 +19,6 @@ class AddBookModal extends Component {
       return genres.map(genre => (
         <Option key={genre.genre}>
           {genre.genre}
-
         </Option>
       ));
     }
@@ -31,7 +35,7 @@ class AddBookModal extends Component {
           <div>
             <div id="dropzone">
               <ion-icon name="image" class="text-center" />
-              <p>Add book cover</p>
+              <p>{ADD_BOOK_COVER}</p>
             </div>
           </div>
           <input
@@ -63,7 +67,7 @@ class AddBookModal extends Component {
           type="button"
           className="btn btn-raised"
         >
-          cancel preview
+          {CANCEL_PREVIEW}
         </button>
       </div>
     );
@@ -99,9 +103,14 @@ class AddBookModal extends Component {
                   className="modal-title"
                   id="exampleModalLongTitle"
                 >
-                  {editingBook ? 'Edit book' : 'Add a Book'}
+                  {editingBook ? EDIT_BOOK : ADD_BOOK}
                 </h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
                   <span aria-hidden="true" id="close-book">&times;</span>
                 </button>
               </div>
@@ -112,7 +121,7 @@ class AddBookModal extends Component {
                 </div>
                 <form className="form-fields">
                   <div className="form-group">
-                    <label htmlFor="book-title">Book title</label>
+                    <label htmlFor="book-title">{BOOK_TITLE}</label>
                     <input
                       type="text"
                       className="form-control"
@@ -123,7 +132,7 @@ class AddBookModal extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="author">Author(s)</label>
+                    <label htmlFor="author">{AUTHORS_LABEL}</label>
                     <input
                       type="text"
                       className="form-control"
@@ -135,17 +144,17 @@ class AddBookModal extends Component {
                     />
                   </div>
                   <div className="form-group is-filled">
-                    <label htmlFor="year" name="year">Published Year</label>
+                    <label htmlFor="year" name="year">{YEAR_PUBLISHED}</label>
                     <DatePicker
                       placeholder=""
                       onChange={dateChange}
                       defaultdefaultValue={editingBook
-                        && year ? moment(year, 'YYYY-MM-DD') : null}
+                        && year ? format(year, 'YYYY-MM-DD') : null}
                       format="YYYY-MM-DD"
                     />
                   </div>
                   <div className="form-group is-filled">
-                    <label htmlFor="genre">Genre</label>
+                    <label htmlFor="genre">{GENRE}</label>
                     <Select
                       mode="tags"
                       style={{ width: '100%' }}
@@ -155,7 +164,7 @@ class AddBookModal extends Component {
                     </Select>
                   </div>
                   <div className="form-group">
-                    <label htmlFor="download">Download Url</label>
+                    <label htmlFor="download">{DOWNLOAD_URL}</label>
                     <input
                       type="text"
                       className="form-control"
@@ -165,7 +174,7 @@ class AddBookModal extends Component {
                     />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="description">Description</label>
+                    <label htmlFor="description">{DESCRIPTION}</label>
                     <textarea
                       rows="3"
                       type="email"
@@ -184,14 +193,14 @@ class AddBookModal extends Component {
                   className="btn btn-default btn-raised cancel-button"
                   data-dismiss="modal"
                 >
-                  Close
+                  {CLOSE}
                 </button>
                 <button
                   type="button"
                   className="btn btn-primary btn-raised text-case save-button"
                   onClick={handleBookSubmission}
                 >
-                  Save changes
+                  {SAVE_CHANGES}
                 </button>
               </div>
             </div>

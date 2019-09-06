@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import UnsplashMention from './UnsplashMention';
 
 class Main extends Component {
   navigateToBooks = () => window.location.replace('/books');
@@ -7,12 +8,22 @@ class Main extends Component {
   renderButtons() {
     return (
       <Fragment>
-        <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#LoginFormModal">
+        <button
+          type="button"
+          className="btn btn-outline-primary"
+          data-toggle="modal"
+          data-target="#LoginFormModal"
+        >
           <ion-icon name="log-in" />
           Login to get started
           {' '}
         </button>
-        <button type="button" className="btn btn-outline-primary" data-toggle="modal" data-target="#SignUpFormModal">
+        <button
+          type="button"
+          className="btn btn-outline-primary"
+          data-toggle="modal"
+          data-target="#SignUpFormModal"
+        >
           <ion-icon name="log-in" />
           Signup
           {' '}
@@ -63,6 +74,8 @@ class Main extends Component {
             {!isAuthenticated && this.renderButtons()}
           </div>
         </div>
+
+        <UnsplashMention />
       </div>
     );
   }

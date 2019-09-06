@@ -11,6 +11,10 @@ import ProfilePreloader from './ProfilePreloader';
 import toaster from '../../utils/toast';
 import errorHandler from '../../utils/errorHandler';
 import BackToTop from '../BackToTop';
+import {
+  SCROLL, TOASTR_ERROR, SUCCESS, NO_AUTHOR, ADD_TO_FAVORITES,
+  REMOVE_FROM_FAVORITES, ADD_FAVORITES_QUERY, FETCH_BOOKS_QUERY
+} from '../../defaults';
 
 class BookProfile extends Component {
   state = {
@@ -18,14 +22,14 @@ class BookProfile extends Component {
   };
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handlePageScroll, {
+    window.addEventListener(SCROLL, this.handlePageScroll, {
       capture: true,
       passive: true
     });
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handlePageScroll, {
+    window.removeEventListener(SCROLL, this.handlePageScroll, {
       capture: true,
       passive: true
     });
@@ -40,20 +44,23 @@ class BookProfile extends Component {
     }
   };
 
-  toggleFavorites = id => () => {
+  toggleFavorites = id => async () => {
     const { addToFavoritesQuery } = this.props;
-    addToFavoritesQuery({
-      variables: {
-        bookId: id
-      },
-      refetchQueries: this.refetchQuery()
-    }).then((response) => {
+
+    try {
+      const response = await addToFavoritesQuery({
+        variables: {
+          bookId: id
+        },
+        refetchQueries: this.refetchQuery()
+      });
+
       const { addFavorite: { message } } = response.data;
-      toaster('success', message);
-    }).catch((error) => {
+      toaster(SUCCESS, message);
+    } catch (error) {
       const messages = errorHandler(error);
-      messages.forEach(message => toaster('error', message));
-    });
+      messages.forEach(message => toaster(TOASTR_ERROR, message));
+    }
   }
 
   refetchQuery() {
@@ -77,9 +84,9 @@ class BookProfile extends Component {
         <h5>
           {book && book.authors.length
             ? `by, ${
-              book.authors.map(author => author)
+            book.authors.map(author => author)
             }`
-            : 'author unavailable'}
+            : NO_AUTHOR}
         </h5>
         <div className="book-meta">
           <span className="genre-badge">
@@ -107,7 +114,7 @@ class BookProfile extends Component {
       <div className="add-review-form">
         <AddReview
           toggleForm={false}
-          reviewType="add"
+          reviewType="review"
           bookId={book && book.id}
         />
       </div>
@@ -161,7 +168,7 @@ class BookProfile extends Component {
 
     const { moreBooks = [], id, isFavorite } = book;
     const favoriteOptionLabel = isFavorite
-      ? 'Remove from Favorites' : 'Add to Favorites';
+      ? REMOVE_FROM_FAVORITES : ADD_TO_FAVORITES;
 
     return (
       <Fragment>
@@ -190,7 +197,8 @@ class BookProfile extends Component {
             {book && book.description}
           </p>
           {book
-            && !book.description && <h4>No description available for this book</h4>}
+            && !book.description
+            && <h4>No description available for this book</h4>}
         </div>
         {this.renderMoreBooks(moreBooks)}
         {this.renderAddReviewForm()}
@@ -270,7 +278,7 @@ BookProfile.defaultProps = {
 
 export default compose(
   graphql(fetchBook, {
-    name: 'fetchBooksQuery',
+    name: FETCH_BOOKS_QUERY,
     options: props => ({
       variables: {
         bookId: props.match.params.id
@@ -278,6 +286,6 @@ export default compose(
     })
   }),
   graphql(addToFavorites, {
-    name: 'addToFavoritesQuery',
+    name: ADD_FAVORITES_QUERY,
   }),
 )(BookProfile);

@@ -7,6 +7,7 @@ import './_BookCard.scss';
 import Star from '../Star';
 import BookImageLoader from './BookImageLoader';
 import toHTTPS from '../../utils/toHTTPS';
+import { IMAGE_FETCH_ERROR, EDIT, DELETE } from '../../defaults';
 
 class BookCard extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class BookCard extends Component {
 
   handleImageLoadingError = () => {
     this.setState({
-      imageLoadingError: 'Unable to fetch image'
+      imageLoadingError: IMAGE_FETCH_ERROR
     });
   };
 
@@ -92,7 +93,7 @@ class BookCard extends Component {
               className="dropdown-item book-action-navlink"
               onClick={setBookToEdit(book)}
             >
-              edit
+              {EDIT}
               {' '}
               <i className="fa fa-edit" />
             </button>
@@ -102,7 +103,7 @@ class BookCard extends Component {
               id="trash-icon"
               onClick={setBookToRemove(id)}
             >
-              delete
+              {DELETE}
               {' '}
               <i className="fa fa-trash" />
             </button>

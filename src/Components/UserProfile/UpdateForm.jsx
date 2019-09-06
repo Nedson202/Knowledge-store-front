@@ -11,6 +11,7 @@ const UpdateForm = (props) => {
     handleInputChange, formErrors, updateProfile, imagePreviewUrl,
     cancelPreview, handleImageChange, uploadingImage
   } = props;
+
   return (
     <div className="profile-upload">
       <ImageUpload
@@ -37,7 +38,11 @@ const UpdateForm = (props) => {
               onChange={handleInputChange}
               defaultValue={stateUsername}
             />
-            {formErrors.username && <span className="validation-error">{formErrors.username}</span>}
+            {formErrors.username && (
+              <span className="validation-error">
+                {formErrors.username}
+              </span>
+            )}
           </div>
           <div className="form-group">
             <label
@@ -54,7 +59,11 @@ const UpdateForm = (props) => {
               onChange={handleInputChange}
               defaultValue={stateEmail}
             />
-            {formErrors.email && <span className="validation-error">{formErrors.email}</span>}
+            {formErrors.email && (
+              <span className="validation-error">
+                {formErrors.email}
+              </span>
+            )}
           </div>
           <div className="action-buttons">
             <button

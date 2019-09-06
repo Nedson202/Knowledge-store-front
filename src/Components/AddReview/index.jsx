@@ -9,25 +9,40 @@ import {
 import toaster from '../../utils/toast';
 import { fetchBook } from '../../queries/books';
 import errorHandler from '../../utils/errorHandler';
+import {
+  REPLY, REPLY_EDIT, REVIEW_EDIT, TOASTR_ERROR, SUCCESS,
+  RESET, REVIEW_WARNING, RATING_WARNING, REVIEW_SUCCESS, LAST_ELEMENT,
+  REVIEW, BLOCK, NONE, ADD_REVIEW_QUERY, ADD_REPLY_QUERY, EDIT_REPLY_QUERY,
+  EDIT_REVIEW_QUERY
+} from '../../defaults';
 
 class AddReview extends Component {
   constructor(props) {
     super(props);
+
     const {
-      ownerOfReview, replyToEdit, reviewToEdit, reviewFormId, bookId,
+      ownerOfReview, replyToEdit, reviewToEdit,
+      currentRating, reviewFormId,
     } = this.props;
+
     this.state = {
       values: {
-        review: '', /* eslint-disable-line */
-        rating: null,
-        bookId,
-        reviewId: reviewFormId,
+        review: '',
+        rating: currentRating || 0,
+        reviewId: reviewFormId || '',
         replyId: '',
         reply: ownerOfReview.length ? `@${ownerOfReview}` : '',
         replyEdit: replyToEdit || '',
-        reviewToEdit: reviewToEdit || '',
-      }
+        reviewEdit: reviewToEdit || '',
+      },
+      bookId: '',
     };
+  }
+
+  componentDidMount() {
+    const bookId = window.location.pathname.split('books/')[1];
+
+    this.setState({ bookId });
   }
 
   handleInputChange = (event) => {
@@ -41,13 +56,13 @@ class AddReview extends Component {
     const { values } = this.state;
     const { reviewType } = this.props;
     switch (reviewType) {
-      case 'reply':
+      case REPLY:
         return this.addReply(values);
 
-      case 'replyEdit':
+      case REPLY_EDIT:
         return this.editReply(values);
 
-      case 'reviewEdit':
+      case REVIEW_EDIT:
         return this.editReview(values);
 
       default:
@@ -61,76 +76,102 @@ class AddReview extends Component {
     this.setState({ values });
   }
 
-  refetchQuery(bookId) {
+  addReview = async (value) => {
+    const { bookId } = this.state;
+    const { addReviewQuery } = this.props;
+    const { rating, review } = value;
+    if (!review.trim()) return toaster(TOASTR_ERROR, REVIEW_WARNING);
+    if (!rating) return toaster(TOASTR_ERROR, RATING_WARNING);
+
+    try {
+      await addReviewQuery({
+        variables: {
+          ...value,
+          bookId
+        },
+        refetchQueries: this.refetchQuery(bookId)
+      });
+
+      window.addEventListener(RESET, this.handleClearForm());
+      toaster(SUCCESS, REVIEW_SUCCESS);
+      const lastElement = document.getElementById(LAST_ELEMENT);
+      return lastElement && lastElement.scrollIntoView();
+    } catch (error) {
+      const messages = errorHandler(error);
+      messages.forEach(message => toaster(TOASTR_ERROR, message));
+    }
+  }
+
+  editReview = async (value) => {
+    const { bookId } = this.state;
+    const { editReviewQuery, setReviewToEdit } = this.props;
+
+    const { rating, reviewEdit } = value;
+
+    value.reviewId = setReviewToEdit;
+    if (!reviewEdit.trim()) return toaster(TOASTR_ERROR, REVIEW_WARNING);
+    if (!rating) return toaster(TOASTR_ERROR, RATING_WARNING);
+
+    try {
+      await editReviewQuery({
+        variables: {
+          ...value
+        },
+        refetchQueries: this.refetchQuery(bookId)
+      });
+
+      window.addEventListener(RESET, this.handleClearForm());
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  addReply = async (value) => {
+    const { bookId } = this.state;
+    const { addReplyQuery } = this.props;
+
+    try {
+      await addReplyQuery({
+        variables: {
+          ...value
+        },
+        refetchQueries: this.refetchQuery(bookId)
+      });
+
+      window.addEventListener(RESET, this.handleClearForm());
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  editReply = async (value) => {
+    const { bookId } = this.state;
+    const { editReplyQuery, setReplyToEdit } = this.props;
+    value.replyId = setReplyToEdit;
+
+    try {
+      await editReplyQuery({
+        variables: {
+          ...value
+        },
+        refetchQueries: this.refetchQuery(bookId)
+      });
+
+      window.addEventListener(RESET, this.handleClearForm());
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  refetchQuery(id) {
     return [
       {
         query: fetchBook,
         variables: {
-          bookId
+          bookId: id,
         }
       }
     ];
-  }
-
-  addReview(value) {
-    const { addReviewQuery, bookId } = this.props;
-    const { rating, review } = value;
-    if (!review.trim()) return toaster('error', 'Please leave a review');
-    if (!rating) return toaster('error', 'Please leave a rating');
-    addReviewQuery({
-      variables: {
-        ...value,
-        bookId
-      },
-      refetchQueries: this.refetchQuery(bookId)
-    }).then(() => {
-      window.addEventListener('reset', this.handleClearForm());
-      toaster('success', 'Review added successfully');
-      const lastElement = document.getElementById('lastElement');
-      return lastElement && lastElement.scrollIntoView();
-    }).catch((error) => {
-      const messages = errorHandler(error);
-      messages.forEach(message => toaster('error', message));
-    });
-  }
-
-  addReply(value) {
-    const { addReplyQuery, bookId } = this.props;
-    addReplyQuery({
-      variables: {
-        ...value
-      },
-      refetchQueries: this.refetchQuery(bookId)
-    }).then(() => {
-      window.addEventListener('reset', this.handleClearForm());
-      toaster('success', 'Reply added successfully');
-    });
-  }
-
-  editReply(value) {
-    const { editReplyQuery, setReplyToEdit, bookId } = this.props;
-    value.replyId = setReplyToEdit;
-    editReplyQuery({
-      variables: {
-        ...value
-      },
-      refetchQueries: this.refetchQuery(bookId)
-    }).then(() => {
-      window.addEventListener('reset', this.handleClearForm());
-      toaster('success', 'Reply edited successfully');
-    });
-  }
-
-  editReview(value) {
-    const { editReviewQuery } = this.props;
-    editReviewQuery({
-      variables: {
-        ...value
-      }
-    }).then(() => {
-      window.addEventListener('reset', this.handleClearForm());
-      toaster('success', 'Review edited successfully');
-    });
   }
 
   handleClearForm() {
@@ -139,11 +180,13 @@ class AddReview extends Component {
     const {
       handleToggleForm
     } = this.props;
-    values.reply = null;
-    values.review = null;
+    values.reply = '';
+    values.review = '';
     values.rating = null;
+    values.reviewEdit = '';
+    values.replyEdit = '';
 
-    if (!reviewType.match('add')) handleToggleForm(values.reviewId)();
+    if (reviewType !== REVIEW) handleToggleForm('')();
     return this.setState({ values });
   }
 
@@ -154,12 +197,12 @@ class AddReview extends Component {
     return value;
   }
 
-  calculateInputName() {
+  computeInputName() {
     const name = {
-      add: 'review',
-      reply: 'reply',
-      replyEdit: 'replyEdit',
-      reviewEdit: 'reviewEdit'
+      review: REVIEW,
+      reviewEdit: REVIEW_EDIT,
+      reply: REPLY,
+      replyEdit: REPLY_EDIT,
     };
 
     return name;
@@ -171,33 +214,33 @@ class AddReview extends Component {
       reviewToReply, setReviewToEdit, itemOnEdit
     } = this.props;
     switch (reviewType) {
-      case 'reply':
-        return reviewType.match('reply')
-          && toggleForm
+      case REVIEW:
+        return BLOCK;
+
+      case REPLY:
+        return toggleForm
           && reviewFormId === reviewToReply
-          ? 'block' : 'none';
+          ? BLOCK : NONE;
 
-      case 'replyEdit':
-        return reviewType.match('replyEdit')
-          && toggleForm
+      case REPLY_EDIT:
+        return toggleForm
           && setReplyToEdit === itemOnEdit
-          ? 'block' : 'none';
+          ? BLOCK : NONE;
 
-      case 'reviewEdit':
-        return reviewType.match('reviewEdit')
-          && toggleForm
+      case REVIEW_EDIT:
+        return toggleForm
           && setReviewToEdit === itemOnEdit
-          ? 'block' : 'none';
+          ? BLOCK : NONE;
 
       default:
-        return 'block';
+        return NONE;
     }
   }
 
   renderStars() {
     const { reviewType } = this.props;
     const { values: { rating } } = this.state;
-    const starOptions = ['reply', 'replyEdit'];
+    const starOptions = [REPLY, REPLY_EDIT];
     return (
       <span>
         {!starOptions.includes(reviewType) && (
@@ -217,7 +260,7 @@ class AddReview extends Component {
     const {
       handleToggleForm, reviewType, reviewToReply
     } = this.props;
-    const allReviewType = ['reply', 'replyEdit', 'reviewEdit'];
+    const allReviewType = [REPLY, REPLY_EDIT, REVIEW_EDIT];
     return (
       <div>
         {allReviewType.includes(reviewType) && (
@@ -242,13 +285,10 @@ class AddReview extends Component {
   }
 
   renderForm() {
-    const {
-      values: {
-        reply, review, replyEdit, reviewToEdit
-      }
-    } = this.state;
+    const { values } = this.state;
     const { reviewType } = this.props;
-    const inputName = this.calculateInputName();
+    const inputName = this.computeInputName();
+
     return (
       <form
         className="review-form"
@@ -260,16 +300,16 @@ class AddReview extends Component {
             paddingTop: `${(reviewType.toLowerCase().includes('edit')) && 0}`
           }}
         >
-          {['add'].includes(reviewType) && (
-            <label htmlFor="exampleFormControlTextarea1">
+          {[REVIEW].includes(reviewType) && (
+            <label htmlFor="review-form">
               Leave a review
             </label>
           )}
           <textarea
             name={inputName[`${reviewType}`]}
-            value={this.fixControlledValue(reply || review || replyEdit || reviewToEdit)}
+            value={this.fixControlledValue(values[reviewType])}
             className="form-control"
-            id="exampleFormControlTextarea1"
+            id="review-form"
             rows="3"
             onChange={this.handleInputChange}
             onReset={this.handleClearForm}
@@ -308,7 +348,7 @@ AddReview.propTypes = {
   itemOnEdit: PropTypes.string,
   setReviewToEdit: PropTypes.string,
   setReplyToEdit: PropTypes.string,
-  bookId: PropTypes.string
+  currentRating: PropTypes.number,
 };
 
 AddReview.defaultProps = {
@@ -327,12 +367,12 @@ AddReview.defaultProps = {
   itemOnEdit: '',
   setReviewToEdit: '',
   setReplyToEdit: '',
-  bookId: ''
+  currentRating: 0,
 };
 
 export default compose(
-  graphql(addReview, { name: 'addReviewQuery' }),
-  graphql(addReply, { name: 'addReplyQuery' }),
-  graphql(editReply, { name: 'editReplyQuery' }),
-  graphql(editReview, { name: 'editReviewQuery' }),
+  graphql(addReview, { name: ADD_REVIEW_QUERY }),
+  graphql(editReview, { name: EDIT_REVIEW_QUERY }),
+  graphql(addReply, { name: ADD_REPLY_QUERY }),
+  graphql(editReply, { name: EDIT_REPLY_QUERY }),
 )(AddReview);

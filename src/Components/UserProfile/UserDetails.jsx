@@ -4,6 +4,7 @@ import './_UserProfile.scss';
 
 const UserDetails = (props) => {
   const { user } = props;
+
   return (
     <div className="profile-details">
       <div className="profile-details__image">

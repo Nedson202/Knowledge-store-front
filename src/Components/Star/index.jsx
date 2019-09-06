@@ -4,6 +4,7 @@ import ReactStars from 'react-stars';
 
 const Star = (props) => {
   const { value, editable } = props;
+
   return (
     <Fragment>
       <ReactStars

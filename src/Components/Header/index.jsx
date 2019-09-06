@@ -8,6 +8,10 @@ import { logOutUser } from '../../redux/actions/userActions';
 import Search from '../Search';
 import Login from '../Login';
 import SignUp from '../SignUp';
+import {
+  OPEN, CLICK, BLOCK, NONE, AUTO, LEFT_SIDE_BAR,
+  MAIN, CLOSED, SIDE_BAR_TEXT, SIDE_BAR_STATUS, SIDE_NAV
+} from '../../defaults';
 
 class Header extends Component {
   state = {
@@ -16,29 +20,29 @@ class Header extends Component {
   };
 
   componentDidMount() {
-    return localStorage.sideBarStatus !== 'open' && this.toggleSidebar();
+    return localStorage.sideBarStatus !== OPEN && this.toggleSidebar();
   }
 
   componentWillUnmount() {
-    document.removeEventListener('click', this.handleOutsideClick, false);
+    document.removeEventListener(CLICK, this.handleOutsideClick, false);
   }
 
   toggleSidebar = () => {
     const { isSideBarOpen } = this.state;
-    const mainContent = document.getElementById('main');
+    const mainContent = document.getElementById(MAIN);
 
     if (isSideBarOpen) {
-      localStorage.setItem('sideBarStatus', 'open');
-      document.getElementById('myLeftSideBar').style.width = '250px';
-      this.toggleSidebarText('block');
+      localStorage.setItem(SIDE_BAR_STATUS, OPEN);
+      document.getElementById(LEFT_SIDE_BAR).style.width = '250px';
+      this.toggleSidebarText(BLOCK);
     } else {
-      localStorage.setItem('sideBarStatus', 'closed');
-      document.getElementById('myLeftSideBar').style.width = '70px';
+      localStorage.setItem(SIDE_BAR_STATUS, CLOSED);
+      document.getElementById(LEFT_SIDE_BAR).style.width = '70px';
 
       if (mainContent) {
-        mainContent.style.marginLeft = 'auto';
+        mainContent.style.marginLeft = AUTO;
       }
-      this.toggleSidebarText('none');
+      this.toggleSidebarText(NONE);
     }
     this.setState(prevState => ({
       isSideBarOpen: !prevState.isSideBarOpen,
@@ -46,7 +50,7 @@ class Header extends Component {
   };
 
   toggleSidebarText = (display) => {
-    const texts = document.querySelectorAll('#sideBarText');
+    const texts = document.querySelectorAll(SIDE_BAR_TEXT);
     for (let text = 0; text < texts.length; text += 1) {
       texts[text].style.display = display;
     }
@@ -54,15 +58,15 @@ class Header extends Component {
 
   toggleMobileNav = () => {
     const { isSideNavOpen } = this.state;
-    const sideNavEL = document.getElementById('mySidenav');
+    const sideNavEL = document.getElementById(SIDE_NAV);
     if (!isSideNavOpen) {
-      document.addEventListener('click', this.handleOutsideClick, false);
+      document.addEventListener(CLICK, this.handleOutsideClick, false);
       sideNavEL.style.width = '270px';
       sideNavEL.style.boxShadow = '0 1px 1px 100vw rgba(0, 0, 0, 0.6)';
     } else {
-      document.removeEventListener('click', this.handleOutsideClick, false);
+      document.removeEventListener(CLICK, this.handleOutsideClick, false);
       sideNavEL.style.width = '0';
-      sideNavEL.style.boxShadow = 'none';
+      sideNavEL.style.boxShadow = NONE;
     }
 
     this.setState(prevState => ({
@@ -155,10 +159,14 @@ class Header extends Component {
     const { user } = this.props;
     return (
       <div className="App" ref={(node) => { this.node = node; }}>
-        <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light" id="navbar">
+        <nav
+          className="navbar fixed-top navbar-expand-lg navbar-light bg-light"
+          id="navbar"
+        >
           <div
             onClick={this.toggleSidebar}
-            className="sidenav-collapse dropdown-item sidebar-navlink collapse-bar btn-raised"
+            className="sidenav-collapse
+            dropdown-item sidebar-navlink collapse-bar btn-raised"
             data-tip="Toggle sidebar"
             role="button"
             tabIndex={0}
@@ -166,7 +174,9 @@ class Header extends Component {
             <ion-icon name="menu" />
           </div>
           <div className="container">
-            <Link to="/"><span className="navbar-brand">Loresters Bookstore</span></Link>
+            <Link to="/">
+              <span className="navbar-brand">Loresters Bookstore</span>
+            </Link>
             <div>
               <button
                 type="button"
@@ -189,7 +199,10 @@ class Header extends Component {
               </button>
             </div>
 
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <div
+              className="collapse navbar-collapse"
+              id="navbarSupportedContent"
+            >
               <Search />
               <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
                 {user.isVerified === 'true' && this.renderUserAvatar()}

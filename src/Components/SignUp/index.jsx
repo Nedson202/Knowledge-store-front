@@ -12,6 +12,9 @@ import tokenDecoder from '../../utils/tokenDecoder';
 import errorHandler from '../../utils/errorHandler';
 import toaster from '../../utils/toast';
 import modalCloser from '../../utils/modalCloser';
+import {
+  ADD_USER_QUERY, CLOSE_SIGNUP, MY_BOOKS_PATH, TOASTR_ERROR, SUCCESS, TOKEN
+} from '../../defaults';
 
 const waitTime = 1000;
 
@@ -65,14 +68,14 @@ class SignUp extends Component {
 
       const { data: { addUser: { token } } = {} } = signupHandler;
       const decodedToken = tokenDecoder(token);
-      localStorage.setItem('token', token);
-      modalCloser('close-signup');
+      localStorage.setItem(TOKEN, token);
+      modalCloser(CLOSE_SIGNUP);
       dispatch(setCurrentUser(decodedToken));
-      if (decodedToken.isVerified === 'true') window.location.replace('/my-books');
-      toaster('success', 'Signed up successfully');
+      if (decodedToken.isVerified === 'true') window.location.replace(MY_BOOKS_PATH);
+      toaster(SUCCESS, 'Signed up successfully');
     } catch (error) {
       const messages = errorHandler(error);
-      messages.forEach(message => toaster('error', message));
+      messages.forEach(message => toaster(TOASTR_ERROR, message));
     }
   }
 
@@ -102,6 +105,6 @@ SignUp.defaultProps = {
 };
 
 export default withRouter(compose(
-  graphql(addUser, { name: 'addUserQuery' }),
+  graphql(addUser, { name: ADD_USER_QUERY }),
   connect()
 )(SignUp));

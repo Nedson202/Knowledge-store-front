@@ -14,6 +14,10 @@ import toaster from '../../utils/toast';
 import { setCurrentUser } from '../../redux/actions/userActions';
 import tokenDecoder from '../../utils/tokenDecoder';
 import errorHandler from '../../utils/errorHandler';
+import {
+  FILE, FOLDER, BOOK_STORE, UPLOAD_PRESET, SUCCESS, TOKEN,
+  CHANGE_PASSWORD_QUERY, EDIT_PROFILE_QUERY, TOASTR_ERROR
+} from '../../defaults';
 
 class UserProfile extends Component {
   debounceSingleFieldValidation = debounce(({ name, value }) => {
@@ -60,8 +64,8 @@ class UserProfile extends Component {
       return toaster('error', 'Only a jpeg, jpg or png image is supported');
     }
 
-    if (file && file.size > 5000000) {
-      return toaster('error', 'Image size cannot be more than 5mb');
+    if (file && file.size > 4000000) {
+      return toaster('error', 'Image size cannot be more than 4mb');
     }
 
     if (file) {
@@ -77,16 +81,19 @@ class UserProfile extends Component {
       reader.readAsDataURL(file);
 
       const data = new FormData();
-      data.append('file', file);
-      data.append('folder', 'bookstore');
-      data.append('upload_preset', process.env.REACT_APP_UPLOAD_PRESET);
+      data.append(FILE, file);
+      data.append(FOLDER, BOOK_STORE);
+      data.append(UPLOAD_PRESET, process.env.REACT_APP_UPLOAD_PRESET);
 
       try {
         const uploadHandler = await axios.post(process.env.REACT_APP_CLOUDINARY_URL, data);
+
         const { values } = this.state;
         const { secure_url: picture } = uploadHandler.data;
+
         values.picture = picture;
         this.setState({ values, uploadingImage: false, });
+
         await this.updateProfile('upload');
       } catch (error) {
         console.error(error);
@@ -123,15 +130,18 @@ class UserProfile extends Component {
           ...values
         }
       });
+
       const { editProfile: { token, message }, } = editProfileHandler.data;
-      localStorage.setItem('token', token);
-      toaster('success', message);
+
+      localStorage.setItem(TOKEN, token);
+      toaster(SUCCESS, message);
+
       this.setState({
         imagePreviewUrl: '',
       });
       return dispatch(setCurrentUser(tokenDecoder(token)));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -149,14 +159,17 @@ class UserProfile extends Component {
           ...values
         }
       });
+
       const { changePassword: { message } } = changePasswordHandler.data;
-      toaster('success', message);
+
+      toaster(SUCCESS, message);
       values.newPassword = '';
       values.oldPassword = '';
+
       this.setState({ values });
     } catch (error) {
       const messages = errorHandler(error);
-      messages.forEach(message => toaster('error', message));
+      messages.forEach(message => toaster(TOASTR_ERROR, message));
     }
   }
 
@@ -212,7 +225,7 @@ UserProfile.defaultProps = {
 };
 
 export default compose(
-  graphql(editProfile, { name: 'editProfileQuery' }),
-  graphql(changePassword, { name: 'changePasswordQuery' }),
+  graphql(editProfile, { name: EDIT_PROFILE_QUERY }),
+  graphql(changePassword, { name: CHANGE_PASSWORD_QUERY }),
   connect(mapStateToProps)
 )(UserProfile);

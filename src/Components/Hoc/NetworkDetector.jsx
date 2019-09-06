@@ -1,28 +1,32 @@
 import React, { Component } from 'react';
 import toaster from '../../utils/toast';
+import {
+  SUCCESS, TOASTR_ERROR, LOAD, ONLINE,
+  OFFLINE
+} from '../../defaults';
 
 export default function (ComposedComponent) {
   class NetworkDetector extends Component {
     componentDidMount() {
-      window.addEventListener('load', () => {
-        window.addEventListener('online', this.updateOnlineStatus);
-        window.addEventListener('offline', this.updateOnlineStatus);
+      window.addEventListener(LOAD, () => {
+        window.addEventListener(ONLINE, this.updateOnlineStatus);
+        window.addEventListener(OFFLINE, this.updateOnlineStatus);
       });
     }
 
     componentWillUnmount() {
-      window.removeEventListener('load', () => {
-        window.removeEventListener('online', this.updateOnlineStatus);
-        window.removeEventListener('offline', this.updateOnlineStatus);
+      window.removeEventListener(LOAD, () => {
+        window.removeEventListener(ONLINE, this.updateOnlineStatus);
+        window.removeEventListener(OFFLINE, this.updateOnlineStatus);
       });
     }
 
     updateOnlineStatus = () => {
-      const condition = navigator.onLine ? 'online' : 'offline';
-      if (condition === 'online') {
-        return toaster('success', 'You are back online');
+      const condition = navigator.onLine ? ONLINE : OFFLINE;
+      if (condition === ONLINE) {
+        return toaster(SUCCESS, 'You are back online');
       }
-      return toaster('error', 'You are no longer online');
+      return toaster(TOASTR_ERROR, 'You are no longer online');
     }
 
     render() {

@@ -10,6 +10,9 @@ import tokenDecoder from '../../utils/tokenDecoder';
 import { resetPassword } from '../../queries/auth';
 import toaster from '../../utils/toast';
 import { setCurrentUser } from '../../redux/actions/userActions';
+import {
+  RESET_PASSWORD_QUERY, TOASTR_ERROR, MY_BOOKS_PATH, TOKEN, SUCCESS
+} from '../../defaults';
 
 class PasswordReset extends Component {
   state = {
@@ -39,6 +42,7 @@ class PasswordReset extends Component {
       values.email = email;
       values.id = id;
       values.token = `Bearer ${token}`;
+
       return this.setState({ values });
     }
     setQuery({ token: '' });
@@ -48,30 +52,43 @@ class PasswordReset extends Component {
     const { name, value } = event.target;
     const { values } = this.state;
     values[name] = value;
+
     this.setState({ values });
   }
 
-  resetUserPassword = () => {
+  resetUserPassword = async () => {
     const { resetPasswordQuery, history, dispatch } = this.props;
     const { values, values: { email } } = this.state;
 
     if (!email.trim()) {
-      return toaster('error', 'Check your email for password reset link');
+      return toaster(TOASTR_ERROR, 'Check your email for password reset link');
     }
-    resetPasswordQuery({
-      variables: {
-        ...values
-      }
-    }).then((response) => {
+
+    try {
+      const response = await resetPasswordQuery({
+        variables: {
+          ...values
+        }
+      });
+
       const { resetPassword: { message, token } } = response.data;
-      toaster('success', message);
-      localStorage.setItem('token', token);
+
+      toaster(SUCCESS, message);
+
+      localStorage.setItem(TOKEN, token);
       const decodedToken = tokenDecoder(token);
+
       dispatch(setCurrentUser(decodedToken));
       setQuery({ token: '' });
-      if (decodedToken.isVerified === 'true') return history.push('/my-books');
+
+      if (decodedToken.isVerified === 'true') {
+        return history.push(MY_BOOKS_PATH);
+      }
+
       history.push('/');
-    });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   render() {
@@ -80,7 +97,10 @@ class PasswordReset extends Component {
       <Fragment>
         <form className="password-reset">
           <div className="form-group">
-            <label htmlFor="exampleInputPassword1" className="bmd-label-floating">
+            <label
+              htmlFor="exampleInputPassword1"
+              className="bmd-label-floating"
+            >
               Email
             </label>
             <input
@@ -92,7 +112,10 @@ class PasswordReset extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="exampleInputPassword1" className="bmd-label-floating">
+            <label
+              htmlFor="exampleInputPassword1"
+              className="bmd-label-floating"
+            >
               New Password
             </label>
             <input
@@ -148,6 +171,6 @@ PasswordReset.defaultProps = {
 };
 
 export default compose(
-  graphql(resetPassword, { name: 'resetPasswordQuery' }),
+  graphql(resetPassword, { name: RESET_PASSWORD_QUERY }),
   connect(),
 )(PasswordReset);

@@ -29,7 +29,7 @@ class ReplyCard extends Component {
           <ion-icon
             name="thumbs-up"
           />
-          <span style={{ cursor: 'default', paddingLeft: '10px' }}>{likes !== 0 && likes}</span>
+          <span className="like-count">{likes !== 0 && likes}</span>
         </p>
         <p onClick={handleToggleForm(reviewId)}>Reply</p>
         {user.id && user.id.match(userId) && (

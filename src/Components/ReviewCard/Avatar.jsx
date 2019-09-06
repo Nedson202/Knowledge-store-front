@@ -1,11 +1,13 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-class Avatar extends Component {
-  renderInitials(user) {
+const Avatar = (props) => {
+  const { user, color } = props;
+
+  const renderInitials = () => {
     const matches = user.match(/\b(\w)/g);
     const acronym = matches.join('');
-    const { color } = this.props;
+
     return (
       <div
         className="avatar-placeholder text-capitalize"
@@ -15,17 +17,14 @@ class Avatar extends Component {
 
       </div>
     );
-  }
+  };
 
-  render() {
-    const { user } = this.props;
-    return (
-      <Fragment>
-        {this.renderInitials(user)}
-      </Fragment>
-    );
-  }
-}
+  return (
+    <Fragment>
+      {renderInitials(user)}
+    </Fragment>
+  );
+};
 
 Avatar.propTypes = {
   user: PropTypes.string,

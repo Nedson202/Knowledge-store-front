@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import tokenDecoder from '../../utils/tokenDecoder';
 import toaster from '../../utils/toast';
+import { TOASTR_ERROR } from '../../defaults';
 
 export default function (ComposedComponent, admin) {
   class AuthWrapper extends Component {
@@ -18,22 +19,22 @@ export default function (ComposedComponent, admin) {
     UNSAFE_componentWillMount() {
       const { history, user: { isAuthenticated, user } } = this.props;
       if (admin && isAuthenticated && user.role === 'user') {
-        toaster('error', 'Access denied, operation is unathorised');
+        toaster(TOASTR_ERROR, 'Access denied, operation is unathorised');
         return history.goBack();
       }
 
       if (!tokenDecoder(localStorage.token).id) {
-        toaster('error', 'Access denied, you need to login');
+        toaster(TOASTR_ERROR, 'Access denied, you need to login');
         return history.goBack();
       }
 
       if (isAuthenticated && user.isVerified !== 'true') {
-        toaster('error', 'Kindly verify your account');
+        toaster(TOASTR_ERROR, 'Kindly verify your account');
         return history.goBack();
       }
 
       if (!isAuthenticated) {
-        toaster('error', 'Access denied, you need to login');
+        toaster(TOASTR_ERROR, 'Access denied, you need to login');
         return history.goBack();
       }
     }

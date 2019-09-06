@@ -7,13 +7,20 @@ import './_ReviewCard.scss';
 import ReplyCard from './ReplyCard';
 import AddReview from '../AddReview';
 import Star from '../Star';
-import { addLikeOnReview, deleteReview, deleteReply } from '../../queries/reviews';
+import {
+  addLikeOnReview, deleteReview,
+  deleteReply
+} from '../../queries/reviews';
 import timeParser from '../../utils/timeParser';
 import Avatar from './Avatar';
 import { fetchBook } from '../../queries/books';
 import toaster from '../../utils/toast';
 import errorHandler from '../../utils/errorHandler';
 import toHTTPS from '../../utils/toHTTPS';
+import {
+  TOASTR_ERROR, REPLY, SCROLL_TO_PARAM, REPLY_EDIT,
+  REVIEW_EDIT, DELETE_REPLY_QUERY, DELETE_REVIEW_QUERY, ADD_LIKE_QUERY
+} from '../../defaults';
 
 class ReviewCard extends Component {
   constructor(props) {
@@ -23,7 +30,7 @@ class ReviewCard extends Component {
       isReplyFormOpen: false,
       isEditFormOpen: false,
       isReviewEditFormOpen: false,
-      reviewType: 'reply',
+      reviewType: '',
       reviewId: '',
       reviewToReply: '',
       setReviewToEdit: '',
@@ -35,16 +42,13 @@ class ReviewCard extends Component {
   toggleReplyDialog = id => () => {
     this.setState(prevState => ({
       isReplyFormOpen: !prevState.isReplyFormOpen,
-      reviewType: 'reply',
+      reviewType: REPLY,
       reviewToReply: id,
       reviewFormId: id,
     }), () => {
       const { isReplyFormOpen } = this.state;
       if (isReplyFormOpen) {
-        scrollToComponent(this.Review,
-          {
-            offset: 500, align: 'middle', duration: 500
-          });
+        scrollToComponent(this.Review, SCROLL_TO_PARAM);
       }
     });
   }
@@ -52,7 +56,7 @@ class ReviewCard extends Component {
   toggleReplyEditForm = id => () => {
     this.setState(prevState => ({
       isEditFormOpen: !prevState.isEditFormOpen,
-      reviewType: 'replyEdit',
+      reviewType: REPLY_EDIT,
       setReplyToEdit: id,
     }));
   }
@@ -60,45 +64,47 @@ class ReviewCard extends Component {
   toggleReviewEditForm = id => () => {
     this.setState(prevState => ({
       isReviewEditFormOpen: !prevState.isReviewEditFormOpen,
-      reviewType: 'reviewEdit',
+      reviewType: REVIEW_EDIT,
       setReviewToEdit: id,
     }));
   }
 
   setReviewToLike = reviewId => () => {
     this.setState({ reviewId }, () => {
-      this.addLike(1);
+      this.toggleLike();
     });
   }
 
-  deleteReview = reviewId => () => {
+  deleteReview = reviewId => async () => {
     const { deleteReviewQuery, bookId } = this.props;
-    deleteReviewQuery({
-      variables: {
-        reviewId,
-      },
-      refetchQueries: this.refetchData(bookId)
-    }).then(() => {
-      toaster('success', 'Review deleted successfully');
-    }).catch((error) => {
+
+    try {
+      await deleteReviewQuery({
+        variables: {
+          reviewId,
+        },
+        refetchQueries: this.refetchData(bookId)
+      });
+    } catch (error) {
       const messages = errorHandler(error);
-      messages.forEach(message => toaster('error', message));
-    });
+      messages.forEach(message => toaster(TOASTR_ERROR, message));
+    }
   }
 
-  deleteReply = replyId => () => {
+  deleteReply = replyId => async () => {
     const { deleteReplyQuery, bookId } = this.props;
-    deleteReplyQuery({
-      variables: {
-        replyId,
-      },
-      refetchQueries: this.refetchData(bookId)
-    }).then(() => {
-      toaster('success', 'Reply deleted successfully');
-    }).catch((error) => {
+
+    try {
+      await deleteReplyQuery({
+        variables: {
+          replyId,
+        },
+        refetchQueries: this.refetchData(bookId)
+      });
+    } catch (error) {
       const messages = errorHandler(error);
-      messages.forEach(message => toaster('error', message));
-    });
+      messages.forEach(message => toaster(TOASTR_ERROR, message));
+    }
   }
 
   refetchData(bookId) {
@@ -112,7 +118,7 @@ class ReviewCard extends Component {
     ];
   }
 
-  addLike(like) {
+  toggleLike(like) {
     const { reviewId } = this.state;
     const { addLikeQuery } = this.props;
     addLikeQuery({
@@ -136,7 +142,7 @@ class ReviewCard extends Component {
     );
   }
 
-  renderReviewEditForm = (message, id) => {
+  renderReviewEditForm = (message, rating, id) => {
     const {
       isReviewEditFormOpen, reviewType, setReviewToEdit, reviewFormId
     } = this.state;
@@ -149,6 +155,7 @@ class ReviewCard extends Component {
         setReviewToEdit={setReviewToEdit}
         reviewFormId={reviewFormId}
         itemOnEdit={id}
+        currentRating={rating}
       />
     );
   }
@@ -190,7 +197,7 @@ class ReviewCard extends Component {
             {this.renderReviewFooter(userReview)}
           </span>
         )}
-        {this.renderReviewEditForm(review, id)}
+        {this.renderReviewEditForm(review, rating, id)}
       </Fragment>
     );
   }
@@ -205,7 +212,7 @@ class ReviewCard extends Component {
             name="thumbs-up"
             style={{ color: likes && '#005C97' }}
           />
-          <span style={{ cursor: 'default', paddingLeft: '10px' }}>{likes !== 0 && likes}</span>
+          <span className="like-count">{likes !== 0 && likes}</span>
         </p>
         <p onClick={this.toggleReplyDialog(id)}>Reply</p>
         {user.id && user.id.match(userId) && (
@@ -315,8 +322,8 @@ ReviewCard.defaultProps = {
 };
 
 export default compose(
-  graphql(addLikeOnReview, { name: 'addLikeQuery' }),
-  graphql(deleteReview, { name: 'deleteReviewQuery' }),
-  graphql(deleteReply, { name: 'deleteReplyQuery' }),
+  graphql(addLikeOnReview, { name: ADD_LIKE_QUERY }),
+  graphql(deleteReview, { name: DELETE_REVIEW_QUERY }),
+  graphql(deleteReply, { name: DELETE_REPLY_QUERY }),
   connect(mapStateToProps),
 )(ReviewCard);

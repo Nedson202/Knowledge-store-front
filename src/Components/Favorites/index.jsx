@@ -7,6 +7,10 @@ import toaster from '../../utils/toast';
 import { removeFavorites, getFavorites } from '../../queries/books';
 import BookPreloader from '../BookCatalog/BookPreloader';
 import errorHandler from '../../utils/errorHandler';
+import {
+  SUCCESS, TOASTR_ERROR, REMOVE_FAVORITES_QUERY,
+  GET_FAVORITES_QUERY
+} from '../../defaults';
 
 class Favorites extends Component {
   state = {
@@ -21,22 +25,26 @@ class Favorites extends Component {
     }));
   }
 
-  removeFavorites = () => {
+  removeFavorites = async () => {
     const { removeFavoritesQuery } = this.props;
     const { itemsToRemove } = this.state;
-    removeFavoritesQuery({
-      variables: {
-        books: itemsToRemove
-      },
-      refetchQueries: this.refetchQuery()
-    }).then((response) => {
+
+    try {
+      const response = await removeFavoritesQuery({
+        variables: {
+          books: itemsToRemove
+        },
+        refetchQueries: this.refetchQuery()
+      });
+
       const { removeFavorites: { message } } = response.data;
-      toaster('success', message);
+      toaster(SUCCESS, message);
+
       this.setState({ checkBoxState: false, itemsToRemove: [] });
-    }).catch((error) => {
+    } catch (error) {
       const messages = errorHandler(error);
-      messages.forEach(message => toaster('error', message));
-    });
+      messages.forEach(message => toaster(TOASTR_ERROR, message));
+    }
   }
 
   handleCheckboxChange(id, event) {
@@ -118,7 +126,8 @@ class Favorites extends Component {
           {loading && <BookPreloader loadingBook={loading} />}
           {!loading && favoriteBooks && favoriteBooks.length !== 0
             && this.renderFavorites(favoriteBooks)}
-          {!loading && favoriteBooks && favoriteBooks.length === 0 && this.render404()}
+          {!loading && favoriteBooks && favoriteBooks.length === 0
+            && this.render404()}
         </div>
       </Fragment>
     );
@@ -136,6 +145,6 @@ Favorites.defaultProps = {
 };
 
 export default compose(
-  graphql(removeFavorites, { name: 'removeFavoritesQuery' }),
-  graphql(getFavorites, { name: 'getFavoritesQuery' }),
+  graphql(removeFavorites, { name: REMOVE_FAVORITES_QUERY }),
+  graphql(getFavorites, { name: GET_FAVORITES_QUERY }),
 )(Favorites);
