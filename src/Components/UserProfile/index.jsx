@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, graphql } from 'react-apollo';
 import './_UserProfile.scss';
+import { ReactTitle } from 'react-meta-tags';
 import UpdateForm from './UpdateForm';
 import { singleFieldValidation } from '../../utils/validator/validator';
 import UpdatePassword from './UpdatePassword';
@@ -181,6 +182,8 @@ class UserProfile extends Component {
     const { user } = this.props;
     return (
       <div className="profile-update" id="main">
+        <ReactTitle title="My Profile" />
+
         <UserDetails
           user={user}
         />

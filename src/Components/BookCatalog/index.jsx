@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withApollo, compose } from 'react-apollo';
+import { ReactTitle } from 'react-meta-tags';
 import queryString from 'querystring';
 import './_BookCatalog.scss';
 import BookCard from '../BookCard';
@@ -182,6 +183,8 @@ class BookCatalog extends Component {
 
     return (
       <Fragment>
+        <ReactTitle title="All Books" />
+
         {this.renderPageHeader()}
         <div className="container-content" id="main">
           {!loadingBook && books.length !== 0 && this.renderBooks(books)}

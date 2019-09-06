@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
 import './_Favorites.scss';
+import { ReactTitle } from 'react-meta-tags';
 import BookCard from '../BookCard';
 import toaster from '../../utils/toast';
 import { removeFavorites, getFavorites } from '../../queries/books';
@@ -121,6 +122,8 @@ class Favorites extends Component {
     const { getFavoritesQuery: { favoriteBooks, loading } } = this.props;
     return (
       <Fragment>
+        <ReactTitle title="My Favorites" />
+
         {this.renderHeader()}
         <div className="container-content" id="main">
           {loading && <BookPreloader loadingBook={loading} />}

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
 import './_BookProfile.scss';
 import '../BookCatalog/_BookCatalog.scss';
+import { ReactTitle } from 'react-meta-tags';
 import BookCard from '../BookCard';
 import AddReview from '../AddReview';
 import ReviewCard from '../ReviewCard';
@@ -249,6 +250,8 @@ class BookProfile extends Component {
 
     return (
       <Fragment>
+        <ReactTitle title="Book Profile" />
+
         {!loading && !book && this.renderBookError()}
         <div className="book-profile-container">
           {loading && (

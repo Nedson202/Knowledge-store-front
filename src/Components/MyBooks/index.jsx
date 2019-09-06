@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './_MyBooks.scss';
 import '../BookCatalog/_BookCatalog.scss';
 import { compose, graphql } from 'react-apollo';
+import { ReactTitle } from 'react-meta-tags';
 import BookCard from '../BookCard';
 import AddBook from '../AddBook';
 import { fetchUsersBooks, removeBook } from '../../queries/books';
@@ -114,6 +115,8 @@ class MyBooks extends Component {
     const { editingBook } = this.state;
     return (
       <Fragment>
+        <ReactTitle title="My Books" />
+
         <AddBook
           bookToEdit={bookToEdit}
           editingBook={editingBook}

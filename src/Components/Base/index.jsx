@@ -6,6 +6,7 @@ import { Link, withRouter } from 'react-router-dom';
 import setQuery from 'set-query-string';
 import { compose, withApollo, graphql } from 'react-apollo';
 import './_App.scss';
+import { ReactTitle } from 'react-meta-tags';
 import Login from '../Login';
 import Main from './Main';
 import SignUp from '../SignUp';
@@ -119,6 +120,8 @@ class App extends Component {
     const { auth: { isAuthenticated, user } } = this.props;
     return (
       <div>
+        <ReactTitle title="Lorester Bookstore" />
+
         {isAuthenticated && user.isVerified === 'false'
           && this.emailConfirmationNote()}
         <div id="background-layout" />
