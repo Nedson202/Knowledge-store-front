@@ -84,7 +84,7 @@ class BookProfile extends Component {
         <h5>
           {book && book.authors.length
             ? `by, ${
-            book.authors.map(author => author)
+              book.authors.map(author => author)
             }`
             : NO_AUTHOR}
         </h5>
