@@ -68,11 +68,14 @@ export const OFFLINE = 'offline';
 
 export const SIDE_BAR_STATUS = 'sideBarStatus';
 export const TOKEN = 'token';
+export const PREVIOUS_LOCATION = 'previousLocation';
 
 export const AUTH_SUCCESS = 'Authentication successful';
 
 export const MY_BOOKS_PATH = '/my-books';
 export const IMAGE_FETCH_ERROR = 'Unable to fetch image';
+export const SEARCH_DEBOUNCE_TIME = 1000;
+export const VALIDATION_DEBOUNCE_TIME = 1000;
 
 export const FLEX = 'flex';
 export const EDIT = 'edit';

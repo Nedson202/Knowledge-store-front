@@ -7,7 +7,7 @@ import { compose, graphql } from 'react-apollo';
 import './_UserProfile.scss';
 import { ReactTitle } from 'react-meta-tags';
 import UpdateForm from './UpdateForm';
-import { singleFieldValidation } from '../../utils/validator/validator';
+import { handleSingleFieldValidation } from '../../utils/validator/validator';
 import UpdatePassword from './UpdatePassword';
 import UserDetails from './UserDetails';
 import { editProfile, changePassword } from '../../queries/auth';
@@ -17,19 +17,16 @@ import tokenDecoder from '../../utils/tokenDecoder';
 import errorHandler from '../../utils/errorHandler';
 import {
   FILE, FOLDER, BOOK_STORE, UPLOAD_PRESET, SUCCESS, TOKEN,
-  CHANGE_PASSWORD_QUERY, EDIT_PROFILE_QUERY, TOASTR_ERROR
+  CHANGE_PASSWORD_QUERY, EDIT_PROFILE_QUERY, TOASTR_ERROR,
+  VALIDATION_DEBOUNCE_TIME
 } from '../../defaults';
 
 class UserProfile extends Component {
   debounceSingleFieldValidation = debounce(({ name, value }) => {
     const { formErrors } = this.state;
-    const { isValid, errors } = singleFieldValidation({ key: name, value });
-    if (!isValid) {
-      this.setState({ formErrors: { ...formErrors, [name]: errors[name] } });
-    } else {
-      this.setState({ formErrors: { ...formErrors, [name]: null } });
-    }
-  }, 1000);
+    const { formErrors: newFormErrors } = handleSingleFieldValidation(formErrors, { name, value });
+    this.setState({ formErrors: newFormErrors });
+  }, VALIDATION_DEBOUNCE_TIME);
 
   constructor(props) {
     super(props);

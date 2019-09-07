@@ -6,19 +6,22 @@ import modalCloser from '../../utils/modalCloser';
 import socialAuthentication from '../../utils/socialAuthentication';
 
 const LoginForm = (props) => {
-  const { onInputChange, confirmLogin, formErrors } = props;
+  const {
+    onInputChange, confirmLogin, formErrors, values
+  } = props;
 
-  const { username, password } = formErrors;
+  const { username, password } = values;
+  const { username: usernameError, password: passwordError } = formErrors;
 
   return (
     <div>
       <div
-        className="modal fade"
-        id="LoginFormModal"
-        tabIndex="-1"
         role="dialog"
         aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true"
+        className="modal fade"
+        id="LoginFormModal"
+        tabIndex="-1"
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
@@ -43,37 +46,39 @@ const LoginForm = (props) => {
                     Username
                   </label>
                   <input
-                    type="text"
-                    name="username"
+                    autoComplete="new-password"
                     className="form-control"
                     id="username-login"
+                    name="username"
                     onChange={onInputChange}
-                    autoComplete="new-password"
+                    type="text"
+                    value={username}
                   />
-                  {username && (
+                  {usernameError && (
                     <span
                       className="validation-error"
                     >
-                      {username[0]}
+                      {usernameError[0]}
                     </span>
                   )}
                 </div>
                 <div className="form-group">
                   <label
-                    htmlFor="password-login"
                     className="bmd-label-floating"
+                    htmlFor="password-login"
                   >
                     Password
                   </label>
                   <input
-                    type="password"
-                    name="password"
+                    autoComplete="new-password"
                     className="form-control"
                     id="password-login"
+                    name="password"
                     onChange={onInputChange}
-                    autoComplete="new-password"
+                    type="password"
+                    value={password}
                   />
-                  {password && <span className="validation-error">{password[0]}</span>}
+                  {passwordError && <span className="validation-error">{passwordError[0]}</span>}
                   <div
                     role="button"
                     tabIndex={0}
@@ -153,6 +158,7 @@ LoginForm.propTypes = {
   onInputChange: PropTypes.func.isRequired,
   confirmLogin: PropTypes.func.isRequired,
   formErrors: PropTypes.object.isRequired,
+  values: PropTypes.object.isRequired,
 };
 
 export default LoginForm;

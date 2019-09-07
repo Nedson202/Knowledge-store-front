@@ -5,7 +5,7 @@ import debounce from 'lodash.debounce';
 import { connect } from 'react-redux';
 import { compose, withApollo } from 'react-apollo';
 import {
-  singleFieldValidation, allFieldsValidation
+  allFieldsValidation, handleSingleFieldValidation
 } from '../../utils/validator/validator';
 import tokenDecoder from '../../utils/tokenDecoder';
 import { sendVerificationEmail, forgotPassword } from '../../queries/auth';
@@ -21,12 +21,8 @@ const waitTime = 1000;
 class EmailGenerator extends Component {
   debounceSingleFieldValidation = debounce(({ name, value }) => {
     const { formErrors } = this.state;
-    const { isValid, errors } = singleFieldValidation({ key: name, value });
-    if (!isValid) {
-      this.setState({ formErrors: { ...formErrors, [name]: errors[name] } });
-    } else {
-      this.setState({ formErrors: { ...formErrors, [name]: null } });
-    }
+    const { formErrors: newFormErrors } = handleSingleFieldValidation(formErrors, { name, value });
+    this.setState({ formErrors: newFormErrors });
   }, waitTime);
 
   state = {

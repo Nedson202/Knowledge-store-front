@@ -8,6 +8,7 @@ import debounce from 'lodash.debounce';
 import { compose, withApollo } from 'react-apollo';
 import { bookFilter } from '../../queries/genre';
 import { setRetrievedBooks } from '../../redux/actions/bookActions';
+import { SEARCH_DEBOUNCE_TIME, PREVIOUS_LOCATION, SEARCH_BOX } from '../../defaults';
 
 class Search extends PureComponent {
   debounceSearch = debounce(async (value) => {
@@ -36,7 +37,7 @@ class Search extends PureComponent {
         return error;
       }
     }
-  }, 1000);
+  }, SEARCH_DEBOUNCE_TIME);
 
   state = {
     value: '',
@@ -72,7 +73,7 @@ class Search extends PureComponent {
       });
 
       if (location.pathname !== '/books') {
-        localStorage.setItem('previousLocation', location.pathname);
+        localStorage.setItem(PREVIOUS_LOCATION, location.pathname);
       }
     }
     this.setState({ [name]: value, }, () => {
@@ -91,27 +92,19 @@ class Search extends PureComponent {
     this.setState({ value: '', toggleCloseIcon: false });
     setQuery({ search: '' });
 
-    const searchInput = document.getElementById('searchBox');
-    if (searchInput) {
-      searchInput.style.width = '350px';
-      searchInput.style.transition = '0.6s';
-    }
+    this.resizeSearchBox('350px');
 
     const { history } = this.props;
     history.push(localStorage.previousLocation);
-    localStorage.removeItem('previousLocation');
+    localStorage.removeItem(PREVIOUS_LOCATION);
   }
 
   handleReset = () => {
-    const { history } = this.props;
     const { value } = this.state;
-    const { previousLocation } = localStorage;
     if (!value.trim()) {
       setQuery({ search: null });
-    }
 
-    if (previousLocation) {
-      history.push(localStorage.previousLocation);
+      this.resizeSearchBox('350px');
     }
   }
 
@@ -124,15 +117,19 @@ class Search extends PureComponent {
         ...history.location,
         pathname: '/books',
       });
-      localStorage.setItem('previousLocation', location.pathname);
+      localStorage.setItem(PREVIOUS_LOCATION, location.pathname);
       return this.debounceSearch(query);
     }
   }
 
   handleSearchFocus = () => {
-    const searchInput = document.getElementById('searchBox');
+    this.resizeSearchBox('450px');
+  }
+
+  resizeSearchBox = (width) => {
+    const searchInput = document.getElementById(SEARCH_BOX);
     if (searchInput) {
-      searchInput.style.width = '450px';
+      searchInput.style.width = width;
       searchInput.style.transition = '0.6s';
     }
   }
