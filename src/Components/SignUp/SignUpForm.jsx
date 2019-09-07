@@ -4,10 +4,16 @@ import passwordToggler from '../../utils/passwordToggler';
 import socialAuthentication from '../../utils/socialAuthentication';
 
 const SignUpForm = (props) => {
-  const { handleInputChange, formErrors, confirmSignup } = props;
+  const {
+    handleInputChange, formErrors, confirmSignup, values,
+  } = props;
 
   const renderForm = () => {
-    const { username, email, password } = formErrors;
+    const {
+      username: usernameError, email: emailError,
+      password: passwordError
+    } = formErrors;
+    const { username, email, password } = values;
     return (
       <Fragment>
         <form autoComplete="false">
@@ -25,12 +31,13 @@ const SignUpForm = (props) => {
               id="username-signup"
               onChange={handleInputChange}
               autoComplete="new-password"
+              value={username}
             />
-            {username && (
+            {usernameError && (
               <span
                 className="validation-error"
               >
-                {username[0]}
+                {usernameError[0]}
               </span>
             )}
           </div>
@@ -48,8 +55,9 @@ const SignUpForm = (props) => {
               id="email-signup"
               autoComplete="new-password"
               onChange={handleInputChange}
+              value={email}
             />
-            {email && <span className="validation-error">{email[0]}</span>}
+            {emailError && <span className="validation-error">{emailError[0]}</span>}
           </div>
           <div className="form-group">
             <label htmlFor="password-signup" className="bmd-label-floating">
@@ -62,10 +70,11 @@ const SignUpForm = (props) => {
               id="password-signup"
               onChange={handleInputChange}
               autoComplete="new-password"
+              value={password}
             />
-            {password && (
+            {passwordError && (
               <span className="validation-error">
-                {password[0]}
+                {passwordError[0]}
               </span>
             )}
             <div
@@ -172,6 +181,7 @@ SignUpForm.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
   confirmSignup: PropTypes.func.isRequired,
   formErrors: PropTypes.object.isRequired,
+  values: PropTypes.object.isRequired,
 };
 
 export default SignUpForm;

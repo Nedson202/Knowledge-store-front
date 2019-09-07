@@ -5,7 +5,7 @@ import { compose, graphql } from 'react-apollo';
 import debounce from 'lodash.debounce';
 import { connect } from 'react-redux';
 import SignUpForm from './SignUpForm';
-import { allFieldsValidation, singleFieldValidation } from '../../utils/validator/validator';
+import { allFieldsValidation, handleSingleFieldValidation } from '../../utils/validator/validator';
 import { addUser } from '../../queries/auth';
 import { setCurrentUser } from '../../redux/actions/userActions';
 import tokenDecoder from '../../utils/tokenDecoder';
@@ -13,21 +13,16 @@ import errorHandler from '../../utils/errorHandler';
 import toaster from '../../utils/toast';
 import modalCloser from '../../utils/modalCloser';
 import {
-  ADD_USER_QUERY, CLOSE_SIGNUP, MY_BOOKS_PATH, TOASTR_ERROR, SUCCESS, TOKEN
+  ADD_USER_QUERY, CLOSE_SIGNUP, MY_BOOKS_PATH, TOASTR_ERROR, SUCCESS, TOKEN,
+  VALIDATION_DEBOUNCE_TIME
 } from '../../defaults';
-
-const waitTime = 1000;
 
 class SignUp extends Component {
   debounceSingleFieldValidation = debounce(({ name, value }) => {
     const { formErrors } = this.state;
-    const { isValid, errors } = singleFieldValidation({ key: name, value });
-    if (!isValid) {
-      this.setState({ formErrors: { ...formErrors, [name]: errors[name] } });
-    } else {
-      this.setState({ formErrors: { ...formErrors, [name]: null } });
-    }
-  }, waitTime);
+    const { formErrors: newFormErrors } = handleSingleFieldValidation(formErrors, { name, value });
+    this.setState({ formErrors: newFormErrors });
+  }, VALIDATION_DEBOUNCE_TIME);
 
   constructor(props) {
     super(props);
@@ -70,9 +65,18 @@ class SignUp extends Component {
       const decodedToken = tokenDecoder(token);
       localStorage.setItem(TOKEN, token);
       modalCloser(CLOSE_SIGNUP);
+
       dispatch(setCurrentUser(decodedToken));
       if (decodedToken.isVerified === 'true') window.location.replace(MY_BOOKS_PATH);
+
       toaster(SUCCESS, 'Signed up successfully');
+      this.setState({
+        values: {
+          username: '',
+          email: '',
+          password: ''
+        }
+      });
     } catch (error) {
       const messages = errorHandler(error);
       messages.forEach(message => toaster(TOASTR_ERROR, message));

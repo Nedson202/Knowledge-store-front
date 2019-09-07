@@ -43,7 +43,7 @@
 
   .navbar {
     padding: 1rem 1rem !important;
-    
+
     &-brand {
       margin-left: 0 !important;
       padding-top: 0;
@@ -84,7 +84,8 @@
 	padding: .8rem 0 .8rem 1.5rem;
 	font-weight: 600;
 	color: rgba(0, 0, 0, .8);
-	font-size: 14px;
+  font-size: 14px;
+  text-transform: capitalize;
 }
 
 .user-toggle {

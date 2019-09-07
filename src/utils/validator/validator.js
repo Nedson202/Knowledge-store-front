@@ -27,3 +27,25 @@ export const allFieldsValidation = (data, exclude) => {
   }
   return validationResponse;
 };
+
+export const handleSingleFieldValidation = (formErrors, { name, value }) => {
+  const { isValid, errors } = singleFieldValidation({ key: name, value });
+  let computeFormErrors = {
+    formErrors: {
+      ...formErrors,
+      [name]: null
+    },
+    isValid,
+  };
+  if (!isValid) {
+    computeFormErrors = {
+      formErrors: {
+        ...formErrors,
+        [name]: errors[name]
+      },
+      isValid,
+    };
+  }
+
+  return computeFormErrors;
+};

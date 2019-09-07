@@ -6,27 +6,23 @@ import { graphql, compose, } from 'react-apollo';
 import debounce from 'lodash.debounce';
 import LoginForm from './LoginForm';
 import { loginUser } from '../../queries/auth';
-import { singleFieldValidation, allFieldsValidation } from '../../utils/validator/validator';
+import { allFieldsValidation, handleSingleFieldValidation } from '../../utils/validator/validator';
 import { setCurrentUser } from '../../redux/actions/userActions';
 import tokenDecoder from '../../utils/tokenDecoder';
 import errorHandler from '../../utils/errorHandler';
 import toaster from '../../utils/toast';
 import modalCloser from '../../utils/modalCloser';
 import {
-  SUCCESS, TOASTR_ERROR, MY_BOOKS_PATH, CLOSE_LOGIN, LOGIN_USER_QUERY, TOKEN
+  SUCCESS, TOASTR_ERROR, MY_BOOKS_PATH, CLOSE_LOGIN, LOGIN_USER_QUERY, TOKEN,
+  VALIDATION_DEBOUNCE_TIME
 } from '../../defaults';
 
-const waitTime = 1000;
 class Login extends Component {
   debounceSingleFieldValidation = debounce(({ name, value }) => {
     const { formErrors } = this.state;
-    const { isValid, errors } = singleFieldValidation({ key: name, value });
-    if (!isValid) {
-      this.setState({ formErrors: { ...formErrors, [name]: errors[name] } });
-    } else {
-      this.setState({ formErrors: { ...formErrors, [name]: null } });
-    }
-  }, waitTime);
+    const { formErrors: newFormErrors } = handleSingleFieldValidation(formErrors, { name, value });
+    this.setState({ formErrors: newFormErrors });
+  }, VALIDATION_DEBOUNCE_TIME);
 
   constructor(props) {
     super(props);
@@ -73,6 +69,12 @@ class Login extends Component {
       if (decodedToken.isVerified === 'true') window.location.replace(MY_BOOKS_PATH);
 
       toaster(SUCCESS, 'Signed in successfully');
+      this.setState({
+        values: {
+          username: '',
+          password: '',
+        }
+      });
     } catch (error) {
       const messages = errorHandler(error);
       messages.forEach(message => toaster(TOASTR_ERROR, message));
@@ -80,13 +82,14 @@ class Login extends Component {
   }
 
   render() {
-    const { formErrors } = this.state;
+    const { formErrors, values } = this.state;
     return (
       <Fragment>
         <LoginForm
           onInputChange={this.onInputChange}
           confirmLogin={this.confirmLogin}
           formErrors={formErrors}
+          values={values}
         />
       </Fragment>
     );

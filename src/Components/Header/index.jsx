@@ -97,6 +97,24 @@ class Header extends Component {
     );
   }
 
+  emailConfirmationNote() {
+    return (
+      <div className="pending-verification">
+        A verification link has been sent to your mail box.
+        Click on the link or use this
+        {' '}
+        <Link
+          to="/email?verify-email=true"
+          style={{ color: 'black' }}
+        >
+          Link
+        </Link>
+        {' '}
+        to request for a new verification mail.
+      </div>
+    );
+  }
+
   renderAuthButtons() {
     return (
       <Fragment>
@@ -158,61 +176,63 @@ class Header extends Component {
   render() {
     const { user } = this.props;
     return (
-      <div className="App" ref={(node) => { this.node = node; }}>
-        <nav
-          className="navbar fixed-top navbar-expand-lg navbar-light bg-light"
-          id="navbar"
-        >
-          <div
-            onClick={this.toggleSidebar}
-            className="sidenav-collapse
-            dropdown-item sidebar-navlink collapse-bar btn-raised"
-            data-tip="Toggle sidebar"
-            role="button"
-            tabIndex={0}
+      <Fragment>
+        <div className="App" ref={(node) => { this.node = node; }}>
+          <nav
+            className="navbar fixed-top navbar-expand-lg navbar-light bg-light"
+            id="navbar"
           >
-            <ion-icon name="menu" />
-          </div>
-          <div className="container">
-            <Link to="/">
-              <span className="navbar-brand">Loresters Bookstore</span>
-            </Link>
-            <div>
-              <button
-                type="button"
-                className="mobile-nav"
-                data-toggle="collapse"
-                data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Search icon"
-              >
-                <ion-icon name="search" />
-              </button>
-              <button
-                type="button"
-                className="mobile-nav"
-                aria-label="Toggle navigation"
-                onClick={this.toggleMobileNav}
-              >
-                <ion-icon name="menu" />
-              </button>
-            </div>
-
             <div
-              className="collapse navbar-collapse"
-              id="navbarSupportedContent"
+              onClick={this.toggleSidebar}
+              className="sidenav-collapse
+              dropdown-item sidebar-navlink collapse-bar btn-raised"
+              data-tip="Toggle sidebar"
+              role="button"
+              tabIndex={0}
             >
-              <Search />
-              <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-                {user.isVerified === 'true' && this.renderUserAvatar()}
-              </ul>
-              {user.isVerified !== 'true' && this.renderAuthButtons()}
+              <ion-icon name="menu" />
             </div>
-          </div>
-        </nav>
-        {this.authenticationForms()}
-      </div>
+            <div className="container">
+              <Link to="/">
+                <span className="navbar-brand">Loresters Bookstore</span>
+              </Link>
+              <div>
+                <button
+                  type="button"
+                  className="mobile-nav"
+                  data-toggle="collapse"
+                  data-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent"
+                  aria-expanded="false"
+                  aria-label="Search icon"
+                >
+                  <ion-icon name="search" />
+                </button>
+                <button
+                  type="button"
+                  className="mobile-nav"
+                  aria-label="Toggle navigation"
+                  onClick={this.toggleMobileNav}
+                >
+                  <ion-icon name="menu" />
+                </button>
+              </div>
+
+              <div
+                className="collapse navbar-collapse"
+                id="navbarSupportedContent"
+              >
+                <Search />
+                <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+                  {user.isVerified === 'true' && this.renderUserAvatar()}
+                </ul>
+                {user.isVerified !== 'true' && this.renderAuthButtons()}
+              </div>
+            </div>
+          </nav>
+          {this.authenticationForms()}
+        </div>
+      </Fragment>
     );
   }
 }
