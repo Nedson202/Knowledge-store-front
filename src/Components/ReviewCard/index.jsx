@@ -172,9 +172,11 @@ class ReviewCard extends Component {
 
   renderTimeReviewed(date) {
     return (
-      <span style={{ paddingLeft: '10px' }}>
-        {timeParser(date)}
-      </span>
+      <div className="review-time">
+        <p style={{ paddingLeft: '10px' }}>
+          {timeParser(date)}
+        </p>
+      </div>
     );
   }
 
@@ -185,15 +187,14 @@ class ReviewCard extends Component {
     const { isReviewEditFormOpen, setReviewToEdit, } = this.state;
     return (
       <Fragment>
-        <p>
-          <b className="text-capitalize">{reviewer}</b>
-          {' '}
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <p><b className="text-capitalize">{reviewer}</b></p>
+          {this.renderStars(rating)}
           {this.renderTimeReviewed(createdAt)}
-        </p>
+        </div>
         {(!isReviewEditFormOpen || id !== setReviewToEdit) && (
           <span id="review">
             {review}
-            {this.renderStars(rating)}
             {this.renderReviewFooter(userReview)}
           </span>
         )}

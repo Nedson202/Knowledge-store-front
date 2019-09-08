@@ -117,9 +117,10 @@ class BookCard extends Component {
     const {
       authors, userId, id, averageRating
     } = book;
+    const { bookProfile } = this.props;
     const link = !moreBooks ? `/books/${id}` : `${id}`;
-    return (
-      <div className="book-footer">
+    const footerSelect = !bookProfile && (
+      <Fragment>
         <span className="book-footer__link">
           <Link to={link} id="book-footer__title">
             <Truncate
@@ -137,11 +138,15 @@ class BookCard extends Component {
             lines={1}
           >
             {authors
-              && `by ${
-                authors.map(author => author)
-              }`}
+              && `by ${authors.map(author => author)}`}
           </Truncate>
         </span>
+      </Fragment>
+    );
+
+    return (
+      <div className="book-footer">
+        {footerSelect}
         <span className="react-star">
           <Star
             value={averageRating}
@@ -175,6 +180,7 @@ BookCard.propTypes = {
   toggleCheckBox: PropTypes.bool,
   enableEllipsis: PropTypes.bool,
   moreBooks: PropTypes.bool,
+  bookProfile: PropTypes.bool,
   checkBoxChange: PropTypes.func,
   setBookToEdit: PropTypes.func,
   setBookToRemove: PropTypes.func,
@@ -185,6 +191,7 @@ BookCard.defaultProps = {
   toggleCheckBox: false,
   enableEllipsis: false,
   moreBooks: false,
+  bookProfile: false,
   checkBoxChange: () => { },
   setBookToEdit: () => { },
   setBookToRemove: () => { },
