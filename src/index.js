@@ -30,7 +30,7 @@ const httpLink = createHttpLink({
   uri: `${serverUrl}/graphql`,
 });
 
-const a = onError(({ graphQLErrors, networkError }) => {
+const errorHandler = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.map(({ message, locations, path }) => console.log(
       `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
@@ -49,7 +49,7 @@ const authLink = setContext((_, { headers }) => ({
   }
 }));
 
-const authFlowLink = authLink.concat(a);
+const authFlowLink = authLink.concat(errorHandler);
 
 const client = new ApolloClient({
   link: authFlowLink.concat(httpLink),

@@ -149,7 +149,7 @@ class AddBookModal extends Component {
                       placeholder=""
                       onChange={dateChange}
                       defaultdefaultValue={editingBook
-                        && year ? format(year, 'YYYY-MM-DD') : null}
+                        && year ? format(year, 'YYYY/MM/DD') : null}
                       format="YYYY-MM-DD"
                     />
                   </div>

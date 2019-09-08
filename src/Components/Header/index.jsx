@@ -33,7 +33,7 @@ class Header extends Component {
 
     if (isSideBarOpen) {
       localStorage.setItem(SIDE_BAR_STATUS, OPEN);
-      document.getElementById(LEFT_SIDE_BAR).style.width = '250px';
+      document.getElementById(LEFT_SIDE_BAR).style.width = '260px';
       this.toggleSidebarText(BLOCK);
     } else {
       localStorage.setItem(SIDE_BAR_STATUS, CLOSED);

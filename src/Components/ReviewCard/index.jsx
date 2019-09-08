@@ -1,8 +1,11 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component, Fragment } from 'react';
 import scrollToComponent from 'react-scroll-to-component';
 import { compose, graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Truncate from 'react-truncate';
+
 import './_ReviewCard.scss';
 import ReplyCard from './ReplyCard';
 import AddReview from '../AddReview';
@@ -36,6 +39,10 @@ class ReviewCard extends Component {
       setReviewToEdit: '',
       setReplyToEdit: '',
       reviewFormId: '', /* eslint-disable-line */
+      expanded: false,
+      truncated: false,
+      truncateId: '',
+      expandedItem: [],
     };
   }
 
@@ -107,18 +114,16 @@ class ReviewCard extends Component {
     }
   }
 
-  refetchData(bookId) {
-    return [
-      {
-        query: fetchBook,
-        variables: {
-          bookId
-        }
+  refetchData = bookId => [
+    {
+      query: fetchBook,
+      variables: {
+        bookId
       }
-    ];
-  }
+    }
+  ]
 
-  toggleLike(like) {
+  toggleLike = (like) => {
     const { reviewId } = this.state;
     const { addLikeQuery } = this.props;
     addLikeQuery({
@@ -129,18 +134,16 @@ class ReviewCard extends Component {
     });
   }
 
-  renderReviewerImage(image) {
-    return (
-      <div>
-        <img
-          src={toHTTPS(image)}
-          className="rounded-circle"
-          alt="Card cap"
-          style={{ width: '45px', height: '45px' }}
-        />
-      </div>
-    );
-  }
+  renderReviewerImage = image => (
+    <div>
+      <img
+        src={toHTTPS(image)}
+        className="rounded-circle"
+        alt="Card cap"
+        style={{ width: '45px', height: '45px' }}
+      />
+    </div>
+  )
 
   renderReviewEditForm = (message, rating, id) => {
     const {
@@ -160,40 +163,88 @@ class ReviewCard extends Component {
     );
   }
 
-  renderStars(rating) {
-    return (
-      <div id="star-rating">
-        <Star
-          value={rating}
-        />
-      </div>
-    );
+  renderStars = rating => (
+    <div id="star-rating">
+      <Star
+        value={rating}
+      />
+    </div>
+  )
+
+  renderTimeReviewed = date => (
+    <div className="review-time">
+      <p style={{ paddingLeft: '10px' }}>
+        {timeParser(date)}
+      </p>
+    </div>
+  )
+
+  toggleLines = (id, showLess, event) => {
+    event.preventDefault();
+    const { expanded, expandedItem } = this.state;
+    if (!expandedItem.includes(id)) expandedItem.push(id);
+    if (showLess) expandedItem.splice(expandedItem.indexOf(id), 1);
+    this.setState({
+      expanded: !expanded,
+      truncateId: id,
+      expandedItem
+    });
   }
 
-  renderTimeReviewed(date) {
-    return (
-      <span style={{ paddingLeft: '10px' }}>
-        {timeParser(date)}
-      </span>
-    );
+  handleTruncate = (truncatedText, id) => () => {
+    const { truncated } = this.state;
+    if (truncated !== truncatedText) {
+      this.setState({
+        truncated,
+        truncateId: id
+      });
+    }
   }
 
   renderReviewBody(userReview) {
     const {
       reviewer, createdAt, review, rating, id
     } = userReview;
-    const { isReviewEditFormOpen, setReviewToEdit, } = this.state;
+    const {
+      isReviewEditFormOpen, setReviewToEdit, expanded,
+      truncateId, expandedItem
+    } = this.state;
+
     return (
       <Fragment>
-        <p>
-          <b className="text-capitalize">{reviewer}</b>
-          {' '}
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <p><b className="text-capitalize">{reviewer}</b></p>
+          {this.renderStars(rating)}
           {this.renderTimeReviewed(createdAt)}
-        </p>
+        </div>
         {(!isReviewEditFormOpen || id !== setReviewToEdit) && (
           <span id="review">
-            {review}
-            {this.renderStars(rating)}
+            <Truncate
+              key={id}
+              lines={expandedItem.includes(id) ? null : 4}
+              ellipsis={(
+                <span>
+                  ...
+                  {' '}
+                  {!(expanded && truncateId === id)
+                    ? (
+                      <a href="" onClick={e => this.toggleLines(id, false, e)}>
+                        Read more
+                      </a>
+                    ) : null}
+                </span>
+              )}
+              onTruncate={this.handleTruncate}
+            >
+              {review}
+            </Truncate>
+            {expandedItem.includes(id) && (
+              <span>
+                ...
+                {' '}
+                <a href="#" onClick={e => this.toggleLines(id, true, e)}>Show less</a>
+              </span>
+            )}
             {this.renderReviewFooter(userReview)}
           </span>
         )}
