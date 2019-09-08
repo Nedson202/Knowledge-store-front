@@ -15,6 +15,7 @@ import rootReducer from './redux/reducers/rootReducer';
 import { setCurrentUser } from './redux/actions/userActions';
 import Routes from './Routes';
 import tokenDecoder from './utils/tokenDecoder';
+import { PRODUCTION } from './defaults';
 
 const enhancer = composeWithDevTools(applyMiddleware(thunk));
 
@@ -23,14 +24,14 @@ const store = createStore(
   enhancer
 );
 
-const serverUrl = process.env.REACT_APP_NODE_ENV.match('production')
-  ? process.env.REACT_APP_PROD_SERVER : 'http://localhost:4000';
+const serverUrl = process.env.REACT_APP_NODE_ENV.match(PRODUCTION)
+  ? process.env.REACT_APP_PROD_SERVER : process.env.REACT_APP_LOCAL_SERVER;
 
 const httpLink = createHttpLink({
   uri: `${serverUrl}/graphql`,
 });
 
-const a = onError(({ graphQLErrors, networkError }) => {
+const errorHandler = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.map(({ message, locations, path }) => console.log(
       `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
@@ -49,7 +50,7 @@ const authLink = setContext((_, { headers }) => ({
   }
 }));
 
-const authFlowLink = authLink.concat(a);
+const authFlowLink = authLink.concat(errorHandler);
 
 const client = new ApolloClient({
   link: authFlowLink.concat(httpLink),

@@ -29,25 +29,37 @@ const LeftSideBar = (props) => {
     <div id="myLeftSideBar" className="leftSideBar">
       <ReactTooltip effect="solid" place="right" />
       <div data-tip="My Books">
-        <NavLink to="/my-books" className="dropdown-item sidebar-navlink">
+        <NavLink
+          to="/my-books"
+          className={`dropdown-item sidebar-navlink ${!isAuthenticated && 'blur'}`}
+        >
           <ion-icon name="book" />
           <span id="sideBarText">My Books</span>
         </NavLink>
       </div>
       <div data-tip="All Books">
-        <NavLink to="/books" className="dropdown-item sidebar-navlink">
+        <NavLink
+          to="/books"
+          className="dropdown-item sidebar-navlink"
+        >
           <ion-icon name="bookmarks" />
           <span id="sideBarText">All Books</span>
         </NavLink>
       </div>
       <div data-tip="My Favorites">
-        <NavLink to="/favorites" className="dropdown-item sidebar-navlink">
+        <NavLink
+          to="/favorites"
+          className={`dropdown-item sidebar-navlink ${!isAuthenticated && 'blur'}`}
+        >
           <ion-icon name="bookmark" />
           <span id="sideBarText">My Favorites</span>
         </NavLink>
       </div>
       <div data-tip="Profile">
-        <NavLink to="/profile" className="dropdown-item sidebar-navlink">
+        <NavLink
+          to="/profile"
+          className={`dropdown-item sidebar-navlink ${!isAuthenticated && 'blur'}`}
+        >
           <ion-icon name="person" />
           <span id="sideBarText">Profile</span>
         </NavLink>

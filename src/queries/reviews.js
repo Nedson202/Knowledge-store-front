@@ -24,22 +24,6 @@ const addLikeOnReview = gql`
   }
 `;
 
-const addReply = gql`
-  mutation($reviewId: String!, $reply: String!) {
-    addReply(reviewId: $reviewId, reply: $reply) {
-      reply
-    }
-  }
-`;
-
-const editReply = gql`
-  mutation($replyId: String!, $replyEdit: String!) {
-    editReply(replyId: $replyId, reply: $replyEdit) {
-      reply
-    }
-  }
-`;
-
 const deleteReview = gql`
   mutation($reviewId: String!) {
     deleteReview(reviewId: $reviewId) {
@@ -48,16 +32,6 @@ const deleteReview = gql`
   }
 `;
 
-const deleteReply = gql`
-  mutation($replyId: String!) {
-    deleteReply(replyId: $replyId) {
-      id
-    }
-  }
-`;
-
 export {
-  addReview, editReview, addReply,
-  editReply, addLikeOnReview, deleteReview,
-  deleteReply
+  addReview, editReview, addLikeOnReview, deleteReview,
 };

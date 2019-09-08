@@ -23,7 +23,8 @@
     justify-content: space-between;
 
 		.original-book {
-			width: 190px !important;
+      width: 190px !important;
+      margin: auto;
 			margin-bottom: 10px;
 
 			#image-error-placeholder {
@@ -42,7 +43,7 @@
 		}
 
 		.book-profile-details {
-			width: 550px;
+			width: 700px;
 		}
 
 		.book-recommendation {

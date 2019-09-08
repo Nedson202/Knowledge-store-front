@@ -65,6 +65,10 @@ export const LOAD = 'load';
 export const RESET = 'reset';
 export const ONLINE = 'online';
 export const OFFLINE = 'offline';
+export const TEXT = 'text';
+export const PASSWORD_TYPE = 'password';
+
+export const PRODUCTION = 'production';
 
 export const SIDE_BAR_STATUS = 'sideBarStatus';
 export const TOKEN = 'token';

@@ -84,9 +84,9 @@ class BookProfile extends Component {
         <h2>{book && book.name}</h2>
         <h5>
           {book && book.authors.length
-            ? `by, ${
+            ? `by ${
               book.authors.map(author => author)
-            }`
+            } `
             : NO_AUTHOR}
         </h5>
         <div className="book-meta">
@@ -173,33 +173,36 @@ class BookProfile extends Component {
 
     return (
       <Fragment>
-        <div className="original-book">
-          <BookCard
-            book={book}
-            enableEllipsis={false}
-          />
-          <div className="favorite-option">
-            <ion-icon
-              name="bookmark"
-              style={{ color: isFavorite && '#005C97' }}
+        <div>
+          <div className="original-book">
+            <BookCard
+              book={book}
+              enableEllipsis={false}
+              bookProfile
             />
-            <p
-              className="favorite-action-button"
-              onClick={this.toggleFavorites(id)}
-            >
-              {favoriteOptionLabel}
-            </p>
+            <div className="favorite-option">
+              <ion-icon
+                name="bookmark"
+                style={{ color: isFavorite && '#005C97' }}
+              />
+              <p
+                className="favorite-action-button"
+                onClick={this.toggleFavorites(id)}
+              >
+                {favoriteOptionLabel}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="book-profile-details">
-          {this.renderBookHeader(book)}
-          <hr />
-          <p>
-            {book && book.description}
-          </p>
-          {book
-            && !book.description
-            && <h4>No description available for this book</h4>}
+          <div className="book-profile-details">
+            {this.renderBookHeader(book)}
+            <hr />
+            <p>
+              {book && book.description}
+            </p>
+            {book
+              && !book.description
+              && <h4>No description available for this book</h4>}
+          </div>
         </div>
         {this.renderMoreBooks(moreBooks)}
         {this.renderAddReviewForm()}

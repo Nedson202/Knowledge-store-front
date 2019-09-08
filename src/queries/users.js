@@ -1,22 +1,5 @@
 import { gql } from 'apollo-boost';
 
-const getGenres = gql`
-  {
-    getGenres {
-      id,
-      genre
-    }
-  }
-`;
-
-const editGenre = gql`
-  mutation($reviewId: String!, $reviewEdit: String!, $rating: Float!) {
-    editReview(reviewId: $reviewId, review: $reviewEdit, rating: $rating) {
-      review
-    }
-  }
-`;
-
 const filterUsers = gql`
   query($type: String!) {
     fetchUsers(type: $type) {
@@ -37,5 +20,5 @@ const toggleAdmin = gql`
 `;
 
 export {
-  getGenres, editGenre, toggleAdmin, filterUsers
+  toggleAdmin, filterUsers
 };

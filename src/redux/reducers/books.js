@@ -1,7 +1,7 @@
 import { SET_BOOKS, SET_BOOK_TO_EDIT } from '../constants/actionTypes';
 
 const initialState = {
-  isBookLoading: false
+  isBookLoading: false,
 };
 
 export default (state = initialState, action) => {

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import setQuery from 'set-query-string';
 import debounce from 'lodash.debounce';
 import { compose, withApollo } from 'react-apollo';
-import { bookFilter } from '../../queries/genre';
+import { bookFilter } from '../../queries/books';
 import { setRetrievedBooks } from '../../redux/actions/bookActions';
 import { SEARCH_DEBOUNCE_TIME, PREVIOUS_LOCATION, SEARCH_BOX } from '../../defaults';
 
@@ -53,6 +53,7 @@ class Search extends PureComponent {
     const query = queryString.parse(window.location.search);
     if (Object.keys(query)[0] && Object.keys(query)[0] === '?search') {
       dispatch(setRetrievedBooks([], true));
+      this.resizeSearchBox('450px');
       const queryValue = Object.values(query)[0];
       this.setState({
         value: queryValue || '',
@@ -148,7 +149,7 @@ class Search extends PureComponent {
         <input
           className="form-input"
           type="search"
-          placeholder="Search by name, author, year, genre, description"
+          placeholder="Search"
           aria-label="Search"
           name="value"
           id="searchBox"

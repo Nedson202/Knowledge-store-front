@@ -3,17 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withApollo, compose } from 'react-apollo';
 import { ReactTitle } from 'react-meta-tags';
-import queryString from 'querystring';
 import './_BookCatalog.scss';
 import BookCard from '../BookCard';
 import BackToTop from '../BackToTop';
 import { setRetrievedBooks } from '../../redux/actions/bookActions';
-import { bookFilter } from '../../queries/genre';
+import { bookFilter } from '../../queries/books';
 import Spinner from '../Spinner';
 import BookPreloader from './BookPreloader';
 import {
   SCROLL, NO_CONTENT, BOOK_SERVER_ERROR, SCROLL_TO_ELEMENT,
-  ALL_BOOKS, SEARCH_BOX
+  ALL_BOOKS,
 } from '../../defaults';
 
 class BookCatalog extends Component {
@@ -27,10 +26,10 @@ class BookCatalog extends Component {
       capture: true,
       passive: true
     });
+
     if (!window.location.search) {
-      this.retrieveBook('');
+      this.retrieveBook();
     }
-    this.setInputFromQuery();
   }
 
   componentWillUnmount() {
@@ -38,17 +37,6 @@ class BookCatalog extends Component {
       capture: true,
       passive: true
     });
-  }
-
-  setInputFromQuery() {
-    const { dispatch } = this.props;
-    const query = queryString.parse(window.location.search);
-    if (Object.keys(query)[0] && Object.keys(query)[0] === '?search') {
-      dispatch(setRetrievedBooks([], true));
-      const queryValue = Object.values(query)[0];
-      document.getElementById(SEARCH_BOX).value = queryValue;
-      this.retrieveBook(queryValue);
-    }
   }
 
   handlePageScroll = () => {

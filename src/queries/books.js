@@ -1,27 +1,27 @@
 import { gql } from 'apollo-boost';
 
-const getGenres = gql`
-  {
-    getGenres {
-      id,
-      genre
-    }
-  }
-`;
-
-const editGenre = gql`
-  mutation($reviewId: String!, $reviewEdit: String!, $rating: Float!) {
-    editReview(reviewId: $reviewId, review: $reviewEdit, rating: $rating) {
-      review
-    }
-  }
-`;
-
 const addBook = gql`
   mutation($name: String!, $year: String!, $description: String!, $image: String, $authors: [String], $genre: [String]) {
     addBook(name: $name, description: $description, year: $year, image: $image, authors: $authors,
       genre: $genre) {
       name
+    }
+  }
+`;
+
+const bookFilter = gql`
+  query($search: String, $from: ID, $size: ID) {
+    searchBooks(searchQuery: $search, from: $from, size: $size) {
+      id
+      name
+      genre
+      authors
+      averageRating
+      googleAverageRating
+      year
+      image
+      userId
+      downloadable
     }
   }
 `;
@@ -79,22 +79,6 @@ const fetchBook = gql`
         updatedAt
       }
       }
-    }
-  }
-`;
-
-const fetchAllBooks = gql`
-  {
-    books{
-      id
-      name
-      genre
-      authors
-      averageRating
-      googleAverageRating
-      year
-      image
-      userId
     }
   }
 `;
@@ -158,6 +142,6 @@ const removeBook = gql`
 `;
 
 export {
-  getGenres, editGenre, fetchBook, fetchAllBooks, removeFavorites, addBook,
+  fetchBook, removeFavorites, addBook, bookFilter,
   fetchUsersBooks, removeBook, addToFavorites, getFavorites
 };

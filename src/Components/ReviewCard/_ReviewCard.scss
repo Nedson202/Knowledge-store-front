@@ -1,13 +1,16 @@
 .add-review-form {
 	width: 100%;
-	max-width: 600px;
-	margin-top: 30px;
+  max-width: 600px;
+  margin: auto;
+	margin-top: 50px;
 }
 
 .review-card {
 	display: flex;
 	flex-direction: row;
-	width: 100%;
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
 	margin-bottom: 15px;
 
 	.review-avatar {
@@ -47,8 +50,8 @@
 		}
 	}
 
-	#star-rating {
-		padding-top: 15px;
+	.review-time, #star-rating {
+		padding-left: 40px;
 	}
 }
 

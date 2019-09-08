@@ -1,4 +1,5 @@
 import { SET_LOGGEDIN_USER } from '../constants/actionTypes';
+import { PREVIOUS_LOCATION, TOKEN } from '../../defaults';
 
 const setCurrentUser = user => ({
   type: SET_LOGGEDIN_USER,
@@ -6,8 +7,8 @@ const setCurrentUser = user => ({
 });
 
 const logOutUser = () => (dispatch) => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('previousLocation');
+  localStorage.removeItem(TOKEN);
+  localStorage.removeItem(PREVIOUS_LOCATION);
   dispatch(setCurrentUser({}));
 };
 

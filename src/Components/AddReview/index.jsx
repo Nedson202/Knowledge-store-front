@@ -4,8 +4,11 @@ import ReactStars from 'react-stars';
 import './_AddReview.scss';
 import { compose, graphql } from 'react-apollo';
 import {
-  addReview, addReply, editReply, editReview
+  addReview, editReview
 } from '../../queries/reviews';
+import {
+  addReply, editReply,
+} from '../../queries/reply';
 import toaster from '../../utils/toast';
 import { fetchBook } from '../../queries/books';
 import errorHandler from '../../utils/errorHandler';
