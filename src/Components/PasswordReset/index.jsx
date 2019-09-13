@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 import setQuery from 'set-query-string';
-import './_PasswordReset.scss';
+
+import { resetPassword } from '../../queries/auth';
 import passwordToggler from '../../utils/passwordToggler';
 import tokenDecoder from '../../utils/tokenDecoder';
-import { resetPassword } from '../../queries/auth';
 import toaster from '../../utils/toast';
 import { setCurrentUser } from '../../redux/actions/userActions';
 import {

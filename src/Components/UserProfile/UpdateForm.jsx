@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './_UserProfile.scss';
+
 import ImageUpload from './ImageUpload';
 
 const UpdateForm = (props) => {

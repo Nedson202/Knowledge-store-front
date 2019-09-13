@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
   ADD, USER_EMAIL, CLOSE, ADD_ADMIN
 } from '../../settings/defaults';

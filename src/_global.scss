@@ -1,0 +1,51 @@
+$font_family_1: georgia, sans-serif;
+
+* {
+	font-family: $font_family_1;
+}
+
+.bg-light {
+  background-color: $white_1 !important;
+}
+
+.hide {
+	display: none;
+}
+
+h2#swal2-title {
+  font-weight: 100;
+}
+
+.swal2-popup.swal2-toast.swal2-show {
+  border-radius: 40px;
+}
+
+.btn-primary {
+  color: $white_1;
+  background-color: $blue_2 !important;
+  border-color: $blue_2;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.btn-raised {
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+[class*=" bmd-label"], [class^=bmd-label] {
+  color: unset !important;
+}
+
+ion-icon {
+  font-size: 20px;
+  color: $black_2;
+}
+
+.blur {
+  color: $black_3;
+
+  ion-icon {
+    color: $black_3;
+  }
+}

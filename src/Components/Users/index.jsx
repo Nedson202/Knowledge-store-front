@@ -2,16 +2,18 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { compose, graphql, withApollo } from 'react-apollo';
 import { Select } from 'antd';
-import './_Users.scss';
+
 import Tables from '../Table';
-import { filterUsers, toggleAdmin } from '../../queries/users';
 import AddAdminModal from '../AddAdminModal';
+
+import { filterUsers, toggleAdmin } from '../../queries/users';
 import toaster from '../../utils/toast';
 import Spinner from '../Spinner';
 import errorHandler from '../../utils/errorHandler';
 import modalCloser from '../../utils/modalCloser';
 import {
-  SUCCESS, CLOSE_USER, ADD, TOASTR_ERROR, FETCH_USERS_QUERY, TOGGLE_ADMIN_QUERY
+  SUCCESS, CLOSE_USER, ADD, TOASTR_ERROR, FETCH_USERS_QUERY,
+  TOGGLE_ADMIN_QUERY
 } from '../../settings/defaults';
 
 const { Option } = Select;

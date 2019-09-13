@@ -1,6 +1,5 @@
 import React from 'react';
 import { ReactTitle } from 'react-meta-tags';
-import './_NotFound.scss';
 
 const NotFound = () => (
   <div className="not-found text-center">

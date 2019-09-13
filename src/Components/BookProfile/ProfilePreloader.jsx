@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import ContentLoader from 'react-content-loader';
-import './_BookProfile.scss';
-import '../BookCatalog/_BookCatalog.scss';
+
 import BookImageLoader from '../BookCard/BookImageLoader';
 import ReviewLoader from '../ReviewCard/ReviewLoader';
 

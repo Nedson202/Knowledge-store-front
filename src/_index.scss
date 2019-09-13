@@ -1,41 +1,25 @@
-* {
-  font-family: georgia, sans-serif;
-}
+@import './colors';
+@import './_global';
 
-h2#swal2-title {
-  font-weight: 100;
-}
-
-.swal2-popup.swal2-toast.swal2-show {
-  border-radius: 40px;
-}
-
-.btn-primary {
-  color: #fff;
-  background-color: #005C97 !important;
-  border-color: #005C97;
-  padding: 10px 20px;
-  border-radius: 5px;
-}
-
-.btn-raised {
-  padding: 10px 20px;
-  border-radius: 5px;
-}
-
-[class*=" bmd-label"], [class^=bmd-label] {
-  color: unset !important;
-}
-
-ion-icon {
-  font-size: 20px;
-  color: rgba(0,0,0,.9);
-}
-
-.blur {
-  color: rgba(0,0,0,.5);
-
-  ion-icon {
-    color: rgba(0,0,0,.5);
-  }
-}
+@import './Components/BookCard/_BookCard';
+@import './Components/AddBook/_AddBookModal';
+@import './Components/AdminPanel/_AdminPanel';
+@import './Components/AddReview/_AddReview';
+@import './Components/Base/_App';
+@import './Components/BackToTop/_BackToTop';
+@import './Components/BookCatalog/_BookCatalog';
+@import './Components/BookProfile/_BookProfile';
+@import './Components/Favorites/_Favorites';
+@import './Components/Header/_Header';
+@import './Components/LeftSideBar/_LeftSideBar';
+@import './Components/MyBooks/_MyBooks';
+@import './Components/NotFound/_NotFound';
+@import './Components/PasswordReset/_PasswordReset';
+@import './Components/ReviewCard/_ReviewCard';
+@import './Components/ReviewCard/_ReplyCard';
+@import './Components/SideNav/_SideNav';
+@import './Components/Table/_Table';
+@import './Components/Users/_Users';
+@import './Components/UserProfile/_ImageUpload';
+@import './Components/UserProfile/_UpdatePassword';
+@import './Components/UserProfile/_UserProfile';

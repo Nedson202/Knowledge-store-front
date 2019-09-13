@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import './_ImageUpload.scss';
+
 import Spinner from '../Spinner';
 
 const ImageUpload = (props) => {

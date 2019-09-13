@@ -1,11 +1,11 @@
 .sidenav {
   height: 100%;
   width: 0;
-  position: fixed; 
+  position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #F5F5F5;
+  background-color: $grey_5;
   overflow-x: hidden;
   padding-top: 50px;
   transition: 0.5s;
@@ -15,7 +15,6 @@
     padding: 8px 8px 8px 5px;
     text-decoration: none;
     font-size: 20px;
-    color: #5a5a5a !important;
     display: block;
     transition: 0.3s;
     font-weight: 100;
@@ -26,7 +25,13 @@
     }
 
     a {
-      color: #313030 !important;
+      color: $black_1 !important;
+    }
+
+    &:hover {
+      background-color: $grey_2;
+      border-left: 5px solid $blue_2;
+      border-bottom-left-radius: 10px;
     }
   }
 
@@ -37,12 +42,6 @@
     div {
       pointer-events: none !important;
     }
-  }
-
-  div:hover {
-    background-color: #eaeaea;
-    border-left: 5px solid #005C97;
-    border-bottom-left-radius: 10px;
   }
 }
 
@@ -60,9 +59,9 @@
     }
 
     .dropdown-item.active {
-      border-left: 2px solid #005C97;
-      background-color: #F5F5F5 !important;
-      color: #020202;
-    }    
+      border-left: 2px solid $blue_2;
+      background-color: $grey_5 !important;
+      color: $black_2;
+    }
   }
 }

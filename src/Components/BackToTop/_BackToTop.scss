@@ -6,16 +6,16 @@
   font-size: 18px;
   border: none;
   outline: none;
-	background-color: #005C97 !important;
+	background-color: $blue_2 !important;
 	width: 50px;
 	height: 50px;
 	border-radius: 50% !important;
   color: white;
   cursor: pointer;
-}
 
-.back-to-top:hover {
-	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23) !important;
+  &:hover {
+    box-shadow: $box_shadow_2 !important;
+  }
 }
 
 @media screen and (max-width: 560px) {

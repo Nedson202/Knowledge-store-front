@@ -5,11 +5,12 @@ import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import setQuery from 'set-query-string';
 import { compose, withApollo, graphql } from 'react-apollo';
-import './_App.scss';
 import { ReactTitle } from 'react-meta-tags';
+
 import Login from '../Login';
 import Main from './Main';
 import SignUp from '../SignUp';
+
 import toaster from '../../utils/toast';
 import tokenDecoder from '../../utils/tokenDecoder';
 import { setCurrentUser } from '../../redux/actions/userActions';

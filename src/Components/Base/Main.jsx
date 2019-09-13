@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+
 import UnsplashMention from './UnsplashMention';
 
 class Main extends Component {

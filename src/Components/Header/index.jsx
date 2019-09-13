@@ -2,12 +2,13 @@ import React, { Component, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import './_Header.scss';
+
 import Avatar from '../ReviewCard/Avatar';
-import { logOutUser } from '../../redux/actions/userActions';
 import Search from '../Search';
 import Login from '../Login';
 import SignUp from '../SignUp';
+
+import { logOutUser } from '../../redux/actions/userActions';
 import {
   OPEN, CLICK, BLOCK, NONE, AUTO, LEFT_SIDE_BAR,
   MAIN, CLOSED, SIDE_BAR_TEXT, SIDE_BAR_STATUS, SIDE_NAV

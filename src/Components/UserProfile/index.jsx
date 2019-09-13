@@ -4,13 +4,15 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose, graphql } from 'react-apollo';
-import './_UserProfile.scss';
 import { ReactTitle } from 'react-meta-tags';
+
 import UpdateForm from './UpdateForm';
-import { handleSingleFieldValidation } from '../../utils/validator/validator';
 import UpdatePassword from './UpdatePassword';
 import UserDetails from './UserDetails';
+
 import { editProfile, changePassword } from '../../queries/auth';
+
+import { handleSingleFieldValidation } from '../../utils/validator/validator';
 import toaster from '../../utils/toast';
 import { setCurrentUser } from '../../redux/actions/userActions';
 import tokenDecoder from '../../utils/tokenDecoder';

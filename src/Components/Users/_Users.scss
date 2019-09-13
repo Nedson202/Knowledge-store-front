@@ -13,12 +13,12 @@
     width: 120px !important;
     margin-right: 15px;
     height: 36px !important;
-  }
 
-  .ant-select, .ant-input:focus {
-    outline: 0;
-    box-shadow: none;
-    border-color: transparent;
+    &:focus {
+      outline: 0;
+      box-shadow: none;
+      border-color: transparent;
+    }
   }
 
   .table-spinner {
@@ -38,10 +38,6 @@
 
     &__header {
       width: 105%;
-
-      h3 {
-        
-      }
     }
   }
 }

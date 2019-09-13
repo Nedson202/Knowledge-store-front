@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withApollo, compose } from 'react-apollo';
 import { ReactTitle } from 'react-meta-tags';
-import './_BookCatalog.scss';
+
 import BookCard from '../BookCard';
 import BackToTop from '../BackToTop';
-import { setRetrievedBooks } from '../../redux/actions/bookActions';
-import { bookFilter } from '../../queries/books';
 import Spinner from '../Spinner';
 import BookPreloader from './BookPreloader';
+
+import { setRetrievedBooks } from '../../redux/actions/bookActions';
+import { bookFilter } from '../../queries/books';
 import {
   SCROLL, NO_CONTENT, BOOK_SERVER_ERROR, SCROLL_TO_ELEMENT,
   ALL_BOOKS,
