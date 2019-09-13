@@ -63,6 +63,7 @@ const fetchBook = gql`
       avatarColor
       likes
       userId
+      reviewsLikedBy
       bookId
       createdAt
       updatedAt
@@ -74,6 +75,7 @@ const fetchBook = gql`
         picture
         likes
         userId
+        repliesLikedBy
         reviewId
         createdAt
         updatedAt

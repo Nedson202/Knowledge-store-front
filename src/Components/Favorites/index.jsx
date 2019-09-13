@@ -11,7 +11,7 @@ import errorHandler from '../../utils/errorHandler';
 import {
   SUCCESS, TOASTR_ERROR, REMOVE_FAVORITES_QUERY,
   GET_FAVORITES_QUERY
-} from '../../defaults';
+} from '../../settings/defaults';
 
 class Favorites extends Component {
   state = {

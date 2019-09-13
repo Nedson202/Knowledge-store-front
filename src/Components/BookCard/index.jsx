@@ -7,7 +7,7 @@ import './_BookCard.scss';
 import Star from '../Star';
 import BookImageLoader from './BookImageLoader';
 import toHTTPS from '../../utils/toHTTPS';
-import { IMAGE_FETCH_ERROR, EDIT, DELETE } from '../../defaults';
+import { IMAGE_FETCH_ERROR, EDIT, DELETE } from '../../settings/defaults';
 
 class BookCard extends Component {
   constructor(props) {

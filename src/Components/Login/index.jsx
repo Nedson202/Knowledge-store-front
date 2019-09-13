@@ -15,7 +15,7 @@ import modalCloser from '../../utils/modalCloser';
 import {
   SUCCESS, TOASTR_ERROR, MY_BOOKS_PATH, CLOSE_LOGIN, LOGIN_USER_QUERY, TOKEN,
   VALIDATION_DEBOUNCE_TIME
-} from '../../defaults';
+} from '../../settings/defaults';
 
 class Login extends Component {
   debounceSingleFieldValidation = debounce(({ name, value }) => {

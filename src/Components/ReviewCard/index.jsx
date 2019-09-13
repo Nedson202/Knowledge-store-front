@@ -7,8 +7,8 @@ import './_ReviewCard.scss';
 import ReplyCard from './ReplyCard';
 import AddReview from '../AddReview';
 import Star from '../Star';
-import { addLikeOnReview, deleteReview, } from '../../queries/reviews';
-import { deleteReply } from '../../queries/reply';
+import { toggleLikeOnReview, deleteReview, } from '../../queries/reviews';
+import { toggleLikeOnReply, deleteReply } from '../../queries/reply';
 import timeParser from '../../utils/timeParser';
 import Avatar from './Avatar';
 import { fetchBook } from '../../queries/books';
@@ -17,8 +17,8 @@ import errorHandler from '../../utils/errorHandler';
 import toHTTPS from '../../utils/toHTTPS';
 import {
   TOASTR_ERROR, REPLY, SCROLL_TO_PARAM, REPLY_EDIT,
-  REVIEW_EDIT, DELETE_REPLY_QUERY, DELETE_REVIEW_QUERY, ADD_LIKE_QUERY
-} from '../../defaults';
+  REVIEW_EDIT, DELETE_REPLY_QUERY, DELETE_REVIEW_QUERY, TOGGLE_LIKE_QUERY
+} from '../../settings/defaults';
 
 class ReviewCard extends Component {
   constructor(props) {
@@ -30,10 +30,11 @@ class ReviewCard extends Component {
       isReviewEditFormOpen: false,
       reviewType: '',
       reviewId: '',
+      replyId: '',
       reviewToReply: '',
       setReviewToEdit: '',
       setReplyToEdit: '',
-      reviewFormId: '', /* eslint-disable-line */
+      reviewFormId: '',
     };
   }
 
@@ -67,9 +68,37 @@ class ReviewCard extends Component {
     }));
   }
 
-  setReviewToLike = reviewId => () => {
+  toggleReviewLike = () => {
+    const { reviewId } = this.state;
+    const { toggleLikeQuery, bookId } = this.props;
+    toggleLikeQuery({
+      variables: {
+        reviewId,
+      },
+      refetchQueries: this.refetchData(bookId)
+    });
+  }
+
+  toggleReplyLike = () => {
+    const { replyId } = this.state;
+    const { toggleReplyLikeQuery, bookId } = this.props;
+    toggleReplyLikeQuery({
+      variables: {
+        replyId,
+      },
+      refetchQueries: this.refetchData(bookId)
+    });
+  }
+
+  handleReviewLikeToggle = reviewId => () => {
     this.setState({ reviewId }, () => {
-      this.toggleLike();
+      this.toggleReviewLike();
+    });
+  }
+
+  handleReplyLikeToggle = replyId => () => {
+    this.setState({ replyId }, () => {
+      this.toggleReplyLike();
     });
   }
 
@@ -116,17 +145,6 @@ class ReviewCard extends Component {
     ];
   }
 
-  toggleLike(like) {
-    const { reviewId } = this.state;
-    const { addLikeQuery } = this.props;
-    addLikeQuery({
-      variables: {
-        reviewId,
-        like,
-      }
-    });
-  }
-
   renderReviewerImage(image) {
     return (
       <div>
@@ -144,6 +162,7 @@ class ReviewCard extends Component {
     const {
       isReviewEditFormOpen, reviewType, setReviewToEdit, reviewFormId
     } = this.state;
+
     return (
       <AddReview
         toggleForm={isReviewEditFormOpen}
@@ -202,18 +221,23 @@ class ReviewCard extends Component {
   }
 
   renderReviewFooter(userReview) {
-    const { likes, id, userId } = userReview;
+    const {
+      likes, id, userId, reviewsLikedBy
+    } = userReview;
     const { user } = this.props;
+
+    const users = reviewsLikedBy ? JSON.parse(reviewsLikedBy) : [];
+
     return (
       <div className="footer">
-        <p onClick={this.setReviewToLike(id)}>
+        <p onClick={this.handleReviewLikeToggle(id)}>
           <ion-icon
             name="thumbs-up"
-            style={{ color: likes && '#005C97' }}
+            style={{ color: users.includes(user.id) && '#005C97' }}
           />
           <span className="like-count">{likes !== 0 && likes}</span>
         </p>
-        <p onClick={this.toggleReplyDialog(id)}>Reply</p>
+        <p onClick={this.toggleReplyDialog(id)}>reply</p>
         {user.id && user.id.match(userId) && (
           <span className="reviewer-buttons">
             <p onClick={this.toggleReviewEditForm(id)}>edit</p>
@@ -239,6 +263,7 @@ class ReviewCard extends Component {
         deleteReply={this.deleteReply}
         setReplyToEdit={setReplyToEdit}
         user={user}
+        handleReplyLikeToggle={this.handleReplyLikeToggle}
       />
     );
   }
@@ -303,7 +328,8 @@ const mapStateToProps = state => ({
 });
 
 ReviewCard.propTypes = {
-  addLikeQuery: PropTypes.func,
+  toggleLikeQuery: PropTypes.func,
+  toggleReplyLikeQuery: PropTypes.func,
   deleteReviewQuery: PropTypes.func,
   deleteReplyQuery: PropTypes.func,
   reviews: PropTypes.array,
@@ -312,7 +338,8 @@ ReviewCard.propTypes = {
 };
 
 ReviewCard.defaultProps = {
-  addLikeQuery: () => { },
+  toggleLikeQuery: () => { },
+  toggleReplyLikeQuery: () => { },
   deleteReviewQuery: () => { },
   deleteReplyQuery: () => { },
   reviews: [],
@@ -321,7 +348,8 @@ ReviewCard.defaultProps = {
 };
 
 export default compose(
-  graphql(addLikeOnReview, { name: ADD_LIKE_QUERY }),
+  graphql(toggleLikeOnReview, { name: TOGGLE_LIKE_QUERY }),
+  graphql(toggleLikeOnReply, { name: 'toggleReplyLikeQuery' }),
   graphql(deleteReview, { name: DELETE_REVIEW_QUERY }),
   graphql(deleteReply, { name: DELETE_REPLY_QUERY }),
   connect(mapStateToProps),

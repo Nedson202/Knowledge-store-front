@@ -11,7 +11,7 @@ import SignUp from '../SignUp';
 import {
   OPEN, CLICK, BLOCK, NONE, AUTO, LEFT_SIDE_BAR,
   MAIN, CLOSED, SIDE_BAR_TEXT, SIDE_BAR_STATUS, SIDE_NAV
-} from '../../defaults';
+} from '../../settings/defaults';
 
 class Header extends Component {
   state = {

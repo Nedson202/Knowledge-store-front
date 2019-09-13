@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   ADD, USER_EMAIL, CLOSE, ADD_ADMIN
-} from '../../defaults';
+} from '../../settings/defaults';
 
 const AddAddminModal = (props) => {
   const { handleInputChange, addAmin } = props;

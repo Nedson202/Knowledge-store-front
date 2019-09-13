@@ -13,7 +13,7 @@ import BookPreloader from './BookPreloader';
 import {
   SCROLL, NO_CONTENT, BOOK_SERVER_ERROR, SCROLL_TO_ELEMENT,
   ALL_BOOKS,
-} from '../../defaults';
+} from '../../settings/defaults';
 
 class BookCatalog extends Component {
   state = {

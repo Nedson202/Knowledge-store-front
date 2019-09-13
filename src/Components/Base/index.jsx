@@ -18,7 +18,7 @@ import modalCloser from '../../utils/modalCloser';
 import {
   NONE, NAV_BAR, LEFT_SIDE_BAR, BLOCK, CLOSE, SUCCESS, FLEX, AUTH_SUCCESS,
   MY_BOOKS_PATH, VERIFY_EMAIL_QUERY, TOKEN
-} from '../../defaults';
+} from '../../settings/defaults';
 
 class App extends Component {
   componentDidMount() {

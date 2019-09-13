@@ -16,6 +16,14 @@ const editReply = gql`
   }
 `;
 
+const toggleLikeOnReply = gql`
+  mutation($replyId: String!) {
+    toggleLikeOnReply(replyId: $replyId) {
+      id
+    }
+  }
+`;
+
 const deleteReply = gql`
   mutation($replyId: String!) {
     deleteReply(replyId: $replyId) {
@@ -25,5 +33,5 @@ const deleteReply = gql`
 `;
 
 export {
-  addReply, editReply, deleteReply
+  addReply, editReply, deleteReply, toggleLikeOnReply
 };

@@ -11,7 +11,7 @@ import { fetchUsersBooks, removeBook } from '../../queries/books';
 import BookPreloader from '../BookCatalog/BookPreloader';
 import { setBookToEdit } from '../../redux/actions/bookActions';
 import toaster from '../../utils/toast';
-import { FETCH_USERS_BOOKS_QUERY, REMOVE_BOOK_QUERY, SUCCESS } from '../../defaults';
+import { FETCH_USERS_BOOKS_QUERY, REMOVE_BOOK_QUERY, SUCCESS } from '../../settings/defaults';
 
 class MyBooks extends Component {
   state = {

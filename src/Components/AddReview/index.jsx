@@ -17,7 +17,7 @@ import {
   RESET, REVIEW_WARNING, RATING_WARNING, REVIEW_SUCCESS, LAST_ELEMENT,
   REVIEW, BLOCK, NONE, ADD_REVIEW_QUERY, ADD_REPLY_QUERY, EDIT_REPLY_QUERY,
   EDIT_REVIEW_QUERY
-} from '../../defaults';
+} from '../../settings/defaults';
 
 class AddReview extends Component {
   constructor(props) {

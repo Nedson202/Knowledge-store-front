@@ -9,7 +9,7 @@ import {
   ADD_BOOK_COVER, CANCEL_PREVIEW, BOOK_TITLE, YEAR_PUBLISHED,
   DOWNLOAD_URL, DESCRIPTION, CLOSE, SAVE_CHANGES, GENRE, ADD_BOOK,
   EDIT_BOOK, AUTHORS_LABEL
-} from '../../defaults';
+} from '../../settings/defaults';
 
 const { Option } = Select;
 

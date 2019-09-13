@@ -15,7 +15,7 @@ import rootReducer from './redux/reducers/rootReducer';
 import { setCurrentUser } from './redux/actions/userActions';
 import Routes from './Routes';
 import tokenDecoder from './utils/tokenDecoder';
-import { PRODUCTION } from './defaults';
+import { PRODUCTION } from './settings/defaults';
 
 const enhancer = composeWithDevTools(applyMiddleware(thunk));
 

@@ -120,7 +120,7 @@ export const DELETE_REVIEW_QUERY = 'deleteReviewQuery';
 export const ADD_REPLY_QUERY = 'addReplyQuery';
 export const EDIT_REPLY_QUERY = 'editReplyQuery';
 export const DELETE_REPLY_QUERY = 'deleteReplyQuery';
-export const ADD_LIKE_QUERY = 'addLikeQuery';
+export const TOGGLE_LIKE_QUERY = 'toggleLikeQuery';
 
 export const VERIFY_EMAIL_QUERY = 'verifyEmailQuery';
 export const LOGIN_USER_QUERY = 'loginUserQuery';
