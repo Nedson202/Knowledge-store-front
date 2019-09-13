@@ -16,9 +16,9 @@ const editReview = gql`
   }
 `;
 
-const addLikeOnReview = gql`
-  mutation($reviewId: String!, $like: Int) {
-    editReview(reviewId: $reviewId, like: $like) {
+const toggleLikeOnReview = gql`
+  mutation($reviewId: String!) {
+    toggleLikeOnReview(reviewId: $reviewId) {
       review
     }
   }
@@ -33,5 +33,5 @@ const deleteReview = gql`
 `;
 
 export {
-  addReview, editReview, addLikeOnReview, deleteReview,
+  addReview, editReview, toggleLikeOnReview, deleteReview,
 };

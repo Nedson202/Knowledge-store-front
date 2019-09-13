@@ -1,4 +1,4 @@
-import { PRODUCTION } from '../defaults';
+import { PRODUCTION } from '../settings/defaults';
 
 /* eslint-disable */
 const socialAuthentication = type => () => {

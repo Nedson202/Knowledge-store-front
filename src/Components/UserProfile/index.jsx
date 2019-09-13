@@ -19,7 +19,7 @@ import {
   FILE, FOLDER, BOOK_STORE, UPLOAD_PRESET, SUCCESS, TOKEN,
   CHANGE_PASSWORD_QUERY, EDIT_PROFILE_QUERY, TOASTR_ERROR,
   VALIDATION_DEBOUNCE_TIME
-} from '../../defaults';
+} from '../../settings/defaults';
 
 class UserProfile extends Component {
   debounceSingleFieldValidation = debounce(({ name, value }) => {

@@ -12,7 +12,7 @@ import errorHandler from '../../utils/errorHandler';
 import modalCloser from '../../utils/modalCloser';
 import {
   SUCCESS, CLOSE_USER, ADD, TOASTR_ERROR, FETCH_USERS_QUERY, TOGGLE_ADMIN_QUERY
-} from '../../defaults';
+} from '../../settings/defaults';
 
 const { Option } = Select;
 

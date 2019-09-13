@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import tokenDecoder from '../../utils/tokenDecoder';
 import toaster from '../../utils/toast';
-import { TOASTR_ERROR } from '../../defaults';
+import { TOASTR_ERROR } from '../../settings/defaults';
 
 export default function (ComposedComponent, admin) {
   class AuthWrapper extends Component {

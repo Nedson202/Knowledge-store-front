@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import './_ReplyCard.scss';
 import AddReview from '../AddReview';
 import timeParser from '../../utils/timeParser';
 import Avatar from './Avatar';
 
-class ReplyCard extends Component {
+class ReplyCard extends PureComponent {
   renderReviewerImage(picture) {
     return (
       <div>
@@ -19,19 +19,25 @@ class ReplyCard extends Component {
     );
   }
 
-  renderReplyFooter(likes, id, userId) {
+  renderReplyFooter(likes, repliesLikedBy, id, userId) {
     const {
-      handleToggleForm, handleReplyEdit, reviewId, deleteReply, user
+      handleToggleForm, handleReplyEdit, reviewId, deleteReply, user,
+      handleReplyLikeToggle,
     } = this.props;
+
+    const users = repliesLikedBy ? JSON.parse(JSON.stringify(repliesLikedBy))
+      : [];
+
     return (
       <div className="footer">
-        <p>
+        <p onClick={handleReplyLikeToggle(id)}>
           <ion-icon
             name="thumbs-up"
+            style={{ color: users.includes(user.id) && '#005C97' }}
           />
           <span className="like-count">{likes !== 0 && likes}</span>
         </p>
-        <p onClick={handleToggleForm(reviewId)}>Reply</p>
+        <p onClick={handleToggleForm(reviewId)}>reply</p>
         {user.id && user.id.match(userId) && (
           <span className="reviewer-buttons">
             <p onClick={handleReplyEdit(id)}>edit</p>
@@ -53,8 +59,10 @@ class ReplyCard extends Component {
   renderReply(userReply, setReplyToEdit) {
     const { isEditFormOpen } = this.props;
     const {
-      replier, picture, createdAt, reply, likes, id, userId, avatarColor
+      replier, picture, createdAt, reply, likes, id, userId,
+      avatarColor, repliesLikedBy
     } = userReply;
+
     return (
       <div className="reply-card" key={id}>
         {picture ? this.renderReviewerImage(picture)
@@ -70,7 +78,7 @@ class ReplyCard extends Component {
               <p>
                 {reply}
               </p>
-              {this.renderReplyFooter(likes, id, userId)}
+              {this.renderReplyFooter(likes, repliesLikedBy, id, userId)}
             </span>
           )}
           {this.renderReplyEditForm(reply, id)}
@@ -114,6 +122,7 @@ ReplyCard.propTypes = {
   handleToggleForm: PropTypes.func,
   handleReplyEdit: PropTypes.func,
   deleteReply: PropTypes.func,
+  handleReplyLikeToggle: PropTypes.func,
   isEditFormOpen: PropTypes.bool,
   reviewType: PropTypes.string,
   replies: PropTypes.array,
@@ -126,6 +135,7 @@ ReplyCard.defaultProps = {
   handleToggleForm: () => { },
   handleReplyEdit: () => { },
   deleteReply: () => { },
+  handleReplyLikeToggle: () => { },
   isEditFormOpen: false,
   reviewType: '',
   replies: [],

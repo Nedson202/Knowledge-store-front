@@ -10,7 +10,7 @@ import toaster from '../../utils/toast';
 import {
   FILE, FOLDER, UPLOAD_PRESET, BOOK_STORE, AUTHORS, CLOSE_BOOK,
   SUCCESS, ADD_BOOK_QUERY
-} from '../../defaults';
+} from '../../settings/defaults';
 
 class AddBook extends Component {
   state = {

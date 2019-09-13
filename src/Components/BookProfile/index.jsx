@@ -15,7 +15,7 @@ import BackToTop from '../BackToTop';
 import {
   SCROLL, TOASTR_ERROR, SUCCESS, NO_AUTHOR, ADD_TO_FAVORITES,
   REMOVE_FROM_FAVORITES, ADD_FAVORITES_QUERY, FETCH_BOOKS_QUERY
-} from '../../defaults';
+} from '../../settings/defaults';
 
 class BookProfile extends Component {
   state = {
@@ -37,12 +37,15 @@ class BookProfile extends Component {
   }
 
   handlePageScroll = () => {
-    if (document.body.scrollTop < 20 || document.documentElement.scrollTop < 20) {
-      this.setState({ displayBackToTop: false });
+    let displayBackToTop = false;
+    const shouldDisplayBackToTop = document.documentElement.scrollTop > 300;
+
+    if (shouldDisplayBackToTop) {
+      displayBackToTop = true;
+    } else {
+      displayBackToTop = false;
     }
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-      this.setState({ displayBackToTop: true });
-    }
+    this.setState({ displayBackToTop });
   };
 
   toggleFavorites = id => async () => {

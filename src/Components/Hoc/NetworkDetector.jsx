@@ -3,7 +3,7 @@ import toaster from '../../utils/toast';
 import {
   SUCCESS, TOASTR_ERROR, LOAD, ONLINE,
   OFFLINE
-} from '../../defaults';
+} from '../../settings/defaults';
 
 export default function (ComposedComponent) {
   class NetworkDetector extends Component {

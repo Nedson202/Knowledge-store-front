@@ -12,7 +12,7 @@ import toaster from '../../utils/toast';
 import { setCurrentUser } from '../../redux/actions/userActions';
 import {
   RESET_PASSWORD_QUERY, TOASTR_ERROR, MY_BOOKS_PATH, TOKEN, SUCCESS
-} from '../../defaults';
+} from '../../settings/defaults';
 
 class PasswordReset extends Component {
   state = {

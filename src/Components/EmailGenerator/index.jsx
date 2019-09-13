@@ -14,7 +14,7 @@ import toaster from '../../utils/toast';
 import {
   RESET_PASSWORD, VERIFY_EMAIL, SUCCESS, TOASTR_ERROR,
   VERIFICATION_MESSAGE, RESET_MESSAGE, VERIFICATION, PASSWORD_RESET
-} from '../../defaults';
+} from '../../settings/defaults';
 
 const waitTime = 1000;
 
