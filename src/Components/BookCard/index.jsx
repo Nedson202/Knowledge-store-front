@@ -55,7 +55,7 @@ class BookCard extends Component {
           <Link to={link}>
             <img
               src={toHTTPS(bookImage)}
-              className="book-images parent"
+              className="book__card--images"
               alt="Card cap"
               id="book-image"
               onLoad={this.checkImageRender}
@@ -122,8 +122,8 @@ class BookCard extends Component {
     const link = !moreBooks ? `/books/${id}` : `${id}`;
     const footerSelect = !bookProfile && (
       <Fragment>
-        <span className="book-footer__link">
-          <Link to={link} id="book-footer__title">
+        <span className="book__card--footer-link">
+          <Link to={link} className="book__card--footer-title">
             <Truncate
               lines={1}
             >
@@ -134,19 +134,18 @@ class BookCard extends Component {
           </Link>
           {this.renderActionDropdown(userId)}
         </span>
-        <span className="book-author">
+        <span className="book__card--author">
           <Truncate
             lines={1}
           >
-            {authors
-              && `by ${authors.map(author => author)}`}
+            {authors && `by ${authors.join(', ')}` }
           </Truncate>
         </span>
       </Fragment>
     );
 
     return (
-      <div className="book-footer">
+      <div className="book__card--footer">
         {footerSelect}
         <span className="react-star">
           <Star
@@ -167,7 +166,7 @@ class BookCard extends Component {
   render() {
     const { toggleCheckBox, book, moreBooks } = this.props;
     return (
-      <div className="child-elem">
+      <div className="book__card">
         {toggleCheckBox && this.renderCheckBox()}
         {book && this.renderImage(book, moreBooks)}
         {book && this.renderBookFooter(book, moreBooks)}

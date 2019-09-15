@@ -19,7 +19,6 @@ import {
 class BookCatalog extends Component {
   state = {
     isNewContentLoading: false,
-    displayBackToTop: false,
   };
 
   componentDidMount() {
@@ -46,12 +45,6 @@ class BookCatalog extends Component {
     const { scrollHeight } = document.body;
     const totalHeight = window.scrollY + window.innerHeight;
 
-    if (document.body.scrollTop < 20 || document.documentElement.scrollTop < 20) {
-      this.setState({ displayBackToTop: false });
-    }
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-      this.setState({ displayBackToTop: true });
-    }
     if (isNewContentLoading) return;
     if (
       !window.location.search && totalHeight >= scrollHeight && books.length
@@ -167,7 +160,7 @@ class BookCatalog extends Component {
   }
 
   render() {
-    const { displayBackToTop, isNewContentLoading } = this.state;
+    const { isNewContentLoading } = this.state;
     const { books, loadingBook } = this.props;
 
     return (
@@ -187,9 +180,7 @@ class BookCatalog extends Component {
         >
           {isNewContentLoading && <Spinner spinnerStyle={45} />}
         </div>
-        <BackToTop
-          displayBackToTop={displayBackToTop}
-        />
+        <BackToTop />
       </Fragment>
     );
   }

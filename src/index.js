@@ -58,6 +58,7 @@ const client = new ApolloClient({
 });
 
 if (token) {
+  window.localStorage.setItem('logout', false);
   store.dispatch(setCurrentUser(tokenDecoder(token)));
 }
 

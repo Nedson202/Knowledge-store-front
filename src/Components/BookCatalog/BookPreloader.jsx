@@ -8,19 +8,19 @@ const BookPreloader = (props) => {
 
   const renderPreloader = () => (
     <Fragment>
-      <div className="child-elem">
+      <div className="book__card">
         <BookImageLoader />
       </div>
-      <div className="child-elem">
+      <div className="book__card">
         <BookImageLoader />
       </div>
-      <div className="child-elem">
+      <div className="book__card">
         <BookImageLoader />
       </div>
-      <div className="child-elem">
+      <div className="book__card">
         <BookImageLoader />
       </div>
-      <div className="child-elem">
+      <div className="book__card">
         <BookImageLoader />
       </div>
     </Fragment>

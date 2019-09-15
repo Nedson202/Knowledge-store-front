@@ -1,4 +1,4 @@
-.back-to-top {
+#back-to-top {
   position: fixed;
   bottom: 20px;
   right: 30px;
@@ -6,20 +6,22 @@
   font-size: 18px;
   border: none;
   outline: none;
-	background-color: $blue_2 !important;
-	width: 50px;
-	height: 50px;
-	border-radius: 50% !important;
+	background-color: $blue_2;
+	border-radius: 50%;
   color: white;
   cursor: pointer;
 
   &:hover {
-    box-shadow: $box_shadow_2 !important;
+    box-shadow: $box_shadow_2;
+  }
+
+  i {
+    font-size: 25px;
   }
 }
 
 @media screen and (max-width: 560px) {
-  .back-to-top {
+  #back-to-top {
     right: 15px;
   }
 }

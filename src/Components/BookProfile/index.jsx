@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { compose, graphql } from 'react-apollo';
+import { compose, graphql, Query } from 'react-apollo';
 import { ReactTitle } from 'react-meta-tags';
 
 import BookCard from '../BookCard';
@@ -13,41 +13,11 @@ import { fetchBook, addToFavorites } from '../../queries/books';
 import toaster from '../../utils/toast';
 import errorHandler from '../../utils/errorHandler';
 import {
-  SCROLL, TOASTR_ERROR, SUCCESS, NO_AUTHOR, ADD_TO_FAVORITES,
-  REMOVE_FROM_FAVORITES, ADD_FAVORITES_QUERY, FETCH_BOOKS_QUERY
+  TOASTR_ERROR, SUCCESS, NO_AUTHOR, ADD_TO_FAVORITES,
+  REMOVE_FROM_FAVORITES, ADD_FAVORITES_QUERY,
 } from '../../settings/defaults';
 
 class BookProfile extends Component {
-  state = {
-    displayBackToTop: false
-  };
-
-  componentDidMount() {
-    window.addEventListener(SCROLL, this.handlePageScroll, {
-      capture: true,
-      passive: true
-    });
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener(SCROLL, this.handlePageScroll, {
-      capture: true,
-      passive: true
-    });
-  }
-
-  handlePageScroll = () => {
-    let displayBackToTop = false;
-    const shouldDisplayBackToTop = document.documentElement.scrollTop > 300;
-
-    if (shouldDisplayBackToTop) {
-      displayBackToTop = true;
-    } else {
-      displayBackToTop = false;
-    }
-    this.setState({ displayBackToTop });
-  };
-
   toggleFavorites = id => async () => {
     const { addToFavoritesQuery } = this.props;
 
@@ -68,7 +38,7 @@ class BookProfile extends Component {
   }
 
   refetchQuery() {
-    const { props: { match: { params: { id } } } } = this;
+    const { match: { params: { id } } } = this.props;
     return [
       {
         query: fetchBook,
@@ -87,9 +57,7 @@ class BookProfile extends Component {
         <h2>{book && book.name}</h2>
         <h5>
           {book && book.authors.length
-            ? `by ${
-              book.authors.map(author => author)
-            } `
+            ? `by ${book.authors.join(', ')}`
             : NO_AUTHOR}
         </h5>
         <div className="book-meta">
@@ -98,7 +66,7 @@ class BookProfile extends Component {
               <span>
                 <b>Genre:</b>
                 {' '}
-                {book.genre.map(genre => genre)}
+                {book.genre.join(', ')}
               </span>
             )}
           </span>
@@ -112,8 +80,7 @@ class BookProfile extends Component {
     );
   }
 
-  renderAddReviewForm() {
-    const { fetchBooksQuery: { book } } = this.props;
+  renderAddReviewForm(book) {
     return (
       <div className="add-review-form">
         <AddReview
@@ -159,17 +126,7 @@ class BookProfile extends Component {
     );
   }
 
-  renderAll(book = {}, loading) {
-    if (loading) {
-      return;
-    }
-
-    const hasProperty = Object.keys(book).length;
-
-    if (!loading && !hasProperty) {
-      return <div />;
-    }
-
+  renderAll(book = {}) {
     const { moreBooks = [], id, isFavorite } = book;
     const favoriteOptionLabel = isFavorite
       ? REMOVE_FROM_FAVORITES : ADD_TO_FAVORITES;
@@ -208,7 +165,7 @@ class BookProfile extends Component {
           </div>
         </div>
         {this.renderMoreBooks(moreBooks)}
-        {this.renderAddReviewForm()}
+        {this.renderAddReviewForm(book)}
         {this.renderReviews(book)}
       </Fragment>
     );
@@ -219,7 +176,7 @@ class BookProfile extends Component {
       <div className="book-retrieve-error">
         <h3>The book you seek is not available</h3>
         <h5>
-          You could make use of our search functionality
+          You can make use of our search functionality
           <br />
           to retrieve books by
           {' '}
@@ -233,10 +190,13 @@ class BookProfile extends Component {
           ,
           {' '}
           <b>authors</b>
+          ,
           {' '}
           <b>year</b>
           {' '}
           etc...
+          {' '}
+          by clicking on the button below
         </h5>
         <label
           htmlFor="searchBox"
@@ -251,49 +211,54 @@ class BookProfile extends Component {
   }
 
   render() {
-    const { fetchBooksQuery: { book, loading } } = this.props;
-    const { displayBackToTop } = this.state;
+    let bookLoadError;
+    const { match } = this.props;
 
     return (
-      <Fragment>
-        <ReactTitle title="Book Profile" />
+      <Query
+        query={fetchBook}
+        variables={{
+          bookId: match.params.id
+        }}
+      >
+        {({
+          loading, data: { book = {} } = {},
+        }) => {
+          const hasProperty = Object.keys(book).length;
 
-        {!loading && !book && this.renderBookError()}
-        <div className="book-profile-container">
-          {loading && (
-            <ProfilePreloader />
-          )}
-          {this.renderAll(book, loading)}
-        </div>
-        <BackToTop
-          displayBackToTop={displayBackToTop}
-        />
-      </Fragment>
+          if (!loading && !hasProperty) {
+            bookLoadError = this.renderBookError();
+          }
+
+          return (
+            <Fragment>
+              <ReactTitle title="Book Profile" />
+
+              {bookLoadError}
+              <div className="book-profile-container">
+                {loading && (<ProfilePreloader />)}
+                {!loading && hasProperty && this.renderAll(book)}
+              </div>
+              <BackToTop />
+            </Fragment>
+          );
+        }}
+      </Query>
     );
   }
 }
 
 BookProfile.propTypes = {
-  fetchBooksQuery: PropTypes.object,
   match: PropTypes.object,
   addToFavoritesQuery: PropTypes.func,
 };
 
 BookProfile.defaultProps = {
-  fetchBooksQuery: {},
   match: {},
   addToFavoritesQuery: () => { },
 };
 
 export default compose(
-  graphql(fetchBook, {
-    name: FETCH_BOOKS_QUERY,
-    options: props => ({
-      variables: {
-        bookId: props.match.params.id
-      }
-    })
-  }),
   graphql(addToFavorites, {
     name: ADD_FAVORITES_QUERY,
   }),

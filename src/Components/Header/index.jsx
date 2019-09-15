@@ -21,11 +21,13 @@ class Header extends Component {
   };
 
   componentDidMount() {
+    window.addEventListener('storage', this.syncLogout);
     return localStorage.sideBarStatus !== OPEN && this.toggleSidebar();
   }
 
   componentWillUnmount() {
     document.removeEventListener(CLICK, this.handleOutsideClick, false);
+    window.removeEventListener(CLICK, this.syncLogout, false);
   }
 
   toggleSidebar = () => {
@@ -84,9 +86,15 @@ class Header extends Component {
   }
 
   handleLogout = () => {
-    const { dispatch, history } = this.props;
+    const { dispatch } = this.props;
+    window.localStorage.setItem('logout', true);
     dispatch(logOutUser());
-    history.push('/books');
+  }
+
+  syncLogout(event) {
+    if (event.key === 'logout') {
+      window.location.replace('/books');
+    }
   }
 
   authenticationForms() {
@@ -180,7 +188,7 @@ class Header extends Component {
       <Fragment>
         <div className="App" ref={(node) => { this.node = node; }}>
           <nav
-            className="navbar fixed-top navbar-expand-lg navbar-light bg-light"
+            className="navbar fixed-top navbar-expand-lg"
             id="navbar"
           >
             <div

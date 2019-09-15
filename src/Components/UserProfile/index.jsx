@@ -11,7 +11,6 @@ import UpdatePassword from './UpdatePassword';
 import UserDetails from './UserDetails';
 
 import { editProfile, changePassword } from '../../queries/auth';
-
 import { handleSingleFieldValidation } from '../../utils/validator/validator';
 import toaster from '../../utils/toast';
 import { setCurrentUser } from '../../redux/actions/userActions';
