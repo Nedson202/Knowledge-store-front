@@ -1,9 +1,10 @@
-import queryString from 'querystring';
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import debounce from 'lodash.debounce';
 import { connect } from 'react-redux';
 import { compose, withApollo } from 'react-apollo';
+import queryString from 'querystring';
+import PropTypes from 'prop-types';
+import debounce from 'lodash.debounce';
+
 import {
   allFieldsValidation, handleSingleFieldValidation
 } from '../../utils/validator/validator';

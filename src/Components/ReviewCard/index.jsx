@@ -3,14 +3,15 @@ import scrollToComponent from 'react-scroll-to-component';
 import { compose, graphql } from 'react-apollo';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import './_ReviewCard.scss';
+
 import ReplyCard from './ReplyCard';
 import AddReview from '../AddReview';
 import Star from '../Star';
+import Avatar from './Avatar';
+
 import { toggleLikeOnReview, deleteReview, } from '../../queries/reviews';
 import { toggleLikeOnReply, deleteReply } from '../../queries/reply';
 import timeParser from '../../utils/timeParser';
-import Avatar from './Avatar';
 import { fetchBook } from '../../queries/books';
 import toaster from '../../utils/toast';
 import errorHandler from '../../utils/errorHandler';

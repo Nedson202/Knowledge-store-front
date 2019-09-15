@@ -1,27 +1,8 @@
-$color_1: #ffffff;
-$color_2: #ccc;
-$color_3: #ffaf00;
-$font_family_1: georgia, sans-serif;
-$border_color_1: $color_1;
-$border_color_2: #ffaf00;
-
-* {
-	font-family: $font_family_1;
-}
-
-.bg-light {
-  background-color: $color_1 !important;
-}
-
-.hide {
-	display: none;
-}
-
 .navbar {
 	padding: 0 !important;
 	z-index: 2;
 	min-height: 60px;
-	box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px, rgba(0, 0, 0, 0.1) 0px 4px 30px;
+	box-shadow: $box_shadow_5;
 }
 
 .dropdown-toggle:after {
@@ -43,11 +24,11 @@ $border_color_2: #ffaf00;
 }
 
 .dropdown-item:hover {
-	background-color: #efefef !important;
+	background-color: $grey_2 !important;
 }
 
 #background-layout {
-	background: url('../../assets/knowledge-centric.jpg') no-repeat center center fixed;
+	background: url('./assets/knowledge-centric.jpg') no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -57,17 +38,17 @@ $border_color_2: #ffaf00;
 	left: -50%;
 	width: 200%;
 	height: 200%;
-	box-shadow: inset 0 0 0 1000px rgba(29, 29, 29, 0.6);
+	box-shadow: $box_shadow_1;
 }
 
 .product-title {
 	font-size: 50px;
 	margin-bottom: 15px;
-	color: $color_1;
+	color: $white_1;
 }
 
 .auth-buttons {
-	color: $color_1;
+	color: $white_1;
 	position: absolute;
 	-webkit-transform: translate(0%, -50%);
 	transform: translate(-50%, -50%);
@@ -78,9 +59,9 @@ $border_color_2: #ffaf00;
 	text-align: center;
 
 	button {
-		color: $color_1 !important;
+		color: $white_1 !important;
 		margin: 20px 15px 0 0;
-		border: 1px solid $color_1 !important;
+		border: 1px solid $white_1 !important;
 		border-radius: 5px;
 		min-width: 150px;
 		padding-top: 10px;
@@ -89,13 +70,13 @@ $border_color_2: #ffaf00;
 		ion-icon {
 			margin-right: 15px;
 			font-size: 18px;
-			color: $color_1;
+			color: $white_1;
 			vertical-align: sub;
 		}
 
 		&:hover {
 			border: 1px solid transparent !important;
-			background-color: #005C97 !important;
+			background-color: $blue_2 !important;
 		}
 	}
 }
@@ -105,7 +86,8 @@ $border_color_2: #ffaf00;
 	margin: 0 auto;
 	quotes: "\201C""\201D""\2018""\2019";
 	padding: 10px 20px;
-	line-height: 1.4;
+  line-height: 1.4;
+
 	&:before {
 		content: open-quote;
 		display: inline;
@@ -113,9 +95,10 @@ $border_color_2: #ffaf00;
 		left: -10px;
 		position: relative;
 		top: 30px;
-		color: $color_2;
+		color: $grey_1;
 		font-size: 3em;
-	}
+  }
+
 	&::after {
 		content: close-quote;
 		display: inline;
@@ -123,20 +106,11 @@ $border_color_2: #ffaf00;
 		left: 10px;
 		position: relative;
 		top: 35px;
-		color: $color_2;
+		color: $grey_1;
 		font-size: 3em;
 	}
 }
 
-.search-button {
-	border-color: $border_color_1;
-	color: #868282 !important;
-	height: 36px;
-	&:hover {
-		border-color: $border_color_2;
-		color: $color_3;
-	}
-}
 .btn-outline-success {
 	border: 1px solid transparent !important;
 	margin-left: 10px;
@@ -149,23 +123,23 @@ $border_color_2: #ffaf00;
 		width: 350px;
 		outline: none;
 		height: 40px;
-		border: 1px solid #4c4c4c;
+		border: 1px solid $grey_3;
 		border-radius: 20px;
 		padding-left: 15px;
 		padding-right: 25px;
 		justify-content: center;
-		color: #4c4c4c;
+		color: $grey_3;
 		font-size: 16px;
 
 		&::placeholder {
-			color: #4c4c4c;
+			color: $grey_3;
 		}
 	}
 
 	.close-icon {
 		position: relative;
 		left: -35px;
-		color: #212529;
+		color: $black_1;
 		cursor: pointer;
 		font-size: 22px;
 		text-decoration: none;
@@ -174,7 +148,7 @@ $border_color_2: #ffaf00;
 		padding-right: 10px;
 
 		&:hover {
-			color: #212529;
+			color: $black_1;
 		}
 	}
 }
@@ -184,8 +158,8 @@ $border_color_2: #ffaf00;
 	text-align: center;
 	line-height: 50px;
 	font-size: 18px;
-	background-color: #ff8d00;
-	color: $color_1;
+	background-color: $yellow_2;
+	color: $white_1;
 }
 
 @media screen and (max-width: 560px) {
@@ -244,8 +218,8 @@ $border_color_2: #ffaf00;
     text-align: center;
     line-height: unset;
     font-size: 17px;
-    background-color: #ff8d00;
-    color: $color_1;
+    background-color: $yellow_2;
+    color: $white_1;
     padding: 10px 15px;
 	}
 }
@@ -274,9 +248,9 @@ $border_color_2: #ffaf00;
 }
 
 .modal .modal-content .modal-header {
-  background-color: #ffffff !important;
+  background-color: $white_1 !important;
 	padding-bottom: 10px !important;
-	border-bottom: 1px solid #efeeee !important;
+	border-bottom: 1px solid $grey_2 !important;
 	border-top-left-radius: 15px !important;
 	border-top-right-radius: 15px !important;
 }
@@ -334,21 +308,21 @@ $border_color_2: #ffaf00;
 		background-color: unset !important;
 
 		i {
-			box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-		}
+      box-shadow: $box_shadow_2;
 
-		i:hover {
-			box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+      &:hover {
+        box-shadow: $box_shadow_3;
+      }
 		}
 
 		.fa-google {
-			background: #dd4b39;
-			color: $color_1;
+			background: $red_1;
+			color: $white_1;
 		}
 
 		.fa-facebook-f {
-			background: #3a4d84;
-			color: $color_1;
+			background: $blue_1;
+			color: $white_1;
 		}
 
 		.google-icon {
@@ -374,31 +348,31 @@ $border_color_2: #ffaf00;
 .form-group {
 	position: relative;
 	input:-webkit-autofill {
-    box-shadow: 0 0 0 30px $color_1 inset;
-    -webkit-box-shadow: 0 0 0 30px $color_1 inset;
+    box-shadow: $box_shadow_6;
+    -webkit-box-shadow: $box_shadow_6;
 	}
 
   #password-icon {
     position: absolute;
     top: 34px;
 		right: 9px;
-		cursor: pointer;
-	}
+    cursor: pointer;
 
-  #password-icon:focus {
-    outline: 0;
-    box-shadow: none;
-    border-color: transparent;
-  }
+    &:focus {
+      outline: 0;
+      box-shadow: none;
+      border-color: transparent;
+    }
+	}
 }
 
 .validation-error {
-	color: red;
+	color: $red_2;
 }
 
 .swal2-top-end {
   font-weight: 100 !important;
-  color: red;
+  color: $red_2;
 }
 
 .error-action {
@@ -407,7 +381,7 @@ $border_color_2: #ffaf00;
 	margin-top: 20px;
 
 	a {
-		color: #005C97;
+		color: $blue_2;
 	}
 }
 
@@ -417,10 +391,10 @@ $border_color_2: #ffaf00;
 .custom-file-control,
 .is-focused
 .form-control {
-	background-image: linear-gradient(0deg, #005C97 2px,rgba(0,150,136,0) 0),linear-gradient(0deg,rgba(0,0,0,.2) 1px,transparent 0);
+	background-image: linear-gradient(0deg, $blue_2 2px,rgba(0,150,136,0) 0),linear-gradient(0deg,rgba(0,0,0,.2) 1px,transparent 0);
 }
 
 .is-focused [class*=bmd-label],
 .is-focused[class^=bmd-label] {
-	color: #005C97 !important;
+	color: $blue_2 !important;
 }

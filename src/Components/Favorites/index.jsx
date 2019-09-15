@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
-import './_Favorites.scss';
 import { ReactTitle } from 'react-meta-tags';
+
 import BookCard from '../BookCard';
+import BookPreloader from '../BookCatalog/BookPreloader';
+
 import toaster from '../../utils/toast';
 import { removeFavorites, getFavorites } from '../../queries/books';
-import BookPreloader from '../BookCatalog/BookPreloader';
 import errorHandler from '../../utils/errorHandler';
 import {
   SUCCESS, TOASTR_ERROR, REMOVE_FAVORITES_QUERY,

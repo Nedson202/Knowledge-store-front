@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import './_Tables.scss';
 
 const Tables = (props) => {
   const { users, removeAdmin } = props;

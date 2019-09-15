@@ -71,11 +71,11 @@
     outline: 0;
     box-shadow: none;
     border-color: transparent;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px, rgba(0, 0, 0, 0.1) 0px 4px 30px;
+    box-shadow: $box_shadow_5;
   }
 
   &:hover {
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px, rgba(0, 0, 0, 0.1) 0px 4px 30px;
+    box-shadow: $box_shadow_5;
     cursor: pointer;
   }
 }
@@ -83,7 +83,7 @@
 .user-detail {
 	padding: .8rem 0 .8rem 1.5rem;
 	font-weight: 600;
-	color: rgba(0, 0, 0, .8);
+	color: $black_2;
   font-size: 14px;
   text-transform: capitalize;
 }

@@ -1,6 +1,6 @@
 #image-upload {
   height: 200px;
-  border: 1px solid #dddcdc;
+  border: 1px solid $grey_6;
   width: 200px;
   border-radius: 5px;
 
@@ -10,14 +10,14 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    color: #FFFFFF;
+    color: $white_1;
   }
 
   ion-icon {
     font-size: 100px;
     z-index: 1;
     padding: auto;
-    color: #FFFFFF;
+    color: $white_1;
   }
 
   .form-group {

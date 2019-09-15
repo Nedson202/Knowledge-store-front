@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import './_LeftSideBar.scss';
 
 const LeftSideBar = (props) => {
   const { user: { role }, isAuthenticated } = props;

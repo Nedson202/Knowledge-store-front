@@ -4,9 +4,13 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { graphql, compose, } from 'react-apollo';
 import debounce from 'lodash.debounce';
+
 import LoginForm from './LoginForm';
 import { loginUser } from '../../queries/auth';
-import { allFieldsValidation, handleSingleFieldValidation } from '../../utils/validator/validator';
+
+import {
+  allFieldsValidation, handleSingleFieldValidation
+} from '../../utils/validator/validator';
 import { setCurrentUser } from '../../redux/actions/userActions';
 import tokenDecoder from '../../utils/tokenDecoder';
 import errorHandler from '../../utils/errorHandler';

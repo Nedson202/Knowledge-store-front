@@ -1,6 +1,5 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
-import './_UserProfile.scss';
 
 const UserAnalyticsLoader = () => (
   <ContentLoader rtl height={160} width={245} speed={2} primaryColor="#f3f3f3">

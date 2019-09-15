@@ -4,10 +4,12 @@ import { withRouter } from 'react-router-dom';
 import { compose, graphql } from 'react-apollo';
 import debounce from 'lodash.debounce';
 import { connect } from 'react-redux';
+
 import SignUpForm from './SignUpForm';
-import { allFieldsValidation, handleSingleFieldValidation } from '../../utils/validator/validator';
+
 import { addUser } from '../../queries/auth';
 import { setCurrentUser } from '../../redux/actions/userActions';
+import { allFieldsValidation, handleSingleFieldValidation } from '../../utils/validator/validator';
 import tokenDecoder from '../../utils/tokenDecoder';
 import errorHandler from '../../utils/errorHandler';
 import toaster from '../../utils/toast';

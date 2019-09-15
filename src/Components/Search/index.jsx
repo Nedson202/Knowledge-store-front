@@ -6,9 +6,13 @@ import { connect } from 'react-redux';
 import setQuery from 'set-query-string';
 import debounce from 'lodash.debounce';
 import { compose, withApollo } from 'react-apollo';
+
 import { bookFilter } from '../../queries/books';
 import { setRetrievedBooks } from '../../redux/actions/bookActions';
-import { SEARCH_DEBOUNCE_TIME, PREVIOUS_LOCATION, SEARCH_BOX } from '../../settings/defaults';
+import {
+  SEARCH_DEBOUNCE_TIME, PREVIOUS_LOCATION,
+  SEARCH_BOX
+} from '../../settings/defaults';
 
 class Search extends PureComponent {
   debounceSearch = debounce(async (value) => {

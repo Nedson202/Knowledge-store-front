@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import './_BackToTop.scss';
+
 import { SCROLL_PARAM } from '../../settings/defaults';
 
 const BackToTop = (props) => {

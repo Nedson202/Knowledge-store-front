@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Truncate from 'react-truncate';
 import { Checkbox } from 'antd';
-import './_BookCard.scss';
+
 import Star from '../Star';
 import BookImageLoader from './BookImageLoader';
+
 import toHTTPS from '../../utils/toHTTPS';
 import { IMAGE_FETCH_ERROR, EDIT, DELETE } from '../../settings/defaults';
 

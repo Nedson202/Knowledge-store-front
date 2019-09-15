@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ReactStars from 'react-stars';
-import './_AddReview.scss';
 import { compose, graphql } from 'react-apollo';
+
 import {
   addReview, editReview
 } from '../../queries/reviews';

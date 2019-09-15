@@ -1,5 +1,5 @@
 .modal-header {
-  background-color: #efefef !important;
+  background-color: $grey_2 !important;
 }
 
 .add-book-form {
@@ -19,36 +19,36 @@
   .ant-input {
     width: 100% !important;
     border: 1px solid transparent !important;
+
+    &:hover {
+      border-color: transparent !important;
+      border-right-width: 0 !important;
+    }
   }
 
   .ant-calendar-picker {
     width: 100% !important;
 
     .ant-input {
-      background: linear-gradient(0deg,#005C97 1px,rgba(0,150,136,0) 0),
+      background: linear-gradient(0deg,$blue_2 1px,rgba(0,150,136,0) 0),
       linear-gradient(0deg,rgba(0,0,0,.26) 1px,transparent 0);
       border-width: 1px;
       line-height: 1.5;
       height: 32px;
       font-family: Georgia, 'Times New Roman', Times, serif;
       font-size: 15px;
+
+      &:focus {
+        outline: 0;
+        box-shadow: none;
+        border-color: transparent;
+      }
     }
-  }
-
-  .ant-input:hover {
-    border-color: transparent !important;
-    border-right-width: 0 !important;
-  }
-
-  .ant-calendar-picker .ant-input:focus {
-    outline: 0;
-    box-shadow: none;
-    border-color: transparent;
   }
 
   .ant-select-selection {
     border: 1px solid transparent !important;
-    background: linear-gradient(0deg,#005C97 1px,rgba(0,150,136,0) 0),
+    background: linear-gradient(0deg,$blue_2 1px,rgba(0,150,136,0) 0),
     linear-gradient(0deg,rgba(0,0,0,.26) 1px,transparent 0);
     border-width: 1px;
     line-height: 1.5;
@@ -63,11 +63,13 @@
     border-color:transparent;
   }
 
-  .ant-select-focused .ant-select-selection:focus {
-    outline-style:none !important;
-    -webkit-box-shadow:none !important;
-    box-shadow:none !important;
-    border-color:transparent;
+  .ant-select-focused .ant-select-selection {
+    &:focus {
+      outline-style:none !important;
+      -webkit-box-shadow:none !important;
+      box-shadow:none !important;
+      border-color:transparent;
+    }
   }
 
   .form-fields {
@@ -125,7 +127,7 @@
     display: flex;
     flex-direction: column;
     max-width: 600px;
-    
+
     .form-fields .form-group {
       width: 100%;
     }

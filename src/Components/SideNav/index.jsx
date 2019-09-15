@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import './_SideNav.scss';
 
 const SideNav = () => (
   <div id="mySidenav" className="sidenav">

@@ -1,17 +1,20 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import './_MyBooks.scss';
-import '../BookCatalog/_BookCatalog.scss';
 import { compose, graphql } from 'react-apollo';
 import { ReactTitle } from 'react-meta-tags';
+
 import BookCard from '../BookCard';
 import AddBook from '../AddBook';
-import { fetchUsersBooks, removeBook } from '../../queries/books';
 import BookPreloader from '../BookCatalog/BookPreloader';
+
+import { fetchUsersBooks, removeBook } from '../../queries/books';
 import { setBookToEdit } from '../../redux/actions/bookActions';
 import toaster from '../../utils/toast';
-import { FETCH_USERS_BOOKS_QUERY, REMOVE_BOOK_QUERY, SUCCESS } from '../../settings/defaults';
+import {
+  FETCH_USERS_BOOKS_QUERY, REMOVE_BOOK_QUERY,
+  SUCCESS
+} from '../../settings/defaults';
 
 class MyBooks extends Component {
   state = {
@@ -30,25 +33,22 @@ class MyBooks extends Component {
     this.setState({ editingBook: false });
   }
 
-  setBookToRemove = id => () => {
-    this.setState({ bookId: id }, async () => { //eslint-disable-line
-      const { removeBookQuery } = this.props;
+  setBookToRemove = id => async () => {
+    const { removeBookQuery } = this.props;
+    try {
+      const response = await removeBookQuery({
+        variables: {
+          bookId: id
+        },
+        refetchQueries: this.refetchQueries()
+      });
 
-      try {
-        const response = await removeBookQuery({
-          variables: {
-            bookId: id
-          },
-          refetchQueries: this.refetchQueries()
-        });
+      const { deleteBook: { message } } = response.data;
 
-        const { deleteBook: { message } } = response.data;
-
-        toaster(SUCCESS, message);
-      } catch (error) {
-        console.error(error);
-      }
-    });
+      toaster(SUCCESS, message);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   refetchQueries() {

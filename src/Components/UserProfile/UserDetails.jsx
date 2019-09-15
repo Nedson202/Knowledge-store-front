@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './_UserProfile.scss';
 
 const UserDetails = (props) => {
   const { user } = props;

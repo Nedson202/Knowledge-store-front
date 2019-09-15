@@ -1,6 +1,5 @@
 import React from 'react';
-import './_MainContent.scss';
-import '../BookCard/_BookCard.scss';
+
 import BookCard from '../BookCard';
 
 const MainContent = () => (

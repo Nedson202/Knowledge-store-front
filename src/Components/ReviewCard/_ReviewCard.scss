@@ -28,12 +28,12 @@
 
 		p {
 			margin-right: 20px;
-			cursor: pointer;
-		}
+      cursor: pointer;
 
-		p:hover {
-			text-decoration: underline;
-    }
+      &:hover {
+        text-decoration: underline;
+      }
+		}
 
     .like-count {
       cursor: default;
@@ -42,7 +42,7 @@
     }
 
 		.danger {
-			color: red;
+			color: $red_2;
 		}
 
 		.reviewer-buttons {
@@ -64,7 +64,7 @@
 	height: 45px;
 	border-radius: 50%;
 	font-size: 20px;
-	color: #fff;
+	color: $white_1;
 	text-align: center;
 	line-height: 45px;
 }

@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
-import './_AddBookModal.scss';
 import { DatePicker, Select } from 'antd';
 import Spinner from '../Spinner';
 import toHTTPS from '../../utils/toHTTPS';

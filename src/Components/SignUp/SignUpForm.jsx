@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+
 import passwordToggler from '../../utils/passwordToggler';
 import socialAuthentication from '../../utils/socialAuthentication';
 

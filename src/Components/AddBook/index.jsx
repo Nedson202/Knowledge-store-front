@@ -2,7 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { compose, graphql } from 'react-apollo';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+
 import AddBookModal from './AddBookModal';
+
 import getGenres from '../../queries/genre';
 import { addBook, fetchUsersBooks } from '../../queries/books';
 import modalCloser from '../../utils/modalCloser';

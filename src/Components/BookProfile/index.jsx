@@ -1,17 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
-import './_BookProfile.scss';
-import '../BookCatalog/_BookCatalog.scss';
 import { ReactTitle } from 'react-meta-tags';
+
 import BookCard from '../BookCard';
 import AddReview from '../AddReview';
 import ReviewCard from '../ReviewCard';
-import { fetchBook, addToFavorites } from '../../queries/books';
 import ProfilePreloader from './ProfilePreloader';
+import BackToTop from '../BackToTop';
+
+import { fetchBook, addToFavorites } from '../../queries/books';
 import toaster from '../../utils/toast';
 import errorHandler from '../../utils/errorHandler';
-import BackToTop from '../BackToTop';
 import {
   SCROLL, TOASTR_ERROR, SUCCESS, NO_AUTHOR, ADD_TO_FAVORITES,
   REMOVE_FROM_FAVORITES, ADD_FAVORITES_QUERY, FETCH_BOOKS_QUERY
