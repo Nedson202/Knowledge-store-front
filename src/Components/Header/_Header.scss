@@ -1,5 +1,6 @@
 .navbar {
   justify-content: space-between !important;
+  background: $white_1;
 
   .container {
     margin: 0;
@@ -8,6 +9,7 @@
 
   &-brand {
     margin-left: 0.5rem;
+    color: $black_2;
   }
 
   .dropdown-menu {

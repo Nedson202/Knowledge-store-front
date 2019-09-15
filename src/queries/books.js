@@ -10,7 +10,7 @@ const addBook = gql`
 `;
 
 const bookFilter = gql`
-  query bookFilter($search: String, $from: ID, $size: ID) {
+  query($search: String, $from: ID, $size: ID) {
     searchBooks(searchQuery: $search, from: $from, size: $size) {
       id
       name

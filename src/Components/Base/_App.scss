@@ -10,12 +10,8 @@
 	vertical-align: 0 !important;
 }
 
-.navbar-light .navbar-nav .nav-link {
+.navbar-nav .nav-link {
 	display: flex !important;
-}
-
-.dropdown-menu {
-	min-width: 11rem;
 }
 
 .notification-pane {
@@ -28,7 +24,8 @@
 }
 
 #background-layout {
-	background: url('./assets/knowledge-centric.jpg') no-repeat center center fixed;
+  background: url('./assets/knowledge-centric.jpg')
+    no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;

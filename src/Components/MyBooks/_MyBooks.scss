@@ -3,13 +3,15 @@
 		display: flex;
 		justify-content: space-between;
 		max-width: 1170px;
-		margin:	105px auto -30px auto;
+    margin:	105px auto -30px auto;
+    padding-top: 120px;
 	}
 }
 
 @media screen and (max-width: 500px) {
 	.user-books, .favorite-books {
 		&__header {
+      padding-top: 120px;
 			margin:	105px 20px -40px 20px;
 			justify-content: space-between;
 		}
@@ -19,6 +21,7 @@
 @media screen and (min-width: 760px) and (max-width: 959px) {
 	.user-books, .favorite-books {
 		&__header {
+      padding-top: 120px;
 			margin:	105px 116px -40px;
 		}
 	}

@@ -13,9 +13,9 @@ import { allFieldsValidation, handleSingleFieldValidation } from '../../utils/va
 import tokenDecoder from '../../utils/tokenDecoder';
 import errorHandler from '../../utils/errorHandler';
 import toaster from '../../utils/toast';
-import modalCloser from '../../utils/modalCloser';
+import modalToggler from '../../utils/modalToggler';
 import {
-  ADD_USER_QUERY, CLOSE_SIGNUP, MY_BOOKS_PATH, TOASTR_ERROR, SUCCESS, TOKEN,
+  ADD_USER_QUERY, CLOSE_SIGNUP, TOASTR_ERROR, SUCCESS, TOKEN,
   VALIDATION_DEBOUNCE_TIME
 } from '../../settings/defaults';
 
@@ -66,10 +66,10 @@ class SignUp extends Component {
       const { data: { addUser: { token } } = {} } = signupHandler;
       const decodedToken = tokenDecoder(token);
       localStorage.setItem(TOKEN, token);
-      modalCloser(CLOSE_SIGNUP);
+      modalToggler(CLOSE_SIGNUP);
 
       dispatch(setCurrentUser(decodedToken));
-      if (decodedToken.isVerified === 'true') window.location.replace(MY_BOOKS_PATH);
+      if (decodedToken.isVerified === 'true') window.location.reload();
 
       toaster(SUCCESS, 'Signed up successfully');
       this.setState({

@@ -148,8 +148,8 @@ class AddBookModal extends Component {
                       placeholder=""
                       onChange={dateChange}
                       defaultdefaultValue={editingBook
-                        && year ? format(year, 'YYYY/MM/DD') : null}
-                      format="YYYY-MM-DD"
+                        && year ? format(new Date(year), 'yyyy/MM/dd') : null}
+                      format="YYYY/MM/DD"
                     />
                   </div>
                   <div className="form-group is-filled">

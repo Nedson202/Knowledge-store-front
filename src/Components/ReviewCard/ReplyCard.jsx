@@ -32,11 +32,11 @@ class ReplyCard extends PureComponent {
     return (
       <div className="footer">
         <p onClick={handleReplyLikeToggle(id)}>
+          <span className="like-count">{likes !== 0 && likes}</span>
           <ion-icon
             name="thumbs-up"
             style={{ color: users.includes(user.id) && '#005C97' }}
           />
-          <span className="like-count">{likes !== 0 && likes}</span>
         </p>
         <p onClick={handleToggleForm(reviewId)}>reply</p>
         {user.id && user.id.match(userId) && (

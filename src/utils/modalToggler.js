@@ -1,6 +1,6 @@
-const modalCloser = (element) => {
+const modalToggler = (element) => {
   const modal = document.getElementById(element);
   modal.click();
 };
 
-export default modalCloser;
+export default modalToggler;

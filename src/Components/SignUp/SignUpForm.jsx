@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import passwordToggler from '../../utils/passwordToggler';
-import socialAuthentication from '../../utils/socialAuthentication';
 
 const SignUpForm = (props) => {
   const {
@@ -94,21 +93,6 @@ const SignUpForm = (props) => {
                 id="password-signup-add-hide"
               />
             </div>
-          </div>
-          <div className="form-group social-login">
-            <div className="text-muted text-center social-login-text">
-              Signup with
-            </div>
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={socialAuthentication('google')}
-            >
-              <i className="fab fa-google google-icon" />
-            </button>
-            <button type="button" className="btn btn-primary">
-              <i className="fab fa-facebook-f facebook-icon" />
-            </button>
           </div>
         </form>
       </Fragment>

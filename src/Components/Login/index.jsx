@@ -15,9 +15,9 @@ import { setCurrentUser } from '../../redux/actions/userActions';
 import tokenDecoder from '../../utils/tokenDecoder';
 import errorHandler from '../../utils/errorHandler';
 import toaster from '../../utils/toast';
-import modalCloser from '../../utils/modalCloser';
+import modalToggler from '../../utils/modalToggler';
 import {
-  SUCCESS, TOASTR_ERROR, MY_BOOKS_PATH, CLOSE_LOGIN, LOGIN_USER_QUERY, TOKEN,
+  SUCCESS, TOASTR_ERROR, CLOSE_LOGIN, LOGIN_USER_QUERY, TOKEN,
   VALIDATION_DEBOUNCE_TIME
 } from '../../settings/defaults';
 
@@ -68,9 +68,9 @@ class Login extends Component {
 
       localStorage.setItem(TOKEN, token);
       const decodedToken = tokenDecoder(token);
-      modalCloser(CLOSE_LOGIN);
+      modalToggler(CLOSE_LOGIN);
       dispatch(setCurrentUser(decodedToken));
-      if (decodedToken.isVerified === 'true') window.location.replace(MY_BOOKS_PATH);
+      if (decodedToken.isVerified === 'true') window.location.reload();
 
       toaster(SUCCESS, 'Signed in successfully');
       this.setState({

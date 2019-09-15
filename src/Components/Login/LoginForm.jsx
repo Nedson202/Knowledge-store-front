@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import passwordToggler from '../../utils/passwordToggler';
-import modalCloser from '../../utils/modalCloser';
+import modalToggler from '../../utils/modalToggler';
 import socialAuthentication from '../../utils/socialAuthentication';
 
 const LoginForm = (props) => {
@@ -99,13 +99,13 @@ const LoginForm = (props) => {
                 </div>
                 <div className="error-action">
                   <Link
-                    onClick={() => modalCloser('close-login')}
+                    onClick={() => modalToggler('close-login')}
                     to="/email?reset-password=true"
                   >
                     Forgot password?
                   </Link>
                   <Link
-                    onClick={() => modalCloser('close-login')}
+                    onClick={() => modalToggler('close-login')}
                     to="/email?verify-email=true"
                   >
                     Verify email

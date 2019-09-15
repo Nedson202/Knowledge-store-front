@@ -1,11 +1,11 @@
 $font_family_1: georgia, sans-serif;
 
 * {
-	font-family: $font_family_1;
+  font-family: $font_family_1;
 }
 
-.bg-light {
-  background-color: $white_1 !important;
+html, body {
+  margin-top: -60px !important;
 }
 
 .hide {

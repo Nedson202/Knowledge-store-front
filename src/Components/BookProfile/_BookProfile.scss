@@ -8,85 +8,85 @@
 }
 
 .original-book {
-	.child-elem {
+	.book__card {
+    margin-top: 6px;
 		pointer-events: none;
 	}
 }
 
-@media screen and (min-width: 960px) {
-	.book-profile-container {
-		display: flex;
+.book-profile-container {
+  display: flex;
+  flex-direction: row;
+  max-width: 1150px;
+  margin: 90px auto 20px;
+  padding-top: 120px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .original-book {
+    width: 190px !important;
+    margin: auto;
+    margin-bottom: 10px;
+
+    #image-error-placeholder {
+      width: 190px !important;
+      height: 17rem !important;
+      line-height: 17rem;
+      border: 1px solid $grey_7;
+      border-radius: 4px;
+      display: block;
+      margin: auto;
+    }
+
+    .book__card--images {
+      height: 17rem !important
+    }
+  }
+
+  .book-profile-details {
+    width: 700px;
+  }
+
+  .book-recommendation {
+    min-width: 300px;
+  }
+
+  .book-profile-more {
+    display: flex;
     flex-direction: row;
-    max-width: 1150px;
-    margin: 90px auto 20px;
     flex-wrap: wrap;
     justify-content: space-between;
+    width: 100%;
+    max-width: 350px !important;
 
-		.original-book {
-      width: 190px !important;
-      margin: auto;
-			margin-bottom: 10px;
+    .book__card {
+      width: calc(1/2*100% - (1 - 1/2)*50px);
 
-			#image-error-placeholder {
-				width: 190px !important;
-				height: 17rem !important;
-				line-height: 17rem;
-				border: 1px solid $grey_7;
-				border-radius: 4px;
-				display: block;
-				margin: auto;
-			}
+      &--images {
+        width: 150px !important;
+        height: 12rem !important;
+      }
 
-			.book-images {
-				height: 17rem !important
-			}
-		}
+      .book__card--footer {
+        width: 150px !important;
+        height: 7rem !important;
+      }
 
-		.book-profile-details {
-			width: 700px;
-		}
+      #image-error-placeholder {
+        width: 150px !important;
+        height: 13rem !important;
+        line-height: 13rem;
+        border: 1px solid $grey_7;
+        border-radius: 4px;
+        display: block;
+        margin: auto;
+      }
+    }
+  }
 
-		.book-recommendation {
-			min-width: 300px;
-		}
-
-		.book-profile-more {
-			display: flex;
-			flex-direction: row;
-			flex-wrap: wrap;
-			justify-content: space-between;
-			width: 100%;
-			max-width: 350px !important;
-
-			.child-elem {
-				width: calc(1/2*100% - (1 - 1/2)*50px);
-
-				.book-images {
-					width: 150px !important;
-					height: 12rem !important;
-				}
-
-				.book-footer {
-					width: 150px !important;
-					height: 7rem !important;
-				}
-
-				#image-error-placeholder {
-					width: 150px !important;
-					height: 13rem !important;
-					line-height: 13rem;
-					border: 1px solid $grey_7;
-					border-radius: 4px;
-					display: block;
-					margin: auto;
-				}
-			}
-		}
-
-		.book-profile-more div {
-			grid-gap: 20px;
-		}
-	}
+  .book-profile-more div {
+    grid-gap: 20px;
+  }
 }
 
 @media screen and (min-width: 760px) and (max-width: 959px) {
@@ -103,8 +103,8 @@
 			margin: 0 auto 20px auto;
 			width: 250px !important;
 
-			.child-elem {
-				.book-images {
+			.book__card {
+				&--images {
 					width: 250px !important;
 					height: 20rem !important;
 				}
@@ -129,13 +129,13 @@
 			justify-content: space-between;
 			flex-wrap: wrap;
 
-			.child-elem {
-				.book-images {
+			.book__card {
+				&--images {
 					width: 200px !important;
 					height: 16rem !important;
 				}
 
-				.book-footer {
+				.book__card--footer {
 					width: 200px !important;
 					height: 7rem !important;
 				}
@@ -176,7 +176,7 @@
 			margin: 0 auto;
 			width: 210px !important;
 
-			.book-images {
+			&--images {
 				width: 210px !important;
 				height: 17rem !important;
 			}
@@ -223,13 +223,13 @@
     flex-wrap: wrap;
     justify-content: space-between;
 
-		.child-elem {
-			.book-images {
+		.book__card {
+			&--images {
 				width: 150px !important;
 				height: 10rem !important;
 			}
 
-			.book-footer {
+			.book__card--footer {
 				width: 150px !important;
 				height: 7rem !important;
 			}

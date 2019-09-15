@@ -10,7 +10,7 @@ import { filterUsers, toggleAdmin } from '../../queries/users';
 import toaster from '../../utils/toast';
 import Spinner from '../Spinner';
 import errorHandler from '../../utils/errorHandler';
-import modalCloser from '../../utils/modalCloser';
+import modalToggler from '../../utils/modalToggler';
 import {
   SUCCESS, CLOSE_USER, ADD, TOASTR_ERROR, FETCH_USERS_QUERY,
   TOGGLE_ADMIN_QUERY
@@ -62,7 +62,7 @@ class Users extends Component {
       });
 
       const { toggleAdmin: { message } } = response.data;
-      modalCloser(CLOSE_USER);
+      modalToggler(CLOSE_USER);
       this.setState({ email: '' });
       toaster(SUCCESS, message);
     } catch (error) {

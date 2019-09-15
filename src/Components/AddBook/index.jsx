@@ -7,7 +7,7 @@ import AddBookModal from './AddBookModal';
 
 import getGenres from '../../queries/genre';
 import { addBook, fetchUsersBooks } from '../../queries/books';
-import modalCloser from '../../utils/modalCloser';
+import modalToggler from '../../utils/modalToggler';
 import toaster from '../../utils/toast';
 import {
   FILE, FOLDER, UPLOAD_PRESET, BOOK_STORE, AUTHORS, CLOSE_BOOK,
@@ -100,7 +100,7 @@ class AddBook extends Component {
       });
 
       const { addBook: { message } } = response.data;
-      modalCloser(CLOSE_BOOK);
+      modalToggler(CLOSE_BOOK);
       toaster(SUCCESS, message);
     } catch (error) {
       console.error(error);

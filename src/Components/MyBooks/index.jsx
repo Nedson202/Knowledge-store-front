@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { compose, graphql } from 'react-apollo';
+import { compose, graphql, Query } from 'react-apollo';
 import { ReactTitle } from 'react-meta-tags';
 
 import BookCard from '../BookCard';
@@ -11,10 +11,7 @@ import BookPreloader from '../BookCatalog/BookPreloader';
 import { fetchUsersBooks, removeBook } from '../../queries/books';
 import { setBookToEdit } from '../../redux/actions/bookActions';
 import toaster from '../../utils/toast';
-import {
-  FETCH_USERS_BOOKS_QUERY, REMOVE_BOOK_QUERY,
-  SUCCESS
-} from '../../settings/defaults';
+import { REMOVE_BOOK_QUERY, SUCCESS } from '../../settings/defaults';
 
 class MyBooks extends Component {
   state = {
@@ -96,9 +93,7 @@ class MyBooks extends Component {
     );
   }
 
-  render404() {
-    const { fetchUsersBooksQuery: { usersBooks = [] } } = this.props;
-
+  render404(usersBooks) {
     if (usersBooks.length) {
       return;
     }
@@ -111,36 +106,43 @@ class MyBooks extends Component {
   }
 
   render() {
-    const { fetchUsersBooksQuery: { usersBooks = [], loading }, bookToEdit } = this.props;
+    const { bookToEdit } = this.props;
     const { editingBook } = this.state;
     return (
-      <Fragment>
-        <ReactTitle title="My Books" />
+      <Query
+        query={fetchUsersBooks}
+      >
+        {({
+          loading, data: { usersBooks = [] } = {},
+        }) => (
+          <Fragment>
+            <ReactTitle title="My Books" />
 
-        <AddBook
-          bookToEdit={bookToEdit}
-          editingBook={editingBook}
-        />
-        {this.renderPageHeader()}
-        <div className="container-content" id="main">
-          {usersBooks && this.renderBooks(usersBooks)}
-          {loading && <BookPreloader loadingBook={loading} />}
-        </div>
-        {!loading && this.render404()}
-      </Fragment>
+            <AddBook
+              bookToEdit={bookToEdit}
+              editingBook={editingBook}
+            />
+            {this.renderPageHeader()}
+            <div className="container-content" id="main">
+              {usersBooks && this.renderBooks(usersBooks)}
+              {loading && <BookPreloader loadingBook={loading} />}
+            </div>
+            {!loading && this.render404(usersBooks)}
+          </Fragment>
+        )
+        }
+      </Query>
     );
   }
 }
 
 MyBooks.propTypes = {
-  fetchUsersBooksQuery: PropTypes.object,
   bookToEdit: PropTypes.object,
   removeBookQuery: PropTypes.func,
   dispatch: PropTypes.func,
 };
 
 MyBooks.defaultProps = {
-  fetchUsersBooksQuery: {},
   bookToEdit: {},
   removeBookQuery: {},
   dispatch: {},
@@ -151,7 +153,6 @@ const mapStateToProps = state => ({
 });
 
 export default compose(
-  graphql(fetchUsersBooks, { name: FETCH_USERS_BOOKS_QUERY, }),
   graphql(removeBook, { name: REMOVE_BOOK_QUERY, }),
   connect(mapStateToProps)
 )(MyBooks);

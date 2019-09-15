@@ -1,21 +1,14 @@
-.book-images {
-	border-radius: 4px;
-}
-
-.parent {
-	position: relative;
-}
-
-.child-elem {
-	.book-images {
-		width: 170px;
+.book__card {
+  &--images {
+    width: 170px;
 		height: 15rem;
+    border-radius: 4px;
 	}
 
-	.book-footer {
+	&--footer {
 		width: 170px;
 
-		&__link {
+		&-link {
 			display: flex;
 			justify-content: space-between;
 
@@ -26,7 +19,7 @@
 			}
 		}
 
-		a {
+		&-title {
 			position: relative;
 			font-size: 15px;
 			top: 18px;
@@ -43,23 +36,17 @@
 				padding-left: 10px;
 			}
 		}
+  }
 
-		.book-author {
-			position: relative;
-			font-weight: 600;
-			top: 20px !important;
-		}
-	}
-}
+  &--author {
+    position: relative;
+    font-weight: 600;
+    top: 20px !important;
+  }
 
-#subchild {
-	position: absolute;
-	width: 100%;
-	max-width: 252px;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
+  .fa-ellipsis-v {
+    cursor: pointer;
+  }
 }
 
 button#trash-icon {

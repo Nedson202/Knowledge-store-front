@@ -28,10 +28,10 @@ const ProfilePreloader = () => {
         </div>
       </div>
       <div className="book-profile-more">
-        <div className="child-elem">
+        <div className="book__card">
           <BookImageLoader />
         </div>
-        <div className="child-elem">
+        <div className="book__card">
           <BookImageLoader />
         </div>
       </div>

@@ -1,5 +1,5 @@
 import queryString from 'querystring';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
@@ -7,15 +7,13 @@ import setQuery from 'set-query-string';
 import { compose, withApollo, graphql } from 'react-apollo';
 import { ReactTitle } from 'react-meta-tags';
 
-import Login from '../Login';
 import Main from './Main';
-import SignUp from '../SignUp';
 
 import toaster from '../../utils/toast';
 import tokenDecoder from '../../utils/tokenDecoder';
 import { setCurrentUser } from '../../redux/actions/userActions';
 import { verifyEmail } from '../../queries/auth';
-import modalCloser from '../../utils/modalCloser';
+import modalToggler from '../../utils/modalToggler';
 import {
   NONE, NAV_BAR, LEFT_SIDE_BAR, BLOCK, CLOSE, SUCCESS, FLEX, AUTH_SUCCESS,
   MY_BOOKS_PATH, VERIFY_EMAIL_QUERY, TOKEN
@@ -42,7 +40,7 @@ class App extends Component {
     }
 
     const modalEL = document.getElementById(CLOSE);
-    return modalEL && modalCloser();
+    return modalEL && modalToggler();
   }
 
   verifyUserEmail = async () => {
@@ -90,15 +88,6 @@ class App extends Component {
     }
   }
 
-  authenticationForms() {
-    return (
-      <Fragment>
-        <Login />
-        <SignUp />
-      </Fragment>
-    );
-  }
-
   emailConfirmationNote() {
     return (
       <div className="pending-verification">
@@ -129,7 +118,6 @@ class App extends Component {
         <Main
           isAuthenticated={isAuthenticated}
         />
-        {!isAuthenticated && this.authenticationForms()}
       </div>
     );
   }

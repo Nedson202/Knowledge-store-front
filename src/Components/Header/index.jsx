@@ -5,13 +5,11 @@ import { connect } from 'react-redux';
 
 import Avatar from '../ReviewCard/Avatar';
 import Search from '../Search';
-import Login from '../Login';
-import SignUp from '../SignUp';
 
 import { logOutUser } from '../../redux/actions/userActions';
 import {
   OPEN, CLICK, BLOCK, NONE, AUTO, LEFT_SIDE_BAR,
-  MAIN, CLOSED, SIDE_BAR_TEXT, SIDE_BAR_STATUS, SIDE_NAV
+  MAIN, CLOSED, SIDE_BAR_TEXT, SIDE_BAR_STATUS, SIDE_NAV, LOGOUT, STORAGE
 } from '../../settings/defaults';
 
 class Header extends Component {
@@ -21,11 +19,13 @@ class Header extends Component {
   };
 
   componentDidMount() {
+    window.addEventListener(STORAGE, this.syncLogout);
     return localStorage.sideBarStatus !== OPEN && this.toggleSidebar();
   }
 
   componentWillUnmount() {
     document.removeEventListener(CLICK, this.handleOutsideClick, false);
+    window.removeEventListener(STORAGE, this.syncLogout, false);
   }
 
   toggleSidebar = () => {
@@ -84,18 +84,15 @@ class Header extends Component {
   }
 
   handleLogout = () => {
-    const { dispatch, history } = this.props;
+    const { dispatch } = this.props;
+    window.localStorage.setItem(LOGOUT, true);
     dispatch(logOutUser());
-    history.push('/books');
   }
 
-  authenticationForms() {
-    return (
-      <Fragment>
-        <Login />
-        <SignUp />
-      </Fragment>
-    );
+  syncLogout(event) {
+    if (event.key === LOGOUT) {
+      window.location.reload();
+    }
   }
 
   emailConfirmationNote() {
@@ -124,6 +121,7 @@ class Header extends Component {
           className="btn btn-default btn-raised cancel-button btn"
           data-toggle="modal"
           data-target="#LoginFormModal"
+          id="login-button"
         >
           Login
         </button>
@@ -132,6 +130,7 @@ class Header extends Component {
           className="btn btn-primary btn-raised text-case login-button"
           data-toggle="modal"
           data-target="#SignUpFormModal"
+          id="signup-button"
         >
           Signup
         </button>
@@ -164,7 +163,11 @@ class Header extends Component {
             {' '}
             Profile
           </Link>
-          <button type="button" className="dropdown-item" onClick={this.handleLogout}>
+          <button
+            type="button"
+            className="dropdown-item"
+            onClick={this.handleLogout}
+          >
             <ion-icon class="user-profile-icon" name="log-out" />
             {' '}
             Logout
@@ -180,7 +183,7 @@ class Header extends Component {
       <Fragment>
         <div className="App" ref={(node) => { this.node = node; }}>
           <nav
-            className="navbar fixed-top navbar-expand-lg navbar-light bg-light"
+            className="navbar fixed-top navbar-expand-lg"
             id="navbar"
           >
             <div
@@ -231,7 +234,6 @@ class Header extends Component {
               </div>
             </div>
           </nav>
-          {this.authenticationForms()}
         </div>
       </Fragment>
     );
@@ -245,13 +247,11 @@ const mapStateToProps = ({ auth }) => ({
 
 Header.propTypes = {
   dispatch: PropTypes.func,
-  history: PropTypes.object,
   user: PropTypes.object,
 };
 
 Header.defaultProps = {
   dispatch: () => { },
-  history: {},
   user: {},
 };
 

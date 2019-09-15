@@ -1,5 +1,7 @@
 .favorite-books {
   &__header {
+    padding-top: 120px;
+
     .save {
       margin-right: 15px;
     }
@@ -17,10 +19,6 @@
 
     &__header {
       width: 105%;
-
-      h3 {
-
-      }
     }
   }
 }

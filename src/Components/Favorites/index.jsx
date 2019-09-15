@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
+import { compose, graphql, Query } from 'react-apollo';
 import PropTypes from 'prop-types';
-import { compose, graphql } from 'react-apollo';
 import { ReactTitle } from 'react-meta-tags';
 
 import BookCard from '../BookCard';
@@ -11,7 +11,6 @@ import { removeFavorites, getFavorites } from '../../queries/books';
 import errorHandler from '../../utils/errorHandler';
 import {
   SUCCESS, TOASTR_ERROR, REMOVE_FAVORITES_QUERY,
-  GET_FAVORITES_QUERY
 } from '../../settings/defaults';
 
 class Favorites extends Component {
@@ -120,35 +119,40 @@ class Favorites extends Component {
   }
 
   render() {
-    const { getFavoritesQuery: { favoriteBooks, loading } } = this.props;
     return (
-      <Fragment>
-        <ReactTitle title="My Favorites" />
+      <Query
+        query={getFavorites}
+      >
+        {({
+          loading, data: { favoriteBooks = {} } = {},
+        }) => (
+          <Fragment>
+            <ReactTitle title="My Favorites" />
 
-        {this.renderHeader()}
-        <div className="container-content" id="main">
-          {loading && <BookPreloader loadingBook={loading} />}
-          {!loading && favoriteBooks && favoriteBooks.length !== 0
-            && this.renderFavorites(favoriteBooks)}
-          {!loading && favoriteBooks && favoriteBooks.length === 0
-            && this.render404()}
-        </div>
-      </Fragment>
+            {this.renderHeader()}
+            <div className="container-content" id="main">
+              {loading && <BookPreloader loadingBook={loading} />}
+              {!loading && favoriteBooks && favoriteBooks.length !== 0
+                && this.renderFavorites(favoriteBooks)}
+              {!loading && favoriteBooks && favoriteBooks.length === 0
+                && this.render404()}
+            </div>
+          </Fragment>
+        )
+      }
+      </Query>
     );
   }
 }
 
 Favorites.propTypes = {
   removeFavoritesQuery: PropTypes.func,
-  getFavoritesQuery: PropTypes.object,
 };
 
 Favorites.defaultProps = {
   removeFavoritesQuery: () => { },
-  getFavoritesQuery: {},
 };
 
 export default compose(
   graphql(removeFavorites, { name: REMOVE_FAVORITES_QUERY }),
-  graphql(getFavorites, { name: GET_FAVORITES_QUERY }),
 )(Favorites);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+
 import App from './Components/Base';
 import Header from './Components/Header';
 import BookProfile from './Components/BookProfile';
@@ -18,12 +19,16 @@ import NetworkDetector from './Components/Hoc/NetworkDetector';
 import AuthWrapper from './Components/Hoc/AuthWrapper';
 import 'antd/dist/antd.css';
 import './_index.scss';
+import Login from './Components/Login';
+import SignUp from './Components/SignUp';
 
 const Routes = () => (
   <div>
     <Header />
     <SideNav />
     <LeftSideBar />
+    <Login />
+    <SignUp />
     <Switch>
       <Route path="/" component={NetworkDetector(App)} exact />
       <Route path="/books/:id" component={NetworkDetector(BookProfile)} exact />

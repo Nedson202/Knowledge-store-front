@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ReactStars from 'react-stars';
 import { compose, graphql } from 'react-apollo';
+import { connect } from 'react-redux';
 
 import {
   addReview, editReview
@@ -18,6 +19,7 @@ import {
   REVIEW, BLOCK, NONE, ADD_REVIEW_QUERY, ADD_REPLY_QUERY, EDIT_REPLY_QUERY,
   EDIT_REVIEW_QUERY
 } from '../../settings/defaults';
+import modalToggler from '../../utils/modalToggler';
 
 class AddReview extends Component {
   constructor(props) {
@@ -81,10 +83,15 @@ class AddReview extends Component {
 
   addReview = async (value) => {
     const { bookId } = this.state;
-    const { addReviewQuery } = this.props;
+    const { addReviewQuery, isAuthenticated } = this.props;
     const { rating, review } = value;
+
+    if (!isAuthenticated) {
+      return modalToggler('login-button');
+    }
     if (!review.trim()) return toaster(TOASTR_ERROR, REVIEW_WARNING);
     if (!rating) return toaster(TOASTR_ERROR, RATING_WARNING);
+
 
     try {
       await addReviewQuery({
@@ -336,6 +343,7 @@ class AddReview extends Component {
 }
 
 AddReview.propTypes = {
+  isAuthenticated: PropTypes.bool,
   toggleForm: PropTypes.bool,
   reviewType: PropTypes.string,
   handleToggleForm: PropTypes.func,
@@ -355,6 +363,7 @@ AddReview.propTypes = {
 };
 
 AddReview.defaultProps = {
+  isAuthenticated: false,
   toggleForm: false,
   reviewType: '',
   handleToggleForm: () => { },
@@ -373,9 +382,14 @@ AddReview.defaultProps = {
   currentRating: 0,
 };
 
+const mapStateToProps = ({ auth }) => ({
+  isAuthenticated: auth.isAuthenticated,
+});
+
 export default compose(
   graphql(addReview, { name: ADD_REVIEW_QUERY }),
   graphql(editReview, { name: EDIT_REVIEW_QUERY }),
   graphql(addReply, { name: ADD_REPLY_QUERY }),
   graphql(editReply, { name: EDIT_REPLY_QUERY }),
+  connect(mapStateToProps)
 )(AddReview);

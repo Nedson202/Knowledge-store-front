@@ -65,6 +65,8 @@ export const LOAD = 'load';
 export const RESET = 'reset';
 export const ONLINE = 'online';
 export const OFFLINE = 'offline';
+export const STORAGE = 'storage';
+
 export const TEXT = 'text';
 export const PASSWORD_TYPE = 'password';
 
@@ -72,6 +74,7 @@ export const PRODUCTION = 'production';
 
 export const SIDE_BAR_STATUS = 'sideBarStatus';
 export const TOKEN = 'token';
+export const LOGOUT = 'logout';
 export const PREVIOUS_LOCATION = 'previousLocation';
 
 export const AUTH_SUCCESS = 'Authentication successful';
@@ -106,12 +109,9 @@ export const PASSWORD_RESET = 'password reset';
 
 // graphql query name
 export const REMOVE_FAVORITES_QUERY = 'removeFavoritesQuery';
-export const GET_FAVORITES_QUERY = 'getFavoritesQuery';
 export const ADD_FAVORITES_QUERY = 'addToFavoritesQuery';
 
 export const ADD_BOOK_QUERY = 'addBookQuery';
-export const FETCH_BOOKS_QUERY = 'fetchBooksQuery';
-export const FETCH_USERS_BOOKS_QUERY = 'fetchUsersBooksQuery';
 export const REMOVE_BOOK_QUERY = 'removeBookQuery';
 
 export const ADD_REVIEW_QUERY = 'addReviewQuery';

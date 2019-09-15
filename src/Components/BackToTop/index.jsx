@@ -1,36 +1,60 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
 
-import { SCROLL_PARAM } from '../../settings/defaults';
+import { SCROLL_PARAM, SCROLL } from '../../settings/defaults';
 
-const BackToTop = (props) => {
-  const { displayBackToTop } = props;
+class BackToTop extends React.Component {
+  state = {
+    displayBackToTop: false,
+  };
 
-  const scrollToTop = () => {
+  componentDidMount() {
+    window.addEventListener(SCROLL, this.handlePageScroll, {
+      capture: true,
+      passive: true
+    });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener(SCROLL, this.handlePageScroll, {
+      capture: true,
+      passive: true
+    });
+  }
+
+  handlePageScroll = () => {
+    let displayBackToTop = false;
+    const shouldDisplayBackToTop = document.documentElement.scrollTop > 300;
+
+    if (shouldDisplayBackToTop) {
+      displayBackToTop = true;
+    } else {
+      displayBackToTop = false;
+    }
+    this.setState({ displayBackToTop });
+  };
+
+  scrollToTop = () => {
     window.scroll(SCROLL_PARAM);
   };
 
-  return (
-    <Fragment>
-      {displayBackToTop && (
+
+  render() {
+    const { displayBackToTop } = this.state;
+    return (
+      <Fragment>
+        {displayBackToTop && (
         <button
           type="button"
-          className="btn btn-secondary bmd-btn-fab back-to-top"
-          onClick={scrollToTop}
+          className="btn btn-secondary bmd-btn-fab"
+          id="back-to-top"
+          onClick={this.scrollToTop}
         >
           <i className="fas fa-caret-up" />
         </button>
-      )}
-    </Fragment>
-  );
-};
-
-BackToTop.propTypes = {
-  displayBackToTop: PropTypes.bool,
-};
-
-BackToTop.defaultProps = {
-  displayBackToTop: false,
-};
+        )}
+      </Fragment>
+    );
+  }
+}
 
 export default BackToTop;

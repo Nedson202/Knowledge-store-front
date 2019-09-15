@@ -232,11 +232,11 @@ class ReviewCard extends Component {
     return (
       <div className="footer">
         <p onClick={this.handleReviewLikeToggle(id)}>
+          <span className="like-count">{likes !== 0 && likes}</span>
           <ion-icon
             name="thumbs-up"
             style={{ color: users.includes(user.id) && '#005C97' }}
           />
-          <span className="like-count">{likes !== 0 && likes}</span>
         </p>
         <p onClick={this.toggleReplyDialog(id)}>reply</p>
         {user.id && user.id.match(userId) && (
@@ -301,7 +301,7 @@ class ReviewCard extends Component {
         <div className="review-details">
           {this.renderReviewBody(userReview)}
           {this.renderReply(userReview, id)}
-          <div id="dome">
+          <div id="reply-form">
             {this.renderReplyForm(id, bookId, reviewer)}
           </div>
           <div id="lastElement" />
