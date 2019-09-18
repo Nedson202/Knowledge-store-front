@@ -2,7 +2,11 @@
 	width: 100%;
   max-width: 600px;
   margin: auto;
-	margin-top: 50px;
+  margin-top: 50px;
+
+  .form-control {
+    font-size: unset;
+  }
 }
 
 .review-card {
@@ -67,4 +71,12 @@
 	color: $white_1;
 	text-align: center;
 	line-height: 45px;
+}
+
+@media screen and (max-width: 560px) {
+  .review-card {
+    .review-time, #star-rating {
+      padding-left: 15px;
+    }
+  }
 }

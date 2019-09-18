@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 
 import { SCROLL_PARAM, SCROLL } from '../../settings/defaults';
 
-class BackToTop extends React.Component {
+class BackToTop extends React.PureComponent {
   state = {
     displayBackToTop: false,
   };
@@ -43,14 +43,14 @@ class BackToTop extends React.Component {
     return (
       <Fragment>
         {displayBackToTop && (
-        <button
-          type="button"
-          className="btn btn-secondary bmd-btn-fab"
-          id="back-to-top"
-          onClick={this.scrollToTop}
-        >
-          <i className="fas fa-caret-up" />
-        </button>
+          <button
+            type="button"
+            className="btn btn-secondary bmd-btn-fab"
+            id="back-to-top"
+            onClick={this.scrollToTop}
+          >
+            <i className="fas fa-caret-up" />
+          </button>
         )}
       </Fragment>
     );

@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import AddReview from '../AddReview';
+import ReviewForm from '../ReviewForm';
 import Avatar from './Avatar';
 
 import timeParser from '../../utils/timeParser';
@@ -32,7 +32,7 @@ class ReplyCard extends PureComponent {
     return (
       <div className="footer">
         <p onClick={handleReplyLikeToggle(id)}>
-          <span className="like-count">{likes !== 0 && likes}</span>
+          {likes !== 0 && <span className="like-count">{likes}</span>}
           <ion-icon
             name="thumbs-up"
             style={{ color: users.includes(user.id) && '#005C97' }}
@@ -60,7 +60,7 @@ class ReplyCard extends PureComponent {
   renderReply(userReply, setReplyToEdit) {
     const { isEditFormOpen } = this.props;
     const {
-      replier, picture, createdAt, reply, likes, id, userId,
+      replier, picture, updatedAt, reply, likes, id, userId,
       avatarColor, repliesLikedBy
     } = userReply;
 
@@ -72,7 +72,7 @@ class ReplyCard extends PureComponent {
           <p>
             <b className="text-capitalize">{replier}</b>
             {' '}
-            {this.renderReplyTime(createdAt)}
+            {this.renderReplyTime(updatedAt)}
           </p>
           {(!isEditFormOpen || id !== setReplyToEdit) && (
             <span>
@@ -93,8 +93,9 @@ class ReplyCard extends PureComponent {
       isEditFormOpen, reviewType, handleReplyEdit,
       setReplyToEdit
     } = this.props;
+
     return (
-      <AddReview
+      <ReviewForm
         toggleForm={isEditFormOpen}
         reviewType={reviewType}
         handleToggleForm={handleReplyEdit}
@@ -107,6 +108,7 @@ class ReplyCard extends PureComponent {
 
   render() {
     const { replies, setReplyToEdit } = this.props;
+
     return (
       <Fragment>
         {

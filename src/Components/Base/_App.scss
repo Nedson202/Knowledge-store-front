@@ -1,81 +1,283 @@
-.navbar {
-	padding: 0 !important;
-	z-index: 2;
-	min-height: 60px;
-	box-shadow: $box_shadow_5;
-}
+.App {
+  .navbar {
+    padding: 0;
+    z-index: 2;
+    min-height: 60px;
+    box-shadow: $box_shadow_5;
+    justify-content: space-between;
+    background: $white_1;
 
-.dropdown-toggle:after {
-	margin: auto auto auto 5px;
-	vertical-align: 0 !important;
-}
+    .container {
+      margin: 0;
+      max-width: 100%;
+    }
 
-.navbar-nav .nav-link {
-	display: flex !important;
-}
+    &-brand {
+      margin-left: 0.5rem;
+      color: $black_2;
+    }
 
-.notification-pane {
-	min-width: 17rem !important;
-	min-height: 17rem !important;
-}
+    .dropdown-menu {
+      left: unset;
+      right: 10%;
+    }
+  }
 
-.dropdown-item:hover {
-	background-color: $grey_2 !important;
+  .dropdown-toggle:after {
+    margin: auto auto auto 5px;
+    vertical-align: 0;
+  }
+
+  .navbar-nav .nav-link {
+    display: flex;
+  }
+
+  .dropdown-item:hover {
+    background-color: $grey_2;
+  }
+
+  .app-title {
+    font-size: 50px;
+    margin-bottom: 15px;
+    color: $white_1;
+  }
+
+  .auth-buttons {
+    color: $white_1;
+    position: absolute;
+    -webkit-transform: translate(0%, -50%);
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+
+    .unsplash-mention {
+      background-color: white;
+      color: black;
+      text-decoration: none;
+      padding: 4px 6px;
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 1.5;
+      display: flex;
+      border-radius: 3px;
+      position: absolute;
+      bottom: -100%;
+      left: 2%;
+      justify-content: center;
+    }
+
+    button {
+      color: $white_1;
+      margin: 20px 15px 0 0;
+      border: 1px solid $white_1;
+      border-radius: 5px;
+      min-width: 150px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+
+      ion-icon {
+        margin-right: 15px;
+        font-size: 18px;
+        color: $white_1;
+        vertical-align: sub;
+      }
+
+      &:hover {
+        border: 1px solid transparent;
+        background-color: $blue_2;
+        color: $white_1;
+      }
+
+      &:focus {
+        box-shadow: unset;
+        border-color: $white_1;
+        background-color: unset;
+        color: $white_1;
+      }
+    }
+  }
+
+  .modal-dialog {
+    max-width: 350px;
+  }
+
+  #AddBookModal {
+    .modal-dialog {
+      max-width: 700px;
+    }
+  }
+
+  .modal {
+    .modal-header {
+      background-color: $white_1;
+      padding-bottom: 10px;
+      border-bottom: 1px solid $grey_2;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    .modal-content {
+      border-radius: 15px;
+      box-shadow: unset;
+    }
+
+    .modal-footer {
+      margin-bottom: 10px;
+
+      .btn {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .nav-link {
+    text-transform: none;
+  }
+
+  .btn {
+    text-transform: none;
+  }
+
+  .user-profile-nav {
+    display: flex;
+
+    .user-profile-icon {
+      margin-right: 20px;
+    }
+  }
+
+  .checkbox {
+    margin-top: 10px;
+  }
+
+  .social-login {
+    &-text {
+      padding-top: 11px;
+      padding-right: 12px;
+      color: $black_1;
+    }
+
+    display: flex;
+    justify-content: center;
+    margin: 20px auto -10px auto;
+
+    button {
+      padding: 7px;
+      font-size: 15px;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 50%;
+      background-color: transparent;
+
+      i {
+        box-shadow: $box_shadow_2;
+
+        &:hover {
+          box-shadow: $box_shadow_3;
+        }
+      }
+
+      .fa-google {
+        background: $red_1;
+        color: $white_1;
+      }
+
+      .fa-facebook-f {
+        background: $blue_1;
+        color: $white_1;
+      }
+
+      .google-icon {
+        padding: 7px;
+        font-size: 15px;
+        text-align: center;
+        text-decoration: none;
+        margin: 5px 2px -px 2px;
+        border-radius: 50%;
+      }
+
+      .facebook-icon {
+        padding: 7px 10px;
+        font-size: 15px;
+        text-align: center;
+        text-decoration: none;
+        margin: 5px 2px -px 2px;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .form-group {
+    position: relative;
+    input:-webkit-autofill {
+      box-shadow: $box_shadow_6;
+      -webkit-box-shadow: $box_shadow_6;
+    }
+
+    #password-icon {
+      position: absolute;
+      top: 34px;
+      right: 9px;
+      cursor: pointer;
+
+      &:focus {
+        outline: 0;
+        box-shadow: none;
+        border-color: transparent;
+      }
+    }
+  }
+
+  .validation-error {
+    color: $red_2;
+  }
+
+  .swal2-top-end {
+    font-weight: 100 !important;
+    color: $red_2;
+  }
+
+  .error-action {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+    a {
+      color: $blue_2;
+    }
+  }
+
+  .custom-file-control,
+  .form-control,
+  .is-focused
+  .custom-file-control,
+  .is-focused
+  .form-control {
+    background-image: linear-gradient(0deg, $blue_2 2px,rgba(0,150,136,0) 0),linear-gradient(0deg,rgba(0,0,0,.2) 1px,transparent 0);
+  }
+
+  .is-focused [class*=bmd-label],
+  .is-focused[class^=bmd-label] {
+    color: $blue_2 !important;
+  }
 }
 
 #background-layout {
   background: url('./assets/knowledge-centric.jpg')
     no-repeat center center fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	height: 100%;
-	position: fixed;
-	left: -50%;
-	width: 200%;
-	height: 200%;
-	box-shadow: $box_shadow_1;
-}
-
-.product-title {
-	font-size: 50px;
-	margin-bottom: 15px;
-	color: $white_1;
-}
-
-.auth-buttons {
-	color: $white_1;
-	position: absolute;
-	-webkit-transform: translate(0%, -50%);
-	transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
-	left: 50%;
-	top: 50%;
-	width: 100%;
-	text-align: center;
-
-	button {
-		color: $white_1 !important;
-		margin: 20px 15px 0 0;
-		border: 1px solid $white_1 !important;
-		border-radius: 5px;
-		min-width: 150px;
-		padding-top: 10px;
-		padding-bottom: 10px;
-
-		ion-icon {
-			margin-right: 15px;
-			font-size: 18px;
-			color: $white_1;
-			vertical-align: sub;
-		}
-
-		&:hover {
-			border: 1px solid transparent !important;
-			background-color: $blue_2 !important;
-		}
-	}
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+  position: fixed;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  box-shadow: $box_shadow_1;
 }
 
 .quotation {
@@ -109,7 +311,7 @@
 }
 
 .btn-outline-success {
-	border: 1px solid transparent !important;
+	border: unset !important;
 	margin-left: 10px;
 }
 
@@ -121,7 +323,7 @@
 		outline: none;
 		height: 40px;
 		border: 1px solid $grey_3;
-		border-radius: 20px;
+		border-radius: 15px;
 		padding-left: 15px;
 		padding-right: 25px;
 		justify-content: center;
@@ -160,65 +362,85 @@
 }
 
 @media screen and (max-width: 560px) {
-	.search {
-		margin: 15px 0;
-		display: flex;
-		flex-direction: row;
+  .App {
+    .search {
+      margin: 15px 0;
+      display: flex;
+      flex-direction: row;
 
-		.form-input {
-			width: 100%;
+      .form-input {
+        width: 100%;
 
-			&:focus {
-				width: 100% !important;
-			}
+        &:focus {
+          width: 100% !important;
+        }
 
-			&:not(:focus) {
-				width: 100% !important;
-			}
-		}
+        &:not(:focus) {
+          width: 100% !important;
+        }
+      }
 
-		.close-icon {
-			left: 0;
-		}
-	}
+      .close-icon {
+        left: 0;
+      }
+    }
 
-	.product-title {
-		font-size: 30px;
-		font-weight: bold;
-	}
+    #login-button {
+      margin-left: unset;
+      margin-top: 15px;
+    }
 
-	.auth-buttons {
-		div {
-			display: flex;
-			flex-direction: column;
+    #signup-button {
+      margin-top: 15px;
+    }
 
-			button {
-				width: 100%;
-				max-width: 250px;
-				margin: 10px auto;
-				padding: 15px 0;
-				font-size: 17px;
-			}
-		}
+    .modal {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
 
-		.auth-action-buttons {
-			margin-top: 30px;
-		}
-	}
+    .app-title {
+      font-size: 30px;
+      font-weight: bold;
+    }
 
-	.quotation {
-		font-size: 22px;
-	}
+    .auth-buttons {
+      .unsplash-mention {
+        display: none;
+      }
 
-	.pending-verification {
-		height: unset;
-    text-align: center;
-    line-height: unset;
-    font-size: 17px;
-    background-color: $yellow_2;
-    color: $white_1;
-    padding: 10px 15px;
-	}
+      div {
+        display: flex;
+        flex-direction: column;
+
+        button {
+          width: 100%;
+          max-width: 250px;
+          margin: 10px auto;
+          padding: 15px 0;
+          font-size: 17px;
+        }
+      }
+
+      .auth-action-buttons {
+        margin-top: 30px;
+      }
+    }
+
+    .quotation {
+      font-size: 22px;
+    }
+
+    .pending-verification {
+      height: unset;
+      text-align: center;
+      line-height: unset;
+      font-size: 17px;
+      background-color: $yellow_2;
+      color: $white_1;
+      padding: 10px 15px;
+    }
+  }
 }
 
 .avatar {
@@ -232,166 +454,4 @@
 #LoginFormModal, #SignUpForm, #AddBookModal {
 	margin: auto;
 	width: 100%;
-}
-
-.modal-dialog {
-	max-width: 350px !important;
-}
-
-#AddBookModal {
-	.modal-dialog {
-		max-width: 700px !important;
-	}
-}
-
-.modal .modal-content .modal-header {
-  background-color: $white_1 !important;
-	padding-bottom: 10px !important;
-	border-bottom: 1px solid $grey_2 !important;
-	border-top-left-radius: 15px !important;
-	border-top-right-radius: 15px !important;
-}
-
-.modal-content {
-	border-radius: 15px !important;
-	box-shadow: unset !important;
-}
-
-.modal .modal-content .modal-footer {
-	margin-bottom: 10px;
-}
-
-.nav-link {
-  text-transform: none !important;
-}
-
-.btn {
-  text-transform: none !important;
-}
-
-.user-profile-nav {
-	display: flex;
-
-	.user-profile-icon {
-		margin-right: 20px;
-	}
-}
-
-.modal-footer button {
-	margin-right: 10px !important;
-}
-
-.checkbox {
-	margin-top: 10px;
-}
-
-.social-login-text {
-	padding-top: 11px;
-	padding-right: 12px;
-}
-
-.social-login {
-	display: flex;
-	justify-content: center;
-	margin: 20px auto -10px auto;
-
-	button {
-		padding: 7px;
-    font-size: 15px;
-    text-align: center;
-    text-decoration: none;
-    margin: 5px 5px -px 2px;
-		border-radius: 50%;
-		background-color: unset !important;
-
-		i {
-      box-shadow: $box_shadow_2;
-
-      &:hover {
-        box-shadow: $box_shadow_3;
-      }
-		}
-
-		.fa-google {
-			background: $red_1;
-			color: $white_1;
-		}
-
-		.fa-facebook-f {
-			background: $blue_1;
-			color: $white_1;
-		}
-
-		.google-icon {
-			padding: 7px;
-			font-size: 15px;
-			text-align: center;
-			text-decoration: none;
-			margin: 5px 2px -px 2px;
-			border-radius: 50%;
-		}
-
-		.facebook-icon {
-			padding: 7px 10px;
-			font-size: 15px;
-			text-align: center;
-			text-decoration: none;
-			margin: 5px 2px -px 2px;
-			border-radius: 50%;
-		}
-	}
-}
-
-.form-group {
-	position: relative;
-	input:-webkit-autofill {
-    box-shadow: $box_shadow_6;
-    -webkit-box-shadow: $box_shadow_6;
-	}
-
-  #password-icon {
-    position: absolute;
-    top: 34px;
-		right: 9px;
-    cursor: pointer;
-
-    &:focus {
-      outline: 0;
-      box-shadow: none;
-      border-color: transparent;
-    }
-	}
-}
-
-.validation-error {
-	color: $red_2;
-}
-
-.swal2-top-end {
-  font-weight: 100 !important;
-  color: $red_2;
-}
-
-.error-action {
-	display: flex;
-	justify-content: space-between;
-	margin-top: 20px;
-
-	a {
-		color: $blue_2;
-	}
-}
-
-.custom-file-control,
-.form-control,
-.is-focused
-.custom-file-control,
-.is-focused
-.form-control {
-	background-image: linear-gradient(0deg, $blue_2 2px,rgba(0,150,136,0) 0),linear-gradient(0deg,rgba(0,0,0,.2) 1px,transparent 0);
-}
-
-.is-focused [class*=bmd-label],
-.is-focused[class^=bmd-label] {
-	color: $blue_2 !important;
 }

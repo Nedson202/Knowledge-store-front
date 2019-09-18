@@ -52,7 +52,7 @@ class Main extends Component {
   renderMainContent() {
     return (
       <Fragment>
-        <h2 className="product-title">The Knowledge Store</h2>
+        <h2 className="app-title">The Knowledge Store</h2>
         <blockquote>
           <p className="quotation">
             Wisdom is not a product of schooling

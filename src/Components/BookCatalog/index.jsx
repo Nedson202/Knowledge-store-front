@@ -43,39 +43,41 @@ class BookCatalog extends Component {
     const { isNewContentLoading } = this.state;
     const { books } = this.props;
     const { scrollHeight } = document.body;
-    const totalHeight = window.scrollY + window.innerHeight;
+    const heightOffset = 60;
+    const totalHeight = window.scrollY + window.innerHeight + heightOffset;
 
     if (isNewContentLoading) return;
     if (
-      !window.location.search && totalHeight >= scrollHeight && books.length
+      window.location.search || totalHeight < scrollHeight || !books.length
     ) {
-      this.setState({
-        isNewContentLoading: true,
-      }, async () => {
-        document.getElementById(SCROLL_TO_ELEMENT).scrollIntoView();
-        const { client, dispatch } = this.props;
-
-        try {
-          const response = await client.query({
-            query: bookFilter,
-            variables: {
-              search: '',
-              from: books.length + 1,
-              size: books.length + 20
-            }
-          });
-
-          const { data: { searchBooks } } = response;
-          dispatch(setRetrievedBooks(searchBooks, false));
-
-          this.setState({ isNewContentLoading: false });
-        } catch (error) {
-          console.error(error);
-        }
-      });
-    } else {
-      this.setState({ isNewContentLoading: false });
+      return this.setState({ isNewContentLoading: false });
     }
+
+    this.setState({
+      isNewContentLoading: true,
+    }, async () => {
+      document.getElementById(SCROLL_TO_ELEMENT).scrollIntoView();
+      const { client, dispatch } = this.props;
+
+      try {
+        const response = await client.query({
+          query: bookFilter,
+          variables: {
+            search: '',
+            from: books.length + 1,
+            size: 20
+          }
+        });
+
+        const { data: { searchBooks } } = response;
+        const combineBooks = [...books, ...searchBooks];
+        dispatch(setRetrievedBooks(combineBooks, false));
+
+        this.setState({ isNewContentLoading: false });
+      } catch (error) {
+        console.error(error);
+      }
+    });
   };
 
   retrieveBook = async (queryValue) => {

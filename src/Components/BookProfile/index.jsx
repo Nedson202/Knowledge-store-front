@@ -4,7 +4,7 @@ import { compose, graphql, Query } from 'react-apollo';
 import { ReactTitle } from 'react-meta-tags';
 
 import BookCard from '../BookCard';
-import AddReview from '../AddReview';
+import ReviewForm from '../ReviewForm';
 import ReviewCard from '../ReviewCard';
 import ProfilePreloader from './ProfilePreloader';
 import BackToTop from '../BackToTop';
@@ -84,7 +84,7 @@ class BookProfile extends Component {
   renderAddReviewForm(book) {
     return (
       <div className="add-review-form">
-        <AddReview
+        <ReviewForm
           toggleForm={false}
           reviewType="review"
           bookId={book && book.id}

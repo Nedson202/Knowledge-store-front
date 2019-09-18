@@ -181,7 +181,7 @@ class Header extends Component {
     const { user } = this.props;
     return (
       <Fragment>
-        <div className="App" ref={(node) => { this.node = node; }}>
+        <div ref={(node) => { this.node = node; }}>
           <nav
             className="navbar fixed-top navbar-expand-lg"
             id="navbar"

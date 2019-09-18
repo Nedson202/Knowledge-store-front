@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import ReplyCard from './ReplyCard';
-import AddReview from '../AddReview';
+import ReviewForm from '../ReviewForm';
 import Star from '../Star';
 import Avatar from './Avatar';
 
@@ -165,7 +165,7 @@ class ReviewCard extends Component {
     } = this.state;
 
     return (
-      <AddReview
+      <ReviewForm
         toggleForm={isReviewEditFormOpen}
         reviewType={reviewType}
         handleToggleForm={this.toggleReviewEditForm}
@@ -200,7 +200,7 @@ class ReviewCard extends Component {
 
   renderReviewBody(userReview) {
     const {
-      reviewer, createdAt, review, rating, id
+      reviewer, updatedAt, review, rating, id
     } = userReview;
     const { isReviewEditFormOpen, setReviewToEdit, } = this.state;
     return (
@@ -208,7 +208,7 @@ class ReviewCard extends Component {
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <p><b className="text-capitalize">{reviewer}</b></p>
           {this.renderStars(rating)}
-          {this.renderTimeReviewed(createdAt)}
+          {this.renderTimeReviewed(updatedAt)}
         </div>
         {(!isReviewEditFormOpen || id !== setReviewToEdit) && (
           <span id="review">
@@ -232,7 +232,7 @@ class ReviewCard extends Component {
     return (
       <div className="footer">
         <p onClick={this.handleReviewLikeToggle(id)}>
-          <span className="like-count">{likes !== 0 && likes}</span>
+          {likes !== 0 && <span className="like-count">{likes}</span>}
           <ion-icon
             name="thumbs-up"
             style={{ color: users.includes(user.id) && '#005C97' }}
@@ -272,7 +272,7 @@ class ReviewCard extends Component {
   renderReplyForm(reviewFormId, bookId, reviewer) {
     const { isReplyFormOpen, reviewType, reviewToReply } = this.state;
     return (
-      <AddReview
+      <ReviewForm
         ref={(section) => { this.Review = section; }}
         toggleForm={isReplyFormOpen}
         reviewType={reviewType}
