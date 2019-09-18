@@ -4,7 +4,11 @@
 	width: 100%;
 	max-width: 800px;
 	margin: 20px 0 25px 0;
-	grid-gap: 10px;
+  grid-gap: 10px;
+
+  .form-control {
+    font-size: unset;
+  }
 
 	.footer {
 		display: flex;

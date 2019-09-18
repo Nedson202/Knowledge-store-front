@@ -112,20 +112,20 @@ const LoginForm = (props) => {
                   </Link>
                 </div>
                 <div className="form-group social-login">
-                  <div className="text-muted text-center social-login-text">
+                  <div className="text-center social-login-text">
                     Login with
                   </div>
                   <button
                     type="button"
                     onClick={socialAuthentication('google')}
-                    className="btn btn-primary"
+                    className="btn"
                   >
                     <i className="fab fa-google google-icon" />
                   </button>
                   <button
                     type="button"
                     onClick={socialAuthentication('facebook')}
-                    className="btn btn-primary"
+                    className="btn"
                   >
                     <i className="fab fa-facebook-f facebook-icon" />
                   </button>

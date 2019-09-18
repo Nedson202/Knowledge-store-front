@@ -21,7 +21,7 @@ import {
 } from '../../settings/defaults';
 import modalToggler from '../../utils/modalToggler';
 
-class AddReview extends Component {
+class ReviewForm extends Component {
   constructor(props) {
     super(props);
 
@@ -193,8 +193,6 @@ class AddReview extends Component {
     values.reply = '';
     values.review = '';
     values.rating = null;
-    values.reviewEdit = '';
-    values.replyEdit = '';
 
     if (reviewType !== REVIEW) handleToggleForm('')();
     return this.setState({ values });
@@ -319,7 +317,6 @@ class AddReview extends Component {
             name={inputName[`${reviewType}`]}
             value={this.fixControlledValue(values[reviewType])}
             className="form-control"
-            id="review-form"
             rows="3"
             onChange={this.handleInputChange}
             onReset={this.handleClearForm}
@@ -342,7 +339,7 @@ class AddReview extends Component {
   }
 }
 
-AddReview.propTypes = {
+ReviewForm.propTypes = {
   isAuthenticated: PropTypes.bool,
   toggleForm: PropTypes.bool,
   reviewType: PropTypes.string,
@@ -362,7 +359,7 @@ AddReview.propTypes = {
   currentRating: PropTypes.number,
 };
 
-AddReview.defaultProps = {
+ReviewForm.defaultProps = {
   isAuthenticated: false,
   toggleForm: false,
   reviewType: '',
@@ -392,4 +389,4 @@ export default compose(
   graphql(addReply, { name: ADD_REPLY_QUERY }),
   graphql(editReply, { name: EDIT_REPLY_QUERY }),
   connect(mapStateToProps)
-)(AddReview);
+)(ReviewForm);

@@ -2,21 +2,7 @@ import React from 'react';
 
 const UnsplashMention = () => (
   <a
-    style={{
-      backgroundColor: 'white',
-      color: 'black',
-      textDecoration: 'none',
-      padding: '4px 6px',
-      fontSize: '14px',
-      fontWeight: 'bold',
-      lineHeight: '1.5',
-      display: 'flex',
-      borderRadius: '3px',
-      position: 'absolute',
-      bottom: '-100%',
-      left: '2%',
-      justifyContent: 'center'
-    }}
+    className="unsplash-mention"
     href="https://unsplash.com/@martinadams?utm_medium=referral&utm_campaign=photographer-credit&utm_content=creditBadge"
     target="_blank"
     rel="noopener noreferrer"

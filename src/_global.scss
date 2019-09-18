@@ -8,8 +8,40 @@ html, body {
   margin-top: -60px !important;
 }
 
-.hide {
-	display: none;
+.App {
+  .hide {
+    display: none;
+  }
+
+  .btn-primary {
+    color: $white_1;
+    background-color: $blue_2 !important;
+    border-color: $blue_2;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+
+  .btn-raised {
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+
+  [class*=" bmd-label"], [class^=bmd-label] {
+    color: unset;
+  }
+
+  ion-icon {
+    font-size: 20px;
+    color: $black_2;
+  }
+
+  .blur {
+    color: $black_3;
+
+    ion-icon {
+      color: $black_3;
+    }
+  }
 }
 
 h2#swal2-title {
@@ -17,35 +49,5 @@ h2#swal2-title {
 }
 
 .swal2-popup.swal2-toast.swal2-show {
-  border-radius: 40px;
-}
-
-.btn-primary {
-  color: $white_1;
-  background-color: $blue_2 !important;
-  border-color: $blue_2;
-  padding: 10px 20px;
-  border-radius: 5px;
-}
-
-.btn-raised {
-  padding: 10px 20px;
-  border-radius: 5px;
-}
-
-[class*=" bmd-label"], [class^=bmd-label] {
-  color: unset !important;
-}
-
-ion-icon {
-  font-size: 20px;
-  color: $black_2;
-}
-
-.blur {
-  color: $black_3;
-
-  ion-icon {
-    color: $black_3;
-  }
+  border-radius: 20px;
 }
