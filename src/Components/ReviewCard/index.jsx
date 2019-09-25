@@ -229,10 +229,15 @@ class ReviewCard extends Component {
 
     const users = reviewsLikedBy ? JSON.parse(reviewsLikedBy) : [];
 
+    let likeEL = <></>;
+    if (likes) {
+      likeEL = <span className="like-count">{likes}</span>;
+    }
+
     return (
       <div className="footer">
         <p onClick={this.handleReviewLikeToggle(id)}>
-          {likes !== 0 && <span className="like-count">{likes}</span>}
+          {likeEL}
           <ion-icon
             name="thumbs-up"
             style={{ color: users.includes(user.id) && '#005C97' }}
