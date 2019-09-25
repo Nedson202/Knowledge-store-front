@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import ReactStars from 'react-stars';
 
 const Star = (props) => {
-  const { value, editable } = props;
+  const { value, editable, size } = props;
 
   return (
     <Fragment>
       <ReactStars
         count={5}
-        size={15}
+        size={size}
         value={value}
         color2="#ffaf00"
         half
@@ -21,11 +21,13 @@ const Star = (props) => {
 
 Star.propTypes = {
   value: PropTypes.number,
+  size: PropTypes.number,
   editable: PropTypes.bool,
 };
 
 Star.defaultProps = {
   value: 0,
+  size: 15,
   editable: false,
 };
 

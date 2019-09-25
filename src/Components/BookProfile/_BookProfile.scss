@@ -21,6 +21,40 @@
   }
 }
 
+.book-profile {
+  &-rating {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 100%;
+    margin-left: 35%;
+
+    &-summary > span {
+      font-size: 120px;
+    }
+
+    &-summary > div {
+      margin-left: 25%;
+    }
+
+    &-stats {
+      margin-left: 30px;
+      vertical-align: sub;
+      margin-top: auto;
+
+      &-child {
+        display: flex;
+        flex-direction: row;
+
+        span {
+          margin-left: 10px;
+          margin-top: auto;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+}
+
 @media screen and (min-width: 960px) {
   .book-profile-container {
     display: flex;
@@ -42,49 +76,51 @@
       }
     }
 
-    .book-profile-details {
-      width: 700px;
-    }
+    .book-profile {
+      &-details {
+        width: 700px;
+      }
 
-    .book-recommendation {
-      min-width: 300px;
-    }
+      &-more {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 350px !important;
 
-    .book-profile-more {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      width: 100%;
-      max-width: 350px !important;
+        .book__card {
+          width: calc(1/2*100% - (1 - 1/2)*50px);
 
-      .book__card {
-        width: calc(1/2*100% - (1 - 1/2)*50px);
+          &--images {
+            width: 150px !important;
+            height: 12rem !important;
+          }
 
-        &--images {
-          width: 150px !important;
-          height: 12rem !important;
+          .book__card--footer {
+            width: 150px !important;
+            height: 7rem !important;
+          }
+
+          #image-error-placeholder {
+            width: 150px !important;
+            height: 13rem !important;
+            line-height: 13rem;
+            border: 1px solid $grey_7;
+            border-radius: 4px;
+            display: block;
+            margin: auto;
+          }
         }
 
-        .book__card--footer {
-          width: 150px !important;
-          height: 7rem !important;
-        }
-
-        #image-error-placeholder {
-          width: 150px !important;
-          height: 13rem !important;
-          line-height: 13rem;
-          border: 1px solid $grey_7;
-          border-radius: 4px;
-          display: block;
-          margin: auto;
+        div {
+          grid-gap: 20px;
         }
       }
     }
 
-    .book-profile-more div {
-      grid-gap: 20px;
+    .book-recommendation {
+      min-width: 300px;
     }
   }
 }
@@ -169,17 +205,18 @@
 		display: flex;
 		flex-direction: column;
 		max-width: 600px;
-		margin: 90px 30px 30px;
+		margin: 215px 30px 30px;
 
 		.original-book {
 			display: block;
 			margin: 0 auto;
-			width: 210px !important;
+      width: 210px !important;
 
-			&--images {
-				width: 210px !important;
-				height: 17rem !important;
-			}
+      .book__card--images {
+        height: 17rem;
+        width: 210px !important;
+        margin: auto;
+      }
 
 			.favorite-option {
 				justify-content: center;
@@ -187,10 +224,6 @@
 				.fa-bookmark {
 					margin-top: 5px;
 				}
-			}
-
-			.react-star {
-				justify-content: center;
 			}
 
 			#image-error-placeholder {
@@ -214,37 +247,54 @@
 			-ms-transform: translate(-50%, -50%);
 			text-align: center;
 		}
-	}
+  }
 
-	.book-profile-more {
-	  display: flex;
-    flex-direction: row;
-    margin: auto;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  .book-profile {
+    &-rating {
+      margin-left: unset;
+      margin-top: 35px;
+      margin-bottom: 70px;
 
-		.book__card {
-			&--images {
-				width: 150px !important;
-				height: 10rem !important;
-			}
+      &-summary > span {
+        font-size: 80px;
+      }
 
-			.book__card--footer {
-				width: 150px !important;
-				height: 7rem !important;
-			}
+      &-summary > div {
+        margin-left: unset;
+      }
+    }
 
-			#image-error-placeholder {
-				width: 150px !important;
-				height: 11rem !important;
-				line-height: 11rem;
-				border: 1px solid $grey_7;
-				border-radius: 4px;
-				display: block;
-				margin: auto;
-			}
-		}
-	}
+    &-more {
+      display: flex;
+      flex-direction: row;
+      margin: auto;
+      margin-top: 30px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .book__card {
+        &--images {
+          width: 150px !important;
+          height: 10rem !important;
+        }
+
+        .book__card--footer {
+          width: 150px !important;
+          height: 7rem !important;
+        }
+
+        #image-error-placeholder {
+          width: 150px !important;
+          height: 11rem !important;
+          line-height: 11rem;
+          border: 1px solid $grey_7;
+          border-radius: 4px;
+          display: block;
+          margin: auto;
+        }
+      }
+    }
+  }
 
 	.review-card, .reply-card {
 		grid-gap: 10px;

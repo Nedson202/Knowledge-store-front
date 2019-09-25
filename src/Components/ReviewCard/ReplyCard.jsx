@@ -29,10 +29,15 @@ class ReplyCard extends PureComponent {
     const users = repliesLikedBy ? JSON.parse(JSON.stringify(repliesLikedBy))
       : [];
 
+    let likeEL = <></>;
+    if (likes) {
+      likeEL = <span className="like-count">{likes}</span>;
+    }
+
     return (
       <div className="footer">
         <p onClick={handleReplyLikeToggle(id)}>
-          {likes !== 0 && <span className="like-count">{likes}</span>}
+          {likeEL}
           <ion-icon
             name="thumbs-up"
             style={{ color: users.includes(user.id) && '#005C97' }}

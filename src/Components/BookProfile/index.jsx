@@ -8,6 +8,7 @@ import ReviewForm from '../ReviewForm';
 import ReviewCard from '../ReviewCard';
 import ProfilePreloader from './ProfilePreloader';
 import BackToTop from '../BackToTop';
+import Star from '../Star';
 
 import { fetchBook, addToFavorites } from '../../queries/books';
 import toaster from '../../utils/toast';
@@ -36,6 +37,52 @@ class BookProfile extends Component {
       const messages = errorHandler(error);
       messages.forEach(message => toaster(TOASTR_ERROR, message));
     }
+  }
+
+  calculateRatingStats = (reviews) => {
+    const ratingSpecs = {
+      1: 'oneStar',
+      2: 'twoStar',
+      3: 'threeStar',
+      4: 'fourStar',
+      5: 'fiveStar',
+    };
+
+    const ratingStats = {
+      oneStar: {
+        rating: 0,
+        percentage: 0,
+      },
+      twoStar: {
+        rating: 0,
+        percentage: 0,
+      },
+      threeStar: {
+        rating: 0,
+        percentage: 0,
+      },
+      fourStar: {
+        rating: 0,
+        percentage: 0,
+      },
+      fiveStar: {
+        rating: 0,
+        percentage: 0,
+      },
+    };
+
+    reviews.forEach((review) => {
+      const parseReview = Math.floor(review.rating);
+
+      const ratingStarType = ratingSpecs[parseReview];
+      const ratingStatsValue = ratingStats[ratingStarType].rating;
+      const starCount = ratingStatsValue + 1;
+      const totalPercentage = starCount / reviews.length * 100;
+      ratingStats[ratingStarType].percentage = totalPercentage;
+      ratingStats[ratingStarType].rating = starCount;
+    });
+
+    return ratingStats;
   }
 
   refetchQuery() {
@@ -102,6 +149,56 @@ class BookProfile extends Component {
     );
   }
 
+  renderReviewStats = (averageRating, reviews) => {
+    const ratingStats = this.calculateRatingStats(reviews);
+    const averageRatingToFixed = averageRating.toFixed(1);
+    const statsToArray = [];
+
+    // eslint-disable-next-line no-unused-vars
+    Object.entries(ratingStats).forEach(([key, value]) => {
+      statsToArray.push({
+        rating: value.rating,
+        percentage: value.percentage,
+      });
+    });
+
+    const sortStatsArray = statsToArray.sort((valA, valB) => valB.percentage - valA.percentage);
+
+    const mapStats = sortStatsArray.map((stat, index) => (
+      <div
+        className={`book-profile-rating-stats-child ${!stat.rating && 'blur'}`}
+        // eslint-disable-next-line react/no-array-index-key
+        key={`${stat.rating}-${index}`}
+      >
+        <div>
+          <Star
+            value={stat.rating}
+            size={20}
+          />
+        </div>
+        <span>
+          {`${Math.floor(stat.percentage)}%`}
+        </span>
+      </div>
+    ));
+
+    return (
+      <div className="book-profile-rating">
+        <div className="book-profile-rating-summary">
+          <span>{averageRatingToFixed}</span>
+          <Star
+            value={Number(averageRatingToFixed)}
+            size={20}
+          />
+        </div>
+
+        <div className="book-profile-rating-stats">
+          {mapStats}
+        </div>
+      </div>
+    );
+  }
+
   renderMoreBooks(books) {
     let moreBooks = 'Not Available';
 
@@ -128,7 +225,9 @@ class BookProfile extends Component {
   }
 
   renderAll(book = {}) {
-    const { moreBooks = [], id, isFavorite } = book;
+    const {
+      moreBooks = [], id, isFavorite, reviews, averageRating
+    } = book;
     const favoriteOptionLabel = isFavorite
       ? REMOVE_FROM_FAVORITES : ADD_TO_FAVORITES;
 
@@ -166,6 +265,7 @@ class BookProfile extends Component {
           </div>
         </div>
         {this.renderMoreBooks(moreBooks)}
+        {this.renderReviewStats(averageRating, reviews)}
         {this.renderAddReviewForm(book)}
         {this.renderReviews(book)}
       </Fragment>

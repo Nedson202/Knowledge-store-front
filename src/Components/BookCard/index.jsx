@@ -120,8 +120,13 @@ class BookCard extends Component {
     } = book;
     const { bookProfile } = this.props;
     const link = !moreBooks ? `/books/${id}` : `${id}`;
-    const footerSelect = !bookProfile && (
-      <Fragment>
+
+    if (bookProfile) {
+      return;
+    }
+
+    return (
+      <div className="book__card--footer">
         <span className="book__card--footer-link">
           <Link to={link} className="book__card--footer-title">
             <Truncate
@@ -138,15 +143,9 @@ class BookCard extends Component {
           <Truncate
             lines={1}
           >
-            {authors && `by ${authors.join(', ')}` }
+            {authors && `by ${authors.join(', ')}`}
           </Truncate>
         </span>
-      </Fragment>
-    );
-
-    return (
-      <div className="book__card--footer">
-        {footerSelect}
         <span className="react-star">
           <Star
             value={averageRating}
