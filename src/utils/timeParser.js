@@ -11,7 +11,7 @@ const timeParser = (date) => {
 
     return stripAboutPrefix;
   } catch (error) {
-    console.log(error);
+    console.warn(error);
   }
 };
 

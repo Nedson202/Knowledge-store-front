@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import passwordToggler from '../../utils/passwordToggler';
-import modalToggler from '../../utils/modalToggler';
-import socialAuthentication from '../../utils/socialAuthentication';
+import {
+  passwordToggler, modalToggler, socialAuthentication
+} from '../../utils';
 
 const LoginForm = (props) => {
   const {
-    onInputChange, confirmLogin, formErrors, values
+    onInputChange, handleUserLogin, formErrors, values
   } = props;
 
   const { username, password } = values;
@@ -143,7 +143,7 @@ const LoginForm = (props) => {
               <button
                 type="button"
                 className="btn btn-primary btn-raised text-case login-button"
-                onClick={confirmLogin}
+                onClick={handleUserLogin}
               >
                 Login
               </button>
@@ -157,7 +157,7 @@ const LoginForm = (props) => {
 
 LoginForm.propTypes = {
   onInputChange: PropTypes.func.isRequired,
-  confirmLogin: PropTypes.func.isRequired,
+  handleUserLogin: PropTypes.func.isRequired,
   formErrors: PropTypes.object.isRequired,
   values: PropTypes.object.isRequired,
 };

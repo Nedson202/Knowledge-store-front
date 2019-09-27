@@ -19,10 +19,10 @@ const ProfilePreloader = () => {
             speed={2}
             primaryColor="#f3f3f3"
           >
-            <rect x="10" y="10" rx="4" ry="4" width="300" height="15" />
-            <rect x="10" y="50" rx="3" ry="3" width="300" height="10" />
-            <rect x="10" y="70" rx="3" ry="3" width="300" height="5" />
-            <rect x="10" y="90" rx="3" ry="5" width="300" height="60" />
+            <rect x="10" y="10" rx="4" ry="4" width="100%" height="15" />
+            <rect x="10" y="50" rx="3" ry="3" width="100%" height="10" />
+            <rect x="10" y="70" rx="3" ry="3" width="100%" height="5" />
+            <rect x="10" y="90" rx="3" ry="5" width="100%" height="60" />
           </ContentLoader>
         </div>
       </div>

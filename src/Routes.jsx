@@ -21,21 +21,23 @@ import 'antd/dist/antd.css';
 import './_index.scss';
 import Login from './Components/Login';
 import SignUp from './Components/SignUp';
+import MessageBanner from './Components/MessageBanner/MessageBanner';
 
 const Routes = () => (
   <div>
-    <Header />
-    <SideNav />
-    <LeftSideBar />
     <Login />
     <SignUp />
+    <SideNav />
+    <MessageBanner />
+    <Header />
+    <LeftSideBar />
     <Switch>
       <Route path="/" component={NetworkDetector(App)} exact />
       <Route path="/books/:id" component={NetworkDetector(BookProfile)} exact />
       <Route path="/books" component={NetworkDetector(BookCatalog)} exact />
       <Route path="/my-books" component={NetworkDetector(AuthWrapper(MyBooks))} exact />
       <Route path="/admin-dashboard" component={AdminPanel} exact />
-      <Route path="/favorites" component={NetworkDetector(AuthWrapper(Favorites))} exact />
+      <Route path="/my-favorites" component={NetworkDetector(AuthWrapper(Favorites))} exact />
       <Route path="/profile" component={NetworkDetector(AuthWrapper(UserProfile))} exact />
       <Route path="/password-reset" component={NetworkDetector(PasswordReset)} exact />
       <Route path="/email" component={NetworkDetector(EmailGenerator)} exact />

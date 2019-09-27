@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import tokenDecoder from '../../utils/tokenDecoder';
-import toaster from '../../utils/toast';
-import { TOASTR_ERROR } from '../../settings/defaults';
+import { tokenDecoder, toaster } from '../../utils';
+import { TOASTR_ERROR } from '../../settings';
 
 export default function (ComposedComponent, admin) {
   class AuthWrapper extends Component {
@@ -25,17 +24,17 @@ export default function (ComposedComponent, admin) {
       }
 
       if (!tokenDecoder(localStorage.token).id) {
-        toaster(TOASTR_ERROR, 'Access denied, you need to login');
+        toaster(TOASTR_ERROR, 'You need to login to access page content');
         return history.goBack();
       }
 
-      if (isAuthenticated && user.isVerified !== 'true') {
+      if (isAuthenticated && !user.isVerified) {
         toaster(TOASTR_ERROR, 'Kindly verify your account');
         return history.goBack();
       }
 
       if (!isAuthenticated) {
-        toaster(TOASTR_ERROR, 'Access denied, you need to login');
+        toaster(TOASTR_ERROR, 'You need to login to access page content');
         return history.goBack();
       }
     }

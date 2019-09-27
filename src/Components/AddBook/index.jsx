@@ -7,12 +7,11 @@ import AddBookModal from './AddBookModal';
 
 import getGenres from '../../queries/genre';
 import { addBook, fetchUsersBooks } from '../../queries/books';
-import modalToggler from '../../utils/modalToggler';
-import toaster from '../../utils/toast';
+import { modalToggler, toaster } from '../../utils';
 import {
   FILE, FOLDER, UPLOAD_PRESET, BOOK_STORE, AUTHORS, CLOSE_BOOK,
   SUCCESS, ADD_BOOK_QUERY
-} from '../../settings/defaults';
+} from '../../settings';
 
 class AddBook extends Component {
   state = {

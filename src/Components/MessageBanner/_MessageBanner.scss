@@ -1,0 +1,35 @@
+.pending-verification {
+  position: fixed;
+  width: 100%;
+  top: 0;
+	height: 60px;
+	text-align: center;
+	line-height: 60px;
+	font-size: 18px;
+	background-color: $yellow_2;
+	color: $white_1;
+}
+
+.pending-verification +
+.navbar,
+.leftsidebar {
+  top: 60px;
+}
+
+.pending-verification +
+.navbar +
+.leftsidebar {
+  top: 120px;
+}
+
+@media screen and (max-width: 560px) {
+  .pending-verification {
+    height: unset;
+    text-align: center;
+    line-height: unset;
+    font-size: 17px;
+    background-color: $yellow_2;
+    color: $white_1;
+    padding: 10px 15px;
+  }
+}

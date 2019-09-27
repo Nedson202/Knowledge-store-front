@@ -14,7 +14,7 @@ import { bookFilter } from '../../queries/books';
 import {
   SCROLL, NO_CONTENT, BOOK_SERVER_ERROR, SCROLL_TO_ELEMENT,
   ALL_BOOKS,
-} from '../../settings/defaults';
+} from '../../settings';
 
 class BookCatalog extends Component {
   state = {
@@ -42,8 +42,9 @@ class BookCatalog extends Component {
   handlePageScroll = () => {
     const { isNewContentLoading } = this.state;
     const { books } = this.props;
-    const { scrollHeight } = document.body;
+
     const heightOffset = 60;
+    const { scrollHeight } = document.body;
     const totalHeight = window.scrollY + window.innerHeight + heightOffset;
 
     if (isNewContentLoading) return;
@@ -55,54 +56,60 @@ class BookCatalog extends Component {
 
     this.setState({
       isNewContentLoading: true,
-    }, async () => {
-      document.getElementById(SCROLL_TO_ELEMENT).scrollIntoView();
-      const { client, dispatch } = this.props;
-
-      try {
-        const response = await client.query({
-          query: bookFilter,
-          variables: {
-            search: '',
-            from: books.length + 1,
-            size: 20
-          }
-        });
-
-        const { data: { searchBooks } } = response;
-        const combineBooks = [...books, ...searchBooks];
-        dispatch(setRetrievedBooks(combineBooks, false));
-
-        this.setState({ isNewContentLoading: false });
-      } catch (error) {
-        console.error(error);
-      }
-    });
+    }, () => this.fetchBooksOnScroll());
   };
 
+  fetchBooksOnScroll = () => {
+    const { books } = this.props;
+
+    document.getElementById(SCROLL_TO_ELEMENT).scrollIntoView();
+
+    try {
+      const queryVariable = {
+        search: '',
+        from: books.length + 1,
+        size: 20
+      };
+
+      this.retrieveBookQueryHandler(queryVariable, books);
+
+      this.setState({ isNewContentLoading: false });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   retrieveBook = async (queryValue) => {
-    const { client, dispatch, } = this.props;
+    const { dispatch, } = this.props;
     dispatch(setRetrievedBooks([], true));
 
     try {
-      const response = await client.query({
-        query: bookFilter,
-        variables: {
-          search: queryValue || '',
-          from: 0,
-          size: 20
-        }
-      });
+      const queryVariable = {
+        search: queryValue || '',
+        from: 0,
+        size: 20
+      };
 
-      const { data: { searchBooks } } = response;
-
-      dispatch(setRetrievedBooks(searchBooks, false));
+      this.retrieveBookQueryHandler(queryVariable, []);
     } catch (error) {
       const { message: networkError } = error;
       dispatch(setRetrievedBooks([], false));
       this.setState({ networkError });
       return error;
     }
+  }
+
+  retrieveBookQueryHandler = async (variables, existingBooks) => {
+    const { client, dispatch } = this.props;
+
+    const response = await client.query({
+      query: bookFilter,
+      variables,
+    });
+
+    const { data: { searchBooks } } = response;
+    const combineBooks = [...existingBooks, ...searchBooks];
+    dispatch(setRetrievedBooks(combineBooks, false));
   }
 
   renderBooks(books) {

@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import passwordToggler from '../../utils/passwordToggler';
+import { passwordToggler } from '../../utils';
 
 const SignUpForm = (props) => {
   const {
-    handleInputChange, formErrors, confirmSignup, values,
+    handleInputChange, formErrors, handleUserSignup, values,
   } = props;
 
   const renderForm = () => {
@@ -111,7 +111,7 @@ const SignUpForm = (props) => {
       <button
         type="button"
         className="btn btn-primary btn-raised text-case signup-button"
-        onClick={confirmSignup}
+        onClick={handleUserSignup}
       >
         Signup
       </button>
@@ -164,7 +164,7 @@ const SignUpForm = (props) => {
 
 SignUpForm.propTypes = {
   handleInputChange: PropTypes.func.isRequired,
-  confirmSignup: PropTypes.func.isRequired,
+  handleUserSignup: PropTypes.func.isRequired,
   formErrors: PropTypes.object.isRequired,
   values: PropTypes.object.isRequired,
 };

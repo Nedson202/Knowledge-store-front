@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import passwordToggler from '../../utils/passwordToggler';
+import { passwordToggler } from '../../utils';
 
 const UpdatePassword = (props) => {
   const {

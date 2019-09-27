@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ReviewForm from '../ReviewForm';
 import Avatar from './Avatar';
 
-import timeParser from '../../utils/timeParser';
+import { timeParser } from '../../utils';
 
 class ReplyCard extends PureComponent {
   renderReviewerImage(picture) {

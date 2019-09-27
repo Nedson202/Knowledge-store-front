@@ -11,15 +11,14 @@ import Avatar from './Avatar';
 
 import { toggleLikeOnReview, deleteReview, } from '../../queries/reviews';
 import { toggleLikeOnReply, deleteReply } from '../../queries/reply';
-import timeParser from '../../utils/timeParser';
+import {
+  timeParser, toaster, errorHandler, toHTTPS
+} from '../../utils';
 import { fetchBook } from '../../queries/books';
-import toaster from '../../utils/toast';
-import errorHandler from '../../utils/errorHandler';
-import toHTTPS from '../../utils/toHTTPS';
 import {
   TOASTR_ERROR, REPLY, SCROLL_TO_PARAM, REPLY_EDIT,
   REVIEW_EDIT, DELETE_REPLY_QUERY, DELETE_REVIEW_QUERY, TOGGLE_LIKE_QUERY
-} from '../../settings/defaults';
+} from '../../settings';
 
 class ReviewCard extends Component {
   constructor(props) {

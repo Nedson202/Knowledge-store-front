@@ -2,22 +2,20 @@ import queryString from 'querystring';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import setQuery from 'set-query-string';
 import { compose, withApollo, graphql } from 'react-apollo';
 import { ReactTitle } from 'react-meta-tags';
 
 import Main from './Main';
 
-import toaster from '../../utils/toast';
-import tokenDecoder from '../../utils/tokenDecoder';
+import { toaster, tokenDecoder, modalToggler } from '../../utils';
 import { setCurrentUser } from '../../redux/actions/userActions';
 import { verifyEmail } from '../../queries/auth';
-import modalToggler from '../../utils/modalToggler';
 import {
   NONE, NAV_BAR, LEFT_SIDE_BAR, BLOCK, CLOSE, SUCCESS, FLEX, AUTH_SUCCESS,
   MY_BOOKS_PATH, VERIFY_EMAIL_QUERY, TOKEN
-} from '../../settings/defaults';
+} from '../../settings';
 
 class App extends Component {
   componentDidMount() {
@@ -29,7 +27,7 @@ class App extends Component {
     this.verifyUserEmail();
 
     return auth.isAuthenticated
-      && user.isVerified === 'true' && history.push(MY_BOOKS_PATH);
+      && user.isVerified && history.push(MY_BOOKS_PATH);
   }
 
   componentWillUnmount() {
@@ -83,37 +81,17 @@ class App extends Component {
       setQuery({ token: '' });
       toaster(SUCCESS, AUTH_SUCCESS);
 
-      return decodedToken.isVerified === 'true'
+      return decodedToken.isVerified
         && window.location.replace(MY_BOOKS_PATH);
     }
   }
 
-  emailConfirmationNote() {
-    return (
-      <div className="pending-verification">
-        A verification link has been sent to your mail box.
-        Click on the link or use this
-        {' '}
-        <Link
-          to="/email?verify-email=true"
-          style={{ color: 'black' }}
-        >
-          Link
-        </Link>
-        {' '}
-        to request for a new verification mail.
-      </div>
-    );
-  }
-
   render() {
-    const { auth: { isAuthenticated, user } } = this.props;
+    const { auth: { isAuthenticated } } = this.props;
     return (
       <div>
         <ReactTitle title="Lorester Bookstore" />
 
-        {isAuthenticated && user.isVerified === 'false'
-          && this.emailConfirmationNote()}
         <div id="background-layout" />
         <Main
           isAuthenticated={isAuthenticated}

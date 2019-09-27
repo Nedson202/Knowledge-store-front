@@ -2,13 +2,14 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import { DatePicker, Select } from 'antd';
+
 import Spinner from '../Spinner';
-import toHTTPS from '../../utils/toHTTPS';
+import { toHTTPS } from '../../utils';
 import {
   ADD_BOOK_COVER, CANCEL_PREVIEW, BOOK_TITLE, YEAR_PUBLISHED,
   DOWNLOAD_URL, DESCRIPTION, CLOSE, SAVE_CHANGES, GENRE, ADD_BOOK,
   EDIT_BOOK, AUTHORS_LABEL
-} from '../../settings/defaults';
+} from '../../settings';
 
 const { Option } = Select;
 

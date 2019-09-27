@@ -7,8 +7,8 @@ import { Checkbox } from 'antd';
 import Star from '../Star';
 import BookImageLoader from './BookImageLoader';
 
-import toHTTPS from '../../utils/toHTTPS';
-import { IMAGE_FETCH_ERROR, EDIT, DELETE } from '../../settings/defaults';
+import { toHTTPS } from '../../utils';
+import { IMAGE_FETCH_ERROR, EDIT, DELETE } from '../../settings';
 
 class BookCard extends Component {
   constructor(props) {

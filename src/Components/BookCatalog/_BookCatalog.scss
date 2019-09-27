@@ -20,7 +20,7 @@
 
 		.book__card {
 			width: calc(1/5*100% - (1 - 1/5)*40px);
-			margin-bottom: 65px;
+      margin-bottom: 65px;
 
 			#image-error-placeholder {
 				width: 190px !important;
@@ -108,13 +108,10 @@
     flex-direction: row;
     flex-wrap: wrap;
 		justify-content: space-between;
-		margin-top: 80px !important;
+		margin-top: 80px;
 
 		.book__card {
-			&--images {
-				width: 155px !important;
-				height: 13rem !important;
-			}
+      width: calc(1/2*100% - (1 - 1/2)*45px);
 
 			.book__card--footer {
 				width: 155px !important;

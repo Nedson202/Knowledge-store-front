@@ -10,16 +10,14 @@ import {
 import {
   addReply, editReply,
 } from '../../queries/reply';
-import toaster from '../../utils/toast';
+import { toaster, errorHandler, modalToggler } from '../../utils';
 import { fetchBook } from '../../queries/books';
-import errorHandler from '../../utils/errorHandler';
 import {
   REPLY, REPLY_EDIT, REVIEW_EDIT, TOASTR_ERROR, SUCCESS,
   RESET, REVIEW_WARNING, RATING_WARNING, REVIEW_SUCCESS, LAST_ELEMENT,
   REVIEW, BLOCK, NONE, ADD_REVIEW_QUERY, ADD_REPLY_QUERY, EDIT_REPLY_QUERY,
   EDIT_REVIEW_QUERY
-} from '../../settings/defaults';
-import modalToggler from '../../utils/modalToggler';
+} from '../../settings';
 
 class ReviewForm extends Component {
   constructor(props) {

@@ -7,14 +7,13 @@ import Tables from '../Table';
 import AddAdminModal from '../AddAdminModal';
 
 import { filterUsers, toggleAdmin } from '../../queries/users';
-import toaster from '../../utils/toast';
+import { toaster, errorHandler, modalToggler } from '../../utils';
 import Spinner from '../Spinner';
-import errorHandler from '../../utils/errorHandler';
-import modalToggler from '../../utils/modalToggler';
 import {
   SUCCESS, CLOSE_USER, ADD, TOASTR_ERROR, FETCH_USERS_QUERY,
-  TOGGLE_ADMIN_QUERY
-} from '../../settings/defaults';
+  TOGGLE_ADMIN_QUERY,
+  FILTER_USERS_QUERY
+} from '../../settings';
 
 const { Option } = Select;
 
@@ -25,18 +24,21 @@ class Users extends Component {
   };
 
   handleChange = async (value) => {
-    const { client } = this.props;
+    const { filterUsersQuery } = this.props;
 
     try {
-      const response = await client.query({
-        query: filterUsers,
+      const response = await filterUsersQuery({
         variables: {
           type: value.toLowerCase()
         }
       });
 
       const { fetchUsers } = response.data;
-      if (fetchUsers.length === 0) toaster(TOASTR_ERROR, 'Sorry no match was found');
+
+      if (fetchUsers.length === 0) {
+        toaster(TOASTR_ERROR, 'Sorry no match was found');
+      }
+
       this.setState({ filteredUsers: fetchUsers || [] });
     } catch (error) {
       console.error(error);
@@ -148,13 +150,13 @@ class Users extends Component {
 }
 
 Users.propTypes = {
-  client: PropTypes.object,
+  filterUsersQuery: PropTypes.func,
   fetchUsersQuery: PropTypes.object,
   toggleAdminQuery: PropTypes.func,
 };
 
 Users.defaultProps = {
-  client: {},
+  filterUsersQuery: () => { },
   fetchUsersQuery: {},
   toggleAdminQuery: () => { },
 };
@@ -171,5 +173,8 @@ export default compose(
   }),
   graphql(toggleAdmin, {
     name: TOGGLE_ADMIN_QUERY
-  })
+  }),
+  graphql(filterUsers, {
+    name: FILTER_USERS_QUERY
+  }),
 )(Users);

@@ -9,20 +9,21 @@ import SignUpForm from './SignUpForm';
 
 import { addUser } from '../../queries/auth';
 import { setCurrentUser } from '../../redux/actions/userActions';
-import { allFieldsValidation, handleSingleFieldValidation } from '../../utils/validator/validator';
-import tokenDecoder from '../../utils/tokenDecoder';
-import errorHandler from '../../utils/errorHandler';
-import toaster from '../../utils/toast';
-import modalToggler from '../../utils/modalToggler';
+import { allFieldsValidation, handleSingleFieldValidation } from '../../validator';
+import {
+  tokenDecoder, errorHandler, toaster, modalToggler
+} from '../../utils';
 import {
   ADD_USER_QUERY, CLOSE_SIGNUP, TOASTR_ERROR, SUCCESS, TOKEN,
   VALIDATION_DEBOUNCE_TIME
-} from '../../settings/defaults';
+} from '../../settings';
 
 class SignUp extends Component {
   debounceSingleFieldValidation = debounce(({ name, value }) => {
     const { formErrors } = this.state;
-    const { formErrors: newFormErrors } = handleSingleFieldValidation(formErrors, { name, value });
+    const { formErrors: newFormErrors } = handleSingleFieldValidation(
+      formErrors, { name, value }
+    );
     this.setState({ formErrors: newFormErrors });
   }, VALIDATION_DEBOUNCE_TIME);
 
@@ -47,11 +48,12 @@ class SignUp extends Component {
     this.debounceSingleFieldValidation({ name, value });
   }
 
-  confirmSignup = async (event) => {
+  handleUserSignup = async (event) => {
     event.preventDefault();
     const { values } = this.state;
     const { isValid, errors } = allFieldsValidation(values);
     const { addUserQuery, dispatch, } = this.props;
+
     if (!isValid) {
       return this.setState({ formErrors: errors });
     }
@@ -69,9 +71,10 @@ class SignUp extends Component {
       modalToggler(CLOSE_SIGNUP);
 
       dispatch(setCurrentUser(decodedToken));
-      if (decodedToken.isVerified === 'true') window.location.reload();
+      if (decodedToken.isVerified) {
+        toaster(SUCCESS, 'Signed up successfully');
+      }
 
-      toaster(SUCCESS, 'Signed up successfully');
       this.setState({
         values: {
           username: '',
@@ -92,7 +95,7 @@ class SignUp extends Component {
         <SignUpForm
           values={values}
           formErrors={formErrors}
-          confirmSignup={this.confirmSignup}
+          handleUserSignup={this.handleUserSignup}
           handleInputChange={this.handleInputChange}
         />
       </Fragment>

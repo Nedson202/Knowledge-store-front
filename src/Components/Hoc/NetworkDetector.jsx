@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
-import toaster from '../../utils/toast';
+import { toaster } from '../../utils';
 import {
   SUCCESS, TOASTR_ERROR, LOAD, ONLINE,
   OFFLINE
-} from '../../settings/defaults';
+} from '../../settings';
 
 export default function (ComposedComponent) {
   class NetworkDetector extends Component {

@@ -10,21 +10,22 @@ import { loginUser } from '../../queries/auth';
 
 import {
   allFieldsValidation, handleSingleFieldValidation
-} from '../../utils/validator/validator';
+} from '../../validator';
 import { setCurrentUser } from '../../redux/actions/userActions';
-import tokenDecoder from '../../utils/tokenDecoder';
-import errorHandler from '../../utils/errorHandler';
-import toaster from '../../utils/toast';
-import modalToggler from '../../utils/modalToggler';
+import {
+  tokenDecoder, errorHandler, toaster, modalToggler
+} from '../../utils';
 import {
   SUCCESS, TOASTR_ERROR, CLOSE_LOGIN, LOGIN_USER_QUERY, TOKEN,
   VALIDATION_DEBOUNCE_TIME
-} from '../../settings/defaults';
+} from '../../settings';
 
 class Login extends Component {
   debounceSingleFieldValidation = debounce(({ name, value }) => {
     const { formErrors } = this.state;
-    const { formErrors: newFormErrors } = handleSingleFieldValidation(formErrors, { name, value });
+    const { formErrors: newFormErrors } = handleSingleFieldValidation(
+      formErrors, { name, value }
+    );
     this.setState({ formErrors: newFormErrors });
   }, VALIDATION_DEBOUNCE_TIME);
 
@@ -48,7 +49,7 @@ class Login extends Component {
     this.debounceSingleFieldValidation({ name, value });
   }
 
-  confirmLogin = async (event) => {
+  handleUserLogin = async (event) => {
     event.preventDefault();
     const { values } = this.state;
     const { isValid, errors } = allFieldsValidation(values, ['email']);
@@ -70,9 +71,11 @@ class Login extends Component {
       const decodedToken = tokenDecoder(token);
       modalToggler(CLOSE_LOGIN);
       dispatch(setCurrentUser(decodedToken));
-      if (decodedToken.isVerified === 'true') window.location.reload();
 
-      toaster(SUCCESS, 'Signed in successfully');
+      if (decodedToken.isVerified) {
+        toaster(SUCCESS, 'Signed in successfully');
+      }
+
       this.setState({
         values: {
           username: '',
@@ -91,7 +94,7 @@ class Login extends Component {
       <Fragment>
         <LoginForm
           onInputChange={this.onInputChange}
-          confirmLogin={this.confirmLogin}
+          handleUserLogin={this.handleUserLogin}
           formErrors={formErrors}
           values={values}
         />

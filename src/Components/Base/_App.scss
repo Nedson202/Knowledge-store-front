@@ -42,7 +42,7 @@
     color: $white_1;
   }
 
-  .auth-buttons {
+  .app-container {
     color: $white_1;
     position: absolute;
     -webkit-transform: translate(0%, -50%);
@@ -266,7 +266,7 @@
 }
 
 #background-layout {
-  background: url('./assets/knowledge-centric.jpg')
+  background: url('https://ik.imagekit.io/kt3t5sxlx/knowledge-centric_U8ayY2KOo.jpg')
     no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -352,15 +352,6 @@
 	}
 }
 
-.pending-verification {
-	height: 50px;
-	text-align: center;
-	line-height: 50px;
-	font-size: 18px;
-	background-color: $yellow_2;
-	color: $white_1;
-}
-
 @media screen and (max-width: 560px) {
   .App {
     .search {
@@ -404,7 +395,7 @@
       font-weight: bold;
     }
 
-    .auth-buttons {
+    .app-container {
       .unsplash-mention {
         display: none;
       }
@@ -417,7 +408,6 @@
           width: 100%;
           max-width: 250px;
           margin: 10px auto;
-          padding: 15px 0;
           font-size: 17px;
         }
       }

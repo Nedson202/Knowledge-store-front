@@ -11,16 +11,14 @@ import UpdatePassword from './UpdatePassword';
 import UserDetails from './UserDetails';
 
 import { editProfile, changePassword } from '../../queries/auth';
-import { handleSingleFieldValidation } from '../../utils/validator/validator';
-import toaster from '../../utils/toast';
+import { handleSingleFieldValidation } from '../../validator';
+import { toaster, tokenDecoder, errorHandler } from '../../utils';
 import { setCurrentUser } from '../../redux/actions/userActions';
-import tokenDecoder from '../../utils/tokenDecoder';
-import errorHandler from '../../utils/errorHandler';
 import {
   FILE, FOLDER, BOOK_STORE, UPLOAD_PRESET, SUCCESS, TOKEN,
   CHANGE_PASSWORD_QUERY, EDIT_PROFILE_QUERY, TOASTR_ERROR,
   VALIDATION_DEBOUNCE_TIME
-} from '../../settings/defaults';
+} from '../../settings';
 
 class UserProfile extends Component {
   debounceSingleFieldValidation = debounce(({ name, value }) => {

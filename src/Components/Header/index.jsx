@@ -10,7 +10,7 @@ import { logOutUser } from '../../redux/actions/userActions';
 import {
   OPEN, CLICK, BLOCK, NONE, AUTO, LEFT_SIDE_BAR,
   MAIN, CLOSED, SIDE_BAR_TEXT, SIDE_BAR_STATUS, SIDE_NAV, LOGOUT, STORAGE
-} from '../../settings/defaults';
+} from '../../settings';
 
 class Header extends Component {
   state = {
@@ -95,27 +95,9 @@ class Header extends Component {
     }
   }
 
-  emailConfirmationNote() {
-    return (
-      <div className="pending-verification">
-        A verification link has been sent to your mail box.
-        Click on the link or use this
-        {' '}
-        <Link
-          to="/email?verify-email=true"
-          style={{ color: 'black' }}
-        >
-          Link
-        </Link>
-        {' '}
-        to request for a new verification mail.
-      </div>
-    );
-  }
-
   renderAuthButtons() {
     return (
-      <Fragment>
+      <div className="desktop-and-tablet">
         <button
           type="button"
           className="btn btn-default btn-raised cancel-button btn"
@@ -134,7 +116,7 @@ class Header extends Component {
         >
           Signup
         </button>
-      </Fragment>
+      </div>
     );
   }
 
@@ -181,60 +163,57 @@ class Header extends Component {
     const { user } = this.props;
     return (
       <Fragment>
-        <div ref={(node) => { this.node = node; }}>
-          <nav
-            className="navbar fixed-top navbar-expand-lg"
-            id="navbar"
-          >
-            <div
-              onClick={this.toggleSidebar}
-              className="sidenav-collapse
+        <nav
+          className="navbar fixed-top navbar-expand-lg"
+          id="navbar"
+          ref={(node) => { this.node = node; }}
+        >
+          <div
+            onClick={this.toggleSidebar}
+            className="sidenav-collapse
               dropdown-item sidebar-navlink collapse-bar btn-raised"
-              data-tip="Toggle sidebar"
-              role="button"
-              tabIndex={0}
+            data-tip="Toggle sidebar"
+            role="button"
+            tabIndex={0}
+          >
+            <ion-icon name="menu" />
+          </div>
+          <div className="container">
+            <button
+              type="button"
+              className="mobile-nav"
+              aria-label="Toggle navigation"
+              onClick={this.toggleMobileNav}
             >
               <ion-icon name="menu" />
-            </div>
-            <div className="container">
-              <Link to="/">
-                <span className="navbar-brand">Loresters Bookstore</span>
-              </Link>
-              <div>
-                <button
-                  type="button"
-                  className="mobile-nav"
-                  data-toggle="collapse"
-                  data-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent"
-                  aria-expanded="false"
-                  aria-label="Search icon"
-                >
-                  <ion-icon name="search" />
-                </button>
-                <button
-                  type="button"
-                  className="mobile-nav"
-                  aria-label="Toggle navigation"
-                  onClick={this.toggleMobileNav}
-                >
-                  <ion-icon name="menu" />
-                </button>
-              </div>
+            </button>
+            <Link to="/">
+              <span className="navbar-brand">Loresters Bookstore</span>
+            </Link>
+            <button
+              type="button"
+              className="mobile-nav"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Search icon"
+            >
+              <ion-icon name="search" />
+            </button>
 
-              <div
-                className="collapse navbar-collapse"
-                id="navbarSupportedContent"
-              >
-                <Search />
-                <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-                  {user.isVerified === 'true' && this.renderUserAvatar()}
-                </ul>
-                {user.isVerified !== 'true' && this.renderAuthButtons()}
-              </div>
+            <div
+              className="collapse navbar-collapse"
+              id="navbarSupportedContent"
+            >
+              <Search />
+              <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+                {user.isVerified && this.renderUserAvatar()}
+              </ul>
             </div>
-          </nav>
-        </div>
+            {!user.isVerified && this.renderAuthButtons()}
+          </div>
+        </nav>
       </Fragment>
     );
   }

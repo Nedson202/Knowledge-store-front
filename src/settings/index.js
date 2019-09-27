@@ -74,7 +74,7 @@ export const PRODUCTION = 'production';
 
 export const SIDE_BAR_STATUS = 'sideBarStatus';
 export const TOKEN = 'token';
-export const LOGOUT = 'logout';
+export const LOGOUT = 'lorester-books-logout';
 export const PREVIOUS_LOCATION = 'previousLocation';
 
 export const AUTH_SUCCESS = 'Authentication successful';
@@ -130,3 +130,5 @@ export const TOGGLE_ADMIN_QUERY = 'toggleAdminQuery';
 export const RESET_PASSWORD_QUERY = 'resetPasswordQuery';
 export const EDIT_PROFILE_QUERY = 'editProfileQuery';
 export const CHANGE_PASSWORD_QUERY = 'changePasswordQuery';
+export const BOOK_FILTER_QUERY = 'bookFilterQuery';
+export const FILTER_USERS_QUERY = 'filterUsersQuery';

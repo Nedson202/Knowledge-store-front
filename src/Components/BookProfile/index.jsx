@@ -9,14 +9,14 @@ import ReviewCard from '../ReviewCard';
 import ProfilePreloader from './ProfilePreloader';
 import BackToTop from '../BackToTop';
 import Star from '../Star';
+import ApolloPolling from '../ApolloPolling/ApolloPolling';
 
 import { fetchBook, addToFavorites } from '../../queries/books';
-import toaster from '../../utils/toast';
-import errorHandler from '../../utils/errorHandler';
+import { toaster } from '../../utils';
 import {
-  TOASTR_ERROR, SUCCESS, NO_AUTHOR, ADD_TO_FAVORITES,
+  SUCCESS, NO_AUTHOR, ADD_TO_FAVORITES,
   REMOVE_FROM_FAVORITES, ADD_FAVORITES_QUERY,
-} from '../../settings/defaults';
+} from '../../settings';
 import BookRetrieveError from './BookRetrieveError';
 
 class BookProfile extends Component {
@@ -31,11 +31,12 @@ class BookProfile extends Component {
         refetchQueries: this.refetchQuery()
       });
 
-      const { addFavorite: { message } } = response.data;
-      toaster(SUCCESS, message);
+      const { addFavorite } = response.data;
+      if (addFavorite) {
+        toaster(SUCCESS, addFavorite.message);
+      }
     } catch (error) {
-      const messages = errorHandler(error);
-      messages.forEach(message => toaster(TOASTR_ERROR, message));
+      console.warn(error);
     }
   }
 
@@ -51,27 +52,22 @@ class BookProfile extends Component {
     const ratingStats = {
       oneStar: {
         rating: 1,
-        ratingCount: 0,
         percentage: 0,
       },
       twoStar: {
         rating: 2,
-        ratingCount: 0,
         percentage: 0,
       },
       threeStar: {
         rating: 3,
-        ratingCount: 0,
         percentage: 0,
       },
       fourStar: {
         rating: 4,
-        ratingCount: 0,
         percentage: 0,
       },
       fiveStar: {
         rating: 5,
-        ratingCount: 0,
         percentage: 0,
       },
     };
@@ -80,7 +76,7 @@ class BookProfile extends Component {
       const parseReview = Math.floor(review.rating);
 
       const ratingStarType = ratingSpecs[parseReview];
-      const ratingStatsValue = ratingStats[ratingStarType].ratingCount;
+      const ratingStatsValue = ratingStats[ratingStarType].ratingCount || 0;
       const starCount = ratingStatsValue + 1;
       const totalPercentage = starCount / reviews.length * 100;
       ratingStats[ratingStarType].percentage = totalPercentage;
@@ -288,9 +284,11 @@ class BookProfile extends Component {
         variables={{
           bookId: match.params.id
         }}
+        fetchPolicy="cache-and-network"
       >
         {({
           loading, data: { book = {} } = {},
+          startPolling, stopPolling,
         }) => {
           const hasProperty = Object.keys(book).length;
 
@@ -308,6 +306,11 @@ class BookProfile extends Component {
                 {!loading && hasProperty !== 0 && this.renderAll(book)}
               </div>
               <BackToTop />
+
+              <ApolloPolling
+                startPolling={startPolling}
+                stopPolling={stopPolling}
+              />
             </Fragment>
           );
         }}

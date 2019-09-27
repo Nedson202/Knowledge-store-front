@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {
   ADD, USER_EMAIL, CLOSE, ADD_ADMIN
-} from '../../settings/defaults';
+} from '../../settings';
 
 const AddAddminModal = (props) => {
   const { handleInputChange, addAmin } = props;

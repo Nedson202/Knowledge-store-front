@@ -7,15 +7,13 @@ import debounce from 'lodash.debounce';
 
 import {
   allFieldsValidation, handleSingleFieldValidation
-} from '../../utils/validator/validator';
-import tokenDecoder from '../../utils/tokenDecoder';
+} from '../../validator';
+import { tokenDecoder, errorHandler, toaster } from '../../utils';
 import { sendVerificationEmail, forgotPassword } from '../../queries/auth';
-import errorHandler from '../../utils/errorHandler';
-import toaster from '../../utils/toast';
 import {
   RESET_PASSWORD, VERIFY_EMAIL, SUCCESS, TOASTR_ERROR,
   VERIFICATION_MESSAGE, RESET_MESSAGE, VERIFICATION, PASSWORD_RESET
-} from '../../settings/defaults';
+} from '../../settings';
 
 const waitTime = 1000;
 

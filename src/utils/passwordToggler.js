@@ -1,4 +1,4 @@
-import { HIDE, TEXT, PASSWORD_TYPE } from '../settings/defaults';
+import { HIDE, TEXT, PASSWORD_TYPE } from '../settings';
 
 const passwordToggler = id => () => {
   const toggleType = document.getElementById(id);

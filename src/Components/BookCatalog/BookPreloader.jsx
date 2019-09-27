@@ -23,6 +23,9 @@ const BookPreloader = (props) => {
       <div className="book__card">
         <BookImageLoader />
       </div>
+      <div className="book__card phone-only">
+        <BookImageLoader />
+      </div>
     </Fragment>
   );
 

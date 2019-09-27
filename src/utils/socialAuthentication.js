@@ -1,4 +1,4 @@
-import { PRODUCTION } from '../settings/defaults';
+import { PRODUCTION } from '../settings';
 
 const socialAuthentication = type => () => {
   const redirectUrl = process.env.REACT_APP_NODE_ENV.match(PRODUCTION)

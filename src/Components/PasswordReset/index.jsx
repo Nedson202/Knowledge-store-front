@@ -6,13 +6,11 @@ import { connect } from 'react-redux';
 import setQuery from 'set-query-string';
 
 import { resetPassword } from '../../queries/auth';
-import passwordToggler from '../../utils/passwordToggler';
-import tokenDecoder from '../../utils/tokenDecoder';
-import toaster from '../../utils/toast';
+import { passwordToggler, tokenDecoder, toaster } from '../../utils';
 import { setCurrentUser } from '../../redux/actions/userActions';
 import {
   RESET_PASSWORD_QUERY, TOASTR_ERROR, MY_BOOKS_PATH, TOKEN, SUCCESS
-} from '../../settings/defaults';
+} from '../../settings';
 
 class PasswordReset extends Component {
   state = {
@@ -81,7 +79,7 @@ class PasswordReset extends Component {
       dispatch(setCurrentUser(decodedToken));
       setQuery({ token: '' });
 
-      if (decodedToken.isVerified === 'true') {
+      if (decodedToken.isVerified) {
         return history.push(MY_BOOKS_PATH);
       }
 

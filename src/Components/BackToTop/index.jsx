@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-import { SCROLL_PARAM, SCROLL } from '../../settings/defaults';
+import { SCROLL_PARAM, SCROLL } from '../../settings';
 
 class BackToTop extends React.PureComponent {
   state = {

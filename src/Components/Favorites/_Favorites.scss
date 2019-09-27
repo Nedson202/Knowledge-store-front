@@ -8,17 +8,26 @@
 
     .remove-favorites {
       background-color: $red_3 !important;
+      margin-right: 37px;
     }
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 560px) {
   .admin-panel {
     width: 90% !important;
     margin: 120px 20px 0 0px !important;
 
     &__header {
       width: 105%;
+    }
+  }
+
+  .favorite-books {
+    &__header {
+      .remove-favorites {
+        margin-right: unset;
+      }
     }
   }
 }

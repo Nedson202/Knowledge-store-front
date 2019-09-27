@@ -1,4 +1,4 @@
-.leftSideBar {
+.leftsidebar {
   height: 100%;
   width: 260px;
   position: fixed;
@@ -80,7 +80,7 @@
 }
 
 @media screen and (max-width: 758px) {
-  .leftSideBar {
+  .leftsidebar {
     display: none;
   }
 
