@@ -153,7 +153,7 @@ class Search extends PureComponent {
         <input
           className="form-input"
           type="search"
-          placeholder="Search"
+          placeholder="Search book collections..."
           aria-label="Search"
           name="value"
           id="searchBox"

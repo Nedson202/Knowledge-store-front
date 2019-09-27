@@ -12,6 +12,7 @@ import errorHandler from '../../utils/errorHandler';
 import {
   SUCCESS, TOASTR_ERROR, REMOVE_FAVORITES_QUERY,
 } from '../../settings/defaults';
+import ApolloPolling from '../ApolloPolling/ApolloPolling';
 
 class Favorites extends Component {
   state = {
@@ -122,9 +123,11 @@ class Favorites extends Component {
     return (
       <Query
         query={getFavorites}
+        fetchPolicy="cache-and-network"
       >
         {({
           loading, data: { favoriteBooks = {} } = {},
+          startPolling, stopPolling,
         }) => (
           <Fragment>
             <ReactTitle title="My Favorites" />
@@ -137,9 +140,13 @@ class Favorites extends Component {
               {!loading && favoriteBooks && favoriteBooks.length === 0
                 && this.render404()}
             </div>
+
+            <ApolloPolling
+              startPolling={startPolling}
+              stopPolling={stopPolling}
+            />
           </Fragment>
-        )
-      }
+        )}
       </Query>
     );
   }

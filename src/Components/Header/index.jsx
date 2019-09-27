@@ -115,7 +115,7 @@ class Header extends Component {
 
   renderAuthButtons() {
     return (
-      <Fragment>
+      <div className="desktop-and-tablet">
         <button
           type="button"
           className="btn btn-default btn-raised cancel-button btn"
@@ -134,7 +134,7 @@ class Header extends Component {
         >
           Signup
         </button>
-      </Fragment>
+      </div>
     );
   }
 
@@ -197,30 +197,28 @@ class Header extends Component {
               <ion-icon name="menu" />
             </div>
             <div className="container">
+              <button
+                type="button"
+                className="mobile-nav"
+                aria-label="Toggle navigation"
+                onClick={this.toggleMobileNav}
+              >
+                <ion-icon name="menu" />
+              </button>
               <Link to="/">
                 <span className="navbar-brand">Loresters Bookstore</span>
               </Link>
-              <div>
-                <button
-                  type="button"
-                  className="mobile-nav"
-                  data-toggle="collapse"
-                  data-target="#navbarSupportedContent"
-                  aria-controls="navbarSupportedContent"
-                  aria-expanded="false"
-                  aria-label="Search icon"
-                >
-                  <ion-icon name="search" />
-                </button>
-                <button
-                  type="button"
-                  className="mobile-nav"
-                  aria-label="Toggle navigation"
-                  onClick={this.toggleMobileNav}
-                >
-                  <ion-icon name="menu" />
-                </button>
-              </div>
+              <button
+                type="button"
+                className="mobile-nav"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Search icon"
+              >
+                <ion-icon name="search" />
+              </button>
 
               <div
                 className="collapse navbar-collapse"
@@ -230,8 +228,8 @@ class Header extends Component {
                 <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
                   {user.isVerified === 'true' && this.renderUserAvatar()}
                 </ul>
-                {user.isVerified !== 'true' && this.renderAuthButtons()}
               </div>
+              {user.isVerified !== 'true' && this.renderAuthButtons()}
             </div>
           </nav>
         </div>

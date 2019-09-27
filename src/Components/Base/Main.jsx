@@ -67,7 +67,7 @@ class Main extends Component {
   render() {
     const { isAuthenticated } = this.props;
     return (
-      <div className="auth-buttons">
+      <div className="app-container">
         <div>
           {this.renderMainContent()}
           <div className="auth-action-buttons">

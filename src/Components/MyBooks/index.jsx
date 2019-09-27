@@ -12,6 +12,7 @@ import { fetchUsersBooks, removeBook } from '../../queries/books';
 import { setBookToEdit } from '../../redux/actions/bookActions';
 import toaster from '../../utils/toast';
 import { REMOVE_BOOK_QUERY, SUCCESS } from '../../settings/defaults';
+import ApolloPolling from '../ApolloPolling/ApolloPolling';
 
 class MyBooks extends Component {
   state = {
@@ -108,12 +109,15 @@ class MyBooks extends Component {
   render() {
     const { bookToEdit } = this.props;
     const { editingBook } = this.state;
+
     return (
       <Query
         query={fetchUsersBooks}
+        pollInterval={2000}
       >
         {({
           loading, data: { usersBooks = [] } = {},
+          startPolling, stopPolling,
         }) => (
           <Fragment>
             <ReactTitle title="My Books" />
@@ -128,9 +132,13 @@ class MyBooks extends Component {
               {loading && <BookPreloader loadingBook={loading} />}
             </div>
             {!loading && this.render404(usersBooks)}
+
+            <ApolloPolling
+              startPolling={startPolling}
+              stopPolling={stopPolling}
+            />
           </Fragment>
-        )
-        }
+        )}
       </Query>
     );
   }

@@ -35,7 +35,7 @@ const Routes = () => (
       <Route path="/books" component={NetworkDetector(BookCatalog)} exact />
       <Route path="/my-books" component={NetworkDetector(AuthWrapper(MyBooks))} exact />
       <Route path="/admin-dashboard" component={AdminPanel} exact />
-      <Route path="/favorites" component={NetworkDetector(AuthWrapper(Favorites))} exact />
+      <Route path="/my-favorites" component={NetworkDetector(AuthWrapper(Favorites))} exact />
       <Route path="/profile" component={NetworkDetector(AuthWrapper(UserProfile))} exact />
       <Route path="/password-reset" component={NetworkDetector(PasswordReset)} exact />
       <Route path="/email" component={NetworkDetector(EmailGenerator)} exact />

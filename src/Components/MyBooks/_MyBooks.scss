@@ -8,11 +8,11 @@
 	}
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 560px) {
 	.user-books, .favorite-books {
 		&__header {
       padding-top: 120px;
-			margin:	105px 20px -40px 20px;
+			margin:	105px 20px auto 20px;
 			justify-content: space-between;
 		}
 	}

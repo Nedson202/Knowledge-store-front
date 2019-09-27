@@ -74,7 +74,7 @@ export const PRODUCTION = 'production';
 
 export const SIDE_BAR_STATUS = 'sideBarStatus';
 export const TOKEN = 'token';
-export const LOGOUT = 'logout';
+export const LOGOUT = 'lorester-books-logout';
 export const PREVIOUS_LOCATION = 'previousLocation';
 
 export const AUTH_SUCCESS = 'Authentication successful';

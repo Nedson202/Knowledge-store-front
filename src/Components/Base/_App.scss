@@ -42,7 +42,7 @@
     color: $white_1;
   }
 
-  .auth-buttons {
+  .app-container {
     color: $white_1;
     position: absolute;
     -webkit-transform: translate(0%, -50%);
@@ -404,7 +404,7 @@
       font-weight: bold;
     }
 
-    .auth-buttons {
+    .app-container {
       .unsplash-mention {
         display: none;
       }
@@ -417,7 +417,6 @@
           width: 100%;
           max-width: 250px;
           margin: 10px auto;
-          padding: 15px 0;
           font-size: 17px;
         }
       }

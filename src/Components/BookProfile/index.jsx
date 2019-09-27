@@ -18,6 +18,7 @@ import {
   REMOVE_FROM_FAVORITES, ADD_FAVORITES_QUERY,
 } from '../../settings/defaults';
 import BookRetrieveError from './BookRetrieveError';
+import ApolloPolling from '../ApolloPolling/ApolloPolling';
 
 class BookProfile extends Component {
   toggleFavorites = id => async () => {
@@ -51,27 +52,22 @@ class BookProfile extends Component {
     const ratingStats = {
       oneStar: {
         rating: 1,
-        ratingCount: 0,
         percentage: 0,
       },
       twoStar: {
         rating: 2,
-        ratingCount: 0,
         percentage: 0,
       },
       threeStar: {
         rating: 3,
-        ratingCount: 0,
         percentage: 0,
       },
       fourStar: {
         rating: 4,
-        ratingCount: 0,
         percentage: 0,
       },
       fiveStar: {
         rating: 5,
-        ratingCount: 0,
         percentage: 0,
       },
     };
@@ -80,7 +76,7 @@ class BookProfile extends Component {
       const parseReview = Math.floor(review.rating);
 
       const ratingStarType = ratingSpecs[parseReview];
-      const ratingStatsValue = ratingStats[ratingStarType].ratingCount;
+      const ratingStatsValue = ratingStats[ratingStarType].ratingCount || 0;
       const starCount = ratingStatsValue + 1;
       const totalPercentage = starCount / reviews.length * 100;
       ratingStats[ratingStarType].percentage = totalPercentage;
@@ -288,9 +284,11 @@ class BookProfile extends Component {
         variables={{
           bookId: match.params.id
         }}
+        fetchPolicy="cache-and-network"
       >
         {({
           loading, data: { book = {} } = {},
+          startPolling, stopPolling,
         }) => {
           const hasProperty = Object.keys(book).length;
 
@@ -308,6 +306,11 @@ class BookProfile extends Component {
                 {!loading && hasProperty !== 0 && this.renderAll(book)}
               </div>
               <BackToTop />
+
+              <ApolloPolling
+                startPolling={startPolling}
+                stopPolling={stopPolling}
+              />
             </Fragment>
           );
         }}

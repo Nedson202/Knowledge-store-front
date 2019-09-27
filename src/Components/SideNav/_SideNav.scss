@@ -27,11 +27,32 @@
     a {
       color: $black_1 !important;
     }
+  }
 
-    &:hover {
-      background-color: $grey_2;
-      border-left: 5px solid $blue_2;
-      border-bottom-left-radius: 10px;
+  &-auth-buttons {
+    padding-left: 20px !important;
+    padding-bottom: 20px !important;
+    border-bottom: 1px solid #005C97;
+    margin-bottom: 15px;
+  }
+
+  &-user-details {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #005C97;
+    margin-bottom: 15px;
+
+    .avatar {
+      height: 70px;
+      width: 70px;
+      display: block;
+      margin: auto;
+    }
+
+    .username {
+      color: $black_2;
+      text-transform: capitalize;
+      font-size: 20px;
+      text-align: center;
     }
   }
 
