@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Avatar from '../ReviewCard/Avatar';
-import { LOGOUT } from '../../settings';
+import { LOGOUT, LEFT_SIDEBAR_NAV_LINKS } from '../../settings';
 import { logOutUser } from '../../redux/actions/userActions';
 
 const SideNav = ({ isAuthenticated, user, dispatch }) => {
@@ -56,6 +56,30 @@ const SideNav = ({ isAuthenticated, user, dispatch }) => {
     );
   };
 
+  const renderNavLinks = () => {
+    const navLinksMap = LEFT_SIDEBAR_NAV_LINKS.map((navLink) => {
+      const {
+        key, label, link
+      } = navLink;
+
+      return (
+        <div key={key}>
+          <NavLink
+            to={link}
+            className={`
+              dropdown-item sidebar-navlink
+              ${key !== 0 && !isAuthenticated && 'blur'}
+            `}
+          >
+            {label}
+          </NavLink>
+        </div>
+      );
+    });
+
+    return navLinksMap;
+  };
+
   const handleLogout = () => {
     window.localStorage.setItem(LOGOUT, true);
     dispatch(logOutUser());
@@ -72,7 +96,7 @@ const SideNav = ({ isAuthenticated, user, dispatch }) => {
           onClick={handleLogout}
           className="dropdown-item sidebar-navlink"
         >
-        Logout
+          Logout
         </p>
       </div>
     );
@@ -82,38 +106,7 @@ const SideNav = ({ isAuthenticated, user, dispatch }) => {
     <div id="mySidenav" className="sidenav">
       {authNavLinks()}
       {userAvatar()}
-      <div>
-        <NavLink
-          to="/books"
-          className="dropdown-item sidebar-navlink"
-        >
-          All books
-        </NavLink>
-      </div>
-      <div>
-        <NavLink
-          to="/my-books"
-          className={`dropdown-item sidebar-navlink ${!isAuthenticated && 'blur'}`}
-        >
-          My books
-        </NavLink>
-      </div>
-      <div>
-        <NavLink
-          to="/my-favorites"
-          className={`dropdown-item sidebar-navlink ${!isAuthenticated && 'blur'}`}
-        >
-          My Favorites
-        </NavLink>
-      </div>
-      <div>
-        <NavLink
-          to="/profile"
-          className={`dropdown-item sidebar-navlink ${!isAuthenticated && 'blur'}`}
-        >
-          Profile
-        </NavLink>
-      </div>
+      {renderNavLinks()}
       {logoutAction()}
     </div>
   );

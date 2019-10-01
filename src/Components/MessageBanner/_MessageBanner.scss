@@ -11,15 +11,9 @@
 }
 
 .pending-verification +
-.navbar,
-.leftsidebar {
-  top: 60px;
-}
-
-.pending-verification +
 .navbar +
 .leftsidebar {
-  top: 120px;
+  top: 60px;
 }
 
 @media screen and (max-width: 560px) {

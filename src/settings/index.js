@@ -132,3 +132,30 @@ export const EDIT_PROFILE_QUERY = 'editProfileQuery';
 export const CHANGE_PASSWORD_QUERY = 'changePasswordQuery';
 export const BOOK_FILTER_QUERY = 'bookFilterQuery';
 export const FILTER_USERS_QUERY = 'filterUsersQuery';
+
+export const LEFT_SIDEBAR_NAV_LINKS = [
+  {
+    key: 0,
+    label: 'All Books',
+    icon: 'bookmarks',
+    link: '/books',
+  },
+  {
+    key: 1,
+    label: 'My Books',
+    icon: 'book',
+    link: '/my-books',
+  },
+  {
+    key: 2,
+    label: 'My Favorites',
+    icon: 'bookmark',
+    link: '/my-favorites',
+  },
+  {
+    key: 3,
+    label: 'My Profile',
+    icon: 'person',
+    link: '/my-profile',
+  },
+];

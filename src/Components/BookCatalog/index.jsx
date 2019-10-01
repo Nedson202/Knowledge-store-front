@@ -109,6 +109,7 @@ class BookCatalog extends Component {
 
     const { data: { searchBooks } } = response;
     const combineBooks = [...existingBooks, ...searchBooks];
+
     dispatch(setRetrievedBooks(combineBooks, false));
   }
 
@@ -177,7 +178,7 @@ class BookCatalog extends Component {
         <ReactTitle title="All Books" />
 
         {this.renderPageHeader()}
-        <div className="container-content" id="main">
+        <div className="container-content">
           {!loadingBook && books.length !== 0 && this.renderBooks(books)}
           {loadingBook && <BookPreloader loadingBook={loadingBook} />}
         </div>

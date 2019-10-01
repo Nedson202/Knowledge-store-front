@@ -8,7 +8,6 @@
   background-color: $grey_5;
   overflow-x: hidden;
   padding-top: 50px;
-  transition: 0.5s;
   z-index: 10;
 
   div {
@@ -16,7 +15,6 @@
     text-decoration: none;
     font-size: 20px;
     display: block;
-    transition: 0.3s;
     font-weight: 100;
 
     .sidebar-navlink i {
@@ -66,8 +64,7 @@
   }
 }
 
-#main {
-  transition: margin-left .5s;
+.container-content {
   padding: 20px;
 }
 

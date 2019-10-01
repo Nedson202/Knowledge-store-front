@@ -177,7 +177,7 @@ class UserProfile extends Component {
     } = this.state;
     const { user } = this.props;
     return (
-      <div className="profile-update" id="main">
+      <div className="profile-update">
         <ReactTitle title="My Profile" />
 
         <UserDetails
