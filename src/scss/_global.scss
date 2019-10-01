@@ -40,10 +40,10 @@ html, body {
   }
 
   .blur {
-    opacity: 0.5;
+    opacity: 0.8;
 
     ion-icon {
-      color: $black_3;
+      opacity: 0.5;
     }
   }
 }

@@ -11,6 +11,7 @@ const Star = (props) => {
         count={5}
         size={size}
         value={value}
+        color1="rgba(0, 0, 0, 0.7)"
         color2="#ffaf00"
         half
         edit={editable}

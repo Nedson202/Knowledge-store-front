@@ -76,7 +76,7 @@ class Header extends Component {
       <div className="desktop-and-tablet">
         <button
           type="button"
-          className="btn btn-default btn-raised cancel-button btn"
+          className="btn btn-default cancel-button btn"
           data-toggle="modal"
           data-target="#LoginFormModal"
           id="login-button"
@@ -118,16 +118,14 @@ class Header extends Component {
           <div className="dropdown-divider" />
           <Link to="/profile" className="dropdown-item">
             <ion-icon class="user-profile-icon" name="person" />
-            {' '}
             Profile
           </Link>
           <button
             type="button"
-            className="dropdown-item"
+            className="dropdown-item logout-button"
             onClick={this.handleLogout}
           >
             <ion-icon class="user-profile-icon" name="log-out" />
-            {' '}
             Logout
           </button>
         </div>

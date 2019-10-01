@@ -27,7 +27,7 @@ class LeftSideBar extends Component {
       sideBarStatus = OPEN;
       sideBarWidth = '270px';
       sideNavTextClass = 'show';
-    } else {
+    } else if (typeof window.orientation === 'undefined') {
       sideBarStatus = CLOSED;
       sideBarWidth = '70px';
       sideNavTextClass = 'hide';
@@ -43,7 +43,8 @@ class LeftSideBar extends Component {
   };
 
   renderAdminNavlinks = () => {
-    const { user: { role }, isAuthenticated } = this.props;
+    const { user, isAuthenticated } = this.props;
+    const { role } = user;
     const { sideNavTextClass } = this.state;
 
     if (!isAuthenticated || role === 'user') {

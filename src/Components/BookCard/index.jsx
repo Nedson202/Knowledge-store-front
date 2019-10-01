@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Truncate from 'react-truncate';
 import { Checkbox } from 'antd';
+import Truncate from 'react-truncate';
 
 import Star from '../Star';
 import BookImageLoader from './BookImageLoader';
@@ -45,12 +45,12 @@ class BookCard extends Component {
         {!imageLoaded && imageLoadingError.length === 0 && <BookImageLoader />}
         {imageLoadingError.length !== 0 && (
           <div
-            className="text-center"
-            id="image-error-placeholder"
+            className="text-center book__card--error-placeholder"
           >
             {imageLoadingError}
           </div>
         )}
+
         {imageLoaded && imageLoadingError.length === 0 && (
           <Link to={link}>
             <img
@@ -121,6 +121,8 @@ class BookCard extends Component {
     const { bookProfile } = this.props;
     const link = !moreBooks ? `/books/${id}` : `${id}`;
 
+    console.log(authors, 'authors');
+
     if (bookProfile) {
       return;
     }
@@ -129,13 +131,13 @@ class BookCard extends Component {
       <div className="book__card--footer">
         <span className="book__card--footer-link">
           <Link to={link} className="book__card--footer-title">
-            <Truncate
+            {/* <Truncate
               lines={1}
             >
               {book.name}
-            </Truncate>
+            </Truncate> */}
+            {book.name}
             <br />
-            {' '}
           </Link>
           {this.renderActionDropdown(userId)}
         </span>
@@ -143,7 +145,7 @@ class BookCard extends Component {
           <Truncate
             lines={1}
           >
-            {authors && `by ${authors.join(', ')}`}
+            {authors.length > 0 && `by ${authors.join(', ')}`}
           </Truncate>
         </span>
         <span className="react-star">

@@ -102,7 +102,7 @@ class BookProfile extends Component {
     const { reviews } = book;
     const numberOfReviews = reviews.length || 0;
     return (
-      <div className="book-profile-title">
+      <div className="book-profile-title text-center">
         <h2>{book && book.name}</h2>
         <h5>
           {book && book.authors.length

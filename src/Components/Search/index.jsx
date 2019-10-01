@@ -11,7 +11,6 @@ import { bookFilter } from '../../queries/books';
 import { setRetrievedBooks } from '../../redux/actions/bookActions';
 import {
   SEARCH_DEBOUNCE_TIME, PREVIOUS_LOCATION,
-  SEARCH_BOX,
 } from '../../settings';
 
 class Search extends PureComponent {
@@ -38,6 +37,7 @@ class Search extends PureComponent {
         ));
       } catch (error) {
         dispatch(setRetrievedBooks([], false));
+
         return error;
       }
     }
@@ -57,13 +57,16 @@ class Search extends PureComponent {
     const query = queryString.parse(window.location.search);
     if (Object.keys(query)[0] && Object.keys(query)[0] === '?search') {
       dispatch(setRetrievedBooks([], true));
-      this.resizeSearchBox('450px');
       const queryValue = Object.values(query)[0];
+
       this.setState({
         value: queryValue || '',
         toggleCloseIcon: queryValue && true
       });
-      if (queryValue.trim().length) return this.debounceSearch(queryValue);
+
+      if (queryValue.trim().length) {
+        return this.debounceSearch(queryValue);
+      }
     }
   }
 
@@ -81,13 +84,18 @@ class Search extends PureComponent {
         localStorage.setItem(PREVIOUS_LOCATION, location.pathname);
       }
     }
+
     this.setState({ [name]: value, }, () => {
       const { value: searchQuery } = this.state;
+      let closeIconStatus;
+
       if (searchQuery.trim().length) {
-        this.setState({ toggleCloseIcon: true });
+        closeIconStatus = true;
       } else {
-        this.setState({ toggleCloseIcon: false });
+        closeIconStatus = false;
       }
+
+      this.setState({ toggleCloseIcon: closeIconStatus });
       setQuery({ search: searchQuery });
       this.debounceSearch(searchQuery);
     });
@@ -96,8 +104,6 @@ class Search extends PureComponent {
   clearSearchQuery = () => {
     this.setState({ value: '', toggleCloseIcon: false });
     setQuery({ search: '' });
-
-    this.resizeSearchBox('350px');
 
     const { history } = this.props;
     history.push(localStorage.previousLocation);
@@ -108,8 +114,6 @@ class Search extends PureComponent {
     const { value } = this.state;
     if (!value.trim()) {
       setQuery({ search: null });
-
-      this.resizeSearchBox('350px');
     }
   }
 
@@ -127,18 +131,6 @@ class Search extends PureComponent {
     }
   }
 
-  handleSearchFocus = () => {
-    this.resizeSearchBox('450px');
-  }
-
-  resizeSearchBox = (width) => {
-    const searchInput = document.getElementById(SEARCH_BOX);
-    if (searchInput) {
-      searchInput.style.width = width;
-      searchInput.style.transition = '0.6s';
-    }
-  }
-
   render() {
     const { value, toggleCloseIcon } = this.state;
     return (
@@ -150,6 +142,7 @@ class Search extends PureComponent {
           }
         }}
       >
+        <ion-icon name="search" />
         <input
           className="form-input"
           type="search"
@@ -158,7 +151,6 @@ class Search extends PureComponent {
           name="value"
           id="searchBox"
           onChange={this.onInputChange}
-          onFocus={this.handleSearchFocus}
           onBlur={this.handleReset}
           autoComplete="off"
           onPaste={this.handleDataPaste}
