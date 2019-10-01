@@ -21,6 +21,27 @@
   }
 }
 
+.book-retrieve-error {
+	width: 100%;
+	max-width: 500px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	text-align: center;
+  letter-spacing: 1px;
+  padding: 0 20px;
+
+  label.btn {
+    padding: 10px 25px;
+  }
+}
+
+.favorite-action-button {
+	cursor: pointer;
+}
+
 .book-profile {
   &-rating {
     display: flex;
@@ -98,12 +119,12 @@
             height: 12rem !important;
           }
 
-          .book__card--footer {
+          &--footer {
             width: 150px !important;
             height: 7rem !important;
           }
 
-          #image-error-placeholder {
+          &--error-placeholder {
             width: 150px !important;
             height: 13rem !important;
             line-height: 13rem;
@@ -172,12 +193,12 @@
 					height: 16rem !important;
 				}
 
-				.book__card--footer {
+				&--footer {
 					width: 200px !important;
 					height: 7rem !important;
 				}
 
-				#image-error-placeholder {
+        &--error-placeholder {
 					width: 250px !important;
 					height: 16rem !important;
 					line-height: 16rem;
@@ -228,7 +249,7 @@
 				}
 			}
 
-			#image-error-placeholder {
+			&--error-placeholder {
 				width: 210px !important;
 				height: 15rem !important;
 				line-height: 15rem;
@@ -237,17 +258,6 @@
 				display: block;
 				margin: auto;
 			}
-		}
-
-		.book-retrieve-error {
-			width: 100%;
-			max-width: 400px;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			-ms-transform: translate(-50%, -50%);
-			text-align: center;
 		}
   }
 
@@ -287,12 +297,12 @@
           height: 12rem !important;
         }
 
-        .book__card--footer {
+        &--footer {
           width: 150px !important;
           height: 7rem !important;
         }
 
-        #image-error-placeholder {
+        &--error-placeholder {
           width: 150px !important;
           height: 11rem !important;
           line-height: 11rem;
@@ -327,20 +337,4 @@
 	display: flex;
 	justify-content: space-between;
 	margin-top: 30px;
-}
-
-.book-retrieve-error {
-	width: 100%;
-	max-width: 500px;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
-	text-align: center;
-	letter-spacing: 1px;
-}
-
-.favorite-action-button {
-	cursor: pointer;
 }

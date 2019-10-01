@@ -5,10 +5,11 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  font-weight: 100;
 
   &__404 {
     font-size: 200px;
     transform: rotate(-5deg);
-    color: $grey_3 !important;
+    margin-bottom: 16px;
   }
 }

@@ -40,11 +40,15 @@ html, body {
   }
 
   .blur {
-    opacity: 0.5;
+    opacity: 0.8;
 
     ion-icon {
-      color: $black_3;
+      opacity: 0.5;
     }
+  }
+
+  .phone-only {
+    display: none;
   }
 }
 
@@ -56,16 +60,14 @@ h2#swal2-title {
   border-radius: 20px;
 }
 
-.phone-only {
-  display: none;
-}
-
 @media screen and (max-width: 560px) {
   .desktop-and-tablet {
     display: none;
   }
 
-  .phone-only {
-    display: block;
+  .App {
+    .phone-only {
+      display: block;
+    }
   }
 }

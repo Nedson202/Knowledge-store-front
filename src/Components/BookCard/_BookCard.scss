@@ -1,12 +1,36 @@
 .book__card {
-  &--images {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  .ant-checkbox-wrapper {
+    display: block;
+    margin: auto;
+    margin-bottom: 10px;
+  }
+
+  &--error-placeholder {
     width: 170px;
-		height: 15rem;
+    height: 15rem;
+    line-height: 15rem;
+    border: 1px solid $grey_2;
+    border-radius: 4px;
+    margin-top: 15px;
+    display: block;
+    margin: auto;
+  }
+
+  &--images {
+    display: block;
+    width: 170px;
+    height: 15rem;
+    margin: auto;
     border-radius: 4px;
 	}
 
 	&--footer {
-		width: 170px;
+    text-align: center;
+    color: $black_4;
 
 		&-link {
 			display: flex;
@@ -23,14 +47,23 @@
 			position: relative;
 			font-size: 15px;
 			top: 18px;
-			color: $grey_4 !important;
-			font-weight: 100;
+			color: $black_4;
+      font-weight: 100;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:hover {
+        color: $black_4;
+      }
 		}
 
 		.react-star {
 			position: relative;
 			top: 23px;
-			display: flex;
+      display: flex;
+      justify-content: center;
 
 			p {
 				padding-left: 10px;
