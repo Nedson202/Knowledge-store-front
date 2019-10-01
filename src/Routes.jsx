@@ -18,7 +18,7 @@ import MyBooks from './Components/MyBooks';
 import NetworkDetector from './Components/Hoc/NetworkDetector';
 import AuthWrapper from './Components/Hoc/AuthWrapper';
 import 'antd/dist/antd.css';
-import './_index.scss';
+import './scss/_index.scss';
 import Login from './Components/Login';
 import SignUp from './Components/SignUp';
 import MessageBanner from './Components/MessageBanner/MessageBanner';
@@ -38,7 +38,7 @@ const Routes = () => (
       <Route path="/my-books" component={NetworkDetector(AuthWrapper(MyBooks))} exact />
       <Route path="/admin-dashboard" component={AdminPanel} exact />
       <Route path="/my-favorites" component={NetworkDetector(AuthWrapper(Favorites))} exact />
-      <Route path="/profile" component={NetworkDetector(AuthWrapper(UserProfile))} exact />
+      <Route path="/my-profile" component={NetworkDetector(AuthWrapper(UserProfile))} exact />
       <Route path="/password-reset" component={NetworkDetector(PasswordReset)} exact />
       <Route path="/email" component={NetworkDetector(EmailGenerator)} exact />
       <Route path="/users" component={NetworkDetector(AuthWrapper(Users, true))} exact />

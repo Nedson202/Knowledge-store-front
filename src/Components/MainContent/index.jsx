@@ -3,7 +3,7 @@ import React from 'react';
 import BookCard from '../BookCard';
 
 const MainContent = () => (
-  <div className="container-content" id="main">
+  <div className="container-content">
     <BookCard />
     <BookCard />
     <BookCard />

@@ -5,25 +5,25 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import setQuery from 'set-query-string';
 import debounce from 'lodash.debounce';
-import { compose, graphql } from 'react-apollo';
+import { compose, withApollo } from 'react-apollo';
 
 import { bookFilter } from '../../queries/books';
 import { setRetrievedBooks } from '../../redux/actions/bookActions';
 import {
   SEARCH_DEBOUNCE_TIME, PREVIOUS_LOCATION,
   SEARCH_BOX,
-  BOOK_FILTER_QUERY
 } from '../../settings';
 
 class Search extends PureComponent {
   debounceSearch = debounce(async (value) => {
-    const { bookFilterQuery, dispatch } = this.props;
+    const { client, dispatch } = this.props;
 
     if (value.trim().length > 1) {
       dispatch(setRetrievedBooks([], true));
 
       try {
-        const response = await bookFilterQuery({
+        const response = await client.query({
+          query: bookFilter,
           variables: {
             search: value,
             from: 0,
@@ -180,17 +180,17 @@ class Search extends PureComponent {
 }
 
 Search.propTypes = {
-  bookFilterQuery: PropTypes.object,
+  client: PropTypes.object,
   history: PropTypes.object.isRequired,
   dispatch: PropTypes.func,
 };
 
 Search.defaultProps = {
-  bookFilterQuery: () => { },
+  client: {},
   dispatch: () => { },
 };
 
 export default withRouter(compose(
-  graphql(bookFilter, { name: BOOK_FILTER_QUERY }),
+  withApollo,
   connect()
 )(Search));

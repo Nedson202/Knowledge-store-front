@@ -40,34 +40,34 @@
   }
 }
 
-.sidenav-collapse {
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
-  margin-left: 10px !important;
-  padding: 0 !important;
-  border-radius: 50% !important;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+// .sidenav-collapse {
+//   width: 50px;
+//   height: 50px;
+//   line-height: 50px;
+//   margin-left: 10px !important;
+//   padding: 0 !important;
+//   border-radius: 50% !important;
+//   cursor: pointer;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
 
-  ion-icon {
-    font-size: 25px;
-  }
+//   ion-icon {
+//     font-size: 25px;
+//   }
 
-  &:focus {
-    outline: 0;
-    box-shadow: none;
-    border-color: transparent;
-    box-shadow: $box_shadow_5;
-  }
+//   &:focus {
+//     outline: 0;
+//     box-shadow: none;
+//     border-color: transparent;
+//     box-shadow: $box_shadow_5;
+//   }
 
-  &:hover {
-    box-shadow: $box_shadow_5;
-    cursor: pointer;
-  }
-}
+//   &:hover {
+//     box-shadow: $box_shadow_5;
+//     cursor: pointer;
+//   }
+// }
 
 .user-detail {
 	padding: .8rem 0 .8rem 1.5rem;

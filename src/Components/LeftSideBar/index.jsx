@@ -1,13 +1,51 @@
-import React, { Fragment } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { Fragment, Component } from 'react';
+import { NavLink, Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import {
+  SIDE_BAR_STATUS, LEFT_SIDE_BAR, CLOSED, OPEN, LEFT_SIDEBAR_NAV_LINKS,
+} from '../../settings';
 
-const LeftSideBar = (props) => {
-  const { user: { role }, isAuthenticated } = props;
+class LeftSideBar extends Component {
+  state = {
+    isSideBarOpen: false,
+    sideNavTextClass: '',
+  };
 
-  const renderAdminNavlinks = () => {
+  componentDidMount() {
+    return localStorage.sideBarStatus !== OPEN && this.toggleSidebar();
+  }
+
+  toggleSidebar = () => {
+    const { isSideBarOpen } = this.state;
+    let sideBarStatus;
+    let sideBarWidth;
+    let sideNavTextClass;
+
+    if (isSideBarOpen) {
+      sideBarStatus = OPEN;
+      sideBarWidth = '270px';
+      sideNavTextClass = 'show';
+    } else {
+      sideBarStatus = CLOSED;
+      sideBarWidth = '70px';
+      sideNavTextClass = 'hide';
+    }
+
+    document.getElementById(LEFT_SIDE_BAR).style.width = sideBarWidth;
+    localStorage.setItem(SIDE_BAR_STATUS, sideBarStatus);
+
+    this.setState(prevState => ({
+      isSideBarOpen: !prevState.isSideBarOpen,
+      sideNavTextClass,
+    }));
+  };
+
+  renderAdminNavlinks = () => {
+    const { user: { role }, isAuthenticated } = this.props;
+    const { sideNavTextClass } = this.state;
+
     if (!isAuthenticated || role === 'user') {
       return;
     }
@@ -17,56 +55,80 @@ const LeftSideBar = (props) => {
         <div data-tip="Users">
           <NavLink to="/users" className="dropdown-item sidebar-navlink">
             <ion-icon name="people" />
-            <span id="sideBarText">Users</span>
+            <span
+              id="sideBarText"
+              className={sideNavTextClass}
+            >
+              Users
+            </span>
           </NavLink>
         </div>
       </Fragment>
     );
   };
 
-  return (
-    <div id="myLeftSideBar" className="leftsidebar">
-      <ReactTooltip effect="solid" place="right" />
-      <div data-tip="All Books">
-        <NavLink
-          to="/books"
-          className="dropdown-item sidebar-navlink"
+  renderNavLinks = () => {
+    const { isAuthenticated } = this.props;
+    const { sideNavTextClass } = this.state;
+
+    const navLinksMap = LEFT_SIDEBAR_NAV_LINKS.map((navLink) => {
+      const {
+        key, label, icon, link
+      } = navLink;
+
+      return (
+        <div data-tip={label} key={key}>
+          <NavLink
+            to={link}
+            className={`
+              dropdown-item sidebar-navlink
+              ${key !== 0 && !isAuthenticated && 'blur'}
+            `}
+          >
+            <ion-icon name={icon} />
+            <span
+              id="sideBarText"
+              className={sideNavTextClass}
+            >
+              {label}
+            </span>
+          </NavLink>
+        </div>
+      );
+    });
+
+    return navLinksMap;
+  }
+
+  render() {
+    const { sideNavTextClass } = this.state;
+
+    return (
+      <div id="myLeftSideBar" className="leftsidebar">
+        <ReactTooltip effect="solid" place="right" />
+        <div
+          onClick={this.toggleSidebar}
+          className="sidenav-collapse"
+          role="button"
+          tabIndex={0}
         >
-          <ion-icon name="bookmarks" />
-          <span id="sideBarText">All Books</span>
-        </NavLink>
+          <div className="menu-icon">
+            <ion-icon name="menu" />
+          </div>
+          <Link
+            to="/"
+            id="sideBarText"
+            className={sideNavTextClass}
+          >
+            Loresters Bookstore
+          </Link>
+        </div>
+        {this.renderNavLinks()}
+        {this.renderAdminNavlinks()}
       </div>
-      <div data-tip="My Books">
-        <NavLink
-          to="/my-books"
-          className={`dropdown-item sidebar-navlink ${!isAuthenticated && 'blur'}`}
-        >
-          <ion-icon name="book" />
-          <span id="sideBarText">My Books</span>
-        </NavLink>
-      </div>
-      <div data-tip="My Favorites">
-        <NavLink
-          to="/my-favorites"
-          className={`dropdown-item sidebar-navlink ${!isAuthenticated && 'blur'}`}
-        >
-          <ion-icon name="bookmark" />
-          <span id="sideBarText">My Favorites</span>
-        </NavLink>
-      </div>
-      <div data-tip="Profile">
-        <NavLink
-          to="/profile"
-          className={`dropdown-item sidebar-navlink ${!isAuthenticated && 'blur'}`}
-        >
-          <ion-icon name="person" />
-          <span id="sideBarText">Profile</span>
-        </NavLink>
-      </div>
-      {renderAdminNavlinks()}
-    </div>
-  );
-};
+    );
+  }
+}
 
 LeftSideBar.propTypes = {
   user: PropTypes.object,

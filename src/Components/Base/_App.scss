@@ -6,6 +6,7 @@
     box-shadow: $box_shadow_5;
     justify-content: space-between;
     background: $white_1;
+    margin-left: 70px;
 
     .container {
       margin: 0;
@@ -354,6 +355,10 @@
 
 @media screen and (max-width: 560px) {
   .App {
+    .navbar {
+      margin-left: unset;
+    }
+
     .search {
       margin: 15px 0;
       display: flex;

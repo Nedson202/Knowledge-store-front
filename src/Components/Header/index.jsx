@@ -8,19 +8,16 @@ import Search from '../Search';
 
 import { logOutUser } from '../../redux/actions/userActions';
 import {
-  OPEN, CLICK, BLOCK, NONE, AUTO, LEFT_SIDE_BAR,
-  MAIN, CLOSED, SIDE_BAR_TEXT, SIDE_BAR_STATUS, SIDE_NAV, LOGOUT, STORAGE
+  CLICK, NONE, SIDE_NAV, LOGOUT, STORAGE
 } from '../../settings';
 
 class Header extends Component {
   state = {
     isSideNavOpen: false,
-    isSideBarOpen: false,
   };
 
   componentDidMount() {
     window.addEventListener(STORAGE, this.syncLogout);
-    return localStorage.sideBarStatus !== OPEN && this.toggleSidebar();
   }
 
   componentWillUnmount() {
@@ -28,47 +25,26 @@ class Header extends Component {
     window.removeEventListener(STORAGE, this.syncLogout, false);
   }
 
-  toggleSidebar = () => {
-    const { isSideBarOpen } = this.state;
-    const mainContent = document.getElementById(MAIN);
-
-    if (isSideBarOpen) {
-      localStorage.setItem(SIDE_BAR_STATUS, OPEN);
-      document.getElementById(LEFT_SIDE_BAR).style.width = '260px';
-      this.toggleSidebarText(BLOCK);
-    } else {
-      localStorage.setItem(SIDE_BAR_STATUS, CLOSED);
-      document.getElementById(LEFT_SIDE_BAR).style.width = '70px';
-
-      if (mainContent) {
-        mainContent.style.marginLeft = AUTO;
-      }
-      this.toggleSidebarText(NONE);
-    }
-    this.setState(prevState => ({
-      isSideBarOpen: !prevState.isSideBarOpen,
-    }));
-  };
-
-  toggleSidebarText = (display) => {
-    const texts = document.querySelectorAll(SIDE_BAR_TEXT);
-    for (let text = 0; text < texts.length; text += 1) {
-      texts[text].style.display = display;
-    }
-  };
-
   toggleMobileNav = () => {
     const { isSideNavOpen } = this.state;
     const sideNavEL = document.getElementById(SIDE_NAV);
+    let sideNavWidth;
+    let sideNavBoxShadow;
+
     if (!isSideNavOpen) {
       document.addEventListener(CLICK, this.handleOutsideClick, false);
-      sideNavEL.style.width = '270px';
-      sideNavEL.style.boxShadow = '0 1px 1px 100vw rgba(0, 0, 0, 0.6)';
+
+      sideNavWidth = '270px';
+      sideNavBoxShadow = '0 1px 1px 100vw rgba(0, 0, 0, 0.6)';
     } else {
       document.removeEventListener(CLICK, this.handleOutsideClick, false);
-      sideNavEL.style.width = '0';
-      sideNavEL.style.boxShadow = NONE;
+
+      sideNavWidth = '0';
+      sideNavBoxShadow = NONE;
     }
+
+    sideNavEL.style.width = sideNavWidth;
+    sideNavEL.style.boxShadow = sideNavBoxShadow;
 
     this.setState(prevState => ({
       isSideNavOpen: !prevState.isSideNavOpen,
@@ -168,16 +144,6 @@ class Header extends Component {
           id="navbar"
           ref={(node) => { this.node = node; }}
         >
-          <div
-            onClick={this.toggleSidebar}
-            className="sidenav-collapse
-              dropdown-item sidebar-navlink collapse-bar btn-raised"
-            data-tip="Toggle sidebar"
-            role="button"
-            tabIndex={0}
-          >
-            <ion-icon name="menu" />
-          </div>
           <div className="container">
             <button
               type="button"

@@ -177,29 +177,32 @@ class UserProfile extends Component {
     } = this.state;
     const { user } = this.props;
     return (
-      <div className="profile-update" id="main">
-        <ReactTitle title="My Profile" />
-
+      <div className="container-content">
         <UserDetails
           user={user}
         />
-        <UpdateForm
-          user={user}
-          imagePreviewUrl={imagePreviewUrl}
-          formValues={values}
-          handleInputChange={this.onInputChange}
-          handleImageChange={this.onImageChange}
-          updateProfile={this.updateProfile}
-          formErrors={formErrors}
-          cancelPreview={this.cancelPreview}
-          uploadingImage={uploadingImage}
-        />
-        <UpdatePassword
-          handleInputChange={this.onInputChange}
-          updatePassword={this.updatePassword}
-          formErrors={formErrors}
-          formValues={values}
-        />
+
+        <div className="profile-update">
+          <ReactTitle title="My Profile" />
+
+          <UpdateForm
+            user={user}
+            imagePreviewUrl={imagePreviewUrl}
+            formValues={values}
+            handleInputChange={this.onInputChange}
+            handleImageChange={this.onImageChange}
+            updateProfile={this.updateProfile}
+            formErrors={formErrors}
+            cancelPreview={this.cancelPreview}
+            uploadingImage={uploadingImage}
+          />
+          <UpdatePassword
+            handleInputChange={this.onInputChange}
+            updatePassword={this.updatePassword}
+            formErrors={formErrors}
+            formValues={values}
+          />
+        </div>
       </div>
     );
   }

@@ -121,24 +121,24 @@ class MyBooks extends Component {
           startPolling, stopPolling,
         }) => (
           <Fragment>
-            <ReactTitle title="My Books" />
+              <ReactTitle title="My Books" />
 
-            <AddBook
-              bookToEdit={bookToEdit}
-              editingBook={editingBook}
-            />
-            {this.renderPageHeader()}
-            <div className="container-content" id="main">
-              {usersBooks && this.renderBooks(usersBooks)}
-              {loading && <BookPreloader loadingBook={loading} />}
-            </div>
-            {!loading && this.render404(usersBooks)}
+              <AddBook
+                bookToEdit={bookToEdit}
+                editingBook={editingBook}
+              />
+              {this.renderPageHeader()}
+              <div className="container-content">
+                {usersBooks && this.renderBooks(usersBooks)}
+                {loading && <BookPreloader loadingBook={loading} />}
+              </div>
+              {!loading && this.render404(usersBooks)}
 
-            <ApolloPolling
-              startPolling={startPolling}
-              stopPolling={stopPolling}
-            />
-          </Fragment>
+              <ApolloPolling
+                startPolling={startPolling}
+                stopPolling={stopPolling}
+              />
+            </Fragment>
         )}
       </Query>
     );

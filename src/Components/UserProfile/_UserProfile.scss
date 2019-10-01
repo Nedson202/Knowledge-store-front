@@ -38,8 +38,8 @@
   margin: 0 auto;
   width: 100%;
   max-width: 600px;
-  margin-bottom: 50px;
-  padding-top: 80px;
+  padding-top: 120px;
+  text-align: center;
 
   h4 {
     padding-bottom: 30px;
@@ -54,10 +54,6 @@
   &__image {
     margin: 20px auto;
   }
-
-  &__info {
-    width: 500px;
-  }
 }
 
 .profile-update {
@@ -66,7 +62,7 @@
   flex-wrap: wrap;
   width: 100%;
   max-width: 1200px;
-  margin: 100px auto 0 auto !important;
+  margin: 50px auto 0 auto;
   justify-content: space-between;
 
   .profile-upload {
@@ -105,31 +101,32 @@
 }
 
 @media screen and (max-width: 560px) {
+  .profile-details {
+    width: 100%;
+    flex-direction: column;
+    padding-top: 170px;
+
+    &__image {
+      width: 100%;
+      margin: 20px auto;
+
+      #show-image {
+        margin: 0 auto;
+        display: block;
+      }
+    }
+
+    &__info {
+      width: 100%;
+      max-width: 500px;
+    }
+  }
+
   .profile-update {
     display: flex;
     flex-direction: column;
     width: 100%;
     max-width: 600px;
-
-    .profile-details {
-      width: 100%;
-      flex-direction: column;
-
-      &__image {
-        width: 100%;
-        margin: 20px auto;
-
-        #show-image {
-          margin: 0 auto;
-          display: block;
-        }
-      }
-
-      &__info {
-        width: 100%;
-        max-width: 500px;
-      }
-    }
 
     .profile-upload {
       width: 100%;

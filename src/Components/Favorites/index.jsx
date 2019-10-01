@@ -129,22 +129,22 @@ class Favorites extends Component {
           startPolling, stopPolling,
         }) => (
           <Fragment>
-            <ReactTitle title="My Favorites" />
+              <ReactTitle title="My Favorites" />
 
-            {this.renderHeader()}
-            <div className="container-content" id="main">
-              {loading && <BookPreloader loadingBook={loading} />}
-              {!loading && favoriteBooks && favoriteBooks.length !== 0
-                && this.renderFavorites(favoriteBooks)}
-              {!loading && favoriteBooks && favoriteBooks.length === 0
-                && this.render404()}
-            </div>
+              {this.renderHeader()}
+              <div className="container-content">
+                {loading && <BookPreloader loadingBook={loading} />}
+                {!loading && favoriteBooks && favoriteBooks.length !== 0
+                  && this.renderFavorites(favoriteBooks)}
+                {!loading && favoriteBooks && favoriteBooks.length === 0
+                  && this.render404()}
+              </div>
 
-            <ApolloPolling
-              startPolling={startPolling}
-              stopPolling={stopPolling}
-            />
-          </Fragment>
+              <ApolloPolling
+                startPolling={startPolling}
+                stopPolling={stopPolling}
+              />
+            </Fragment>
         )}
       </Query>
     );
