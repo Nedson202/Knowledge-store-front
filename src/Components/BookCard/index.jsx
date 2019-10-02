@@ -77,6 +77,7 @@ class BookCard extends Component {
     const {
       enableEllipsis, setBookToEdit, book: { id }, book, setBookToRemove
     } = this.props;
+
     if (enableEllipsis) {
       return (
         <Fragment>
@@ -121,8 +122,6 @@ class BookCard extends Component {
     const { bookProfile } = this.props;
     const link = !moreBooks ? `/books/${id}` : `${id}`;
 
-    console.log(authors, 'authors');
-
     if (bookProfile) {
       return;
     }
@@ -131,11 +130,6 @@ class BookCard extends Component {
       <div className="book__card--footer">
         <span className="book__card--footer-link">
           <Link to={link} className="book__card--footer-title">
-            {/* <Truncate
-              lines={1}
-            >
-              {book.name}
-            </Truncate> */}
             {book.name}
             <br />
           </Link>

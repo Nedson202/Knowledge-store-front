@@ -5,7 +5,7 @@ import { passwordToggler } from '../../utils';
 
 const SignUpForm = (props) => {
   const {
-    handleInputChange, formErrors, handleUserSignup, values,
+    handleInputChange, formErrors, handleUserSignup, values, processing
   } = props;
 
   const renderForm = () => {
@@ -81,7 +81,7 @@ const SignUpForm = (props) => {
               role="button"
               tabIndex={0}
               onClick={passwordToggler('password-signup')}
-              id="password-icon"
+              id="signup-password-icon"
             >
               <ion-icon
                 class="hide"
@@ -112,6 +112,7 @@ const SignUpForm = (props) => {
         type="button"
         className="btn btn-primary btn-raised text-case signup-button"
         onClick={handleUserSignup}
+        disabled={processing}
       >
         Signup
       </button>
@@ -125,13 +126,13 @@ const SignUpForm = (props) => {
         id="SignUpFormModal"
         tabIndex="-1"
         role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
+        aria-labelledby="signup form"
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLongTitle">
+              <h5 className="modal-title">
                 Signup
               </h5>
               <button
@@ -167,6 +168,7 @@ SignUpForm.propTypes = {
   handleUserSignup: PropTypes.func.isRequired,
   formErrors: PropTypes.object.isRequired,
   values: PropTypes.object.isRequired,
+  processing: PropTypes.object.isRequired,
 };
 
 export default SignUpForm;

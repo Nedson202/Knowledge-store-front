@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { compose, graphql, Query } from 'react-apollo';
-import { ReactTitle } from 'react-meta-tags';
+import MetaTags from 'react-meta-tags';
 
 import BookCard from '../BookCard';
 import ReviewForm from '../ReviewForm';
@@ -298,7 +298,15 @@ class BookProfile extends Component {
 
           return (
             <Fragment>
-              <ReactTitle title="Book Profile" />
+              <MetaTags>
+                <meta
+                  name="description"
+                  content="Book profile shows a detailed summary of book description
+                  review, rating summary, book recommendations, and support for adding
+                  reviews."
+                />
+                <meta property="og:title" content="All Books" />
+              </MetaTags>
 
               {bookLoadError}
               <div className="book-profile-container">

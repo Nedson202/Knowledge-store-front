@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withApollo, compose } from 'react-apollo';
-import { ReactTitle } from 'react-meta-tags';
+import MetaTags from 'react-meta-tags';
 
 import BookCard from '../BookCard';
 import BackToTop from '../BackToTop';
@@ -175,7 +175,13 @@ class BookCatalog extends Component {
 
     return (
       <Fragment>
-        <ReactTitle title="All Books" />
+        <MetaTags>
+          <meta
+            name="description"
+            content="Book catalogue section. View a brief summary of books, their authors, and rating."
+          />
+          <meta property="og:title" content="All Books" />
+        </MetaTags>
 
         {this.renderPageHeader()}
         <div className="container-content">

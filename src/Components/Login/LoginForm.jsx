@@ -8,7 +8,7 @@ import {
 
 const LoginForm = (props) => {
   const {
-    onInputChange, handleUserLogin, formErrors, values
+    onInputChange, handleUserLogin, formErrors, values, processing
   } = props;
 
   const { username, password } = values;
@@ -18,7 +18,7 @@ const LoginForm = (props) => {
     <div>
       <div
         role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
+        aria-labelledby="login modal"
         aria-hidden="true"
         className="modal fade"
         id="LoginFormModal"
@@ -27,7 +27,7 @@ const LoginForm = (props) => {
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLongTitle">Login</h5>
+              <h5 className="modal-title">Login</h5>
               <button
                 type="button"
                 className="close"
@@ -84,7 +84,7 @@ const LoginForm = (props) => {
                     role="button"
                     tabIndex={0}
                     onClick={passwordToggler('password-login')}
-                    id="password-icon"
+                    id="login-password-icon"
                   >
                     <ion-icon
                       class="hide"
@@ -144,6 +144,7 @@ const LoginForm = (props) => {
                 type="button"
                 className="btn btn-primary btn-raised text-case login-button"
                 onClick={handleUserLogin}
+                disabled={processing}
               >
                 Login
               </button>
@@ -160,6 +161,7 @@ LoginForm.propTypes = {
   handleUserLogin: PropTypes.func.isRequired,
   formErrors: PropTypes.object.isRequired,
   values: PropTypes.object.isRequired,
+  processing: PropTypes.object.isRequired,
 };
 
 export default LoginForm;

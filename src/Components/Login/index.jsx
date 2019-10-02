@@ -37,7 +37,8 @@ class Login extends Component {
         username: '',
         password: '',
       },
-      formErrors: {}
+      formErrors: {},
+      processing: false,
     };
   }
 
@@ -54,11 +55,14 @@ class Login extends Component {
     const { values } = this.state;
     const { isValid, errors } = allFieldsValidation(values, ['email']);
     const { loginUserQuery, dispatch, } = this.props;
+
     if (!isValid) {
       return this.setState({ formErrors: errors });
     }
 
     try {
+      this.setState({ processing: true });
+
       const loginHandler = await loginUserQuery({
         variables: {
           ...values
@@ -80,16 +84,19 @@ class Login extends Component {
         values: {
           username: '',
           password: '',
-        }
+        },
+        processing: false,
       });
     } catch (error) {
       const messages = errorHandler(error);
       messages.forEach(message => toaster(TOASTR_ERROR, message));
+
+      this.setState({ processing: false });
     }
   }
 
   render() {
-    const { formErrors, values } = this.state;
+    const { formErrors, values, processing } = this.state;
     return (
       <Fragment>
         <LoginForm
@@ -97,6 +104,7 @@ class Login extends Component {
           handleUserLogin={this.handleUserLogin}
           formErrors={formErrors}
           values={values}
+          processing={processing}
         />
       </Fragment>
     );

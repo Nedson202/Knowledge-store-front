@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import setQuery from 'set-query-string';
 import { compose, withApollo, graphql } from 'react-apollo';
-import { ReactTitle } from 'react-meta-tags';
+import MetaTags from 'react-meta-tags';
 
 import Main from './Main';
 
@@ -90,7 +90,15 @@ class App extends Component {
     const { auth: { isAuthenticated } } = this.props;
     return (
       <div>
-        <ReactTitle title="Lorester Bookstore" />
+        <MetaTags>
+          <title>Lorester Bookstore</title>
+          <meta
+            name="og:description"
+            content="Welcome to Lorester Bookstore.
+              View, search, review, and bookmark book profiles."
+          />
+          <meta property="og:title" content="Lorester Bookstore" />
+        </MetaTags>
 
         <div id="background-layout" />
         <Main

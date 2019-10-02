@@ -5,9 +5,9 @@ import { passwordToggler } from '../../utils';
 
 const UpdatePassword = (props) => {
   const {
-    handleInputChange, updatePassword, formErrors,
-    formValues: { oldPassword, newPassword }
+    handleInputChange, updatePassword, formErrors, formValues,
   } = props;
+  const { oldPassword, newPassword } = formValues;
 
   return (
     <div className="password-update">
@@ -34,7 +34,7 @@ const UpdatePassword = (props) => {
             role="button"
             tabIndex={0}
             onClick={passwordToggler('old-password')}
-            id="password-icon"
+            id="old-password-icon"
           >
             <ion-icon
               class="hide"
@@ -69,7 +69,7 @@ const UpdatePassword = (props) => {
             role="button"
             tabIndex={0}
             onClick={passwordToggler('new-password')}
-            id="password-icon"
+            id="new-password-icon"
           >
             <ion-icon
               class="hide"

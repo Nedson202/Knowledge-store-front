@@ -56,7 +56,6 @@ export const SIDE_NAV = 'mySidenav';
 export const SCROLL_TO_ELEMENT = 'scrollToElement';
 export const SEARCH_BOX = 'searchBox';
 export const MAIN = 'main';
-export const SIDE_BAR_TEXT = '#sideBarText';
 
 // dom events
 export const CLICK = 'click';
