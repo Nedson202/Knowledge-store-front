@@ -17,7 +17,6 @@ class Main extends Component {
         >
           <ion-icon name="log-in" />
           Login to get started
-          {' '}
         </button>
         <button
           type="button"
@@ -27,7 +26,6 @@ class Main extends Component {
         >
           <ion-icon name="log-in" />
           Signup
-          {' '}
         </button>
       </Fragment>
     );
@@ -42,7 +40,6 @@ class Main extends Component {
           onClick={this.navigateToBooks}
         >
           <ion-icon name="paper-plane" />
-          {' '}
           Explore
         </button>
       </Fragment>

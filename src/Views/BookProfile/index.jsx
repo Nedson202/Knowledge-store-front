@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { compose, graphql, Query } from 'react-apollo';
 import MetaTags from 'react-meta-tags';
 
-import BookCard from '../BookCard';
-import ReviewForm from '../ReviewForm';
-import ReviewCard from '../ReviewCard';
+import BookCard from '../../Components/BookCard';
+import ReviewForm from '../../Components/ReviewForm';
+import ReviewCard from '../../Components/ReviewCard';
 import ProfilePreloader from './ProfilePreloader';
-import BackToTop from '../BackToTop';
-import Star from '../Star';
-import ApolloPolling from '../ApolloPolling/ApolloPolling';
+import BackToTop from '../../Components/BackToTop';
+import Star from '../../Components/Star';
+import ApolloPolling from '../../Components/ApolloPolling';
 
 import { fetchBook, addToFavorites } from '../../queries/books';
 import { toaster } from '../../utils';

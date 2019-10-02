@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import ContentLoader from 'react-content-loader';
 
-import BookImageLoader from '../BookCard/BookImageLoader';
-import ReviewLoader from '../ReviewCard/ReviewLoader';
+import BookImageLoader from '../../Components/BookCard/BookImageLoader';
+import ReviewLoader from '../../Components/ReviewCard/ReviewLoader';
 
 const ProfilePreloader = () => {
   const renderPreloader = () => (

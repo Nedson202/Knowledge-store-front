@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { compose, graphql, Query } from 'react-apollo';
 import { ReactTitle } from 'react-meta-tags';
 
-import BookCard from '../BookCard';
-import AddBook from '../AddBook';
+import BookCard from '../../Components/BookCard';
+import AddBook from '../../Components/AddBook';
 import BookPreloader from '../BookCatalog/BookPreloader';
-import ApolloPolling from '../ApolloPolling/ApolloPolling';
+import ApolloPolling from '../../Components/ApolloPolling';
 
 import { fetchUsersBooks, removeBook } from '../../queries/books';
 import { setBookToEdit } from '../../redux/actions/bookActions';
@@ -121,24 +121,24 @@ class MyBooks extends Component {
           startPolling, stopPolling,
         }) => (
           <Fragment>
-              <ReactTitle title="My Books" />
+            <ReactTitle title="My Books" />
 
-              <AddBook
-                bookToEdit={bookToEdit}
-                editingBook={editingBook}
-              />
-              {this.renderPageHeader()}
-              <div className="container-content">
-                {usersBooks && this.renderBooks(usersBooks)}
-                {loading && <BookPreloader loadingBook={loading} />}
-              </div>
-              {!loading && this.render404(usersBooks)}
+            <AddBook
+              bookToEdit={bookToEdit}
+              editingBook={editingBook}
+            />
+            {this.renderPageHeader()}
+            <div className="container-content">
+              {usersBooks && this.renderBooks(usersBooks)}
+              {loading && <BookPreloader loadingBook={loading} />}
+            </div>
+            {!loading && this.render404(usersBooks)}
 
-              <ApolloPolling
-                startPolling={startPolling}
-                stopPolling={stopPolling}
-              />
-            </Fragment>
+            <ApolloPolling
+              startPolling={startPolling}
+              stopPolling={stopPolling}
+            />
+          </Fragment>
         )}
       </Query>
     );

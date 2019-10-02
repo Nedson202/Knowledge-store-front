@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import Spinner from '../Spinner';
+import Spinner from '../../Components/Spinner';
 
 const ImageUpload = (props) => {
   const {
