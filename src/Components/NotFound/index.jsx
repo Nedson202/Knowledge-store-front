@@ -1,9 +1,15 @@
 import React from 'react';
-import { ReactTitle } from 'react-meta-tags';
+import MetaTags from 'react-meta-tags';
 
 const NotFound = () => (
   <div className="not-found text-center">
-    <ReactTitle title="Content not found" />
+    <MetaTags>
+      <meta
+        name="description"
+        content="Page is not found"
+      />
+      <meta property="og:title" content="Page not found" />
+    </MetaTags>
 
     <h1 className="not-found__404">404!</h1>
     <h1 className="not-found__text">

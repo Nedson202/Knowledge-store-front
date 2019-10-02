@@ -126,7 +126,7 @@ class PasswordReset extends Component {
             />
             <div
               onClick={passwordToggler('password-reset')}
-              id="password-icon"
+              id="reset-password-icon"
               role="button"
               tabIndex={0}
             >

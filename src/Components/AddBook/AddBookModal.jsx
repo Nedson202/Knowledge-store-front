@@ -76,11 +76,11 @@ class AddBookModal extends Component {
   render() {
     const {
       imagePreviewUrl, genres, handleInputChange, handleGenreChange,
-      dateChange, handleBookSubmission, editingBook,
-      bookToEdit: {
-        name, authors, year, description
-      }
+      dateChange, handleBookSubmission, editingBook, bookToEdit,
     } = this.props;
+    const {
+      name, authors, year, description
+    } = bookToEdit;
 
     return (
       <Fragment>
@@ -101,7 +101,7 @@ class AddBookModal extends Component {
               <div className="modal-header">
                 <h5
                   className="modal-title"
-                  id="exampleModalLongTitle"
+
                 >
                   {editingBook ? EDIT_BOOK : ADD_BOOK}
                 </h5>

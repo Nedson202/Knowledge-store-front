@@ -57,8 +57,7 @@ class LeftSideBar extends Component {
           <NavLink to="/users" className="dropdown-item sidebar-navlink">
             <ion-icon name="people" />
             <span
-              id="sideBarText"
-              className={sideNavTextClass}
+              className={`${sideNavTextClass} sideBarText`}
             >
               Users
             </span>
@@ -88,8 +87,7 @@ class LeftSideBar extends Component {
           >
             <ion-icon name={icon} />
             <span
-              id="sideBarText"
-              className={sideNavTextClass}
+              className={`${sideNavTextClass} sideBarText`}
             >
               {label}
             </span>
@@ -118,8 +116,7 @@ class LeftSideBar extends Component {
           </div>
           <Link
             to="/"
-            id="sideBarText"
-            className={sideNavTextClass}
+            className={`${sideNavTextClass} sideBarText`}
           >
             Loresters Bookstore
           </Link>

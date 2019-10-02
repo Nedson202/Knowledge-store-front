@@ -21,7 +21,7 @@ const AddAddminModal = (props) => {
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLongTitle">
+              <h5 className="modal-title">
                 {ADD_ADMIN}
               </h5>
               <button

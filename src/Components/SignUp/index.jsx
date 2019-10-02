@@ -37,6 +37,7 @@ class SignUp extends Component {
         password: ''
       },
       formErrors: {},
+      processing: false,
     };
   }
 
@@ -59,6 +60,8 @@ class SignUp extends Component {
     }
 
     try {
+      this.setState({ processing: true });
+
       const signupHandler = await addUserQuery({
         variables: {
           ...values
@@ -80,16 +83,19 @@ class SignUp extends Component {
           username: '',
           email: '',
           password: ''
-        }
+        },
+        processing: false,
       });
     } catch (error) {
       const messages = errorHandler(error);
       messages.forEach(message => toaster(TOASTR_ERROR, message));
+
+      this.setState({ processing: false });
     }
   }
 
   render() {
-    const { values, formErrors } = this.state;
+    const { values, formErrors, processing } = this.state;
     return (
       <Fragment>
         <SignUpForm
@@ -97,6 +103,7 @@ class SignUp extends Component {
           formErrors={formErrors}
           handleUserSignup={this.handleUserSignup}
           handleInputChange={this.handleInputChange}
+          processing={processing}
         />
       </Fragment>
     );
