@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import BookImageLoader from '../BookCard/BookImageLoader';
+import BookImageLoader from '../../Components/BookCard/BookImageLoader';
 
 const BookPreloader = (props) => {
   const { loadingBook } = props;

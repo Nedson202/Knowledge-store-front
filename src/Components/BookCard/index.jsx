@@ -57,7 +57,6 @@ class BookCard extends Component {
               src={toHTTPS(bookImage)}
               className="book__card--images"
               alt="Card cap"
-              id="book-image"
               onLoad={this.checkImageRender}
             />
           </Link>

@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { compose, graphql, withApollo } from 'react-apollo';
 import { Select } from 'antd';
 
-import Tables from '../Table';
-import AddAdminModal from '../AddAdminModal';
+import Tables from '../../Components/Table';
+import AddAdminModal from '../../Components/AddAdminModal';
 
 import { filterUsers, toggleAdmin } from '../../queries/users';
 import { toaster, errorHandler, modalToggler } from '../../utils';
-import Spinner from '../Spinner';
+import Spinner from '../../Components/Spinner';
 import {
   SUCCESS, CLOSE_USER, ADD, TOASTR_ERROR, FETCH_USERS_QUERY,
   TOGGLE_ADMIN_QUERY,

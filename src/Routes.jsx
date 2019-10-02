@@ -1,20 +1,21 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import App from './Components/Base';
+import App from './Views/Base';
+import BookProfile from './Views/BookProfile';
+import BookCatalog from './Views/BookCatalog';
+import NotFound from './Views/NotFound';
+import AdminPanel from './Views/AdminPanel';
+import Users from './Views/Users';
+import UserProfile from './Views/UserProfile';
+import PasswordReset from './Views/PasswordReset';
+import EmailGenerator from './Views/EmailGenerator';
+import Favorites from './Views/Favorites';
+import MyBooks from './Views/MyBooks';
+
 import Header from './Components/Header';
-import BookProfile from './Components/BookProfile';
-import BookCatalog from './Components/BookCatalog';
-import NotFound from './Components/NotFound';
-import AdminPanel from './Components/AdminPanel';
-import Users from './Components/Users';
-import UserProfile from './Components/UserProfile';
 import SideNav from './Components/SideNav';
 import LeftSideBar from './Components/LeftSideBar';
-import PasswordReset from './Components/PasswordReset';
-import EmailGenerator from './Components/EmailGenerator';
-import Favorites from './Components/Favorites';
-import MyBooks from './Components/MyBooks';
 import NetworkDetector from './Components/Hoc/NetworkDetector';
 import AuthWrapper from './Components/Hoc/AuthWrapper';
 import 'antd/dist/antd.css';

@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { withApollo, compose } from 'react-apollo';
 import MetaTags from 'react-meta-tags';
 
-import BookCard from '../BookCard';
-import BackToTop from '../BackToTop';
-import Spinner from '../Spinner';
+import BookCard from '../../Components/BookCard';
+import BackToTop from '../../Components/BackToTop';
+import Spinner from '../../Components/Spinner';
 import BookPreloader from './BookPreloader';
 
 import { setRetrievedBooks } from '../../redux/actions/bookActions';

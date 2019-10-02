@@ -1,6 +1,6 @@
 import React from 'react';
 
-import MainContent from '../MainContent';
+import MainContent from '../../Components/MainContent';
 
 const AdminPanel = () => (
   <div className="admin-panel">

@@ -151,7 +151,6 @@ class EmailGenerator extends Component {
             {requestType}
             {' '}
             link will be sent to the email address you provide.
-            {' '}
           </h5>
         </div>
         <div className="form-group">
