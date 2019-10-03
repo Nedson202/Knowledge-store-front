@@ -16,15 +16,6 @@
     font-size: 20px;
     display: block;
     font-weight: 100;
-
-    .sidebar-navlink i {
-      cursor: pointer;
-      padding-right: 20px;
-    }
-
-    a {
-      color: $black_1 !important;
-    }
   }
 
   &-auth-buttons {
@@ -47,7 +38,6 @@
     }
 
     .username {
-      color: $black_2;
       text-transform: capitalize;
       font-size: 20px;
       text-align: center;
@@ -63,9 +53,9 @@
       font-size: 18px;
     }
 
-    .dropdown-item.active {
+    a.dropdown-item.active {
       border-left: 2px solid $blue_2;
-      background-color: $grey_5 !important;
+      background-color: $grey_5;
       color: $black_2;
     }
   }

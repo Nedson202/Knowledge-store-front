@@ -9,7 +9,7 @@ import { timeParser } from '../../utils';
 class ReplyCard extends PureComponent {
   renderReviewerImage(picture) {
     return (
-      <div>
+      <div className="review-avatar">
         <img
           src={picture}
           className="rounded-circle"

@@ -40,6 +40,7 @@ class BookCard extends Component {
     const { image, id } = book;
     const { imageLoaded, bookImage, imageLoadingError } = this.state;
     const link = !moreBooks ? `/books/${id}` : `${id}`;
+
     return (
       <Fragment>
         {!imageLoaded && imageLoadingError.length === 0 && <BookImageLoader />}
@@ -61,13 +62,16 @@ class BookCard extends Component {
             />
           </Link>
         )}
-        <img
-          src={toHTTPS(image) || ''}
-          className="hide"
-          onLoad={this.checkImageRender(book ? image : '')}
-          onError={this.handleImageLoadingError}
-          alt="userImage"
-        />
+
+        {!imageLoaded && (
+          <img
+            src={toHTTPS(image) || ''}
+            className="hide"
+            onLoad={this.checkImageRender(book ? image : '')}
+            onError={this.handleImageLoadingError}
+            alt="userImage"
+          />
+        )}
       </Fragment>
     );
   };
@@ -129,8 +133,12 @@ class BookCard extends Component {
       <div className="book__card--footer">
         <span className="book__card--footer-link">
           <Link to={link} className="book__card--footer-title">
-            {book.name}
-            <br />
+            <Truncate
+              lines={1}
+            >
+              {book.name}
+              <br />
+            </Truncate>
           </Link>
           {this.renderActionDropdown(userId)}
         </span>

@@ -37,7 +37,6 @@ class BackToTop extends React.PureComponent {
     window.scroll(SCROLL_PARAM);
   };
 
-
   render() {
     const { displayBackToTop } = this.state;
     return (

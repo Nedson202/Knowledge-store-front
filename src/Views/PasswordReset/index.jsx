@@ -1,5 +1,5 @@
 import queryString from 'querystring';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
 import { connect } from 'react-redux';
@@ -92,7 +92,7 @@ class PasswordReset extends Component {
   render() {
     const { values: { email } } = this.state;
     return (
-      <Fragment>
+      <div className="container-content">
         <form className="password-reset">
           <div className="form-group">
             <label
@@ -151,7 +151,7 @@ class PasswordReset extends Component {
             </button>
           </div>
         </form>
-      </Fragment>
+      </div>
     );
   }
 }

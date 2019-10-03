@@ -8,6 +8,10 @@
 	}
 }
 
+.preloader {
+  width: 100%;
+}
+
 .original-book {
 	.book__card {
     margin-top: 6px;
@@ -92,7 +96,7 @@
 
       .book__card {
         margin-bottom: unset;
-        
+
         &--images {
           height: 17rem;
           margin: auto;
@@ -208,20 +212,10 @@
 	}
 }
 
-@media screen and (min-width: 561px) and (max-width: 758px) {
-	.container-content {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		max-width: 1200px;
-		margin: 90px 30px;
-		grid-gap: 50px;
-	}
-}
-
 @media screen and (max-width: 560px) {
 	.container-content {
 		display: flex;
-		flex-direction: column;
+    flex-direction: column;
 
 		.original-book {
 			display: block;
@@ -308,13 +302,8 @@
     }
   }
 
-	.review-card, .reply-card {
-		grid-gap: 10px;
-	}
-
 	.add-review-form {
 		margin-top: -30px !important;
-    grid-column: span 2;
 
     .form-control {
       font-size: unset;

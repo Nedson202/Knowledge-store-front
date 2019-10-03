@@ -9,14 +9,12 @@ class MessageBanner extends Component {
       <div className="pending-verification">
         A verification link has been sent to your mail box.
         Click on the link or use this
-        {' '}
         <Link
           to="/email?verify-email=true"
           style={{ color: 'black' }}
         >
           Link
         </Link>
-        {' '}
         to request for a new verification mail.
       </div>
     );

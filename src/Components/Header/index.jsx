@@ -8,7 +8,8 @@ import Search from '../Search';
 
 import { logOutUser } from '../../redux/actions/userActions';
 import {
-  CLICK, NONE, SIDE_NAV, LOGOUT, STORAGE
+  CLICK, NONE, SIDE_NAV, LOGOUT, STORAGE, THEME, FLIP_THEME, LIGHT, THEME_ATTRIBUTE,
+  SIDE_NAV_WIDTH_270, SIDE_NAV_BOX_SHADOW
 } from '../../settings';
 
 class Header extends Component {
@@ -17,6 +18,7 @@ class Header extends Component {
   };
 
   componentDidMount() {
+    this.loadTheme();
     window.addEventListener(STORAGE, this.syncLogout);
   }
 
@@ -34,8 +36,8 @@ class Header extends Component {
     if (!isSideNavOpen) {
       document.addEventListener(CLICK, this.handleOutsideClick, false);
 
-      sideNavWidth = '270px';
-      sideNavBoxShadow = '0 1px 1px 100vw rgba(0, 0, 0, 0.6)';
+      sideNavWidth = SIDE_NAV_WIDTH_270;
+      sideNavBoxShadow = SIDE_NAV_BOX_SHADOW;
     } else {
       document.removeEventListener(CLICK, this.handleOutsideClick, false);
 
@@ -65,10 +67,36 @@ class Header extends Component {
     dispatch(logOutUser());
   }
 
+  toggleDarkMode = () => {
+    const currentTheme = localStorage.getItem(THEME) || LIGHT;
+    const theme = FLIP_THEME[currentTheme];
+
+    localStorage.setItem(THEME, theme);
+    document.documentElement.setAttribute(THEME_ATTRIBUTE, theme);
+  }
+
+  loadTheme = () => {
+    const currentTheme = localStorage.getItem(THEME) || LIGHT;
+    document.documentElement.setAttribute(THEME_ATTRIBUTE, currentTheme);
+  }
+
   syncLogout(event) {
     if (event.key === LOGOUT) {
       window.location.reload();
     }
+  }
+
+  renderThemeButton(platformStyle) {
+    return (
+      <button
+        type="button"
+        className={`dark-mode-switch ${platformStyle}`}
+        aria-label="Dark mode switch"
+        onClick={this.toggleDarkMode}
+      >
+        <ion-icon name="contrast" class="dark-mode-icon" />
+      </button>
+    );
   }
 
   renderAuthButtons() {
@@ -116,7 +144,7 @@ class Header extends Component {
             {username}
           </div>
           <div className="dropdown-divider" />
-          <Link to="/profile" className="dropdown-item">
+          <Link to="/my-profile" className="dropdown-item">
             <ion-icon class="user-profile-icon" name="person" />
             Profile
           </Link>
@@ -154,6 +182,7 @@ class Header extends Component {
             <Link to="/">
               <span className="navbar-brand">Loresters Bookstore</span>
             </Link>
+
             <button
               type="button"
               className="mobile-nav"
@@ -166,6 +195,8 @@ class Header extends Component {
               <ion-icon name="search" />
             </button>
 
+            {this.renderThemeButton('mobile-nav')}
+
             <div
               className="collapse navbar-collapse"
               id="navbarSupportedContent"
@@ -174,8 +205,12 @@ class Header extends Component {
               <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
                 {user.isVerified && this.renderUserAvatar()}
               </ul>
+              {!user.isVerified && this.renderAuthButtons()}
+              <span className="desktop-and-tablet">
+                {this.renderThemeButton()}
+              </span>
             </div>
-            {!user.isVerified && this.renderAuthButtons()}
+
           </div>
         </nav>
       </Fragment>

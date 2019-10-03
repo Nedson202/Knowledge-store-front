@@ -386,10 +386,13 @@
 
       ion-icon {
         top: 10px;
+        left: 20px;
       }
 
       .form-input {
         width: 100%;
+        max-width: 100%;
+        margin-left: -10px;
 
         &:focus {
           width: 100% !important;

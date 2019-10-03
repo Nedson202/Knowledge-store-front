@@ -7,7 +7,7 @@ import ReviewLoader from '../../Components/ReviewCard/ReviewLoader';
 const ProfilePreloader = () => {
   const renderPreloader = () => (
     <Fragment>
-      <div>
+      <div className="preloader">
         <div className="original-book">
           <BookImageLoader />
         </div>

@@ -66,6 +66,16 @@ export const ONLINE = 'online';
 export const OFFLINE = 'offline';
 export const STORAGE = 'storage';
 
+// Theme
+export const THEME = 'theme';
+export const LIGHT = 'light';
+export const DARK = 'dark';
+export const FLIP_THEME = {
+  dark: LIGHT,
+  light: DARK,
+};
+export const THEME_ATTRIBUTE = 'data-theme';
+
 export const TEXT = 'text';
 export const PASSWORD_TYPE = 'password';
 
@@ -89,9 +99,11 @@ export const DELETE = 'delete';
 export const BLOCK = 'block';
 export const NONE = 'none';
 export const HIDE = 'hide';
+export const SHOW = 'show';
 export const OPEN = 'open';
 export const AUTO = 'auto';
 export const CLOSED = 'closed';
+export const USER = 'user';
 
 export const NO_CONTENT = 'The content you seek is unavailable';
 export const BOOK_SERVER_ERROR = 'Unable to retrieve books from the server please try again';
@@ -158,3 +170,45 @@ export const LEFT_SIDEBAR_NAV_LINKS = [
     link: '/my-profile',
   },
 ];
+
+export const SIDE_NAV_WIDTH_270 = '270px';
+export const SIDE_NAV_WIDTH_70 = '70px';
+export const SIDE_NAV_BOX_SHADOW = '0 1px 1px 100vw rgba(0, 0, 0, 0.6)';
+
+export const STOP_POLLING_AFTER = 5000;
+export const POLL_INTERVAL = 2000;
+
+export const BOOKS_PATH = '/books';
+
+export const RATING_SPECS = {
+  1: 'oneStar',
+  2: 'twoStar',
+  3: 'threeStar',
+  4: 'fourStar',
+  5: 'fiveStar',
+};
+
+export const RATING_STATS = {
+  oneStar: {
+    rating: 1,
+    percentage: 0,
+  },
+  twoStar: {
+    rating: 2,
+    percentage: 0,
+  },
+  threeStar: {
+    rating: 3,
+    percentage: 0,
+  },
+  fourStar: {
+    rating: 4,
+    percentage: 0,
+  },
+  fiveStar: {
+    rating: 5,
+    percentage: 0,
+  },
+};
+
+export const PERCENTAGE_100 = 100;

@@ -25,6 +25,10 @@ a {
   }
 }
 
+.dropdown-item {
+  color: unset;
+}
+
 .App {
   .hide {
     display: none;
@@ -67,6 +71,16 @@ a {
   .phone-only {
     display: none;
   }
+
+  .dark-mode {
+    &-switch {
+      background: transparent;
+      border: transparent;
+      cursor: pointer;
+      vertical-align: sub;
+      margin-left: 30px;
+    }
+  }
 }
 
 h2#swal2-title {
@@ -85,6 +99,12 @@ h2#swal2-title {
   .App {
     .phone-only {
       display: block;
+    }
+
+    .dark-mode {
+      &-switch {
+        margin-left: unset;
+      }
     }
   }
 }

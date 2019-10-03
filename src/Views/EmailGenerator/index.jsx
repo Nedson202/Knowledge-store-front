@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose, withApollo } from 'react-apollo';
 import queryString from 'querystring';
@@ -181,9 +181,9 @@ class EmailGenerator extends Component {
 
   render() {
     return (
-      <Fragment>
+      <div className="container-content">
         {this.renderForm()}
-      </Fragment>
+      </div>
     );
   }
 }

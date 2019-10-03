@@ -1,22 +1,63 @@
-@media (prefers-color-scheme: dark) {
+[data-theme="dark"] {
   .App {
     background: $black_1;
-    color: $grey_1;
+    color: $white_1;
+
+    .dark-mode {
+      &-icon {
+        transform: rotate(180deg);
+        color: $white_1;
+      }
+    }
+
+    .mobile-nav {
+      ion-icon {
+        color: $white_1;
+      }
+    }
 
     a {
-      color: $grey_1;
+      color: $white_1;
     }
 
     nav.navbar {
       background: $black_4;
 
+      .dropdown-toggle:after {
+        color: $white_1;
+      }
+
       a {
-        color: $grey_1;
+        color: $white_1;
       }
 
       .search .form-input {
-        background: $grey_1;
+        background: $white_1;
         color: $black_2;
+      }
+
+      .dropdown-menu {
+        ion-icon {
+          color: $white_1;
+        }
+
+        background: $black_4;
+
+        a:hover {
+          background: transparent;
+        }
+
+        div {
+          color: $white_1;
+        }
+
+        button {
+          color: $white_1;
+
+          &:hover {
+            background: transparent;
+          }
+        }
       }
     }
 
@@ -24,18 +65,18 @@
       background: $black_4;
 
       a {
-        color: $grey_1;
+        color: $white_1;
 
         &:not(.active) {
           ion-icon {
-            color: $grey_1;
+            color: $white_1;
           }
         }
       }
 
       .sidenav-collapse {
         ion-icon {
-          color: $grey_1;
+          color: $white_1;
         }
       }
 
@@ -45,19 +86,29 @@
       }
     }
 
-    input.form-control,
-    textarea.form-control {
-      color: $grey_1;
-      background-image: linear-gradient(0deg, $grey_1 1px, rgba(0, 150, 136, 0) 0),
-      linear-gradient(0deg, rgba(0, 0, 0, 0.2) 1px, transparent 0)
+    div.sidenav {
+      background: $black_4;
+      color: $white_1;
+
+      a.dropdown-item {
+        color: $white_1;
+      }
+
+      a.dropdown-item.active {
+        background-color: unset;
+      }
+
+      #login-button {
+        color: $black_2;
+      }
     }
 
     .btn-raised {
-      background: $grey_2;
+      background: $white_1;
     }
 
     #login-button {
-      color: $grey_1;
+      color: $white_1;
 
       &:hover,
       &:focus {
@@ -75,57 +126,70 @@
 
     .favorite-option {
       ion-icon {
-        color: $grey_2;
+        color: $white_1;
+      }
+    }
+
+    .form-group {
+      ion-icon {
+        color: $white_1;
+      }
+
+      input.form-control,
+      textarea.form-control {
+        border-bottom: 0.25px solid $white_1;
+        color: $white_1;
+        background-image: linear-gradient(0deg, $white_1 1px, rgba(0, 150, 136, 0) 0),
+        linear-gradient(0deg, rgba(0, 0, 0, 0.2) 1px, transparent 0)
       }
     }
 
     .modal {
-      color: $grey_2;
+      color: $white_1;
 
       .is-focused [class*=bmd-label],
       .is-focused [class^=bmd-label] {
-        color: $grey_2 !important;
-      }
-
-      input.form-control {
-        border-bottom: 0.25px solid $grey_2;
-        color: $grey_1;
-        background-image: linear-gradient(0deg, $grey_1 1px, rgba(0, 150, 136, 0) 0),
-        linear-gradient(0deg, rgba(0, 0, 0, 0.2) 1px, transparent 0)
+        color: $white_1 !important;
       }
 
       ion-icon {
-        color: $grey_2;
+        color: $white_1;
       }
 
       div.modal-header {
-        border: 1px solid $grey_2;
+        border: 1px solid $white_1;
         background-color: $black_4;
 
         #close-login,
         #close-signup {
-          color: $grey_2;
+          color: $white_1;
         }
       }
 
       .modal-content {
-        border: 1px solid $grey_2;
+        border: 1px solid $white_1;
         background-color: $black_4;
       }
     }
 
     div.social-login-text {
-      color: $grey_2;
+      color: $white_1;
     }
 
     div.login-additional-help {
       a {
-        color: $grey_2;
+        color: $white_1;
       }
     }
 
     .book-retrieve-error {
-      color: $grey_2;
+      color: $white_1;
+    }
+
+    .review-card {
+      ion-icon {
+        color: $white_1;
+      }
     }
   }
 }

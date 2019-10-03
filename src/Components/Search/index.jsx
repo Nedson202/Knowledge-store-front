@@ -10,7 +10,7 @@ import { compose, withApollo } from 'react-apollo';
 import { bookFilter } from '../../queries/books';
 import { setRetrievedBooks } from '../../redux/actions/bookActions';
 import {
-  SEARCH_DEBOUNCE_TIME, PREVIOUS_LOCATION,
+  SEARCH_DEBOUNCE_TIME, PREVIOUS_LOCATION, BOOKS_PATH,
 } from '../../settings';
 
 class Search extends PureComponent {
@@ -77,10 +77,10 @@ class Search extends PureComponent {
     if (value.trim().length === 1) {
       history.push({
         ...history.location,
-        pathname: '/books',
+        pathname: BOOKS_PATH,
       });
 
-      if (location.pathname !== '/books') {
+      if (location.pathname !== BOOKS_PATH) {
         localStorage.setItem(PREVIOUS_LOCATION, location.pathname);
       }
     }
@@ -121,12 +121,15 @@ class Search extends PureComponent {
     const { clipboardData } = event;
     const { history, history: { location } } = this.props;
     const query = clipboardData.getData('text/plain');
+
     if (query.trim().length) {
       history.push({
         ...history.location,
-        pathname: '/books',
+        pathname: BOOKS_PATH,
       });
+
       localStorage.setItem(PREVIOUS_LOCATION, location.pathname);
+
       return this.debounceSearch(query);
     }
   }

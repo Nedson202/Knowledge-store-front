@@ -46,6 +46,7 @@ class ReviewCard extends Component {
       reviewFormId: id,
     }), () => {
       const { isReplyFormOpen } = this.state;
+
       if (isReplyFormOpen) {
         scrollToComponent(this.Review, SCROLL_TO_PARAM);
       }

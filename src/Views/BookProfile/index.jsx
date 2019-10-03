@@ -15,7 +15,7 @@ import { fetchBook, addToFavorites } from '../../queries/books';
 import { toaster } from '../../utils';
 import {
   SUCCESS, NO_AUTHOR, ADD_TO_FAVORITES,
-  REMOVE_FROM_FAVORITES, ADD_FAVORITES_QUERY,
+  REMOVE_FROM_FAVORITES, ADD_FAVORITES_QUERY, RATING_SPECS, RATING_STATS, PERCENTAGE_100,
 } from '../../settings';
 import BookRetrieveError from './BookRetrieveError';
 
@@ -41,49 +41,19 @@ class BookProfile extends Component {
   }
 
   calculateRatingStats = (reviews) => {
-    const ratingSpecs = {
-      1: 'oneStar',
-      2: 'twoStar',
-      3: 'threeStar',
-      4: 'fourStar',
-      5: 'fiveStar',
-    };
-
-    const ratingStats = {
-      oneStar: {
-        rating: 1,
-        percentage: 0,
-      },
-      twoStar: {
-        rating: 2,
-        percentage: 0,
-      },
-      threeStar: {
-        rating: 3,
-        percentage: 0,
-      },
-      fourStar: {
-        rating: 4,
-        percentage: 0,
-      },
-      fiveStar: {
-        rating: 5,
-        percentage: 0,
-      },
-    };
-
     reviews.forEach((review) => {
       const parseReview = Math.floor(review.rating);
 
-      const ratingStarType = ratingSpecs[parseReview];
-      const ratingStatsValue = ratingStats[ratingStarType].ratingCount || 0;
+      const ratingStarType = RATING_SPECS[parseReview];
+      const ratingStatsValue = RATING_STATS[ratingStarType].ratingCount || 0;
       const starCount = ratingStatsValue + 1;
-      const totalPercentage = starCount / reviews.length * 100;
-      ratingStats[ratingStarType].percentage = totalPercentage;
-      ratingStats[ratingStarType].ratingCount = starCount;
+      const totalPercentage = starCount / reviews.length * PERCENTAGE_100;
+
+      RATING_STATS[ratingStarType].percentage = totalPercentage;
+      RATING_STATS[ratingStarType].ratingCount = starCount;
     });
 
-    return ratingStats;
+    return RATING_STATS;
   }
 
   refetchQuery() {

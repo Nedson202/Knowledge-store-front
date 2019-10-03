@@ -1,10 +1,8 @@
 .reply-card {
-	display: grid;
-	grid-template-columns: 1fr 9fr;
-	width: 100%;
-	max-width: 800px;
-	margin: 20px 0 25px 0;
-  grid-gap: 10px;
+  display: flex;
+  width: 100%;
+  max-width: 800px;
+  margin: 20px 0 25px;
 
   .form-control {
     font-size: unset;
