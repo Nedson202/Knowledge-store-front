@@ -17,6 +17,7 @@ class Header extends Component {
   };
 
   componentDidMount() {
+    this.loadTheme();
     window.addEventListener(STORAGE, this.syncLogout);
   }
 
@@ -65,6 +66,23 @@ class Header extends Component {
     dispatch(logOutUser());
   }
 
+  toggleDarkMode = () => {
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    const flipTheme = {
+      dark: 'light',
+      light: 'dark',
+    };
+    const theme = flipTheme[currentTheme];
+
+    localStorage.setItem('theme', theme);
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+
+  loadTheme = () => {
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+  }
+
   syncLogout(event) {
     if (event.key === LOGOUT) {
       window.location.reload();
@@ -74,6 +92,15 @@ class Header extends Component {
   renderAuthButtons() {
     return (
       <div className="desktop-and-tablet">
+        <button
+          type="button"
+          className="dark-mode-switch"
+          aria-label="Dark mode switch"
+          onClick={this.toggleDarkMode}
+        >
+          <ion-icon name="contrast" class="dark-mode-icon" />
+        </button>
+
         <button
           type="button"
           className="btn btn-default cancel-button btn"
@@ -154,6 +181,16 @@ class Header extends Component {
             <Link to="/">
               <span className="navbar-brand">Loresters Bookstore</span>
             </Link>
+
+            <button
+              type="button"
+              className="dark-mode-switch mobile-nav"
+              aria-label="Dark mode switch"
+              onClick={this.toggleDarkMode}
+            >
+              <ion-icon name="contrast" class="dark-mode-icon" />
+            </button>
+
             <button
               type="button"
               className="mobile-nav"
@@ -175,6 +212,7 @@ class Header extends Component {
                 {user.isVerified && this.renderUserAvatar()}
               </ul>
             </div>
+
             {!user.isVerified && this.renderAuthButtons()}
           </div>
         </nav>

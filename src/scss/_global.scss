@@ -67,6 +67,15 @@ a {
   .phone-only {
     display: none;
   }
+
+  .dark-mode {
+    &-switch {
+      background: transparent;
+      border: transparent;
+      cursor: pointer;
+      vertical-align: sub;
+    }
+  }
 }
 
 h2#swal2-title {

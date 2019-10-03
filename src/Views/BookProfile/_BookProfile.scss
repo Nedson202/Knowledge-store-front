@@ -92,7 +92,7 @@
 
       .book__card {
         margin-bottom: unset;
-        
+
         &--images {
           height: 17rem;
           margin: auto;
@@ -221,7 +221,11 @@
 @media screen and (max-width: 560px) {
 	.container-content {
 		display: flex;
-		flex-direction: column;
+    flex-direction: column;
+
+    .preloader {
+      width: 100%;
+    }
 
 		.original-book {
 			display: block;
