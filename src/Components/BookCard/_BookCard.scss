@@ -1,8 +1,4 @@
 .book__card {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-
   .ant-checkbox-wrapper {
     display: block;
     margin: auto;
@@ -30,7 +26,6 @@
 
 	&--footer {
     text-align: center;
-    color: $black_4;
 
 		&-link {
 			display: flex;
@@ -47,16 +42,11 @@
 			position: relative;
 			font-size: 15px;
 			top: 18px;
-			color: $black_4;
       font-weight: 100;
       width: 100%;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-
-      &:hover {
-        color: $black_4;
-      }
 		}
 
 		.react-star {

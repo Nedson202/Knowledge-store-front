@@ -131,8 +131,9 @@ class Favorites extends Component {
           <Fragment>
             <ReactTitle title="My Favorites" />
 
-            {this.renderHeader()}
             <div className="container-content">
+              {this.renderHeader()}
+
               {loading && <BookPreloader loadingBook={loading} />}
               {!loading && favoriteBooks && favoriteBooks.length !== 0
                 && this.renderFavorites(favoriteBooks)}

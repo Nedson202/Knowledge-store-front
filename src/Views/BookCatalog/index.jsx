@@ -161,11 +161,11 @@ class BookCatalog extends Component {
     }
 
     return (
-      <div>
+      <Fragment>
         <h2 className="text-center fetch-error">
           {message}
         </h2>
-      </div>
+      </Fragment>
     );
   }
 
@@ -183,12 +183,12 @@ class BookCatalog extends Component {
           <meta property="og:title" content="All Books" />
         </MetaTags>
 
-        {this.renderPageHeader()}
         <div className="container-content">
+          {this.renderPageHeader()}
           {!loadingBook && books.length !== 0 && this.renderBooks(books)}
           {loadingBook && <BookPreloader loadingBook={loadingBook} />}
+          {!loadingBook && this.render404Message()}
         </div>
-        {!loadingBook && this.render404Message()}
         <div
           className="text-center"
           style={{ marginBottom: '20px' }}

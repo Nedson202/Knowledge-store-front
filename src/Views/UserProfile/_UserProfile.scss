@@ -37,7 +37,6 @@
   margin: 0 auto;
   width: 100%;
   max-width: 600px;
-  padding-top: 120px;
   text-align: center;
 
   h4 {
@@ -60,8 +59,8 @@
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-  max-width: 1200px;
-  margin: 50px auto 0 auto;
+  margin: 0 auto;
+  padding-top: 40px;
   justify-content: space-between;
 
   .profile-upload {
@@ -100,10 +99,13 @@
 }
 
 @media screen and (max-width: 560px) {
+  .container-content {
+    padding-top: 80px;
+  }
+
   .profile-details {
     width: 100%;
     flex-direction: column;
-    padding-top: 170px;
 
     &__image {
       width: 100%;

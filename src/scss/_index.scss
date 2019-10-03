@@ -1,10 +1,11 @@
 @import './colors';
 @import './global';
+@import './darkmode';
 
 @import '../Views/AdminPanel/AdminPanel';
 @import '../Views/Base/App';
-@import '../Views/BookCatalog/BookCatalog';
 @import '../Views/BookProfile/BookProfile';
+@import '../Views/BookCatalog/BookCatalog';
 @import '../Views/Favorites/Favorites';
 @import '../Views/MyBooks/MyBooks';
 @import '../Views/NotFound/NotFound';

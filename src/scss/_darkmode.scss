@@ -1,0 +1,131 @@
+@media (prefers-color-scheme: dark) {
+  .App {
+    background: $black_1;
+    color: $grey_1;
+
+    a {
+      color: $grey_1;
+    }
+
+    nav.navbar {
+      background: $black_4;
+
+      a {
+        color: $grey_1;
+      }
+
+      .search .form-input {
+        background: $grey_1;
+        color: $black_2;
+      }
+    }
+
+    div.leftsidebar {
+      background: $black_4;
+
+      a {
+        color: $grey_1;
+
+        &:not(.active) {
+          ion-icon {
+            color: $grey_1;
+          }
+        }
+      }
+
+      .sidenav-collapse {
+        ion-icon {
+          color: $grey_1;
+        }
+      }
+
+      .dropdown-item:focus,
+      .dropdown-item:hover {
+        background: transparent;
+      }
+    }
+
+    input.form-control,
+    textarea.form-control {
+      color: $grey_1;
+      background-image: linear-gradient(0deg, $grey_1 1px, rgba(0, 150, 136, 0) 0),
+      linear-gradient(0deg, rgba(0, 0, 0, 0.2) 1px, transparent 0)
+    }
+
+    .btn-raised {
+      background: $grey_2;
+    }
+
+    #login-button {
+      color: $grey_1;
+
+      &:hover,
+      &:focus {
+        color: $black_2;
+        background: $white_1;
+      }
+    }
+
+    button.btn.btn-primary {
+      &:hover,
+      &:focus {
+        background: $blue_2;
+      }
+    }
+
+    .favorite-option {
+      ion-icon {
+        color: $grey_2;
+      }
+    }
+
+    .modal {
+      color: $grey_2;
+
+      .is-focused [class*=bmd-label],
+      .is-focused [class^=bmd-label] {
+        color: $grey_2 !important;
+      }
+
+      input.form-control {
+        border-bottom: 0.25px solid $grey_2;
+        color: $grey_1;
+        background-image: linear-gradient(0deg, $grey_1 1px, rgba(0, 150, 136, 0) 0),
+        linear-gradient(0deg, rgba(0, 0, 0, 0.2) 1px, transparent 0)
+      }
+
+      ion-icon {
+        color: $grey_2;
+      }
+
+      div.modal-header {
+        border: 1px solid $grey_2;
+        background-color: $black_4;
+
+        #close-login,
+        #close-signup {
+          color: $grey_2;
+        }
+      }
+
+      .modal-content {
+        border: 1px solid $grey_2;
+        background-color: $black_4;
+      }
+    }
+
+    div.social-login-text {
+      color: $grey_2;
+    }
+
+    div.login-additional-help {
+      a {
+        color: $grey_2;
+      }
+    }
+
+    .book-retrieve-error {
+      color: $grey_2;
+    }
+  }
+}
