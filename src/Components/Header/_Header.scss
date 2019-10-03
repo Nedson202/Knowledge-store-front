@@ -12,30 +12,32 @@
 }
 
 @media screen and (max-width: 758px) {
-  .close-icon {
-    left: 0;
-  }
+  .App {
+    .close-icon {
+      left: 0;
+    }
 
-  .navbar-collapse {
-    ul {
+    .navbar-collapse {
+      ul {
+        display: none !important;
+      }
+    }
+
+    .sidenav-collapse {
       display: none !important;
     }
-  }
 
-  .sidenav-collapse {
-    display: none !important;
-  }
+    #navbarSupportedContent .bmd-form-group {
+      width: 100%;
+    }
 
-  #navbarSupportedContent .bmd-form-group {
-    width: 100%;
-  }
+    .navbar {
+      padding: 1rem 1rem !important;
 
-  .navbar {
-    padding: 1rem 1rem !important;
-
-    &-brand {
-      margin-left: 0 !important;
-      padding-top: 0;
+      &-brand {
+        margin-left: 0 !important;
+        padding-top: 0;
+      }
     }
   }
 }

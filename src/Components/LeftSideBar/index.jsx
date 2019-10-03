@@ -61,7 +61,10 @@ class LeftSideBar extends Component {
     return (
       <Fragment>
         <div data-tip="Users">
-          <NavLink to="/users" className="dropdown-item sidebar-navlink">
+          <NavLink
+            to="/users"
+            className="dropdown-item sidebar-navlink"
+          >
             <ion-icon name="people" />
             <span
               className={`${sideNavTextClass} sideBarText`}

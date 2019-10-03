@@ -115,25 +115,24 @@
         flex-wrap: wrap;
         justify-content: space-between;
         width: 100%;
-        max-width: 350px !important;
+        max-width: 350px;
 
         .book__card {
           width: calc(1/2*100% - (1 - 1/2)*50px);
           margin-bottom: unset;
 
           &--images {
-            width: 150px !important;
-            height: 12rem !important;
+            width: 150px;
+            height: 12rem;
           }
 
           &--footer {
-            width: 150px !important;
-            height: 7rem !important;
+            height: 7rem;
           }
 
           &--error-placeholder {
-            width: 150px !important;
-            height: 13rem !important;
+            width: 150px;
+            height: 13rem;
             line-height: 13rem;
             border: 1px solid $grey_7;
             border-radius: 4px;
@@ -159,12 +158,12 @@
 		.original-book {
 			display: block;
 			margin: 0 auto 20px auto;
-			width: 250px !important;
+			width: 250px;
 
 			.book__card {
 				&--images {
-					width: 250px !important;
-					height: 20rem !important;
+					width: 250px;
+					height: 20rem;
 				}
 			}
 
@@ -189,13 +188,12 @@
 
 			.book__card {
 				&--images {
-					width: 200px !important;
-					height: 16rem !important;
+					width: 200px;
+					height: 16rem;
 				}
 
 				&--footer {
-					width: 200px !important;
-					height: 7rem !important;
+					height: 7rem;
 				}
 
         &--error-placeholder {
@@ -220,12 +218,16 @@
 		.original-book {
 			display: block;
 			margin: 0 auto;
-      width: 210px !important;
+      width: 210px;
 
-      .book__card--images {
-        height: 17rem;
-        width: 210px !important;
-        margin: auto;
+      .book__card {
+        margin-bottom: 30px;
+
+        &--images {
+          height: 17rem;
+          width: 210px;
+          margin: auto;
+        }
       }
 
 			.favorite-option {
@@ -237,82 +239,80 @@
 			}
 
 			&--error-placeholder {
-				width: 210px !important;
-				height: 15rem !important;
+				width: 210px;
+				height: 15rem;
 				line-height: 15rem;
-				border: 1px solid $grey_7;
-				border-radius: 4px;
-				display: block;
-				margin: auto;
 			}
-		}
-  }
+    }
 
-  .book-profile {
-    &-rating {
-      flex-direction: column;
-      margin-top: 20px;
-      margin-bottom: 70px;
-
-      &-summary > span {
-        margin-left: -10%;
-        font-size: 100px;
-      }
-
-      &-summary > div {
-        margin-left: unset;
-      }
-
-      &-stats {
-        margin-left: -17%;
-        vertical-align: sub;
+    .book-profile {
+      &-rating {
+        flex-direction: column;
         margin-top: 20px;
+        margin-bottom: 70px;
+
+        &-summary > span {
+          margin-left: -10%;
+          font-size: 100px;
+        }
+
+        &-summary > div {
+          margin-left: unset;
+        }
+
+        &-stats {
+          margin-left: -17%;
+          vertical-align: sub;
+          margin-top: 20px;
+        }
+      }
+
+      &-more {
+        display: flex;
+        flex-direction: row;
+        margin: auto;
+        margin-top: 30px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .book__card {
+          margin-bottom: unset;
+
+          &--images {
+            width: 150px;
+            height: 12rem;
+          }
+
+          &--footer {
+            height: 7rem;
+          }
+
+          &--error-placeholder {
+            width: 150px !important;
+            height: 11rem !important;
+            line-height: 11rem;
+            border: 1px solid $grey_7;
+            border-radius: 4px;
+            display: block;
+            margin: auto;
+          }
+        }
       }
     }
 
-    &-more {
-      display: flex;
-      flex-direction: row;
-      margin: auto;
+    .add-review-form {
+      margin-top: -30px;
+
+      .form-control {
+        font-size: unset;
+      }
+    }
+
+    .book-recommendation {
       margin-top: 30px;
-      flex-wrap: wrap;
-      justify-content: space-between;
-
-      .book__card {
-        &--images {
-          width: 150px !important;
-          height: 12rem !important;
-        }
-
-        &--footer {
-          width: 150px !important;
-          height: 7rem !important;
-        }
-
-        &--error-placeholder {
-          width: 150px !important;
-          height: 11rem !important;
-          line-height: 11rem;
-          border: 1px solid $grey_7;
-          border-radius: 4px;
-          display: block;
-          margin: auto;
-        }
-      }
     }
   }
 
-	.add-review-form {
-		margin-top: -30px !important;
-
-    .form-control {
-      font-size: unset;
-    }
-  }
-
-  .book-recommendation {
-    margin-top: 30px;
-  }
 }
 
 .book-meta {

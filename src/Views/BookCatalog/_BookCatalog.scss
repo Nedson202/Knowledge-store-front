@@ -42,13 +42,13 @@
 				display: block;
 				margin: auto;
 			}
-		}
-	}
+    }
 
-	.user-books {
-		&__header {
-			display: none !important;
-		}
+    .user-books {
+      &__header {
+        display: none;
+      }
+    }
 	}
 }
 

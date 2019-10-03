@@ -133,17 +133,19 @@ class Users extends Component {
       ? fetchUsersQuery.fetchUsers : [];
     const filteredResult = filteredUsers.length ? filteredUsers : users;
     return (
-      <div className="admin-panel">
-        {this.renderHeader()}
-        {fetchUsersQuery.loading ? (
-          <span className="table-spinner">
-            <Spinner spinnerStyle={45} />
-          </span>
-        ) : this.renderTable(filteredResult)}
-        <AddAdminModal
-          handleInputChange={this.handleEmailChange}
-          addAmin={this.handleToggleAdmin}
-        />
+      <div className="container-content">
+        <div className="admin-panel">
+          {this.renderHeader()}
+          {fetchUsersQuery.loading ? (
+            <span className="table-spinner">
+              <Spinner spinnerStyle={45} />
+            </span>
+          ) : this.renderTable(filteredResult)}
+          <AddAdminModal
+            handleInputChange={this.handleEmailChange}
+            addAmin={this.handleToggleAdmin}
+          />
+        </div>
       </div>
     );
   }
