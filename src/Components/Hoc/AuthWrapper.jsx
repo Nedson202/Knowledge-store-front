@@ -24,7 +24,7 @@ export default function (ComposedComponent, admin) {
       }
 
       if (!tokenDecoder(localStorage.token).id) {
-        toaster(TOASTR_ERROR, 'You need to login to access page content');
+        toaster(TOASTR_ERROR, 'You need to login to access page');
         return history.goBack();
       }
 
@@ -34,7 +34,7 @@ export default function (ComposedComponent, admin) {
       }
 
       if (!isAuthenticated) {
-        toaster(TOASTR_ERROR, 'You need to login to access page content');
+        toaster(TOASTR_ERROR, 'You need to login to access page');
         return history.goBack();
       }
     }

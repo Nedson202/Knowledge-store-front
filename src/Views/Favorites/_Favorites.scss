@@ -1,29 +1,37 @@
-.favorite-books {
-  &__header {
-    .save {
-      margin-right: 15px;
-    }
+.App {
+  .favorite-books {
+    &__header {
+      .save {
+        margin-right: 15px;
+      }
 
-    .remove-favorites {
-      background-color: $red_3 !important;
+      button.btn.remove-favorites {
+        background-color: $red_3;
+
+        &:hover {
+          background-color: $red_3;
+        }
+      }
     }
   }
 }
 
 @media (max-width: 560px) {
-  .admin-panel {
-    width: 90% !important;
-    margin: 120px 20px 0 0px !important;
+  .container-content {
+    .admin-panel {
+      width: 90%;
+      margin: 120px 20px 0 0px;
 
-    &__header {
-      width: 105%;
+      &__header {
+        width: 105%;
+      }
     }
-  }
 
-  .favorite-books {
-    &__header {
-      .remove-favorites {
-        margin-right: unset;
+    .favorite-books {
+      &__header {
+        .remove-favorites {
+          margin-right: unset;
+        }
       }
     }
   }

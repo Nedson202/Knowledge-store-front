@@ -24,7 +24,7 @@ class LeftSideBar extends Component {
     let sideBarWidth;
     let sideNavTextClass;
 
-    if (typeof window.orientation !== 'undefined') {
+    if (typeof window.orientation === 'undefined') {
       sideBarStatus = CLOSED;
       sideBarWidth = SIDE_NAV_WIDTH_70;
       sideNavTextClass = HIDE;
@@ -39,6 +39,7 @@ class LeftSideBar extends Component {
       sideBarWidth = SIDE_NAV_WIDTH_270;
       sideNavTextClass = SHOW;
     }
+
 
     document.getElementById(LEFT_SIDE_BAR).style.width = sideBarWidth;
     localStorage.setItem(SIDE_BAR_STATUS, sideBarStatus);
@@ -61,7 +62,10 @@ class LeftSideBar extends Component {
     return (
       <Fragment>
         <div data-tip="Users">
-          <NavLink to="/users" className="dropdown-item sidebar-navlink">
+          <NavLink
+            to="/users"
+            className="dropdown-item sidebar-navlink"
+          >
             <ion-icon name="people" />
             <span
               className={`${sideNavTextClass} sideBarText`}

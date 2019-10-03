@@ -137,9 +137,9 @@
 
       input.form-control,
       textarea.form-control {
-        border-bottom: 0.25px solid $white_1;
+        border-bottom: 0.25px solid $grey_8;
         color: $white_1;
-        background-image: linear-gradient(0deg, $white_1 1px, rgba(0, 150, 136, 0) 0),
+        background-image: linear-gradient(0deg, $grey_8 1px, rgba(0, 150, 136, 0) 0),
         linear-gradient(0deg, rgba(0, 0, 0, 0.2) 1px, transparent 0)
       }
     }
@@ -157,7 +157,6 @@
       }
 
       div.modal-header {
-        border: 1px solid $white_1;
         background-color: $black_4;
 
         #close-login,
@@ -167,7 +166,7 @@
       }
 
       .modal-content {
-        border: 1px solid $white_1;
+        border: 1px solid $grey_8;
         background-color: $black_4;
       }
     }
@@ -190,6 +189,10 @@
       ion-icon {
         color: $white_1;
       }
+    }
+
+    hr {
+      background-color: $grey_8;
     }
   }
 }

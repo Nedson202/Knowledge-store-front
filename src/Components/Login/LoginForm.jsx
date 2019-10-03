@@ -161,7 +161,7 @@ LoginForm.propTypes = {
   handleUserLogin: PropTypes.func.isRequired,
   formErrors: PropTypes.object.isRequired,
   values: PropTypes.object.isRequired,
-  processing: PropTypes.object.isRequired,
+  processing: PropTypes.bool.isRequired,
 };
 
 export default LoginForm;

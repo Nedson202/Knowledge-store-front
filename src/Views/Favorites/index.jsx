@@ -75,7 +75,7 @@ class Favorites extends Component {
           {itemsToRemove.length !== 0 && (
             <button
               type="button"
-              className="btn btn-primary btn-raised save"
+              className="btn btn-primary btn-raised save remove-favorites"
               onClick={this.removeFavorites}
             >
               Remove

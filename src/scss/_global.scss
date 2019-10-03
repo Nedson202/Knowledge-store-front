@@ -81,6 +81,15 @@ a {
       margin-left: 30px;
     }
   }
+
+  .table thead th {
+    color: unset;
+    border-bottom-color: unset;
+  }
+
+  .ant-checkbox-wrapper {
+    color: unset;
+  }
 }
 
 h2#swal2-title {

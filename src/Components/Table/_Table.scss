@@ -1,15 +1,19 @@
-.table-panel {
-  max-width: 950px;
-  width: 100%;
+.container-content {
+  .table-panel {
+    width: 100%;
 
-  &__user-delete {
-    min-width: 9rem !important;
-    padding: 0 !important;
-  }
+    &__user-delete {
+      min-width: 9rem;
+      padding: 0;
+    }
 
-  tr {
-    &:hover {
-      box-shadow: $box_shadow_7;
+    tr {
+      border: 1px solid transparent;
+
+      &:hover {
+        box-shadow: none;
+        border: 1px solid;
+      }
     }
   }
 }

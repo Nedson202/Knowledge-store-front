@@ -75,14 +75,26 @@ if (token) {
   store.dispatch(setCurrentUser(tokenDecoder(token)));
 }
 
-ReactDOM.render(
-  (
-    <ApolloProvider client={client}>
-      <Provider store={store}>
-        <BrowserRouter>
-          <Routes />
-        </BrowserRouter>
-      </Provider>
-    </ApolloProvider>
-  ), document.getElementById('root')
-);
+const renderDOM = () => {
+  ReactDOM.render(
+    (
+      <ApolloProvider client={client}>
+        <Provider store={store}>
+          <BrowserRouter>
+            <Routes />
+          </BrowserRouter>
+        </Provider>
+      </ApolloProvider>
+    ), document.getElementById('root')
+  );
+};
+
+
+(async () => {
+  await persistCache({
+    cache,
+    storage: window.localStorage,
+  });
+
+  renderDOM();
+})();

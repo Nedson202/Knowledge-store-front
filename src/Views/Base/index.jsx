@@ -20,6 +20,7 @@ import {
 class App extends Component {
   componentDidMount() {
     const { auth, auth: { user }, history } = this.props;
+
     document.getElementById(NAV_BAR).style.display = NONE;
     document.getElementById(LEFT_SIDE_BAR).style.display = NONE;
 
@@ -38,6 +39,7 @@ class App extends Component {
     }
 
     const modalEL = document.getElementById(CLOSE);
+
     return modalEL && modalToggler();
   }
 
@@ -73,21 +75,27 @@ class App extends Component {
   socialAuthentication() {
     const query = queryString.parse(window.location.search);
     const { dispatch } = this.props;
-    if (Object.keys(query)[0] === '?token') {
-      const token = Object.values(query)[0];
-      localStorage.setItem(TOKEN, token);
-      const decodedToken = tokenDecoder(token);
-      dispatch(setCurrentUser(decodedToken));
-      setQuery({ token: '' });
-      toaster(SUCCESS, AUTH_SUCCESS);
+    const hasTokenProperty = Object.keys(query)[0] === '?token';
+    const token = Object.values(query)[0];
 
-      return decodedToken.isVerified
-        && window.location.replace(MY_BOOKS_PATH);
+    if (!hasTokenProperty) {
+      return;
     }
+
+    const decodedToken = tokenDecoder(token);
+    localStorage.setItem(TOKEN, token);
+
+    dispatch(setCurrentUser(decodedToken));
+    setQuery({ token: '' });
+    toaster(SUCCESS, AUTH_SUCCESS);
+
+    return decodedToken.isVerified
+      && window.location.replace(MY_BOOKS_PATH);
   }
 
   render() {
     const { auth: { isAuthenticated } } = this.props;
+
     return (
       <div>
         <MetaTags>

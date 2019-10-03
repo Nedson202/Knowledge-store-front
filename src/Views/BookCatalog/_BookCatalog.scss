@@ -42,13 +42,13 @@
 				display: block;
 				margin: auto;
 			}
-		}
-	}
+    }
 
-	.user-books {
-		&__header {
-			display: none !important;
-		}
+    .user-books {
+      &__header {
+        display: none;
+      }
+    }
 	}
 }
 
@@ -82,27 +82,38 @@
 }
 
 @media screen and (max-width: 375px) {
-	.container-content {
-    padding: 100px 10px 0 10px;
+  .App {
+    .container-content {
+      padding: 100px 15px 0 15px;
 
-		.book__card {
-      flex-basis: 35%;
-      margin-bottom: 50px;
+      .book__card {
+        margin-bottom: 50px;
 
-			&--error-placeholder {
-				width: 155px !important;
-				height: 13rem !important;
-				line-height: 13rem;
-				border: 1px solid $grey_2;
-				border-radius: 4px;
-				margin-top: 15px;
-				display: block;
-				margin: auto;
-			}
-		}
-	}
+        &--images {
+          width: 150px;
+          height: 13rem;
+        }
+
+        &--error-placeholder {
+          width: 155px !important;
+          height: 13rem !important;
+          line-height: 13rem;
+          border: 1px solid $grey_2;
+          border-radius: 4px;
+          margin-top: 15px;
+          display: block;
+          margin: auto;
+        }
+      }
+    }
+  }
 }
 
 .fetch-error {
 	margin: 100px auto;
+}
+
+#scrollToElement {
+  flex-basis: 100%;
+  margin-bottom: 20px;
 }

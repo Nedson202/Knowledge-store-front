@@ -1,36 +1,37 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-class MessageBanner extends Component {
-  emailConfirmationNote() {
-    return (
-      <div className="pending-verification">
-        A verification link has been sent to your mail box.
-        Click on the link or use this
-        <Link
-          to="/email?verify-email=true"
-          style={{ color: 'black' }}
-        >
-          Link
-        </Link>
-        to request for a new verification mail.
-      </div>
-    );
+const MessageBanner = (props) => {
+  const { isAuthenticated, user } = props;
+
+  const emailConfirmationNote = () => (
+    <div className="pending-verification">
+      A verification link has been sent to your mail box.
+      Click on the link or use this
+      &nbsp;
+      <Link
+        to="/email?verify-email=true"
+        style={{ color: 'black' }}
+      >
+        Link
+      </Link>
+      &nbsp;
+      to request for a new verification mail.
+    </div>
+  );
+
+  if (!isAuthenticated || user.isVerified) {
+    return <></>;
   }
 
-  render() {
-    const { isAuthenticated, user } = this.props;
-
-    return (
-      <Fragment>
-        {isAuthenticated && !user.isVerified
-        && this.emailConfirmationNote()}
-      </Fragment>
-    );
-  }
-}
+  return (
+    <Fragment>
+      {emailConfirmationNote()}
+    </Fragment>
+  );
+};
 
 MessageBanner.propTypes = {
   isAuthenticated: PropTypes.bool,

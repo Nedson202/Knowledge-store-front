@@ -58,6 +58,7 @@ class BookProfile extends Component {
 
   refetchQuery() {
     const { match: { params: { id } } } = this.props;
+
     return [
       {
         query: fetchBook,

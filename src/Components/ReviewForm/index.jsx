@@ -48,9 +48,14 @@ class ReviewForm extends Component {
     this.setState({ bookId });
   }
 
+  componentWillUnmount() {
+    window.addEventListener(RESET, this.clearForm);
+  }
+
   handleInputChange = (event) => {
     const { values } = this.state;
     const { value, name } = event.target;
+
     values[name] = value;
     this.setState({ values });
   }
@@ -58,6 +63,7 @@ class ReviewForm extends Component {
   handleFormSubmission = () => () => {
     const { values } = this.state;
     const { reviewType } = this.props;
+
     switch (reviewType) {
       case REPLY:
         return this.addReply(values);
@@ -90,7 +96,7 @@ class ReviewForm extends Component {
     if (!review.trim()) return toaster(TOASTR_ERROR, REVIEW_WARNING);
     if (!rating) return toaster(TOASTR_ERROR, RATING_WARNING);
 
-
+    console.log('wht asjdjsdjdjsjds');
     try {
       await addReviewQuery({
         variables: {
@@ -101,8 +107,10 @@ class ReviewForm extends Component {
       });
 
       window.addEventListener(RESET, this.clearForm());
+
       toaster(SUCCESS, REVIEW_SUCCESS);
       const lastElement = document.getElementById(LAST_ELEMENT);
+
       return lastElement && lastElement.scrollIntoView();
     } catch (error) {
       const messages = errorHandler(error);
@@ -196,9 +204,10 @@ class ReviewForm extends Component {
   }
 
   fixControlledValue(value) {
-    if (typeof value === 'undefined' || value === null) {
+    if (typeof value === 'undefined' || !value) {
       return '';
     }
+
     return value;
   }
 
@@ -218,6 +227,7 @@ class ReviewForm extends Component {
       toggleForm, reviewType, reviewFormId, setReplyToEdit,
       reviewToReply, setReviewToEdit, itemOnEdit
     } = this.props;
+
     switch (reviewType) {
       case REVIEW:
         return BLOCK;
@@ -246,6 +256,7 @@ class ReviewForm extends Component {
     const { reviewType } = this.props;
     const { values: { rating } } = this.state;
     const starOptions = [REPLY, REPLY_EDIT];
+
     return (
       <span>
         {!starOptions.includes(reviewType) && (

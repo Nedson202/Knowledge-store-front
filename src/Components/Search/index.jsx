@@ -45,7 +45,7 @@ class Search extends PureComponent {
 
   state = {
     value: '',
-    toggleCloseIcon: false
+    closeIconActive: false
   };
 
   componentDidMount() {
@@ -55,18 +55,24 @@ class Search extends PureComponent {
   setInputFromQuery() {
     const { dispatch } = this.props;
     const query = queryString.parse(window.location.search);
-    if (Object.keys(query)[0] && Object.keys(query)[0] === '?search') {
-      dispatch(setRetrievedBooks([], true));
-      const queryValue = Object.values(query)[0];
+    const queryKeys = Object.keys(query)[0];
+    const queryValue = Object.values(query)[0];
 
-      this.setState({
-        value: queryValue || '',
-        toggleCloseIcon: queryValue && true
-      });
+    const hasSearchProperty = queryKeys && queryKeys === '?search';
 
-      if (queryValue.trim().length) {
-        return this.debounceSearch(queryValue);
-      }
+    if (!hasSearchProperty) {
+      return;
+    }
+
+    dispatch(setRetrievedBooks([], true));
+
+    this.setState({
+      value: queryValue || '',
+      closeIconActive: queryValue && true
+    });
+
+    if (queryValue.trim()) {
+      return this.debounceSearch(queryValue);
     }
   }
 
@@ -74,6 +80,7 @@ class Search extends PureComponent {
     event.preventDefault();
     const { name, value } = event.target;
     const { history, history: { location } } = this.props;
+
     if (value.trim().length === 1) {
       history.push({
         ...history.location,
@@ -85,24 +92,18 @@ class Search extends PureComponent {
       }
     }
 
-    this.setState({ [name]: value, }, () => {
+    this.setState({
+      [name]: value,
+    }, () => {
       const { value: searchQuery } = this.state;
-      let closeIconStatus;
 
-      if (searchQuery.trim().length) {
-        closeIconStatus = true;
-      } else {
-        closeIconStatus = false;
-      }
-
-      this.setState({ toggleCloseIcon: closeIconStatus });
       setQuery({ search: searchQuery });
       this.debounceSearch(searchQuery);
     });
   }
 
   clearSearchQuery = () => {
-    this.setState({ value: '', toggleCloseIcon: false });
+    this.setState({ value: '', closeIconActive: false });
     setQuery({ search: '' });
 
     const { history } = this.props;
@@ -112,9 +113,13 @@ class Search extends PureComponent {
 
   handleReset = () => {
     const { value } = this.state;
-    if (!value.trim()) {
-      setQuery({ search: null });
+    if (value.trim()) {
+      return;
     }
+
+    setQuery({ search: null });
+
+    this.setState({ closeIconActive: false });
   }
 
   handleDataPaste = (event) => {
@@ -122,20 +127,26 @@ class Search extends PureComponent {
     const { history, history: { location } } = this.props;
     const query = clipboardData.getData('text/plain');
 
-    if (query.trim().length) {
-      history.push({
-        ...history.location,
-        pathname: BOOKS_PATH,
-      });
-
-      localStorage.setItem(PREVIOUS_LOCATION, location.pathname);
-
-      return this.debounceSearch(query);
+    if (!query.trim()) {
+      return;
     }
+
+    history.push({
+      ...history.location,
+      pathname: BOOKS_PATH,
+    });
+
+    localStorage.setItem(PREVIOUS_LOCATION, location.pathname);
+
+    return this.debounceSearch(query);
+  }
+
+  closeIconActive = () => {
+    this.setState({ closeIconActive: true });
   }
 
   render() {
-    const { value, toggleCloseIcon } = this.state;
+    const { value, closeIconActive } = this.state;
     return (
       <form
         className="search"
@@ -155,11 +166,13 @@ class Search extends PureComponent {
           id="searchBox"
           onChange={this.onInputChange}
           onBlur={this.handleReset}
+          onFocus={this.closeIconActive}
           autoComplete="off"
           onPaste={this.handleDataPaste}
           value={value}
         />
-        {toggleCloseIcon && (
+
+        {closeIconActive && (
           <button
             type="button"
             onClick={this.clearSearchQuery}

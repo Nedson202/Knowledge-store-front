@@ -1,18 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
-import { toaster } from '../../utils';
 import {
-  SUCCESS, TOASTR_ERROR, LOAD, ONLINE,
-  OFFLINE
+  LOAD, ONLINE, OFFLINE, DESTROY_INTERNET_BANNER
 } from '../../settings';
 
 export default function (ComposedComponent) {
   class NetworkDetector extends Component {
+    state = {
+      connectionMessage: '',
+      online: false,
+    }
+
     componentDidMount() {
       window.addEventListener(LOAD, () => {
         window.addEventListener(ONLINE, this.updateOnlineStatus);
         window.addEventListener(OFFLINE, this.updateOnlineStatus);
       });
+    }
+
+    shouldComponentUpdate() {
+      this.registerDestroyBanner();
+
+      return true;
     }
 
     componentWillUnmount() {
@@ -23,16 +32,47 @@ export default function (ComposedComponent) {
     }
 
     updateOnlineStatus = () => {
-      const condition = navigator.onLine ? ONLINE : OFFLINE;
-      if (condition === ONLINE) {
-        return toaster(SUCCESS, 'You are back online');
+      const browserOnline = navigator.onLine;
+      let message;
+
+      if (browserOnline) {
+        message = 'You are back online';
+      } else {
+        message = 'You are offline';
       }
-      return toaster(TOASTR_ERROR, 'You are no longer online');
+
+      this.setState({
+        connectionMessage: message,
+        online: browserOnline
+      });
+    }
+
+    registerDestroyBanner = () => {
+      setTimeout(() => {
+        const { online } = this.state;
+
+        if (online) {
+          this.setState({ connectionMessage: '' });
+        }
+      }, DESTROY_INTERNET_BANNER);
+    }
+
+    renderConnectionMessage() {
+      const { connectionMessage } = this.state;
+
+      if (!connectionMessage) {
+        return;
+      }
+
+      return <div className="internet-connection">{connectionMessage}</div>;
     }
 
     render() {
       return (
-        <ComposedComponent {...this.props} />
+        <Fragment>
+          <ComposedComponent {...this.props} />
+          {this.renderConnectionMessage()}
+        </Fragment>
       );
     }
   }

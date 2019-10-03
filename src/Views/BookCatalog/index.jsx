@@ -59,7 +59,7 @@ class BookCatalog extends Component {
     }, () => this.fetchBooksOnScroll());
   };
 
-  fetchBooksOnScroll = () => {
+  fetchBooksOnScroll = async () => {
     const { books } = this.props;
 
     document.getElementById(SCROLL_TO_ELEMENT).scrollIntoView();
@@ -71,7 +71,7 @@ class BookCatalog extends Component {
         size: 20
       };
 
-      this.retrieveBookQueryHandler(queryVariable, books);
+      await this.retrieveBookQueryHandler(queryVariable, books);
 
       this.setState({ isNewContentLoading: false });
     } catch (error) {
@@ -90,11 +90,13 @@ class BookCatalog extends Component {
         size: 20
       };
 
-      this.retrieveBookQueryHandler(queryVariable, []);
+      await this.retrieveBookQueryHandler(queryVariable, []);
     } catch (error) {
       const { message: networkError } = error;
+
       dispatch(setRetrievedBooks([], false));
       this.setState({ networkError });
+
       return error;
     }
   }
@@ -133,6 +135,7 @@ class BookCatalog extends Component {
     const { totalSearchResult } = this.props;
     const message = totalSearchResult !== 0
       ? `${totalSearchResult} item(s) retrieved` : '';
+
     return (
       <div
         className="user-books__header"
@@ -188,13 +191,13 @@ class BookCatalog extends Component {
           {!loadingBook && books.length !== 0 && this.renderBooks(books)}
           {loadingBook && <BookPreloader loadingBook={loadingBook} />}
           {!loadingBook && this.render404Message()}
-        </div>
-        <div
-          className="text-center"
-          style={{ marginBottom: '20px' }}
-          id="scrollToElement"
-        >
-          {isNewContentLoading && <Spinner spinnerStyle={45} />}
+
+          <div
+            className="text-center"
+            id="scrollToElement"
+          >
+            {isNewContentLoading && <Spinner spinnerStyle={45} />}
+          </div>
         </div>
         <BackToTop />
       </Fragment>
