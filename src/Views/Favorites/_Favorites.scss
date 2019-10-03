@@ -1,14 +1,11 @@
 .favorite-books {
   &__header {
-    padding-top: 120px;
-
     .save {
       margin-right: 15px;
     }
 
     .remove-favorites {
       background-color: $red_3 !important;
-      margin-right: 37px;
     }
   }
 }

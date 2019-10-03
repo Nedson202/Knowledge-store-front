@@ -13,11 +13,6 @@
       max-width: 100%;
     }
 
-    &-brand {
-      margin-left: 0.5rem;
-      color: $black_2;
-    }
-
     .dropdown-menu {
       left: unset;
       right: 10%;
@@ -247,7 +242,7 @@
     color: $red_2;
   }
 
-  .error-action {
+  .login-additional-help {
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
@@ -269,7 +264,7 @@
   }
 
   .is-focused [class*=bmd-label],
-  .is-focused[class^=bmd-label] {
+  .is-focused [class^=bmd-label] {
     color: $blue_2 !important;
   }
 }

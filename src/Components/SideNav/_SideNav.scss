@@ -30,13 +30,13 @@
   &-auth-buttons {
     padding-left: 20px !important;
     padding-bottom: 20px !important;
-    border-bottom: 1px solid #005C97;
+    border-bottom: 1px solid $blue_2;
     margin-bottom: 15px;
   }
 
   &-user-details {
     padding-bottom: 20px;
-    border-bottom: 1px solid #005C97;
+    border-bottom: 1px solid $blue_2;
     margin-bottom: 15px;
 
     .avatar {
@@ -53,19 +53,6 @@
       text-align: center;
     }
   }
-
-  .user-account-mobile {
-    padding-left: 0 !important;
-    margin-top: 20px;
-
-    div {
-      pointer-events: none !important;
-    }
-  }
-}
-
-.container-content {
-  padding: 20px;
 }
 
 @media screen and (max-width: 560px) {

@@ -78,11 +78,9 @@
 }
 
 @media screen and (min-width: 960px) {
-  .book-profile-container {
+  .container-content {
     display: flex;
     flex-direction: row;
-    max-width: 1150px;
-    margin: 90px auto 20px;
     padding-top: 120px;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -92,9 +90,13 @@
       margin: auto;
       margin-bottom: 10px;
 
-      .book__card--images {
-        height: 17rem;
-        margin: auto;
+      .book__card {
+        margin-bottom: unset;
+        
+        &--images {
+          height: 17rem;
+          margin: auto;
+        }
       }
     }
 
@@ -113,6 +115,7 @@
 
         .book__card {
           width: calc(1/2*100% - (1 - 1/2)*50px);
+          margin-bottom: unset;
 
           &--images {
             width: 150px !important;
@@ -134,10 +137,6 @@
             margin: auto;
           }
         }
-
-        div {
-          grid-gap: 20px;
-        }
       }
     }
 
@@ -148,11 +147,8 @@
 }
 
 @media screen and (min-width: 760px) and (max-width: 959px) {
-	.book-profile-container {
+	.container-content {
 		display: flex;
-    flex-direction: row;
-    max-width: 959px;
-    margin: 90px 120px;
     flex-wrap: wrap;
 		justify-content: space-between;
 
@@ -213,7 +209,7 @@
 }
 
 @media screen and (min-width: 561px) and (max-width: 758px) {
-	.book-profile-container {
+	.container-content {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
 		max-width: 1200px;
@@ -223,12 +219,9 @@
 }
 
 @media screen and (max-width: 560px) {
-	.book-profile-container {
+	.container-content {
 		display: flex;
 		flex-direction: column;
-		max-width: 600px;
-    margin: auto 20px;
-    padding-top: 215px;
 
 		.original-book {
 			display: block;

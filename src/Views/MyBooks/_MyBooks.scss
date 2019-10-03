@@ -1,13 +1,12 @@
 .user-books, .favorite-books {
 	&__header {
-		display: flex;
-		justify-content: space-between;
-		max-width: 1170px;
-    margin:	105px auto -30px auto;
-    padding-top: 120px;
+    display: flex;
+    flex-basis: 100%;
+    justify-content: space-between;
+    padding-bottom: 30px;
 
-    .add-book {
-      margin-right: 37px;
+    .btn {
+      max-height: 50px;
     }
 	}
 }
@@ -29,18 +28,9 @@
 @media screen and (max-width: 560px) {
 	.user-books, .favorite-books {
 		&__header {
-      padding-top: 120px;
-			margin:	105px 20px auto 20px;
+      display: flex;
+      flex-basis: 100%;
 			justify-content: space-between;
-		}
-	}
-}
-
-@media screen and (min-width: 760px) and (max-width: 959px) {
-	.user-books, .favorite-books {
-		&__header {
-      padding-top: 120px;
-			margin:	105px 116px -40px;
 		}
 	}
 }

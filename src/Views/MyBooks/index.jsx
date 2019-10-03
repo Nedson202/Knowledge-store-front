@@ -100,9 +100,7 @@ class MyBooks extends Component {
     }
 
     return (
-      <div className="book-retrieve-error">
-        <h4>You are yet to add a book</h4>
-      </div>
+      <h4 className="book-retrieve-error">You are yet to add a book</h4>
     );
   }
 
@@ -127,12 +125,13 @@ class MyBooks extends Component {
               bookToEdit={bookToEdit}
               editingBook={editingBook}
             />
-            {this.renderPageHeader()}
+
             <div className="container-content">
+              {this.renderPageHeader()}
               {usersBooks && this.renderBooks(usersBooks)}
               {loading && <BookPreloader loadingBook={loading} />}
+              {!loading && this.render404(usersBooks)}
             </div>
-            {!loading && this.render404(usersBooks)}
 
             <ApolloPolling
               startPolling={startPolling}

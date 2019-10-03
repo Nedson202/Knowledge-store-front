@@ -309,7 +309,7 @@ class BookProfile extends Component {
               </MetaTags>
 
               {bookLoadError}
-              <div className="book-profile-container">
+              <div className="container-content">
                 {loading && (<ProfilePreloader />)}
                 {!loading && hasProperty !== 0 && this.renderAll(book)}
               </div>

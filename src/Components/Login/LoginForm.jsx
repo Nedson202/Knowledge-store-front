@@ -97,7 +97,7 @@ const LoginForm = (props) => {
                     />
                   </div>
                 </div>
-                <div className="error-action">
+                <div className="login-additional-help">
                   <Link
                     onClick={() => modalToggler('close-login')}
                     to="/email?reset-password=true"

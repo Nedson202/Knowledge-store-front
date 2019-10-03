@@ -5,7 +5,24 @@ $font_family_1: georgia, sans-serif;
 }
 
 html, body {
-  margin-top: -60px !important;
+  color: $black_2;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: unset;
+}
+
+a {
+  color: $black_2;
+
+  &:hover {
+    color: $black_2;
+  }
 }
 
 .App {
@@ -17,9 +34,9 @@ html, body {
     display: block;
   }
 
-  .btn-primary {
+  button.btn.btn-primary {
     color: $white_1;
-    background-color: $blue_2 !important;
+    background-color: $blue_2;
     border-color: $blue_2;
     padding: 10px 20px;
     border-radius: 5px;
