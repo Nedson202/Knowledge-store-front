@@ -4,7 +4,8 @@ import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  SIDE_BAR_STATUS, LEFT_SIDE_BAR, CLOSED, OPEN, LEFT_SIDEBAR_NAV_LINKS,
+  SIDE_BAR_STATUS, LEFT_SIDE_BAR, CLOSED, OPEN, LEFT_SIDEBAR_NAV_LINKS, HIDE,
+  SHOW, SIDE_NAV_WIDTH_270, SIDE_NAV_WIDTH_70, USER,
 } from '../../settings';
 
 class LeftSideBar extends Component {
@@ -25,12 +26,12 @@ class LeftSideBar extends Component {
 
     if (isSideBarOpen) {
       sideBarStatus = OPEN;
-      sideBarWidth = '270px';
-      sideNavTextClass = 'show';
+      sideBarWidth = SIDE_NAV_WIDTH_270;
+      sideNavTextClass = SHOW;
     } else if (typeof window.orientation === 'undefined') {
       sideBarStatus = CLOSED;
-      sideBarWidth = '70px';
-      sideNavTextClass = 'hide';
+      sideBarWidth = SIDE_NAV_WIDTH_70;
+      sideNavTextClass = HIDE;
     }
 
     document.getElementById(LEFT_SIDE_BAR).style.width = sideBarWidth;
@@ -47,7 +48,7 @@ class LeftSideBar extends Component {
     const { role } = user;
     const { sideNavTextClass } = this.state;
 
-    if (!isAuthenticated || role === 'user') {
+    if (!isAuthenticated || role === USER) {
       return;
     }
 

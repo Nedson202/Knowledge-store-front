@@ -8,7 +8,8 @@ import Search from '../Search';
 
 import { logOutUser } from '../../redux/actions/userActions';
 import {
-  CLICK, NONE, SIDE_NAV, LOGOUT, STORAGE
+  CLICK, NONE, SIDE_NAV, LOGOUT, STORAGE, THEME, FLIP_THEME, LIGHT, THEME_ATTRIBUTE,
+  SIDE_NAV_WIDTH_270, SIDE_NAV_BOX_SHADOW
 } from '../../settings';
 
 class Header extends Component {
@@ -35,8 +36,8 @@ class Header extends Component {
     if (!isSideNavOpen) {
       document.addEventListener(CLICK, this.handleOutsideClick, false);
 
-      sideNavWidth = '270px';
-      sideNavBoxShadow = '0 1px 1px 100vw rgba(0, 0, 0, 0.6)';
+      sideNavWidth = SIDE_NAV_WIDTH_270;
+      sideNavBoxShadow = SIDE_NAV_BOX_SHADOW;
     } else {
       document.removeEventListener(CLICK, this.handleOutsideClick, false);
 
@@ -67,20 +68,16 @@ class Header extends Component {
   }
 
   toggleDarkMode = () => {
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    const flipTheme = {
-      dark: 'light',
-      light: 'dark',
-    };
-    const theme = flipTheme[currentTheme];
+    const currentTheme = localStorage.getItem(THEME) || LIGHT;
+    const theme = FLIP_THEME[currentTheme];
 
-    localStorage.setItem('theme', theme);
-    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem(THEME, theme);
+    document.documentElement.setAttribute(THEME_ATTRIBUTE, theme);
   }
 
   loadTheme = () => {
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', currentTheme);
+    const currentTheme = localStorage.getItem(THEME) || LIGHT;
+    document.documentElement.setAttribute(THEME_ATTRIBUTE, currentTheme);
   }
 
   syncLogout(event) {

@@ -2,9 +2,10 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import UnsplashMention from './UnsplashMention';
+import { BOOKS_PATH } from '../../settings';
 
 class Main extends Component {
-  navigateToBooks = () => window.location.replace('/books');
+  navigateToBooks = () => window.location.replace(BOOKS_PATH);
 
   renderButtons() {
     return (

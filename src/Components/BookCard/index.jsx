@@ -40,6 +40,7 @@ class BookCard extends Component {
     const { image, id } = book;
     const { imageLoaded, bookImage, imageLoadingError } = this.state;
     const link = !moreBooks ? `/books/${id}` : `${id}`;
+
     return (
       <Fragment>
         {!imageLoaded && imageLoadingError.length === 0 && <BookImageLoader />}

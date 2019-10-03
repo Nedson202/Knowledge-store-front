@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { tokenDecoder, toaster } from '../../utils';
-import { TOASTR_ERROR } from '../../settings';
+import { TOASTR_ERROR, USER } from '../../settings';
 
 export default function (ComposedComponent, admin) {
   class AuthWrapper extends Component {
@@ -18,7 +18,7 @@ export default function (ComposedComponent, admin) {
     // eslint-disable-next-line camelcase
     UNSAFE_componentWillMount() {
       const { history, user: { isAuthenticated, user } } = this.props;
-      if (admin && isAuthenticated && user.role === 'user') {
+      if (admin && isAuthenticated && user.role === USER) {
         toaster(TOASTR_ERROR, 'Access denied, operation is unathorised');
         return history.goBack();
       }

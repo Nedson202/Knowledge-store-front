@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { LOAD, ONLINE } from '../../settings';
+import {
+  LOAD, ONLINE, POLL_INTERVAL, STOP_POLLING_AFTER
+} from '../../settings';
 
 class ApolloPolling extends Component {
   componentDidMount() {
@@ -22,8 +24,6 @@ class ApolloPolling extends Component {
 
   activatePolling = () => {
     const { startPolling, stopPolling } = this.props;
-    const STOP_POLLING_AFTER = 5000;
-    const POLL_INTERVAL = 2000;
 
     startPolling(POLL_INTERVAL);
 
