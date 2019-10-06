@@ -5,9 +5,8 @@ import PropTypes from 'prop-types';
 
 const MessageBanner = (props) => {
   const { isAuthenticated, user } = props;
-
   const emailConfirmationNote = () => (
-    <div className="pending-verification">
+    <div className="pending-verification" data-testid="banner-message">
       A verification link has been sent to your mail box.
       Click on the link or use this
       &nbsp;

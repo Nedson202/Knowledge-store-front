@@ -22,10 +22,10 @@ const ImageUpload = (props) => {
           </div>
         </div>
         <input
-          type="file"
+          hidden
           name="image"
           onChange={handleImageChange}
-          hidden
+          type="file"
         />
       </label>
     </Fragment>
@@ -34,16 +34,16 @@ const ImageUpload = (props) => {
   const renderPreview = () => (
     <div className="image-previewer">
       <img
-        src={imagePreviewUrl}
-        id="show-image"
-        className="rounded-circle"
         alt="Avatar"
+        className="rounded-circle"
+        id="show-image"
+        src={imagePreviewUrl}
       />
       {uploadingImage && <Spinner />}
       <button
-        type="button"
         className="btn btn-raised"
         onClick={cancelPreview}
+        type="button"
       >
         cancel preview
       </button>

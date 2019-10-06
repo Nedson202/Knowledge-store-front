@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Avatar component should render 1`] = `
+<DocumentFragment>
+  <div
+    class="avatar-placeholder text-capitalize"
+    style="background-color: green;"
+  >
+    CA
+  </div>
+</DocumentFragment>
+`;

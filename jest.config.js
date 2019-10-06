@@ -6,4 +6,5 @@ module.export = {
   testMatch: ['<rootDir>/src/**/>(*.)test.{js, jsx}'], // finds test
   moduleFileExtensions: ['js', 'jsx', 'json', 'node'],
   testPathIgnorePatterns: ['/node_modules/', '/public/'],
+  runInBand: true,
 };

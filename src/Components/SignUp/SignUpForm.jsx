@@ -14,88 +14,93 @@ const SignUpForm = (props) => {
       password: passwordError
     } = formErrors;
     const { username, email, password } = values;
+
     return (
-      <Fragment>
-        <form autoComplete="false">
-          <div className="form-group">
-            <label
-              htmlFor="username"
-              className="bmd-label-floating"
-            >
-              Userame
-            </label>
-            <input
-              type="text"
-              name="username"
-              className="form-control"
-              id="username-signup"
-              onChange={handleInputChange}
-              autoComplete="new-password"
-              value={username}
+      <form autoComplete="false">
+        <div className="form-group">
+          <label
+            htmlFor="username-signup"
+            className="bmd-label-floating"
+          >
+            Username
+          </label>
+          <input
+            type="text"
+            name="username"
+            className="form-control"
+            id="username-signup"
+            onChange={handleInputChange}
+            autoComplete="new-password"
+            value={username}
+          />
+          {usernameError && (
+          <span
+            className="validation-error"
+          >
+            {usernameError[0]}
+          </span>
+          )}
+        </div>
+        <div className="form-group">
+          <label
+            htmlFor="email-signup"
+            className="bmd-label-floating"
+          >
+            Email address
+          </label>
+          <input
+            type="email"
+            name="email"
+            className="form-control"
+            id="email-signup"
+            autoComplete="new-password"
+            onChange={handleInputChange}
+            value={email}
+          />
+          {emailError && <span className="validation-error">{emailError[0]}</span>}
+        </div>
+        <div className="form-group">
+          <label
+            htmlFor="password-signup"
+            className="bmd-label-floating"
+          >
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            className="form-control"
+            id="password-signup"
+            onChange={handleInputChange}
+            autoComplete="new-password"
+            value={password}
+          />
+          {passwordError && (
+          <span className="validation-error">
+            {passwordError[0]}
+          </span>
+          )}
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={passwordToggler('password-signup')}
+            id="signup-password-icon"
+            data-testid="signup-password-icon"
+          >
+            <ion-icon
+              class="hide"
+              name="eye-off"
+              id="password-signup-remove-hide"
+              data-testid="password-signup-remove-hide"
             />
-            {usernameError && (
-              <span
-                className="validation-error"
-              >
-                {usernameError[0]}
-              </span>
-            )}
-          </div>
-          <div className="form-group">
-            <label
-              htmlFor="email"
-              className="bmd-label-floating"
-            >
-              Email address
-            </label>
-            <input
-              type="email"
-              name="email"
-              className="form-control"
-              id="email-signup"
-              autoComplete="new-password"
-              onChange={handleInputChange}
-              value={email}
+            <ion-icon
+              name="eye"
+              id="password-signup-add-hide"
+              data-testid="password-signup-add-hide"
             />
-            {emailError && <span className="validation-error">{emailError[0]}</span>}
           </div>
-          <div className="form-group">
-            <label htmlFor="password-signup" className="bmd-label-floating">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              className="form-control"
-              id="password-signup"
-              onChange={handleInputChange}
-              autoComplete="new-password"
-              value={password}
-            />
-            {passwordError && (
-              <span className="validation-error">
-                {passwordError[0]}
-              </span>
-            )}
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={passwordToggler('password-signup')}
-              id="signup-password-icon"
-            >
-              <ion-icon
-                class="hide"
-                name="eye-off"
-                id="password-signup-remove-hide"
-              />
-              <ion-icon
-                name="eye"
-                id="password-signup-add-hide"
-              />
-            </div>
-          </div>
-        </form>
-      </Fragment>
+        </div>
+      </form>
     );
   };
 
@@ -113,6 +118,7 @@ const SignUpForm = (props) => {
         className="btn btn-primary btn-raised text-case signup-button"
         onClick={handleUserSignup}
         disabled={processing}
+        data-testid="signup-button"
       >
         Signup
       </button>
@@ -128,6 +134,7 @@ const SignUpForm = (props) => {
         role="dialog"
         aria-labelledby="signup form"
         aria-hidden="true"
+        data-testid="signup-modal"
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
@@ -157,9 +164,9 @@ const SignUpForm = (props) => {
   );
 
   return (
-    <div>
+    <Fragment>
       {renderModal()}
-    </div>
+    </Fragment>
   );
 };
 

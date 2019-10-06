@@ -23,13 +23,14 @@ class BackToTop extends React.PureComponent {
 
   handlePageScroll = () => {
     let displayBackToTop = false;
-    const shouldDisplayBackToTop = document.documentElement.scrollTop > 300;
+    const shouldDisplayBackToTop = window.scrollY > 300;
 
     if (shouldDisplayBackToTop) {
       displayBackToTop = true;
     } else {
       displayBackToTop = false;
     }
+
     this.setState({ displayBackToTop });
   };
 
@@ -43,10 +44,11 @@ class BackToTop extends React.PureComponent {
       <Fragment>
         {displayBackToTop && (
           <button
-            type="button"
             className="btn btn-secondary bmd-btn-fab"
+            data-testid="back-to-top"
             id="back-to-top"
             onClick={this.scrollToTop}
+            type="button"
           >
             <i className="fas fa-caret-up" />
           </button>

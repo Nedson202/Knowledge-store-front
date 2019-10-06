@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import { compose, graphql } from 'react-apollo';
 import { ReactTitle } from 'react-meta-tags';
 
-import UpdateForm from './UpdateForm';
-import UpdatePassword from './UpdatePassword';
+import AccountUpdateForm from './AccountUpdateForm';
+import UpdatePasswordForm from './UpdatePasswordForm';
 import UserDetails from './UserDetails';
 
 import { editProfile, changePassword } from '../../queries/auth';
@@ -23,7 +23,9 @@ import {
 class UserProfile extends Component {
   debounceSingleFieldValidation = debounce(({ name, value }) => {
     const { formErrors } = this.state;
-    const { formErrors: newFormErrors } = handleSingleFieldValidation(formErrors, { name, value });
+    const { formErrors: newFormErrors } = handleSingleFieldValidation(
+      formErrors, { name, value }
+    );
     this.setState({ formErrors: newFormErrors });
   }, VALIDATION_DEBOUNCE_TIME);
 
@@ -48,6 +50,7 @@ class UserProfile extends Component {
   onInputChange = (event) => {
     const { name, value } = event.target;
     const { values } = this.state;
+
     values[name] = value.trim();
     this.setState({ values });
     this.debounceSingleFieldValidation({ name, value });
@@ -176,6 +179,7 @@ class UserProfile extends Component {
       uploadingImage,
     } = this.state;
     const { user } = this.props;
+
     return (
       <div className="container-content">
         <UserDetails
@@ -185,7 +189,7 @@ class UserProfile extends Component {
         <div className="profile-update">
           <ReactTitle title="My Profile" />
 
-          <UpdateForm
+          <AccountUpdateForm
             user={user}
             imagePreviewUrl={imagePreviewUrl}
             formValues={values}
@@ -196,7 +200,8 @@ class UserProfile extends Component {
             cancelPreview={this.cancelPreview}
             uploadingImage={uploadingImage}
           />
-          <UpdatePassword
+
+          <UpdatePasswordForm
             handleInputChange={this.onInputChange}
             updatePassword={this.updatePassword}
             formErrors={formErrors}

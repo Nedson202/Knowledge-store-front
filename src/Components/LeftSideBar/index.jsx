@@ -40,7 +40,6 @@ class LeftSideBar extends Component {
       sideNavTextClass = SHOW;
     }
 
-
     document.getElementById(LEFT_SIDE_BAR).style.width = sideBarWidth;
     localStorage.setItem(SIDE_BAR_STATUS, sideBarStatus);
 
@@ -121,6 +120,7 @@ class LeftSideBar extends Component {
           className="sidenav-collapse"
           role="button"
           tabIndex={0}
+          data-testid="menu-button"
         >
           <div className="menu-icon">
             <ion-icon name="menu" />

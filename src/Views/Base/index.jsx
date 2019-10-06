@@ -21,8 +21,16 @@ class App extends Component {
   componentDidMount() {
     const { auth, auth: { user }, history } = this.props;
 
-    document.getElementById(NAV_BAR).style.display = NONE;
-    document.getElementById(LEFT_SIDE_BAR).style.display = NONE;
+    const navbarEL = document.getElementById(NAV_BAR);
+    const leftSideBarEL = document.getElementById(LEFT_SIDE_BAR);
+
+    if (navbarEL) {
+      navbarEL.style.display = NONE;
+    }
+
+    if (leftSideBarEL) {
+      leftSideBarEL.style.display = NONE;
+    }
 
     this.socialAuthentication();
     this.verifyUserEmail();
@@ -32,10 +40,15 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    document.getElementById(NAV_BAR).style.display = FLEX;
+    const navbarEL = document.getElementById(NAV_BAR);
+    const leftSideBarEL = document.getElementById(LEFT_SIDE_BAR);
 
-    if (typeof window.orientation === 'undefined') {
-      document.getElementById(LEFT_SIDE_BAR).style.display = BLOCK;
+    if (navbarEL) {
+      navbarEL.style.display = FLEX;
+    }
+
+    if (typeof window.orientation === 'undefined' && leftSideBarEL) {
+      leftSideBarEL.style.display = BLOCK;
     }
 
     const modalEL = document.getElementById(CLOSE);
@@ -47,6 +60,7 @@ class App extends Component {
     const { verifyEmailQuery } = this.props;
     const query = queryString.parse(window.location.search);
     const { dispatch } = this.props;
+
     if (Object.keys(query)[0] === '?verify-email') {
       const userToken = Object.values(query)[0];
       setQuery({ token: '' });
@@ -109,6 +123,7 @@ class App extends Component {
         </MetaTags>
 
         <div id="background-layout" />
+
         <Main
           isAuthenticated={isAuthenticated}
         />

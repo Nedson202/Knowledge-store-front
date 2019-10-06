@@ -15,6 +15,7 @@
     "apollo-link-context": "^1.0.9",
     "apollo-link-error": "^1.1.2",
     "apollo-link-http": "^1.5.5",
+    "apollo-link-schema": "^1.2.4",
     "autoprefixer": "7.1.6",
     "axios": "^0.18.1",
     "babel-core": "6.26.0",
@@ -42,6 +43,7 @@
     "fs-extra": "3.0.1",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
+    "graphql-tools": "^4.0.5",
     "html-webpack-plugin": "2.29.0",
     "jest": "^24.9.0",
     "jsonwebtoken": "^8.3.0",
@@ -88,7 +90,7 @@
     "start:dev": "react-scripts start",
     "start": "serve -s build",
     "build": "react-scripts build",
-    "test": "jest -c jest.config.js --watch",
+    "test": "jest -c jest.config.js --coverage",
     "eject": "react-scripts eject",
     "heroku-postbuild": "yarn build"
   },
@@ -99,7 +101,7 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
+      "src/*.js",
       "!<rootDir>/node_modules/",
       "!<rootDir>/path/to/dir/"
     ],

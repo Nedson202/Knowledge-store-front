@@ -5,7 +5,6 @@ import App from './Views/Base';
 import BookProfile from './Views/BookProfile';
 import BookCatalog from './Views/BookCatalog';
 import NotFound from './Views/NotFound';
-import AdminPanel from './Views/AdminPanel';
 import Users from './Views/Users';
 import UserProfile from './Views/UserProfile';
 import PasswordReset from './Views/PasswordReset';
@@ -37,7 +36,6 @@ const Routes = () => (
       <Route path="/books/:id" component={NetworkDetector(BookProfile)} exact />
       <Route path="/books" component={NetworkDetector(BookCatalog)} exact />
       <Route path="/my-books" component={NetworkDetector(AuthWrapper(MyBooks))} exact />
-      <Route path="/admin-dashboard" component={AdminPanel} exact />
       <Route path="/my-favorites" component={NetworkDetector(AuthWrapper(Favorites))} exact />
       <Route path="/my-profile" component={NetworkDetector(AuthWrapper(UserProfile))} exact />
       <Route path="/password-reset" component={NetworkDetector(PasswordReset)} exact />

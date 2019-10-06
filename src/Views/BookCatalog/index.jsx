@@ -176,6 +176,8 @@ class BookCatalog extends Component {
     const { isNewContentLoading } = this.state;
     const { books, loadingBook } = this.props;
 
+    const hasProperty = books.length > 0;
+
     return (
       <Fragment>
         <MetaTags>
@@ -188,9 +190,9 @@ class BookCatalog extends Component {
 
         <div className="container-content">
           {this.renderPageHeader()}
-          {!loadingBook && books.length !== 0 && this.renderBooks(books)}
+          {!loadingBook && hasProperty && this.renderBooks(books)}
           {loadingBook && <BookPreloader loadingBook={loadingBook} />}
-          {!loadingBook && this.render404Message()}
+          {this.render404Message()}
 
           <div
             className="text-center"

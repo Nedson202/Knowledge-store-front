@@ -127,20 +127,22 @@ class Users extends Component {
   }
 
   render() {
-    const { fetchUsersQuery } = this.props;
+    const { fetchUsersQuery: { loading, fetchUsers } } = this.props;
     const { filteredUsers } = this.state;
-    const users = fetchUsersQuery.fetchUsers !== undefined
-      ? fetchUsersQuery.fetchUsers : [];
+    const users = fetchUsers && fetchUsers.length ? fetchUsers : [];
     const filteredResult = filteredUsers.length ? filteredUsers : users;
+
     return (
       <div className="container-content">
         <div className="admin-panel">
           {this.renderHeader()}
-          {fetchUsersQuery.loading ? (
+
+          {loading ? (
             <span className="table-spinner">
               <Spinner spinnerStyle={45} />
             </span>
           ) : this.renderTable(filteredResult)}
+
           <AddAdminModal
             handleInputChange={this.handleEmailChange}
             addAmin={this.handleToggleAdmin}
@@ -153,7 +155,10 @@ class Users extends Component {
 
 Users.propTypes = {
   filterUsersQuery: PropTypes.func,
-  fetchUsersQuery: PropTypes.object,
+  fetchUsersQuery: PropTypes.shape({
+    loading: PropTypes.bool,
+    fetchUsers: PropTypes.array,
+  }),
   toggleAdminQuery: PropTypes.func,
 };
 

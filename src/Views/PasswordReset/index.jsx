@@ -29,10 +29,12 @@ class PasswordReset extends Component {
   getResetToken() {
     const query = queryString.parse(window.location.search);
     const token = Object.values(query)[0];
+
     if (!token) {
       setQuery({ token: '' });
       return localStorage.removeItem('token');
     }
+
     const decodedToken = tokenDecoder(token);
     if (decodedToken) {
       const { values } = this.state;
@@ -43,6 +45,7 @@ class PasswordReset extends Component {
 
       return this.setState({ values });
     }
+
     setQuery({ token: '' });
   }
 
@@ -91,61 +94,63 @@ class PasswordReset extends Component {
 
   render() {
     const { values: { email } } = this.state;
+
     return (
       <div className="container-content">
         <form className="password-reset">
           <div className="form-group">
             <label
-              htmlFor="exampleInputPassword1"
               className="bmd-label-floating"
+              htmlFor="user-email"
             >
               Email
             </label>
             <input
-              type="email"
-              defaultValue={email}
               className="form-control"
-              id="user-email"
+              defaultValue={email}
               disabled
+              id="user-email"
+              type="email"
             />
           </div>
           <div className="form-group">
             <label
-              htmlFor="exampleInputPassword1"
+              htmlFor="password-reset"
               className="bmd-label-floating"
             >
               New Password
             </label>
             <input
-              type="password"
-              name="password"
+              autoComplete="new-password"
               className="form-control"
               id="password-reset"
-              autoComplete="new-password"
+              name="password"
               onChange={this.handlePasswordChange}
+              type="password"
             />
             <div
-              onClick={passwordToggler('password-reset')}
+              data-testid="reset-password-icon"
               id="reset-password-icon"
+              onClick={passwordToggler('password-reset')}
               role="button"
               tabIndex={0}
             >
               <ion-icon
                 class="hide"
-                name="eye-off"
                 id="password-reset-remove-hide"
+                name="eye-off"
               />
               <ion-icon
-                name="eye"
                 id="password-reset-add-hide"
+                name="eye"
               />
             </div>
           </div>
           <div className="form-group password-reset__button">
             <button
-              type="button"
               className="btn btn-primary btn-raised text-case"
               onClick={this.resetUserPassword}
+              type="button"
             >
               Save password
             </button>

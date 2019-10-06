@@ -158,26 +158,26 @@ class Search extends PureComponent {
       >
         <ion-icon name="search" />
         <input
-          className="form-input"
-          type="search"
-          placeholder="Search book collections..."
           aria-label="Search"
-          name="value"
-          id="searchBox"
-          onChange={this.onInputChange}
-          onBlur={this.handleReset}
-          onFocus={this.closeIconActive}
           autoComplete="off"
+          className="form-input"
+          id="searchBox"
+          name="value"
+          onBlur={this.handleReset}
+          onChange={this.onInputChange}
+          onFocus={this.closeIconActive}
           onPaste={this.handleDataPaste}
+          placeholder="Search book collections..."
+          type="search"
           value={value}
         />
 
         {closeIconActive && (
           <button
-            type="button"
+            className="close-icon"
             onClick={this.clearSearchQuery}
             tabIndex={0}
-            className="close-icon"
+            type="button"
           >
             &times;
           </button>

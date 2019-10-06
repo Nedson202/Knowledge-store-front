@@ -67,20 +67,22 @@ class AddBook extends Component {
     if (name === AUTHORS) {
       authors.push(value);
       values[name] = authors;
-      this.setState({ authors });
     }
-    this.setState({ values });
+
+    this.setState({ values, authors });
   }
 
   handleGenreChange = (value) => {
     const { genre } = this.state;
     genre.push(value);
+
     this.setState({ genre });
   }
 
   dateChange = (date, dateString) => {
     const { values } = this.state;
     values.year = dateString;
+
     this.setState({ values });
   }
 

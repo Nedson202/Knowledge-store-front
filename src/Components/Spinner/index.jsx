@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Spin, Icon } from 'antd';
 import PropTypes from 'prop-types';
 
@@ -13,9 +13,11 @@ const Spinner = (props) => {
   );
 
   return (
-    <Fragment>
+    <div
+      data-testid="loading-indicator"
+    >
       <Spin indicator={antIcon} />
-    </Fragment>
+    </div>
   );
 };
 

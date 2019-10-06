@@ -8,22 +8,30 @@ class Main extends Component {
   navigateToBooks = () => window.location.replace(BOOKS_PATH);
 
   renderButtons() {
+    const { isAuthenticated } = this.props;
+
+    if (isAuthenticated) {
+      return;
+    }
+
     return (
       <Fragment>
         <button
-          type="button"
           className="btn btn-outline-primary"
           data-toggle="modal"
           data-target="#LoginFormModal"
+          data-testid="index-login-action"
+          type="button"
         >
           <ion-icon name="log-in" />
           Login to get started
         </button>
         <button
-          type="button"
           className="btn btn-outline-primary"
           data-toggle="modal"
           data-target="#SignUpFormModal"
+          data-testid="index-signup-action"
+          type="button"
         >
           <ion-icon name="log-in" />
           Signup
@@ -36,9 +44,9 @@ class Main extends Component {
     return (
       <Fragment>
         <button
-          type="button"
           className="btn btn-outline-primary"
           onClick={this.navigateToBooks}
+          type="button"
         >
           <ion-icon name="paper-plane" />
           Explore
@@ -63,14 +71,13 @@ class Main extends Component {
   }
 
   render() {
-    const { isAuthenticated } = this.props;
     return (
       <div className="app-container">
         <div>
           {this.renderMainContent()}
           <div className="auth-action-buttons">
             {this.renderExploreButton()}
-            {!isAuthenticated && this.renderButtons()}
+            {this.renderButtons()}
           </div>
         </div>
 

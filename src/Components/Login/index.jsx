@@ -42,7 +42,7 @@ class Login extends Component {
     };
   }
 
-  onInputChange = (event) => {
+  handleInputChange = (event) => {
     const { name, value } = event.target;
     const { values } = this.state;
     values[name] = value;
@@ -100,7 +100,7 @@ class Login extends Component {
     return (
       <Fragment>
         <LoginForm
-          onInputChange={this.onInputChange}
+          handleInputChange={this.handleInputChange}
           handleUserLogin={this.handleUserLogin}
           formErrors={formErrors}
           values={values}
