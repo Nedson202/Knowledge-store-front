@@ -90,7 +90,7 @@
     "start:dev": "react-scripts start",
     "start": "serve -s build",
     "build": "react-scripts build",
-    "test": "jest -c jest.config.js --coverage",
+    "test": "react-scripts test --watchAll=true --coverage",
     "eject": "react-scripts eject",
     "heroku-postbuild": "yarn build"
   },
@@ -115,15 +115,17 @@
     },
     "coverageReporters": [
       "text"
-    ],
-    "snapshotSerializers": [
-      "my-serializer-module"
     ]
   },
   "babel": {
     "presets": [
       "react-app"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "kcd-scripts pre-commit"
+    }
   },
   "eslintConfig": {
     "extends": "react-app"
