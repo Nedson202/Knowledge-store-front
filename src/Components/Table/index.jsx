@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { ADMIN, REMOVE } from '../../settings';
 
@@ -22,7 +22,7 @@ const Tables = (props) => {
     }
 
     return (
-      <Fragment>
+      <tbody>
         {data.map(({
           id, username, email, role
         }) => (
@@ -47,8 +47,7 @@ const Tables = (props) => {
                   className="dropdown-item user-profile-navlink"
                   id="trash-icon"
                 >
-                  deactivate
-                  <i className="fa fa-trash" />
+                  deactivate <i className="fa fa-trash" />
                 </a>
 
                 {role.match(ADMIN) && (
@@ -66,7 +65,7 @@ const Tables = (props) => {
             </td>
           </tr>
         ))}
-      </Fragment>
+      </tbody>
     );
   };
 
@@ -74,9 +73,7 @@ const Tables = (props) => {
     <div className="table-panel">
       <table className="table table-striped">
         {renderTableHead()}
-        <tbody>
-          {renderTableContent(users)}
-        </tbody>
+        {renderTableContent(users)}
       </table>
     </div>
   );
