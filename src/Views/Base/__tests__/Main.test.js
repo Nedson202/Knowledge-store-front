@@ -1,7 +1,9 @@
 import React from 'react';
+import { createStore } from 'redux';
 
-import { AllProviders, render } from 'test-utils';
+import { AllProviders, render, fireEvent } from 'test-utils';
 
+import auth from '../../../redux/reducers/auth';
 import Main from '..';
 
 describe('Main', () => {
@@ -38,11 +40,19 @@ describe('Main', () => {
 
   it('should not render auth buttons if signed in', () => {
     const props = {
-      isAuthenticated: true,
+      auth: {
+        isAuthenticated: true,
+        user: {
+          isVerfied: true,
+        }
+      }
     };
+
+    const store = createStore(auth, props);
+
     const { queryByTestId } = render(
-      <AllProviders>
-        <Main {...props} />
+      <AllProviders customStore={store}>
+        <Main />
       </AllProviders>
     );
 
@@ -51,5 +61,23 @@ describe('Main', () => {
 
     expect(loginButton).toBeNull();
     expect(signupButton).toBeNull();
+  });
+
+  it('should navigate to explore page', () => {
+    const props = {
+      isAuthenticated: true,
+    };
+    const { getByText } = render(
+      <AllProviders>
+        <Main {...props} />
+      </AllProviders>
+    );
+
+    window.location.replace = jest.fn();
+
+    const exploreButton = getByText('Explore');
+    fireEvent.click(exploreButton);
+
+    window.location.replace.mockClear();
   });
 });

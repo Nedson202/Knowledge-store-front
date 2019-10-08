@@ -122,7 +122,10 @@ class App extends Component {
           <meta property="og:title" content="Lorester Bookstore" />
         </MetaTags>
 
-        <div id="background-layout" />
+        <div
+          data-testid="background-layout"
+          id="background-layout"
+        />
 
         <Main
           isAuthenticated={isAuthenticated}

@@ -10,9 +10,9 @@ import LeftSideBar from '..';
 
 
 describe('LeftSideBar', () => {
-  it('should display nav links', () => {
+  it('should display nav links only', () => {
     const {
-      container, asFragment, getByText, getByTestId
+      container, asFragment, getByText, getByTestId, queryByText
     } = render(
       <AllProviders>
         <LeftSideBar />
@@ -20,9 +20,9 @@ describe('LeftSideBar', () => {
     );
 
     const menuButton = getByTestId('menu-button');
+    fireEvent.click(menuButton);
 
     getByText('Loresters Bookstore');
-
 
     expect(asFragment()).toMatchSnapshot();
     expect(container).toBeInTheDocument();
@@ -30,6 +30,9 @@ describe('LeftSideBar', () => {
     LEFT_SIDEBAR_NAV_LINKS.forEach(({ label }) => {
       getByText(label);
     });
+
+    const adminLink = queryByText('Users');
+    expect(adminLink).toBeNull();
 
     fireEvent.click(menuButton);
   });
@@ -46,7 +49,7 @@ describe('LeftSideBar', () => {
 
     const store = createStore(auth, mockProps);
 
-    const { getByText } = render(
+    const { getByText, getByTestId } = render(
       <AllProviders
         customStore={store}
       >
@@ -54,6 +57,26 @@ describe('LeftSideBar', () => {
       </AllProviders>
     );
 
+    const menuButton = getByTestId('menu-button');
+    fireEvent.click(menuButton);
+
     getByText('Users');
+
+    fireEvent.click(menuButton);
+  });
+
+  it('should render nav links based on device', () => {
+    window.orientation = jest.fn();
+
+    const { queryByText } = render(
+      <AllProviders>
+        <LeftSideBar />
+      </AllProviders>
+    );
+
+    const allBooksLink = queryByText('All Books');
+    expect(allBooksLink).toBeNull();
+
+    window.orientation.mockClear();
   });
 });

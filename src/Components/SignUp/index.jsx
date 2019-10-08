@@ -70,10 +70,13 @@ class SignUp extends Component {
 
       const { data: { addUser: { token } } = {} } = signupHandler;
       const decodedToken = tokenDecoder(token);
+
       localStorage.setItem(TOKEN, token);
       modalToggler(CLOSE_SIGNUP);
 
       dispatch(setCurrentUser(decodedToken));
+
+      /* istanbul ignore next */
       if (decodedToken.isVerified) {
         toaster(SUCCESS, 'Signed up successfully');
       }
@@ -86,7 +89,7 @@ class SignUp extends Component {
         },
         processing: false,
       });
-    } catch (error) {
+    } catch (error) /* istanbul ignore next */ {
       const messages = errorHandler(error);
       messages.forEach(message => toaster(TOASTR_ERROR, message));
 

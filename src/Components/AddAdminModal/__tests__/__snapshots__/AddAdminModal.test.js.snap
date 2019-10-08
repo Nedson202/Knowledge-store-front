@@ -78,6 +78,7 @@ exports[`AddAddminModal component should render 1`] = `
             </button>
             <button
               class="btn btn-primary btn-raised text-case add-admin"
+              data-testid="add-admin-button"
               type="button"
             >
               Add Admin

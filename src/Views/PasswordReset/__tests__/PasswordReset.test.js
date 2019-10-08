@@ -45,4 +45,34 @@ describe('PasswordReset', () => {
 
     getByText('Save password');
   });
+
+  it('should trigger password reset', () => {
+    delete window.location;
+    window.location = { search: jest.fn() };
+
+    const { getByText, getByLabelText } = render(
+      <AllProviders>
+        <PasswordReset />
+      </AllProviders>
+    );
+
+    const savePasswordButton = getByText('Save password');
+
+    const formGroupCase = [
+      {
+        name: 'Email',
+        value: 'Cooper.AL@alcooper.al'
+      },
+      {
+        name: 'New Password',
+        value: '90huERyu22'
+      },
+    ];
+
+    formGroupCase.forEach(({ name, value }) => {
+      fireEvent.change(getByLabelText(name), { target: { value } });
+    });
+
+    savePasswordButton.click();
+  });
 });

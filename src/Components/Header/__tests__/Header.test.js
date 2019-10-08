@@ -1,8 +1,9 @@
 import React from 'react';
+import { createStore } from 'redux';
 
 import { render, fireEvent, AllProviders } from 'test-utils';
+import { LOGOUT } from 'settings';
 
-import { createStore } from 'redux';
 import auth from '../../../redux/reducers/auth';
 import Header from '..';
 
@@ -77,7 +78,7 @@ describe('Header', () => {
     expect(queryByTestId('Login')).toBeNull();
   });
 
-  it('should test dark mode', () => {
+  it('should test theme mode', () => {
     const { queryAllByTestId } = render(
       <AllProviders>
         <Header />
@@ -95,5 +96,38 @@ describe('Header', () => {
 
     const lightThemeMode = window.document.documentElement.getAttribute('data-theme');
     expect(lightThemeMode).toBe('light');
+  });
+
+  it('should test theme toggle storage event', () => {
+    render(
+      <AllProviders>
+        <Header />
+      </AllProviders>
+    );
+
+    window.dispatchEvent(new StorageEvent('storage', {
+      key: 'theme',
+      newValue: 'light'
+    }));
+
+    const lightThemeMode = window.document.documentElement.getAttribute('data-theme');
+    expect(lightThemeMode).toBe('light');
+  });
+
+  it('should test logout storage event', () => {
+    window.location.reload = jest.fn();
+
+    render(
+      <AllProviders>
+        <Header />
+      </AllProviders>
+    );
+
+    window.dispatchEvent(new StorageEvent('storage', {
+      key: LOGOUT,
+      newValue: 'light'
+    }));
+
+    window.location.reload.mockClear();
   });
 });

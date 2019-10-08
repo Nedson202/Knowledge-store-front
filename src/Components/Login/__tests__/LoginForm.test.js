@@ -95,8 +95,14 @@ describe('Login Form', () => {
       </AllProviders>
     );
 
-    getByText('Forgot password?');
-    getByText('Verify email');
+    const forgotPasswordOption = getByText('Forgot password?');
+    const verifyMailOption = getByText('Verify email');
+
+    expect(forgotPasswordOption).toBeVisible();
+    expect(verifyMailOption).toBeVisible();
+
+    fireEvent.click(forgotPasswordOption);
+    fireEvent.click(verifyMailOption);
   });
 
   it('should render modal', () => {

@@ -1,7 +1,9 @@
 import React from 'react';
-import { render } from 'test-utils';
+import { render, cleanup } from 'test-utils';
 
 import Table from '..';
+
+afterEach(cleanup);
 
 describe('Table', () => {
   it('should render', () => {
@@ -50,8 +52,8 @@ describe('Table', () => {
         role: 'admin'
       }]
     };
-    const { getAllByText } = render(<Table {...mockProps} />);
+    const { getByText } = render(<Table {...mockProps} />);
 
-    getAllByText('remove');
+    getByText('remove');
   });
 });

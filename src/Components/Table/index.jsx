@@ -47,15 +47,18 @@ const Tables = (props) => {
                   className="dropdown-item user-profile-navlink"
                   id="trash-icon"
                 >
-                  deactivate <i className="fa fa-trash" />
+                  deactivate
+                  {' '}
+                  <i className="fa fa-trash" />
                 </a>
 
                 {role.match(ADMIN) && (
                   <button
-                    type="button"
-                    onClick={removeAdmin(REMOVE, email)}
                     className="dropdown-item user-profile-navlink"
+                    data-testid="remove-admin-button"
                     id="trash-icon"
+                    onClick={removeAdmin(REMOVE, email)}
+                    type="button"
                   >
                     {REMOVE}
                     <i className="fa fa-trash" />

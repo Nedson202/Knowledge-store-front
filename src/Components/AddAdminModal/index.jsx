@@ -63,6 +63,7 @@ const AddAddminModal = (props) => {
               </button>
               <button
                 className="btn btn-primary btn-raised text-case add-admin"
+                data-testid="add-admin-button"
                 onClick={addAmin(ADD)}
                 type="button"
               >

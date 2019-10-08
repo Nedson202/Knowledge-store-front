@@ -42,16 +42,14 @@ class Main extends Component {
 
   renderExploreButton() {
     return (
-      <Fragment>
-        <button
-          className="btn btn-outline-primary"
-          onClick={this.navigateToBooks}
-          type="button"
-        >
-          <ion-icon name="paper-plane" />
+      <button
+        className="btn btn-outline-primary"
+        onClick={this.navigateToBooks}
+        type="button"
+      >
+        <ion-icon name="paper-plane" />
           Explore
-        </button>
-      </Fragment>
+      </button>
     );
   }
 

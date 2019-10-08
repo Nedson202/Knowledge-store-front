@@ -28,6 +28,7 @@ class PasswordReset extends Component {
 
   getResetToken() {
     const query = queryString.parse(window.location.search);
+
     const token = Object.values(query)[0];
 
     if (!token) {

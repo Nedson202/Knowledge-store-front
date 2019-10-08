@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Main should render action buttons 1`] = `
+exports[`App should render 1`] = `
 <DocumentFragment>
   <div>
     <div

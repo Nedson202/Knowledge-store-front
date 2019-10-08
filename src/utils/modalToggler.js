@@ -1,6 +1,9 @@
 const modalToggler = (element) => {
   const modal = document.getElementById(element);
-  modal.click();
+
+  if (modal) {
+    modal.click();
+  }
 };
 
 export default modalToggler;

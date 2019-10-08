@@ -20,13 +20,13 @@ const LoginForm = (props) => {
         onClick={() => modalToggler('close-login')}
         to="/email?reset-password=true"
       >
-      Forgot password?
+        Forgot password?
       </Link>
       <Link
         onClick={() => modalToggler('close-login')}
         to="/email?verify-email=true"
       >
-      Verify email
+        Verify email
       </Link>
     </div>
   );

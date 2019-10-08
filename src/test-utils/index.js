@@ -6,8 +6,11 @@ import { Provider } from 'react-redux';
 import store from '../redux';
 
 // eslint-disable-next-line react/prop-types
-export const AllProviders = ({ children, customStore }) => (
-  <MockedProvider removeTypename>
+export const AllProviders = ({ children, customStore, apolloMocks }) => (
+  <MockedProvider
+    addTypename={false}
+    mocks={apolloMocks}
+  >
     <Provider store={customStore || store}>
       <BrowserRouter>
         {children}

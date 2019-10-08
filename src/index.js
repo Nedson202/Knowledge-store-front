@@ -17,6 +17,8 @@ import { tokenDecoder } from './utils';
 import { PRODUCTION, LOGOUT } from './settings';
 import store from './redux';
 
+import registerServiceWorker from './registerServiceWorker';
+
 const serverUrl = process.env.REACT_APP_NODE_ENV.match(PRODUCTION)
   ? process.env.REACT_APP_PROD_SERVER : process.env.REACT_APP_LOCAL_SERVER;
 
@@ -88,3 +90,5 @@ const renderDOM = () => {
 
   renderDOM();
 })();
+
+registerServiceWorker();

@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 const errorParser = (message) => {
   try {
     if (JSON.parse(message)) return true;
