@@ -54,18 +54,18 @@ class AddBookModal extends Component {
     return (
       <div className="image-previewer">
         <img
-          src={toHTTPS(imagePreviewUrl)}
-          id="image-upload"
-          height="220px"
-          width="180px"
           alt="Avatar"
+          height="220px"
+          id="image-upload"
+          src={toHTTPS(imagePreviewUrl)}
+          width="180px"
         />
         <span style={{ marginTop: '15px' }}>
           {imageUploadStatus && <Spinner />}
         </span>
         <button
-          type="button"
           className="btn btn-raised"
+          type="button"
         >
           {CANCEL_PREVIEW}
         </button>
@@ -85,13 +85,13 @@ class AddBookModal extends Component {
     return (
       <Fragment>
         <div
-          className="modal fade add-book-modal"
-          id="AddBookModal"
-          tabIndex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalCenterTitle"
           aria-hidden="true"
+          aria-labelledby="exampleModalCenterTitle"
+          className="modal fade add-book-modal"
           data-keyboard="false"
+          id="AddBookModal"
+          role="dialog"
+          tabIndex="-1"
         >
           <div
             className="modal-dialog modal-dialog-centered"
@@ -101,15 +101,14 @@ class AddBookModal extends Component {
               <div className="modal-header">
                 <h5
                   className="modal-title"
-
                 >
                   {editingBook ? EDIT_BOOK : ADD_BOOK}
                 </h5>
                 <button
-                  type="button"
+                  aria-label="Close"
                   className="close"
                   data-dismiss="modal"
-                  aria-label="Close"
+                  type="button"
                 >
                   <span aria-hidden="true" id="close-book">&times;</span>
                 </button>
@@ -123,24 +122,24 @@ class AddBookModal extends Component {
                   <div className="form-group">
                     <label htmlFor="book-title">{BOOK_TITLE}</label>
                     <input
-                      type="text"
                       className="form-control"
+                      defaultValue={editingBook ? name : ''}
                       id="book-title"
                       name="name"
                       onChange={handleInputChange}
-                      defaultValue={editingBook ? name : ''}
+                      type="text"
                     />
                   </div>
                   <div className="form-group">
                     <label htmlFor="author">{AUTHORS_LABEL}</label>
                     <input
-                      type="text"
                       className="form-control"
+                      defaultValue={editingBook ? authors : ''}
                       id="author"
                       name="authors"
-                      placeholder="e.g paul max, smith mill..."
                       onChange={handleInputChange}
-                      defaultValue={editingBook ? authors : ''}
+                      placeholder="e.g paul max, smith mill..."
+                      type="text"
                     />
                   </div>
                   <div className="form-group is-filled">
@@ -157,8 +156,8 @@ class AddBookModal extends Component {
                     <label htmlFor="genre">{GENRE}</label>
                     <Select
                       mode="tags"
-                      style={{ width: '100%' }}
                       onChange={handleGenreChange}
+                      style={{ width: '100%' }}
                     >
                       {this.renderChildren(genres)}
                     </Select>
@@ -166,39 +165,39 @@ class AddBookModal extends Component {
                   <div className="form-group">
                     <label htmlFor="download">{DOWNLOAD_URL}</label>
                     <input
-                      type="text"
                       className="form-control"
                       id="download"
                       name="downloadUrl"
                       onChange={handleInputChange}
+                      type="text"
                     />
                   </div>
                   <div className="form-group">
                     <label htmlFor="description">{DESCRIPTION}</label>
                     <textarea
-                      rows="3"
-                      type="email"
                       className="form-control"
+                      defaultValue={editingBook ? description : ''}
                       id="description"
                       name="description"
                       onChange={handleInputChange}
-                      defaultValue={editingBook ? description : ''}
+                      rows="3"
+                      type="email"
                     />
                   </div>
                 </form>
               </div>
               <div className="modal-footer">
                 <button
-                  type="button"
                   className="btn btn-default btn-raised cancel-button"
                   data-dismiss="modal"
+                  type="button"
                 >
                   {CLOSE}
                 </button>
                 <button
-                  type="button"
                   className="btn btn-primary btn-raised text-case save-button"
                   onClick={handleBookSubmission}
+                  type="button"
                 >
                   {SAVE_CHANGES}
                 </button>

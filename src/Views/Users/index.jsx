@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { compose, graphql, withApollo } from 'react-apollo';
 import { Select } from 'antd';
@@ -12,7 +12,6 @@ import Spinner from '../../Components/Spinner';
 import {
   SUCCESS, CLOSE_USER, ADD, TOASTR_ERROR, FETCH_USERS_QUERY,
   TOGGLE_ADMIN_QUERY,
-  FILTER_USERS_QUERY
 } from '../../settings';
 
 const { Option } = Select;
@@ -24,10 +23,11 @@ class Users extends Component {
   };
 
   handleChange = async (value) => {
-    const { filterUsersQuery } = this.props;
+    const { client } = this.props;
 
     try {
-      const response = await filterUsersQuery({
+      const response = await client.query({
+        query: filterUsers,
         variables: {
           type: value.toLowerCase()
         }
@@ -40,7 +40,7 @@ class Users extends Component {
       }
 
       this.setState({ filteredUsers: fetchUsers || [] });
-    } catch (error) {
+    } catch (error) /* istanbul ignore next */ {
       console.error(error);
     }
   }
@@ -67,7 +67,7 @@ class Users extends Component {
       modalToggler(CLOSE_USER);
       this.setState({ email: '' });
       toaster(SUCCESS, message);
-    } catch (error) {
+    } catch (error) /* istanbul ignore next */ {
       const messages = errorHandler(error);
       messages.forEach(message => toaster(TOASTR_ERROR, message));
     }
@@ -87,14 +87,15 @@ class Users extends Component {
   renderSelectField() {
     const { filteredUsers } = this.state;
     return (
-      <Fragment>
-        <Select defaultValue="Filter (All)" onChange={this.handleChange}>
-          {filteredUsers.length && <Option value="All">All</Option>}
-          <Option value="User">User</Option>
-          <Option value="Admin">Admin</Option>
-          <Option value="Super">Super</Option>
-        </Select>
-      </Fragment>
+      <Select
+        defaultValue="Filter (All)"
+        onChange={this.handleChange}
+      >
+        {filteredUsers.length && <Option value="All">All</Option>}
+        <Option value="User">User</Option>
+        <Option value="Admin">Admin</Option>
+        <Option value="Super">Super</Option>
+      </Select>
     );
   }
 
@@ -105,10 +106,10 @@ class Users extends Component {
         <div>
           {this.renderSelectField()}
           <button
-            type="button"
             className="btn btn-primary btn-raised"
-            data-toggle="modal"
             data-target="#AddAdminModal"
+            data-toggle="modal"
+            type="button"
           >
             Add Admin
           </button>
@@ -127,23 +128,26 @@ class Users extends Component {
   }
 
   render() {
-    const { fetchUsersQuery } = this.props;
+    const { fetchUsersQuery: { loading, fetchUsers } } = this.props;
+
     const { filteredUsers } = this.state;
-    const users = fetchUsersQuery.fetchUsers !== undefined
-      ? fetchUsersQuery.fetchUsers : [];
+    const users = fetchUsers && fetchUsers.length ? fetchUsers : [];
     const filteredResult = filteredUsers.length ? filteredUsers : users;
+
     return (
       <div className="container-content">
         <div className="admin-panel">
           {this.renderHeader()}
-          {fetchUsersQuery.loading ? (
+
+          {loading ? (
             <span className="table-spinner">
               <Spinner spinnerStyle={45} />
             </span>
           ) : this.renderTable(filteredResult)}
+
           <AddAdminModal
-            handleInputChange={this.handleEmailChange}
             addAmin={this.handleToggleAdmin}
+            handleInputChange={this.handleEmailChange}
           />
         </div>
       </div>
@@ -152,13 +156,16 @@ class Users extends Component {
 }
 
 Users.propTypes = {
-  filterUsersQuery: PropTypes.func,
-  fetchUsersQuery: PropTypes.object,
+  client: PropTypes.object,
+  fetchUsersQuery: PropTypes.shape({
+    loading: PropTypes.bool,
+    fetchUsers: PropTypes.array,
+  }),
   toggleAdminQuery: PropTypes.func,
 };
 
 Users.defaultProps = {
-  filterUsersQuery: () => { },
+  client: {},
   fetchUsersQuery: {},
   toggleAdminQuery: () => { },
 };
@@ -175,8 +182,5 @@ export default compose(
   }),
   graphql(toggleAdmin, {
     name: TOGGLE_ADMIN_QUERY
-  }),
-  graphql(filterUsers, {
-    name: FILTER_USERS_QUERY
   }),
 )(Users);

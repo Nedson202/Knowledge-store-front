@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LeftSideBar should display nav links only 1`] = `
+<DocumentFragment>
+  <div
+    class="leftsidebar"
+    id="myLeftSideBar"
+    style="width: 270px;"
+  >
+    <div
+      class="__react_component_tooltip place-right type-dark "
+      data-id="tooltip"
+    />
+    <div
+      class="sidenav-collapse"
+      data-testid="menu-button"
+      role="button"
+      tabindex="0"
+    >
+      <div
+        class="menu-icon"
+      >
+        <ion-icon
+          name="menu"
+        />
+      </div>
+      <a
+        class="sideBarText"
+        href="/"
+      >
+        Loresters Bookstore
+      </a>
+    </div>
+    <div
+      currentitem="false"
+      data-tip="All Books"
+    >
+      <a
+        class="
+            dropdown-item sidebar-navlink
+              false
+              "
+        href="/books"
+      >
+        <ion-icon
+          name="bookmarks"
+        />
+        <span
+          class="sideBarText"
+        >
+          All Books
+        </span>
+      </a>
+    </div>
+    <div
+      currentitem="false"
+      data-tip="My Books"
+    >
+      <a
+        class="
+            dropdown-item sidebar-navlink
+              blur
+              "
+        href="/my-books"
+      >
+        <ion-icon
+          name="book"
+        />
+        <span
+          class="sideBarText"
+        >
+          My Books
+        </span>
+      </a>
+    </div>
+    <div
+      currentitem="false"
+      data-tip="My Favorites"
+    >
+      <a
+        class="
+            dropdown-item sidebar-navlink
+              blur
+              "
+        href="/my-favorites"
+      >
+        <ion-icon
+          name="bookmark"
+        />
+        <span
+          class="sideBarText"
+        >
+          My Favorites
+        </span>
+      </a>
+    </div>
+    <div
+      currentitem="false"
+      data-tip="My Profile"
+    >
+      <a
+        class="
+            dropdown-item sidebar-navlink
+              blur
+              "
+        href="/my-profile"
+      >
+        <ion-icon
+          name="person"
+        />
+        <span
+          class="sideBarText"
+        >
+          My Profile
+        </span>
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;

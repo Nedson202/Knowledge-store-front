@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddAddminModal component should render 1`] = `
+<DocumentFragment>
+  <div
+    class="admin-panel"
+  >
+    <div
+      aria-hidden="true"
+      aria-labelledby="Add admin modal"
+      class="modal fade"
+      data-testid="add-admin-modal"
+      id="AddAdminModal"
+      role="dialog"
+      tabindex="-1"
+    >
+      <div
+        class="modal-dialog modal-dialog-centered"
+        role="document"
+      >
+        <div
+          class="modal-content"
+        >
+          <div
+            class="modal-header"
+          >
+            <h5
+              class="modal-title"
+            >
+              Add Admin
+            </h5>
+            <button
+              aria-label="Close"
+              class="close"
+              data-dismiss="modal"
+              id="close-user"
+              type="button"
+            >
+              <span
+                aria-hidden="true"
+              >
+                ×
+              </span>
+            </button>
+          </div>
+          <div
+            class="modal-body"
+          >
+            <form
+              class="add-admin-form"
+            >
+              <div
+                class="form-group"
+              >
+                <label
+                  class="bmd-label-floating"
+                  for="admin-email"
+                >
+                  User Email
+                </label>
+                <input
+                  class="form-control"
+                  id="admin-email"
+                  type="email"
+                />
+              </div>
+            </form>
+          </div>
+          <div
+            class="modal-footer"
+          >
+            <button
+              class="btn btn-default btn-raised cancel-button"
+              data-dismiss="modal"
+              type="button"
+            >
+              Close
+            </button>
+            <button
+              class="btn btn-primary btn-raised text-case add-admin"
+              data-testid="add-admin-button"
+              type="button"
+            >
+              Add Admin
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

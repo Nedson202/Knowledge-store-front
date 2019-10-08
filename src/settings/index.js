@@ -96,6 +96,7 @@ export const VALIDATION_DEBOUNCE_TIME = 1000;
 export const FLEX = 'flex';
 export const EDIT = 'edit';
 export const DELETE = 'delete';
+export const REMOVE = 'remove';
 export const BLOCK = 'block';
 export const NONE = 'none';
 export const HIDE = 'hide';
@@ -104,6 +105,7 @@ export const OPEN = 'open';
 export const AUTO = 'auto';
 export const CLOSED = 'closed';
 export const USER = 'user';
+export const ADMIN = 'admin';
 
 export const NO_CONTENT = 'The content you seek is unavailable';
 export const BOOK_SERVER_ERROR = 'Unable to retrieve books from the server please try again';

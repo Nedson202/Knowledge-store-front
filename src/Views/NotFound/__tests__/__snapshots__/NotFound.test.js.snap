@@ -3,18 +3,22 @@
 exports[`NotFound component should render message 1`] = `
 <DocumentFragment>
   <div
-    class="not-found text-center"
+    class="container-content"
   >
-    <h1
-      class="not-found__404"
+    <div
+      class="not-found text-center"
     >
-      404!
-    </h1>
-    <h1
-      class="not-found__text"
-    >
-      Sorry this page does not exist.
-    </h1>
+      <h1
+        class="not-found__404"
+      >
+        404!
+      </h1>
+      <h1
+        class="not-found__text"
+      >
+        Sorry this page does not exist.
+      </h1>
+    </div>
   </div>
 </DocumentFragment>
 `;

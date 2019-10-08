@@ -1,5 +1,5 @@
-import queryString from 'querystring';
 import React, { PureComponent } from 'react';
+import queryString from 'querystring';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -35,7 +35,7 @@ class Search extends PureComponent {
         dispatch(setRetrievedBooks(
           searchBooks, false, searchBooks && searchBooks.length
         ));
-      } catch (error) {
+      } catch (error) /* istanbul ignore next */ {
         dispatch(setRetrievedBooks([], false));
 
         return error;
@@ -107,8 +107,8 @@ class Search extends PureComponent {
     setQuery({ search: '' });
 
     const { history } = this.props;
-    history.push(localStorage.previousLocation);
-    localStorage.removeItem(PREVIOUS_LOCATION);
+    history.push(window.localStorage.previousLocation);
+    window.localStorage.removeItem(PREVIOUS_LOCATION);
   }
 
   handleReset = () => {
@@ -122,7 +122,7 @@ class Search extends PureComponent {
     this.setState({ closeIconActive: false });
   }
 
-  handleDataPaste = (event) => {
+  handleDataPaste = (event) => /* istanbul ignore next */ {
     const { clipboardData } = event;
     const { history, history: { location } } = this.props;
     const query = clipboardData.getData('text/plain');
@@ -136,7 +136,7 @@ class Search extends PureComponent {
       pathname: BOOKS_PATH,
     });
 
-    localStorage.setItem(PREVIOUS_LOCATION, location.pathname);
+    window.localStorage.setItem(PREVIOUS_LOCATION, location.pathname);
 
     return this.debounceSearch(query);
   }
@@ -145,39 +145,42 @@ class Search extends PureComponent {
     this.setState({ closeIconActive: true });
   }
 
+  handleEnterKeyPress = (event) => {
+    if (event.which === 13 /* Enter */) {
+      event.preventDefault();
+    }
+  }
+
   render() {
     const { value, closeIconActive } = this.state;
     return (
       <form
         className="search"
-        onKeyPress={(event) => {
-          if (event.which === 13 /* Enter */) {
-            event.preventDefault();
-          }
-        }}
+        onKeyPress={this.handleEnterKeyPress}
       >
         <ion-icon name="search" />
         <input
-          className="form-input"
-          type="search"
-          placeholder="Search book collections..."
           aria-label="Search"
-          name="value"
-          id="searchBox"
-          onChange={this.onInputChange}
-          onBlur={this.handleReset}
-          onFocus={this.closeIconActive}
           autoComplete="off"
+          className="form-input"
+          id="searchBox"
+          name="value"
+          onBlur={this.handleReset}
+          onChange={this.onInputChange}
+          onFocus={this.closeIconActive}
           onPaste={this.handleDataPaste}
+          placeholder="Search book collections..."
+          type="search"
           value={value}
         />
 
         {closeIconActive && (
           <button
-            type="button"
+            className="close-icon"
+            data-testid="reset-search"
             onClick={this.clearSearchQuery}
             tabIndex={0}
-            className="close-icon"
+            type="button"
           >
             &times;
           </button>

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MessageBanner should render with default store 1`] = `<DocumentFragment />`;

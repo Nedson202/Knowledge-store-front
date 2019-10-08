@@ -96,7 +96,6 @@ class ReviewForm extends Component {
     if (!review.trim()) return toaster(TOASTR_ERROR, REVIEW_WARNING);
     if (!rating) return toaster(TOASTR_ERROR, RATING_WARNING);
 
-    console.log('wht asjdjsdjdjsjds');
     try {
       await addReviewQuery({
         variables: {
@@ -328,6 +327,7 @@ class ReviewForm extends Component {
             rows="3"
             onChange={this.handleInputChange}
             onReset={this.clearForm}
+            id="review-form"
           />
         </div>
         <span className="add-review-footer">

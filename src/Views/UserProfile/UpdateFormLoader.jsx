@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-const UpdateForm = () => (
+const AccountUpdateForm = () => (
   <ContentLoader rtl height={160} width={400} speed={2} primaryColor="#f3f3f3">
     <rect x="50" y="10" rx="4" ry="4" width="145" height="6.4" />
     <rect x="50" y="50" rx="3" ry="3" width="270" height="6.4" />
@@ -11,4 +11,4 @@ const UpdateForm = () => (
   </ContentLoader>
 );
 
-export default UpdateForm;
+export default AccountUpdateForm;

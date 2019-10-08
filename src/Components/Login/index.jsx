@@ -26,6 +26,7 @@ class Login extends Component {
     const { formErrors: newFormErrors } = handleSingleFieldValidation(
       formErrors, { name, value }
     );
+
     this.setState({ formErrors: newFormErrors });
   }, VALIDATION_DEBOUNCE_TIME);
 
@@ -42,9 +43,10 @@ class Login extends Component {
     };
   }
 
-  onInputChange = (event) => {
+  handleInputChange = (event) => {
     const { name, value } = event.target;
     const { values } = this.state;
+
     values[name] = value;
     this.setState({ values });
     this.debounceSingleFieldValidation({ name, value });
@@ -76,6 +78,7 @@ class Login extends Component {
       modalToggler(CLOSE_LOGIN);
       dispatch(setCurrentUser(decodedToken));
 
+      /* istanbul ignore next */
       if (decodedToken.isVerified) {
         toaster(SUCCESS, 'Signed in successfully');
       }
@@ -87,8 +90,9 @@ class Login extends Component {
         },
         processing: false,
       });
-    } catch (error) {
+    } catch (error) /* istanbul ignore next */{
       const messages = errorHandler(error);
+
       messages.forEach(message => toaster(TOASTR_ERROR, message));
 
       this.setState({ processing: false });
@@ -100,7 +104,7 @@ class Login extends Component {
     return (
       <Fragment>
         <LoginForm
-          onInputChange={this.onInputChange}
+          handleInputChange={this.handleInputChange}
           handleUserLogin={this.handleUserLogin}
           formErrors={formErrors}
           values={values}

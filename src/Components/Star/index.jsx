@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import ReactStars from 'react-stars';
 
@@ -6,7 +6,7 @@ const Star = (props) => {
   const { value, editable, size } = props;
 
   return (
-    <Fragment>
+    <div data-testid="react-star-rating">
       <ReactStars
         count={5}
         size={size}
@@ -16,7 +16,7 @@ const Star = (props) => {
         half
         edit={editable}
       />
-    </Fragment>
+    </div>
   );
 };
 

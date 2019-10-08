@@ -3,91 +3,107 @@ import PropTypes from 'prop-types';
 
 import { passwordToggler } from '../../utils';
 
-const UpdatePassword = (props) => {
+const UpdatePasswordForm = (props) => {
   const {
-    handleInputChange, updatePassword, formErrors, formValues,
+    handleInputChange, updatePassword, formValues,
+    formErrors: {
+      oldPassword: oldPasswordError,
+      newPassword: newPasswordError,
+    }
   } = props;
+
+
   const { oldPassword, newPassword } = formValues;
 
   return (
     <div className="password-update">
       <form>
         <div className="form-group">
-          <label htmlFor="old-password" className="bmd-label-floating">
+          <label
+            className="bmd-label-floating"
+            htmlFor="old-password"
+          >
             Old Password
           </label>
           <input
-            name="oldPassword"
-            type="password"
+            autoComplete="new-password"
             className="form-control"
             id="old-password"
-            value={oldPassword}
+            name="oldPassword"
             onChange={handleInputChange}
-            autoComplete="new-password"
+            type="password"
+            value={oldPassword}
           />
-          {formErrors.password && (
+          {oldPasswordError && (
             <span className="validation-error">
-              {formErrors.password}
+              {oldPasswordError[0]}
             </span>
           )}
           <div
+            onClick={passwordToggler('old-password')}
+            data-testid="old-password-icon"
+            id="old-password-icon"
             role="button"
             tabIndex={0}
-            onClick={passwordToggler('old-password')}
-            id="old-password-icon"
           >
             <ion-icon
               class="hide"
-              name="eye-off"
               id="old-password-remove-hide"
+              name="eye-off"
             />
             <ion-icon
-              name="eye"
               id="old-password-add-hide"
+              name="eye"
             />
           </div>
         </div>
         <div className="form-group">
-          <label htmlFor="new-password" className="bmd-label-floating">
+          <label
+            className="bmd-label-floating"
+            htmlFor="new-password"
+          >
             New Password
           </label>
           <input
-            name="newPassword"
-            type="password"
+            autoComplete="new-password"
             className="form-control"
             id="new-password"
-            value={newPassword}
+            name="newPassword"
             onChange={handleInputChange}
-            autoComplete="new-password"
+            type="password"
+            value={newPassword}
           />
-          {formErrors.password && (
+          {newPasswordError && (
             <span className="validation-error">
-              {formErrors.password}
+              {newPasswordError[0]}
             </span>
           )}
+
           <div
+            onClick={passwordToggler('new-password')}
+            data-testid="new-password-icon"
+            id="new-password-icon"
             role="button"
             tabIndex={0}
-            onClick={passwordToggler('new-password')}
-            id="new-password-icon"
           >
             <ion-icon
               class="hide"
-              name="eye-off"
               id="new-password-remove-hide"
+              name="eye-off"
             />
             <ion-icon
-              name="eye"
               id="new-password-add-hide"
+              name="eye"
             />
           </div>
         </div>
+
         <div className="form-group">
           <button
-            type="button"
             className="btn btn-raised text-case"
             id="update-password"
             onClick={updatePassword}
+            type="button"
           >
             Update Password
           </button>
@@ -97,14 +113,17 @@ const UpdatePassword = (props) => {
   );
 };
 
-UpdatePassword.propTypes = {
+UpdatePasswordForm.propTypes = {
   handleInputChange: PropTypes.func,
   updatePassword: PropTypes.func,
   formValues: PropTypes.object,
-  formErrors: PropTypes.object,
+  formErrors: PropTypes.shape({
+    oldPassword: PropTypes.array,
+    newPassword: PropTypes.array,
+  }),
 };
 
-UpdatePassword.defaultProps = {
+UpdatePasswordForm.defaultProps = {
   handleInputChange: () => { },
   updatePassword: () => { },
   formValues: {},
@@ -112,4 +131,4 @@ UpdatePassword.defaultProps = {
 };
 
 
-export default UpdatePassword;
+export default UpdatePasswordForm;

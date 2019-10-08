@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -19,12 +19,17 @@ class Header extends Component {
 
   componentDidMount() {
     this.loadTheme();
-    window.addEventListener(STORAGE, this.syncLogout);
+    window.addEventListener(STORAGE, this.registerStorageEvents);
   }
 
   componentWillUnmount() {
     document.removeEventListener(CLICK, this.handleOutsideClick, false);
-    window.removeEventListener(STORAGE, this.syncLogout, false);
+    window.removeEventListener(STORAGE, this.registerStorageEvents, false);
+  }
+
+  registerStorageEvents = (event) => {
+    this.syncLogout(event);
+    this.handleDarkModeToggle(event);
   }
 
   toggleMobileNav = () => {
@@ -63,36 +68,58 @@ class Header extends Component {
 
   handleLogout = () => {
     const { dispatch } = this.props;
+
     window.localStorage.setItem(LOGOUT, true);
     dispatch(logOutUser());
   }
 
+  syncLogout = (event) => {
+    if (event.key !== LOGOUT) {
+      return;
+    }
+
+    window.location.reload();
+  }
+
   toggleDarkMode = () => {
-    const currentTheme = localStorage.getItem(THEME) || LIGHT;
+    const currentTheme = window.localStorage.getItem(THEME) || LIGHT;
     const theme = FLIP_THEME[currentTheme];
 
-    localStorage.setItem(THEME, theme);
+    window.localStorage.setItem(THEME, theme);
     document.documentElement.setAttribute(THEME_ATTRIBUTE, theme);
   }
 
-  loadTheme = () => {
-    const currentTheme = localStorage.getItem(THEME) || LIGHT;
-    document.documentElement.setAttribute(THEME_ATTRIBUTE, currentTheme);
+  handleDarkModeToggle = (event) => {
+    if (event.key !== THEME) {
+      return;
+    }
+
+    this.loadTheme();
   }
 
-  syncLogout(event) {
-    if (event.key === LOGOUT) {
-      window.location.reload();
+  loadTheme = () => {
+    const currentTheme = window.localStorage.getItem(THEME) || LIGHT;
+    window.document.documentElement.setAttribute(THEME_ATTRIBUTE, currentTheme);
+  }
+
+  switchAuthButtonsAndUserAvatar = () => {
+    const { user: { isVerified = false } } = this.props;
+
+    if (!isVerified) {
+      return this.renderAuthButtons();
     }
+
+    return this.renderUserAvatar();
   }
 
   renderThemeButton(platformStyle) {
     return (
       <button
-        type="button"
-        className={`dark-mode-switch ${platformStyle}`}
         aria-label="Dark mode switch"
+        className={`dark-mode-switch ${platformStyle}`}
+        data-testid="dark-mode-switch"
         onClick={this.toggleDarkMode}
+        type="button"
       >
         <ion-icon name="contrast" class="dark-mode-icon" />
       </button>
@@ -103,20 +130,20 @@ class Header extends Component {
     return (
       <div className="desktop-and-tablet">
         <button
-          type="button"
-          className="btn btn-default cancel-button btn"
-          data-toggle="modal"
-          data-target="#LoginFormModal"
           id="login-button"
+          className="btn btn-default cancel-button btn"
+          data-target="#LoginFormModal"
+          data-toggle="modal"
+          type="button"
         >
           Login
         </button>
         <button
-          type="button"
           className="btn btn-primary btn-raised text-case login-button"
-          data-toggle="modal"
           data-target="#SignUpFormModal"
+          data-toggle="modal"
           id="signup-button"
+          type="button"
         >
           Signup
         </button>
@@ -126,20 +153,25 @@ class Header extends Component {
 
   renderUserAvatar() {
     const { user: { username, picture, avatarColor, } = {} } = this.props;
+
     return (
       <li className="nav-item dropdown user-profile-nav">
         <button
-          type="button"
-          className="btn btn-default nav-link dropdown-toggle text-case user-toggle"
-          id="navbarDropdown"
-          data-toggle="dropdown"
-          aria-haspopup="true"
           aria-expanded="false"
+          aria-haspopup="true"
+          className="btn btn-default nav-link dropdown-toggle text-case user-toggle"
+          data-toggle="dropdown"
+          id="navbarDropdown"
+          type="button"
         >
           {picture && <img src={picture} alt="Avatar" className="avatar" />}
           {!picture && <Avatar user={username} color={avatarColor} />}
         </button>
-        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+
+        <div
+          aria-labelledby="navbarDropdown"
+          className="dropdown-menu"
+        >
           <div className="user-detail">
             {username}
           </div>
@@ -149,9 +181,9 @@ class Header extends Component {
             Profile
           </Link>
           <button
-            type="button"
             className="dropdown-item logout-button"
             onClick={this.handleLogout}
+            type="button"
           >
             <ion-icon class="user-profile-icon" name="log-out" />
             Logout
@@ -162,58 +194,54 @@ class Header extends Component {
   }
 
   render() {
-    const { user } = this.props;
     return (
-      <Fragment>
-        <nav
-          className="navbar fixed-top navbar-expand-lg"
-          id="navbar"
-          ref={(node) => { this.node = node; }}
-        >
-          <div className="container">
-            <button
-              type="button"
-              className="mobile-nav"
-              aria-label="Toggle navigation"
-              onClick={this.toggleMobileNav}
-            >
-              <ion-icon name="menu" />
-            </button>
-            <Link to="/">
-              <span className="navbar-brand">Loresters Bookstore</span>
-            </Link>
+      <nav
+        className="navbar fixed-top navbar-expand-lg"
+        id="navbar"
+        ref={(node) => { this.node = node; }}
+      >
+        <div className="container">
+          <button
+            aria-label="Toggle navigation"
+            className="mobile-nav"
+            onClick={this.toggleMobileNav}
+            type="button"
+          >
+            <ion-icon name="menu" />
+          </button>
+          <Link to="/">
+            <span className="navbar-brand">Loresters Bookstore</span>
+          </Link>
 
-            <button
-              type="button"
-              className="mobile-nav"
-              data-toggle="collapse"
-              data-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Search icon"
-            >
-              <ion-icon name="search" />
-            </button>
+          <button
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Search icon"
+            className="mobile-nav"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            type="button"
+          >
+            <ion-icon name="search" />
+          </button>
 
-            {this.renderThemeButton('mobile-nav')}
+          {this.renderThemeButton('mobile-nav')}
 
-            <div
-              className="collapse navbar-collapse"
-              id="navbarSupportedContent"
-            >
-              <Search />
-              <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-                {user.isVerified && this.renderUserAvatar()}
-              </ul>
-              {!user.isVerified && this.renderAuthButtons()}
-              <span className="desktop-and-tablet">
-                {this.renderThemeButton()}
-              </span>
-            </div>
+          <div
+            className="collapse navbar-collapse"
+            id="navbarSupportedContent"
+          >
+            <Search />
+            <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+              {this.switchAuthButtonsAndUserAvatar()}
+            </ul>
 
+            <span className="desktop-and-tablet">
+              {this.renderThemeButton()}
+            </span>
           </div>
-        </nav>
-      </Fragment>
+        </div>
+      </nav>
     );
   }
 }

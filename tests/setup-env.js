@@ -7,3 +7,12 @@ const localStorageMock = {
 };
 
 global.localStorage = localStorageMock;
+
+HTMLCanvasElement.prototype.getContext = jest.fn();
+
+console.warn = jest.fn();
+
+global.setQuery = jest.fn();
+global.toast = jest.fn();
+
+global.token = process.env.TEST_TOKEN;

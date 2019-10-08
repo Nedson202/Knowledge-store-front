@@ -9,23 +9,15 @@ import { setContext } from 'apollo-link-context';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { persistCache } from 'apollo-cache-persist';
 import { onError } from 'apollo-link-error';
-import thunk from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
 
-import rootReducer from './redux/reducers/rootReducer';
 import { setCurrentUser } from './redux/actions/userActions';
 
 import Routes from './Routes';
 import { tokenDecoder } from './utils';
 import { PRODUCTION, LOGOUT } from './settings';
+import store from './redux';
 
-const enhancer = composeWithDevTools(applyMiddleware(thunk));
-
-const store = createStore(
-  rootReducer,
-  enhancer
-);
+import registerServiceWorker from './registerServiceWorker';
 
 const serverUrl = process.env.REACT_APP_NODE_ENV.match(PRODUCTION)
   ? process.env.REACT_APP_PROD_SERVER : process.env.REACT_APP_LOCAL_SERVER;
@@ -98,3 +90,5 @@ const renderDOM = () => {
 
   renderDOM();
 })();
+
+registerServiceWorker();

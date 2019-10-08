@@ -194,5 +194,17 @@
     hr {
       background-color: $grey_8;
     }
+
+    #image-upload {
+      #dropzone {
+        p {
+          color: $white_1;
+        }
+
+        ion-icon {
+          color: $white_1;
+        }
+      }
+    }
   }
 }

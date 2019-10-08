@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header should render darkmode switch 1`] = `
+<DocumentFragment>
+  <nav
+    class="navbar fixed-top navbar-expand-lg"
+    id="navbar"
+  >
+    <div
+      class="container"
+    >
+      <button
+        aria-label="Toggle navigation"
+        class="mobile-nav"
+        type="button"
+      >
+        <ion-icon
+          name="menu"
+        />
+      </button>
+      <a
+        href="/"
+      >
+        <span
+          class="navbar-brand"
+        >
+          Loresters Bookstore
+        </span>
+      </a>
+      <button
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Search icon"
+        class="mobile-nav"
+        data-target="#navbarSupportedContent"
+        data-toggle="collapse"
+        type="button"
+      >
+        <ion-icon
+          name="search"
+        />
+      </button>
+      <button
+        aria-label="Dark mode switch"
+        class="dark-mode-switch mobile-nav"
+        data-testid="dark-mode-switch"
+        type="button"
+      >
+        <ion-icon
+          class="dark-mode-icon"
+          name="contrast"
+        />
+      </button>
+      <div
+        class="collapse navbar-collapse"
+        id="navbarSupportedContent"
+      >
+        <form
+          class="search"
+        >
+          <ion-icon
+            name="search"
+          />
+          <input
+            aria-label="Search"
+            autocomplete="off"
+            class="form-input"
+            id="searchBox"
+            name="value"
+            placeholder="Search book collections..."
+            type="search"
+            value=""
+          />
+        </form>
+        <ul
+          class="navbar-nav ml-auto mt-2 mt-lg-0"
+        >
+          <div
+            class="desktop-and-tablet"
+          >
+            <button
+              class="btn btn-default cancel-button btn"
+              data-target="#LoginFormModal"
+              data-toggle="modal"
+              id="login-button"
+              type="button"
+            >
+              Login
+            </button>
+            <button
+              class="btn btn-primary btn-raised text-case login-button"
+              data-target="#SignUpFormModal"
+              data-toggle="modal"
+              id="signup-button"
+              type="button"
+            >
+              Signup
+            </button>
+          </div>
+        </ul>
+        <span
+          class="desktop-and-tablet"
+        >
+          <button
+            aria-label="Dark mode switch"
+            class="dark-mode-switch undefined"
+            data-testid="dark-mode-switch"
+            type="button"
+          >
+            <ion-icon
+              class="dark-mode-icon"
+              name="contrast"
+            />
+          </button>
+        </span>
+      </div>
+    </div>
+  </nav>
+</DocumentFragment>
+`;

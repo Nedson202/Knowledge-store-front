@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 
 import ImageUpload from './ImageUpload';
 
-const UpdateForm = (props) => {
+const AccountUpdateForm = (props) => {
   const {
     user: {
       email: stateEmail, username: stateUsername
-    }, formValues: { username, email },
+    },
+    formValues: { username, email },
     handleInputChange, formErrors, updateProfile, imagePreviewUrl,
     cancelPreview, handleImageChange, uploadingImage
   } = props;
@@ -28,7 +29,6 @@ const UpdateForm = (props) => {
               className="bmd-label-floating"
             >
               Username
-
             </label>
             <input
               name="username"
@@ -82,19 +82,25 @@ const UpdateForm = (props) => {
   );
 };
 
-UpdateForm.propTypes = {
+AccountUpdateForm.propTypes = {
   handleInputChange: PropTypes.func,
   handleImageChange: PropTypes.func,
   cancelPreview: PropTypes.func,
   updateProfile: PropTypes.func,
-  user: PropTypes.object,
-  formValues: PropTypes.object,
+  user: PropTypes.shape({
+    email: PropTypes.string,
+    username: PropTypes.string,
+  }),
+  formValues: PropTypes.shape({
+    email: PropTypes.string,
+    username: PropTypes.string,
+  }),
   formErrors: PropTypes.object,
   imagePreviewUrl: PropTypes.string,
   uploadingImage: PropTypes.bool,
 };
 
-UpdateForm.defaultProps = {
+AccountUpdateForm.defaultProps = {
   handleInputChange: () => { },
   handleImageChange: () => { },
   cancelPreview: () => { },
@@ -106,4 +112,4 @@ UpdateForm.defaultProps = {
   uploadingImage: false,
 };
 
-export default UpdateForm;
+export default AccountUpdateForm;

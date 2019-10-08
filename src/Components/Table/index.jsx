@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { ADMIN, REMOVE } from '../../settings';
 
 const Tables = (props) => {
   const { users, removeAdmin } = props;
@@ -15,60 +16,67 @@ const Tables = (props) => {
     </thead>
   );
 
-  const renderTableContent = data => (
-    <Fragment>
-      {data && data.map(user => (
-        <tr key={user.id}>
-          <th scope="row">{user.id}</th>
-          <td>{user.username}</td>
-          <td>{user.email}</td>
-          <td>{user.role}</td>
-          <td>
-            <i
-              className="fa fa-ellipsis-v"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            />
-            <div
-              className="dropdown-menu table-panel__user-delete"
-              id="book-action-buttons"
-            >
-              <a
-                href="/"
-                className="dropdown-item user-profile-navlink"
-                id="trash-icon"
+  const renderTableContent = (data) => {
+    if (!data || !data.length) {
+      return;
+    }
+
+    return (
+      <tbody>
+        {data.map(({
+          id, username, email, role
+        }) => (
+          <tr key={id}>
+            <th scope="row">{id}</th>
+            <td>{username}</td>
+            <td>{email}</td>
+            <td>{role}</td>
+            <td>
+              <i
+                className="fa fa-ellipsis-v"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              />
+              <div
+                className="dropdown-menu table-panel__user-delete"
+                id="book-action-buttons"
               >
-                deactivate
-                {' '}
-                <i className="fa fa-trash" />
-              </a>
-              {user.role.match('admin') && (
-                <button
-                  type="button"
-                  onClick={removeAdmin('remove', user.email)}
+                <a
+                  href="/"
                   className="dropdown-item user-profile-navlink"
                   id="trash-icon"
                 >
-                  remove
-                    {' '}
+                  deactivate
+                  {' '}
                   <i className="fa fa-trash" />
-                </button>
-              )}
-            </div>
-          </td>
-        </tr>
-      ))}
-    </Fragment>
-  );
+                </a>
+
+                {role.match(ADMIN) && (
+                  <button
+                    className="dropdown-item user-profile-navlink"
+                    data-testid="remove-admin-button"
+                    id="trash-icon"
+                    onClick={removeAdmin(REMOVE, email)}
+                    type="button"
+                  >
+                    {REMOVE}
+                    <i className="fa fa-trash" />
+                  </button>
+                )}
+              </div>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    );
+  };
 
   return (
     <div className="table-panel">
       <table className="table table-striped">
         {renderTableHead()}
-        <tbody>
-          {users && renderTableContent(users)}
-        </tbody>
+        {renderTableContent(users)}
       </table>
     </div>
   );

@@ -42,12 +42,16 @@ const SideNav = ({ isAuthenticated, user, dispatch }) => {
     }
 
     const { username, picture, avatarColor, } = user;
+    let avatar = <Avatar user={username} color={avatarColor} />;
+
+    if (picture) {
+      avatar = <img src={picture} alt="Avatar" className="avatar" />;
+    }
 
     return (
       <div className="sidenav-user-details">
         <div>
-          {picture && <img src={picture} alt="Avatar" className="avatar" />}
-          {!picture && <Avatar user={username} color={avatarColor} />}
+          {avatar}
         </div>
         <p className="username">
           {username}

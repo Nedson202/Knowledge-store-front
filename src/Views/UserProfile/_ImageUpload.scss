@@ -1,32 +1,37 @@
-#image-upload {
-  height: 200px;
-  border: 1px solid $grey_6;
-  width: 200px;
-  border-radius: 5px;
+.App {
+  #image-upload {
+    height: 200px;
+    border: 1px solid $grey_6;
+    width: 200px;
+    border-radius: 5px;
 
-  #dropzone {
-    position: absolute;
-    width: 100%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    color: $white_1;
-  }
+    #dropzone {
+      position: absolute;
+      width: 100%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
 
-  ion-icon {
-    font-size: 100px;
-    z-index: 1;
-    padding: auto;
-    color: $white_1;
-  }
+      ion-icon {
+        font-size: 100px;
+        z-index: 1;
+        padding: auto;
+        color: $blue_2;
+      }
 
-  .form-group {
-    margin-bottom: 20px;
+      p {
+        color: $black_1;
+      }
+    }
 
-    #update-button {
-      display: block;
-      width: 140px;
-      margin-left: auto;
+    .form-group {
+      margin-bottom: 20px;
+
+      #update-button {
+        display: block;
+        width: 140px;
+        margin-left: auto;
+      }
     }
   }
 }

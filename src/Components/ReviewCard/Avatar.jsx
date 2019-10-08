@@ -6,15 +6,14 @@ const Avatar = (props) => {
 
   const renderInitials = () => {
     const matches = user.match(/\b(\w)/g);
-    const acronym = matches.join('');
+    const shortUsername = matches.join('');
 
     return (
       <div
         className="avatar-placeholder text-capitalize"
         style={{ backgroundColor: color }}
       >
-        {acronym}
-
+        {shortUsername}
       </div>
     );
   };

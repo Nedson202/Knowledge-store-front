@@ -5,36 +5,36 @@ import { connect } from 'react-redux';
 import { tokenDecoder, toaster } from '../../utils';
 import { TOASTR_ERROR, USER } from '../../settings';
 
-export default function (ComposedComponent, admin) {
+export default function (ComposedComponent, adminProtected) {
   class AuthWrapper extends Component {
-    // eslint-disable-next-line camelcase
-    UNSAFE_componentWillUpdate(nextProps) {
-      const { history } = this.props;
-      if (!nextProps.user.isAuthenticated) {
-        history.goBack();
+    state = {};
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+      const { history, user: { isAuthenticated } } = nextProps;
+
+      if (isAuthenticated) {
+        return;
       }
+
+      history.goBack();
+
+      return prevState;
     }
 
-    // eslint-disable-next-line camelcase
-    UNSAFE_componentWillMount() {
-      const { history, user: { isAuthenticated, user } } = this.props;
-      if (admin && isAuthenticated && user.role === USER) {
-        toaster(TOASTR_ERROR, 'Access denied, operation is unathorised');
+    componentDidMount() {
+      const { history, user: { isAuthenticated, role, isVerified } } = this.props;
+      if (adminProtected && isAuthenticated && role === USER) {
+        toaster(TOASTR_ERROR, 'Sorry, you are not an admin');
         return history.goBack();
       }
 
-      if (!tokenDecoder(localStorage.token).id) {
+      if (!isAuthenticated || !tokenDecoder(localStorage.token).id) {
         toaster(TOASTR_ERROR, 'You need to login to access page');
         return history.goBack();
       }
 
-      if (isAuthenticated && !user.isVerified) {
+      if (isAuthenticated && !isVerified) {
         toaster(TOASTR_ERROR, 'Kindly verify your account');
-        return history.goBack();
-      }
-
-      if (!isAuthenticated) {
-        toaster(TOASTR_ERROR, 'You need to login to access page');
         return history.goBack();
       }
     }
@@ -56,8 +56,11 @@ export default function (ComposedComponent, admin) {
     user: {},
   };
 
-  const mapStateToProps = state => ({
-    user: state.auth
+  const mapStateToProps = ({ auth }) => ({
+    user: {
+      isAuthenticated: auth.isAuthenticated,
+      ...auth.user
+    }
   });
 
   return connect(mapStateToProps)(AuthWrapper);

@@ -4,14 +4,14 @@ import ReactTooltip from 'react-tooltip';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-  SIDE_BAR_STATUS, LEFT_SIDE_BAR, CLOSED, OPEN, LEFT_SIDEBAR_NAV_LINKS, HIDE,
-  SHOW, SIDE_NAV_WIDTH_270, SIDE_NAV_WIDTH_70, USER,
+  SIDE_BAR_STATUS, LEFT_SIDE_BAR, CLOSED, OPEN, LEFT_SIDEBAR_NAV_LINKS,
+  SIDE_NAV_WIDTH_270, SIDE_NAV_WIDTH_70, USER,
 } from '../../settings';
 
 class LeftSideBar extends Component {
   state = {
     isSideBarOpen: false,
-    sideNavTextClass: '',
+    sideBarTextVisible: false,
   };
 
   componentDidMount() {
@@ -22,38 +22,37 @@ class LeftSideBar extends Component {
     const { isSideBarOpen } = this.state;
     let sideBarStatus;
     let sideBarWidth;
-    let sideNavTextClass;
+    let sideBarTextVisible;
 
     if (typeof window.orientation === 'undefined') {
       sideBarStatus = CLOSED;
       sideBarWidth = SIDE_NAV_WIDTH_70;
-      sideNavTextClass = HIDE;
+      sideBarTextVisible = false;
     }
 
     if (!isSideBarOpen) {
       sideBarStatus = CLOSED;
       sideBarWidth = SIDE_NAV_WIDTH_70;
-      sideNavTextClass = HIDE;
+      sideBarTextVisible = false;
     } else {
       sideBarStatus = OPEN;
       sideBarWidth = SIDE_NAV_WIDTH_270;
-      sideNavTextClass = SHOW;
+      sideBarTextVisible = true;
     }
-
 
     document.getElementById(LEFT_SIDE_BAR).style.width = sideBarWidth;
     localStorage.setItem(SIDE_BAR_STATUS, sideBarStatus);
 
     this.setState(prevState => ({
       isSideBarOpen: !prevState.isSideBarOpen,
-      sideNavTextClass,
+      sideBarTextVisible,
     }));
   };
 
   renderAdminNavlinks = () => {
     const { user, isAuthenticated } = this.props;
     const { role } = user;
-    const { sideNavTextClass } = this.state;
+    const { sideBarTextVisible } = this.state;
 
     if (!isAuthenticated || role === USER) {
       return;
@@ -63,15 +62,17 @@ class LeftSideBar extends Component {
       <Fragment>
         <div data-tip="Users">
           <NavLink
-            to="/users"
             className="dropdown-item sidebar-navlink"
+            to="/users"
           >
             <ion-icon name="people" />
-            <span
-              className={`${sideNavTextClass} sideBarText`}
-            >
-              Users
-            </span>
+            { sideBarTextVisible && (
+              <span
+                className="sideBarText"
+              >
+                Users
+              </span>
+            )}
           </NavLink>
         </div>
       </Fragment>
@@ -80,7 +81,7 @@ class LeftSideBar extends Component {
 
   renderNavLinks = () => {
     const { isAuthenticated } = this.props;
-    const { sideNavTextClass } = this.state;
+    const { sideBarTextVisible } = this.state;
 
     const navLinksMap = LEFT_SIDEBAR_NAV_LINKS.map((navLink) => {
       const {
@@ -90,18 +91,20 @@ class LeftSideBar extends Component {
       return (
         <div data-tip={label} key={key}>
           <NavLink
-            to={link}
             className={`
-              dropdown-item sidebar-navlink
+            dropdown-item sidebar-navlink
               ${key !== 0 && !isAuthenticated && 'blur'}
-            `}
+              `}
+            to={link}
           >
             <ion-icon name={icon} />
-            <span
-              className={`${sideNavTextClass} sideBarText`}
-            >
-              {label}
-            </span>
+            { sideBarTextVisible && (
+              <span
+                className="sideBarText"
+              >
+                {label}
+              </span>
+            )}
           </NavLink>
         </div>
       );
@@ -111,26 +114,29 @@ class LeftSideBar extends Component {
   }
 
   render() {
-    const { sideNavTextClass } = this.state;
+    const { sideBarTextVisible } = this.state;
 
     return (
       <div id="myLeftSideBar" className="leftsidebar">
         <ReactTooltip effect="solid" place="right" />
         <div
-          onClick={this.toggleSidebar}
           className="sidenav-collapse"
+          onClick={this.toggleSidebar}
+          data-testid="menu-button"
           role="button"
           tabIndex={0}
         >
           <div className="menu-icon">
             <ion-icon name="menu" />
           </div>
-          <Link
-            to="/"
-            className={`${sideNavTextClass} sideBarText`}
-          >
-            Loresters Bookstore
-          </Link>
+          { sideBarTextVisible && (
+            <Link
+              className="sideBarText"
+              to="/"
+            >
+              Loresters Bookstore
+            </Link>
+          )}
         </div>
         {this.renderNavLinks()}
         {this.renderAdminNavlinks()}

@@ -81,41 +81,41 @@ class BookCard extends Component {
       enableEllipsis, setBookToEdit, book: { id }, book, setBookToRemove
     } = this.props;
 
-    if (enableEllipsis) {
-      return (
-        <Fragment>
-          <i
-            className="fa fa-ellipsis-v"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          />
-          <span className="dropdown-menu" id="book-action-buttons">
-            <button
-              type="button"
-              data-toggle="modal"
-              data-target="#AddBookModal"
-              className="dropdown-item book-action-navlink"
-              onClick={setBookToEdit(book)}
-            >
-              {EDIT}
-              {' '}
-              <i className="fa fa-edit" />
-            </button>
-            <button
-              type="button"
-              className="dropdown-item book-action-navlink"
-              id="trash-icon"
-              onClick={setBookToRemove(id)}
-            >
-              {DELETE}
-              {' '}
-              <i className="fa fa-trash" />
-            </button>
-          </span>
-        </Fragment>
-      );
+    if (!enableEllipsis) {
+      return;
     }
+
+    return (
+      <div data-testid="book-action-dropmenu">
+        <i
+          aria-expanded="false"
+          aria-haspopup="true"
+          className="fa fa-ellipsis-v"
+          data-toggle="dropdown"
+        />
+        <span className="dropdown-menu" id="book-action-buttons">
+          <button
+            className="dropdown-item book-action-navlink"
+            data-toggle="modal"
+            data-target="#AddBookModal"
+            onClick={setBookToEdit(book)}
+            type="button"
+          >
+            {EDIT}
+            <i className="fa fa-edit" />
+          </button>
+          <button
+            className="dropdown-item book-action-navlink"
+            id="trash-icon"
+            onClick={setBookToRemove(id)}
+            type="button"
+          >
+            {DELETE}
+            <i className="fa fa-trash" />
+          </button>
+        </span>
+      </div>
+    );
   }
 
   renderBookFooter(book, moreBooks) {
@@ -130,7 +130,10 @@ class BookCard extends Component {
     }
 
     return (
-      <div className="book__card--footer">
+      <div
+        className="book__card--footer"
+        data-testid="book-card-footer"
+      >
         <span className="book__card--footer-link">
           <Link to={link} className="book__card--footer-title">
             <Truncate
@@ -149,7 +152,7 @@ class BookCard extends Component {
             {authors.length > 0 && `by ${authors.join(', ')}`}
           </Truncate>
         </span>
-        <span className="react-star">
+        <span className="react-star" data-testid="book-star-rating">
           <Star
             value={averageRating}
           />
@@ -167,8 +170,12 @@ class BookCard extends Component {
 
   render() {
     const { toggleCheckBox, book, moreBooks } = this.props;
+
     return (
-      <div className="book__card">
+      <div
+        className="book__card"
+        data-testid="book-card"
+      >
         {toggleCheckBox && this.renderCheckBox()}
         {book && this.renderImage(book, moreBooks)}
         {book && this.renderBookFooter(book, moreBooks)}

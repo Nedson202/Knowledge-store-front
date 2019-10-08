@@ -76,6 +76,7 @@ class EmailGenerator extends Component {
     const { isValid, errors } = allFieldsValidation(
       values, ['username', 'password']
     );
+
     if (!isValid) {
       return this.setState({ formErrors: errors });
     }
@@ -142,6 +143,7 @@ class EmailGenerator extends Component {
     const { values: { email }, formErrors, actionType } = this.state;
     const requestType = actionType.match(VERIFY_EMAIL)
       ? VERIFICATION : PASSWORD_RESET;
+
     return (
       <form className="password-reset">
         <div className="password-reset__label">

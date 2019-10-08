@@ -30,6 +30,7 @@ class ReplyCard extends PureComponent {
       : [];
 
     let likeEL = <></>;
+
     if (likes) {
       likeEL = <span className="like-count">{likes}</span>;
     }
@@ -72,13 +73,16 @@ class ReplyCard extends PureComponent {
     return (
       <div className="reply-card" key={id}>
         {picture ? this.renderReviewerImage(picture)
-          : <Avatar user={replier} color={avatarColor} />}
+          : <Avatar user={replier} color={avatarColor} />
+        }
+
         <div>
           <p>
             <b className="text-capitalize">{replier}</b>
             {' '}
             {this.renderReplyTime(updatedAt)}
           </p>
+
           {(!isEditFormOpen || id !== setReplyToEdit) && (
             <span>
               <p>

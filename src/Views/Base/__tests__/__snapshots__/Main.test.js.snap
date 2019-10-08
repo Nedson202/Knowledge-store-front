@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Main should render action buttons 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      data-testid="background-layout"
+      id="background-layout"
+    />
+    <div
+      class="app-container"
+    >
+      <div>
+        <h2
+          class="app-title"
+        >
+          The Knowledge Store
+        </h2>
+        <blockquote>
+          <p
+            class="quotation"
+          >
+            Wisdom is not a product of schooling but of the lifelong attempt to acquire it.
+          </p>
+          <footer>
+            ― Albert Einstein
+          </footer>
+        </blockquote>
+        <div
+          class="auth-action-buttons"
+        >
+          <button
+            class="btn btn-outline-primary"
+            type="button"
+          >
+            <ion-icon
+              name="paper-plane"
+            />
+            Explore
+          </button>
+          <button
+            class="btn btn-outline-primary"
+            data-target="#LoginFormModal"
+            data-testid="index-login-action"
+            data-toggle="modal"
+            type="button"
+          >
+            <ion-icon
+              name="log-in"
+            />
+            Login to get started
+          </button>
+          <button
+            class="btn btn-outline-primary"
+            data-target="#SignUpFormModal"
+            data-testid="index-signup-action"
+            data-toggle="modal"
+            type="button"
+          >
+            <ion-icon
+              name="log-in"
+            />
+            Signup
+          </button>
+        </div>
+      </div>
+      <a
+        class="unsplash-mention"
+        href="https://unsplash.com/@martinadams?utm_medium=referral&utm_campaign=photographer-credit&utm_content=creditBadge"
+        rel="noopener noreferrer"
+        target="_blank"
+        title="Download free do whatever you want high-resolution photos from Martin Adams"
+      >
+        <span
+          style="display: inline-block; padding: 2px 3px;"
+        >
+          <svg
+            style="height: 12px; width: auto; position: relative; vertical-align: middle; top: -2px; fill: black;"
+            viewBox="0 0 32 32"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <title>
+               unsplash - logo
+            </title>
+            <path
+              d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"
+            />
+          </svg>
+        </span>
+        <span
+          style="display: inline-block; padding: 2px 3px;"
+        >
+          Martin Adams
+        </span>
+      </a>
+    </div>
+  </div>
+</DocumentFragment>
+`;

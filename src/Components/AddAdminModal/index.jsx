@@ -15,8 +15,9 @@ const AddAddminModal = (props) => {
         id="AddAdminModal"
         tabIndex="-1"
         role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
+        aria-labelledby="Add admin modal"
         aria-hidden="true"
+        data-testid="add-admin-modal"
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
@@ -25,11 +26,11 @@ const AddAddminModal = (props) => {
                 {ADD_ADMIN}
               </h5>
               <button
-                type="button"
-                id="close-user"
+                aria-label="Close"
                 className="close"
                 data-dismiss="modal"
-                aria-label="Close"
+                id="close-user"
+                type="button"
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -54,16 +55,17 @@ const AddAddminModal = (props) => {
             </div>
             <div className="modal-footer">
               <button
-                type="button"
                 className="btn btn-default btn-raised cancel-button"
                 data-dismiss="modal"
+                type="button"
               >
                 {CLOSE}
               </button>
               <button
-                type="button"
                 className="btn btn-primary btn-raised text-case add-admin"
+                data-testid="add-admin-button"
                 onClick={addAmin(ADD)}
+                type="button"
               >
                 {ADD_ADMIN}
               </button>
