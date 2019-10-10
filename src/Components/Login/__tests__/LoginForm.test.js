@@ -6,7 +6,8 @@ import LoginForm from '../LoginForm';
 import {
   PASSWORD_LABEL, USERNAME_LABEL, MOCK_PROPS, FORM_ERROR_PROPS, LOGIN_BUTTON,
   FORGOT_PASSWORD, VERIFY_EMAIL, LOGIN_MODAL, PASSWORD, TEXT, CLOSE,
-  USERNAME_ERROR_REXP, PASSWORD_ERROR_REXP, PASSWORD_TOGGLE
+  USERNAME_ERROR_REXP, PASSWORD_ERROR_REXP, PASSWORD_TOGGLE, GOOGLE_AUTH_OPTION,
+  FACEBOOK_AUTH_OPTION
 } from './constants';
 
 describe('Login Form', () => {
@@ -97,5 +98,24 @@ describe('Login Form', () => {
     );
 
     getByTestId(LOGIN_MODAL);
+  });
+
+  it('should trigger social authentication', () => {
+    window.location.replace = jest.fn();
+
+    const { getByTestId } = render(
+      <AllProviders>
+        <LoginForm {...MOCK_PROPS} />
+      </AllProviders>
+    );
+
+    const googleAuthOption = getByTestId(GOOGLE_AUTH_OPTION);
+    getByTestId(FACEBOOK_AUTH_OPTION);
+
+    fireEvent.click(googleAuthOption);
+
+    expect(window.location.replace).toHaveBeenCalledTimes(1);
+
+    window.location.replace.mockClear();
   });
 });

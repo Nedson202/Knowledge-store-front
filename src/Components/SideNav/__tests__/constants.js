@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 export const USERNAME = 'Cooper AL';
 export const AVATAR_ONLY = {
   auth: {

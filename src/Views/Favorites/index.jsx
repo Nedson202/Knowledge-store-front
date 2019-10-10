@@ -42,7 +42,7 @@ class Favorites extends Component {
       toaster(SUCCESS, message);
 
       this.setState({ checkBoxState: false, itemsToRemove: [] });
-    } catch (error) {
+    } catch (error) /* istanbul ignore next */ {
       const messages = errorHandler(error);
       messages.forEach(message => toaster(TOASTR_ERROR, message));
     }
@@ -51,10 +51,13 @@ class Favorites extends Component {
   handleCheckboxChange(id, event) {
     const { checked } = event.target;
     const { itemsToRemove } = this.state;
+
     if (!checked) {
       itemsToRemove.splice(itemsToRemove.indexOf(id), 1);
     }
+
     if (checked && !itemsToRemove.includes(id)) itemsToRemove.push(id);
+
     this.setState({ itemsToRemove });
   }
 
@@ -69,7 +72,10 @@ class Favorites extends Component {
   renderHeader() {
     const { checkBoxState, itemsToRemove } = this.state;
     return (
-      <div className="favorite-books__header">
+      <div
+        className="favorite-books__header"
+        data-testid="page-header"
+      >
         <h3>My Favorites</h3>
         <div>
           {itemsToRemove.length !== 0 && (
@@ -125,7 +131,7 @@ class Favorites extends Component {
         fetchPolicy="cache-and-network"
       >
         {({
-          loading, data: { favoriteBooks = {} } = {},
+          loading, data: { favoriteBooks = [] } = {},
           startPolling, stopPolling,
         }) => (
           <Fragment>

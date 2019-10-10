@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { resetPassword } from 'queries/auth';
 
 export const EMAIL_LABEL = 'Email';

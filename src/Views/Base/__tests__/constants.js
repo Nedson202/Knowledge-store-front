@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { verifyEmail } from 'queries/auth';
 
 export const LOGIN = 'Login to get started';

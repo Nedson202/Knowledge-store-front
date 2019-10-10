@@ -58,3 +58,6 @@ export const USERNAME_ERROR_REXP = /Username is required/i;
 export const PASSWORD_ERROR_REXP = /Password is required/i;
 
 export const PASSWORD_TOGGLE = 'login-password-icon';
+
+export const GOOGLE_AUTH_OPTION = 'google-auth';
+export const FACEBOOK_AUTH_OPTION = 'facebook-auth';
