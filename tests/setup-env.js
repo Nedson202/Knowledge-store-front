@@ -1,4 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
+import { createMemoryHistory } from 'history';
+import FAKE_TOKEN from './constants';
 
 const localStorageMock = {
   getItem: jest.fn(),
@@ -13,6 +15,6 @@ HTMLCanvasElement.prototype.getContext = jest.fn();
 console.warn = jest.fn();
 
 global.setQuery = jest.fn();
-global.toast = jest.fn();
 
-global.token = process.env.TEST_TOKEN;
+global.token = FAKE_TOKEN;
+global.history = createMemoryHistory('/');

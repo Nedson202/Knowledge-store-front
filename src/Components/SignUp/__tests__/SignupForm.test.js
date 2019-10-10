@@ -2,81 +2,62 @@ import React from 'react';
 import { render, fireEvent } from 'test-utils';
 
 import SignUpForm from '../SignUpForm';
-
-const mockProps = {
-  values: {
-    username: '',
-    email: '',
-    password: '',
-  },
-  formErrors: {
-    username: '',
-    email: '',
-    password: '',
-  },
-  handleInputChange: () => {},
-  handleUserSignup: () => {},
-  processing: false,
-};
+import {
+  SIGNUP_MODAL, SIGNUP_BUTTON, CLOSE, PASSWORD, TEXT, MOCK_PROPS, USERNAME_LABEL,
+  PASSWORD_LABEL, FORM_ERROR_PROPS, USERNAME_ERROR_REXP, PASSWORD_ERROR_REXP,
+  EMAIL_ERROR_REXP, PASSWORD_TOGGLE, EMAIL_LABEL
+} from './constants';
 
 describe('Signup Form', () => {
   it('should render form labels', () => {
     const { getByText, container } = render(
-      <SignUpForm {...mockProps} />
+      <SignUpForm {...MOCK_PROPS} />
     );
 
-    getByText('Username');
-    getByText('Email address');
-    getByText('Password');
+    getByText(USERNAME_LABEL);
+    getByText(EMAIL_LABEL);
+    getByText(PASSWORD_LABEL);
 
     expect(container).toBeInTheDocument();
   });
 
   it('should render form errors', () => {
-    const extendProps = {
-      ...mockProps,
-      formErrors: {
-        username: ['Username is required'],
-        email: ['Email address is required'],
-        password: ['Password is required'],
-      }
-    };
     const { getByText } = render(
-      <SignUpForm {...extendProps} />
+      <SignUpForm {...FORM_ERROR_PROPS} />
     );
 
-    getByText('Username is required');
-    getByText('Email address is required');
-    getByText('Password is required');
+    getByText(USERNAME_ERROR_REXP);
+    getByText(EMAIL_ERROR_REXP);
+    getByText(PASSWORD_ERROR_REXP);
   });
 
   it('simulate password type toggle', () => {
     const { getByTestId, getByLabelText } = render(
-      <SignUpForm {...mockProps} />
+      <SignUpForm {...MOCK_PROPS} />
     );
-    const passwordInput = getByLabelText('Password');
-    const passwordToggleButton = getByTestId('signup-password-icon');
+    const passwordInput = getByLabelText(PASSWORD_LABEL);
+    const passwordToggleButton = getByTestId(PASSWORD_TOGGLE);
 
     fireEvent.click(passwordToggleButton);
-    expect(passwordInput.type).toBe('text');
+    expect(passwordInput.type).toBe(TEXT);
     fireEvent.click(passwordToggleButton);
-    expect(passwordInput.type).toBe('password');
+    expect(passwordInput.type).toBe(PASSWORD);
   });
 
   it('should render action buttons', () => {
     const { getByText, getByTestId } = render(
-      <SignUpForm {...mockProps} />
+      <SignUpForm {...MOCK_PROPS} />
     );
 
-    getByText('Close');
-    getByTestId('signup-button');
+    getByText(CLOSE);
+    getByTestId(SIGNUP_BUTTON);
   });
 
   it('should render modal', () => {
     const { getByTestId } = render(
-      <SignUpForm {...mockProps} />
+      <SignUpForm {...MOCK_PROPS} />
     );
 
-    getByTestId('signup-modal');
+    getByTestId(SIGNUP_MODAL);
   });
 });

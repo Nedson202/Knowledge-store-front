@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import toaster from './toast';
 import { TOASTR_ERROR, TOKEN } from '../settings';
+
+dotenv.config();
 
 const tokenDecoder = (token) => {
   try {

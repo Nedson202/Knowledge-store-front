@@ -26,6 +26,7 @@ class UserProfile extends Component {
     const { formErrors: newFormErrors } = handleSingleFieldValidation(
       formErrors, { name, value }
     );
+
     this.setState({ formErrors: newFormErrors });
   }, VALIDATION_DEBOUNCE_TIME);
 
@@ -95,7 +96,7 @@ class UserProfile extends Component {
         this.setState({ values, uploadingImage: false, });
 
         await this.updateProfile('upload');
-      } catch (error) {
+      } catch (error) /* istanbul ignore next */ {
         console.error(error);
       }
     }
@@ -110,24 +111,28 @@ class UserProfile extends Component {
   updateProfile = async (type) => {
     const { editProfileQuery, dispatch, user } = this.props;
     const { values } = this.state;
-    const newUser = {
+    const newProfileData = {
       username: values.username,
       email: values.email,
+      picture: values.picture
     };
 
-    const oldUser = {
+    const oldProfileData = {
       username: user.username,
       email: user.email,
+      picture: user.picture
     };
 
-    if (JSON.stringify(newUser) === JSON.stringify(oldUser) && type !== 'upload') {
+    if (
+      JSON.stringify(newProfileData) === JSON.stringify(oldProfileData)
+      && type !== 'upload') {
       return;
     }
 
     try {
       const editProfileHandler = await editProfileQuery({
         variables: {
-          ...values
+          ...newProfileData
         }
       });
 
@@ -140,7 +145,7 @@ class UserProfile extends Component {
         imagePreviewUrl: '',
       });
       return dispatch(setCurrentUser(tokenDecoder(token)));
-    } catch (error) {
+    } catch (error) /* istanbul ignore next */ {
       console.error(error);
     }
   }
@@ -150,24 +155,29 @@ class UserProfile extends Component {
     const { changePasswordQuery } = this.props;
 
     if (!oldPassword || !newPassword) {
-      return toaster.error('Fill the password fields to continue');
+      return toaster('error', 'Fill the password fields to continue');
     }
 
     try {
       const changePasswordHandler = await changePasswordQuery({
         variables: {
-          ...values
+          oldPassword,
+          newPassword,
         }
       });
 
       const { changePassword: { message } } = changePasswordHandler.data;
 
       toaster(SUCCESS, message);
-      values.newPassword = '';
-      values.oldPassword = '';
 
-      this.setState({ values });
-    } catch (error) {
+      this.setState({
+        values: {
+          ...values,
+          oldPassword: '',
+          newPassword: '',
+        }
+      });
+    } catch (error) /* istanbul ignore next */ {
       const messages = errorHandler(error);
       messages.forEach(message => toaster(TOASTR_ERROR, message));
     }

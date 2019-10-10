@@ -1,7 +1,15 @@
 import React from 'react';
-import { render, fireEvent, AllProviders } from 'test-utils';
+
+import {
+  render, fireEvent, AllProviders, waitForTime
+} from 'test-utils';
+import { MY_BOOKS_PATH } from 'settings';
 
 import PasswordReset from '..';
+import {
+  EMAIL_LABEL, NEW_PASSWORD_LABEL, TEXT, PASSWORD, PASSWORD_TOGGLE,
+  SAVE_BUTTON, FORM_GROUP_CASE, PASSWORD_REST_MOCK
+} from './constants';
 
 describe('PasswordReset', () => {
   it('should render form labels', () => {
@@ -13,8 +21,8 @@ describe('PasswordReset', () => {
       </AllProviders>
     );
 
-    getByText('Email');
-    getByText('New Password');
+    getByText(EMAIL_LABEL);
+    getByText(NEW_PASSWORD_LABEL);
 
     expect(asFragment()).toMatchSnapshot();
     expect(container).toBeVisible();
@@ -27,13 +35,13 @@ describe('PasswordReset', () => {
       </AllProviders>
     );
 
-    const passwordInput = getByLabelText('New Password');
-    const passwordToggleButton = getByTestId('reset-password-icon');
+    const passwordInput = getByLabelText(NEW_PASSWORD_LABEL);
+    const passwordToggleButton = getByTestId(PASSWORD_TOGGLE);
 
     fireEvent.click(passwordToggleButton);
-    expect(passwordInput.type).toBe('text');
+    expect(passwordInput.type).toBe(TEXT);
     fireEvent.click(passwordToggleButton);
-    expect(passwordInput.type).toBe('password');
+    expect(passwordInput.type).toBe(PASSWORD);
   });
 
   it('should render action button', () => {
@@ -43,36 +51,29 @@ describe('PasswordReset', () => {
       </AllProviders>
     );
 
-    getByText('Save password');
+    getByText(SAVE_BUTTON);
   });
 
-  it('should trigger password reset', () => {
-    delete window.location;
-    window.location = { search: jest.fn() };
+  it('should trigger password reset', async () => {
+    window.history.pushState({}, 'Password reset', `?token=${token}`);
 
     const { getByText, getByLabelText } = render(
-      <AllProviders>
+      <AllProviders apolloMocks={PASSWORD_REST_MOCK}>
         <PasswordReset />
       </AllProviders>
     );
 
-    const savePasswordButton = getByText('Save password');
+    const savePasswordButton = getByText(SAVE_BUTTON);
 
-    const formGroupCase = [
-      {
-        name: 'Email',
-        value: 'Cooper.AL@alcooper.al'
-      },
-      {
-        name: 'New Password',
-        value: '90huERyu22'
-      },
-    ];
-
-    formGroupCase.forEach(({ name, value }) => {
+    FORM_GROUP_CASE.forEach(({ name, value }) => {
       fireEvent.change(getByLabelText(name), { target: { value } });
     });
 
     savePasswordButton.click();
+
+    await waitForTime(10);
+
+    expect(localStorage.token).toBe(token);
+    expect(window.location.pathname).toBe(MY_BOOKS_PATH);
   });
 });

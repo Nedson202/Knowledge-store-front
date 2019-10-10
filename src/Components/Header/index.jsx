@@ -50,8 +50,10 @@ class Header extends Component {
       sideNavBoxShadow = NONE;
     }
 
-    sideNavEL.style.width = sideNavWidth;
-    sideNavEL.style.boxShadow = sideNavBoxShadow;
+    if (sideNavEL) {
+      sideNavEL.style.width = sideNavWidth;
+      sideNavEL.style.boxShadow = sideNavBoxShadow;
+    }
 
     this.setState(prevState => ({
       isSideNavOpen: !prevState.isSideNavOpen,
@@ -70,7 +72,7 @@ class Header extends Component {
     const { dispatch } = this.props;
 
     window.localStorage.setItem(LOGOUT, true);
-    dispatch(logOutUser());
+    logOutUser(dispatch);
   }
 
   syncLogout = (event) => {
@@ -204,6 +206,7 @@ class Header extends Component {
           <button
             aria-label="Toggle navigation"
             className="mobile-nav"
+            data-testid="mobile-menu"
             onClick={this.toggleMobileNav}
             type="button"
           >

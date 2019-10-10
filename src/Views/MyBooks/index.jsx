@@ -6,8 +6,8 @@ import { ReactTitle } from 'react-meta-tags';
 
 import BookCard from '../../Components/BookCard';
 import AddBook from '../../Components/AddBook';
-import BookPreloader from '../BookCatalog/BookPreloader';
 import ApolloPolling from '../../Components/ApolloPolling';
+import BookPreloader from '../BookCatalog/BookPreloader';
 
 import { fetchUsersBooks, removeBook } from '../../queries/books';
 import { setBookToEdit } from '../../redux/actions/bookActions';
@@ -33,6 +33,7 @@ class MyBooks extends Component {
 
   setBookToRemove = id => async () => {
     const { removeBookQuery } = this.props;
+
     try {
       const response = await removeBookQuery({
         variables: {

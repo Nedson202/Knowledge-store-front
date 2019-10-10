@@ -35,8 +35,14 @@ class App extends Component {
     this.socialAuthentication();
     this.verifyUserEmail();
 
-    return auth.isAuthenticated
-      && user.isVerified && history.push(MY_BOOKS_PATH);
+    if (!auth.isAuthenticated || !user.isVerified) {
+      return;
+    }
+
+    history.push({
+      ...history.location,
+      pathname: MY_BOOKS_PATH
+    });
   }
 
   componentWillUnmount() {
@@ -59,38 +65,45 @@ class App extends Component {
   verifyUserEmail = async () => {
     const { verifyEmailQuery } = this.props;
     const query = queryString.parse(window.location.search);
+    const verifyEmailSignature = '?verify-email';
+    const hasVerifyEmailProperty = Object.keys(query).includes(verifyEmailSignature);
+
     const { dispatch } = this.props;
 
-    if (Object.keys(query)[0] === '?verify-email') {
-      const userToken = Object.values(query)[0];
-      setQuery({ token: '' });
+    if (!hasVerifyEmailProperty) {
+      return;
+    }
 
-      try {
-        const response = await verifyEmailQuery({
-          variables: {
-            token: `Bearer ${userToken}`,
-          }
-        });
+    const userToken = query[verifyEmailSignature];
+    setQuery({ token: '' });
 
-        const { verifyEmail: { token, message } } = response.data;
+    try {
+      const response = await verifyEmailQuery({
+        variables: {
+          token: `Bearer ${userToken}`,
+        }
+      });
 
-        localStorage.setItem(TOKEN, token);
+      const { verifyEmail: { token, message } } = response.data;
 
-        dispatch(setCurrentUser(tokenDecoder(token)));
-        window.location.replace(MY_BOOKS_PATH);
+      localStorage.setItem(TOKEN, token);
 
-        toaster(SUCCESS, message);
-      } catch (error) {
-        console.error(error);
-      }
+      dispatch(setCurrentUser(tokenDecoder(token)));
+      window.location.replace(MY_BOOKS_PATH);
+
+      toaster(SUCCESS, message);
+    } catch (error) /* istanbul ignore next */ {
+      console.error(error);
     }
   }
 
   socialAuthentication() {
-    const query = queryString.parse(window.location.search);
     const { dispatch } = this.props;
-    const hasTokenProperty = Object.keys(query)[0] === '?token';
-    const token = Object.values(query)[0];
+    const query = queryString.parse(window.location.search);
+    const tokenSignature = '?token';
+    const hasTokenProperty = Object.keys(query).includes(tokenSignature);
+
+    const token = query[tokenSignature];
 
     if (!hasTokenProperty) {
       return;

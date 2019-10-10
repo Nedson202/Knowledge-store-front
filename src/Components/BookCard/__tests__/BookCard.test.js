@@ -3,15 +3,10 @@ import React from 'react';
 import { render, AllProviders } from 'test-utils';
 
 import BookCard from '..';
-
-const mockProps = {
-  book: {
-    id: '67sdGDf12',
-    name: 'The lost book of optununu',
-    image: 'https://image.url',
-    authors: ['Cooper AL']
-  }
-};
+import {
+  mockProps, SELECT_LABEL, BOOK_ACTION_DROPMENU, BOOK_CARD, BOOK_CARD_FOOTER,
+  BOOK_STAR_RATING, EDIT, DELETE,
+} from './constants';
 
 describe('BookCard', () => {
   it('should render', () => {
@@ -23,12 +18,12 @@ describe('BookCard', () => {
       </AllProviders>
     );
 
-    const selectCheckbox = queryByLabelText('Select');
-    const actionDropMenu = queryByTestId('book-action-dropmenu');
+    const selectCheckbox = queryByLabelText(SELECT_LABEL);
+    const actionDropMenu = queryByTestId(BOOK_ACTION_DROPMENU);
 
-    getByTestId('book-card');
-    getByTestId('book-card-footer');
-    getByTestId('book-star-rating');
+    getByTestId(BOOK_CARD);
+    getByTestId(BOOK_CARD_FOOTER);
+    getByTestId(BOOK_STAR_RATING);
     getByText(mockProps.book.name);
     getByText(`by ${mockProps.book.authors[0]}`);
 
@@ -44,7 +39,7 @@ describe('BookCard', () => {
       </AllProviders>
     );
 
-    getByLabelText('Select');
+    getByLabelText(SELECT_LABEL);
   });
 
   it('should not render book footer if card is in BookProfile page', () => {
@@ -55,7 +50,7 @@ describe('BookCard', () => {
       </AllProviders>
     );
 
-    const bookFooter = queryByTestId('book-card-footer');
+    const bookFooter = queryByTestId(BOOK_CARD_FOOTER);
 
     expect(bookFooter).toBeNull();
   });
@@ -68,8 +63,8 @@ describe('BookCard', () => {
       </AllProviders>
     );
 
-    getByTestId('book-action-dropmenu');
-    getByText('edit');
-    getByText('delete');
+    getByTestId(BOOK_ACTION_DROPMENU);
+    getByText(EDIT);
+    getByText(DELETE);
   });
 });

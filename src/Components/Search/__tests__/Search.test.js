@@ -1,8 +1,7 @@
 import React from 'react';
-import wait from 'waait';
 
 import {
-  render, fireEvent, AllProviders, cleanup
+  render, fireEvent, AllProviders, cleanup, waitForTime
 } from 'test-utils';
 import { bookFilter } from 'queries/books';
 import { BOOKS_PATH } from 'settings';
@@ -56,7 +55,7 @@ describe('Search container', () => {
 
     fireEvent.keyPress(searchBar, { key: 'Enter', keyCode: 13 });
 
-    await wait(1001);
+    await waitForTime(1001);
 
     store.dispatch(setRetrievedBooks(searchBooksData, false, searchBooksData.length));
     const { books: { totalSearchResult } } = store.getState();

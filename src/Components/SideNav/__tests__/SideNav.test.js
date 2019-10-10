@@ -1,11 +1,14 @@
 import React from 'react';
 import { createStore } from 'redux';
 
-import { render, AllProviders } from 'test-utils';
+import { render, AllProviders, fireEvent } from 'test-utils';
 import { LEFT_SIDEBAR_NAV_LINKS } from 'settings';
 
 import auth from '../../../redux/reducers/auth';
 import SideNav from '..';
+import {
+  USERNAME, AVATAR_ONLY, LOGOUT, PICTURE_ONLY, LOGIN, SIGNUP
+} from './constants';
 
 describe('SideNav', () => {
   it('should display nav links', () => {
@@ -30,36 +33,37 @@ describe('SideNav', () => {
       </AllProviders>
     );
 
-    getByText('Login');
-    getByText('Signup');
+    getByText(LOGIN);
+    getByText(SIGNUP);
 
-    expect(queryByTestId('Logout')).toBeNull();
+    expect(queryByTestId(LOGOUT)).toBeNull();
   });
 
-  it('should display user avatar and trigger logout option', () => {
-    const mockProps = {
-      auth: {
-        isAuthenticated: true,
-        user: {
-          username: 'Cooper AL',
-          picture: 'https://image.url',
-          avatar: 'green',
-        }
-      }
-    };
-
-    const store = createStore(auth, mockProps);
+  it('should display user image and trigger logout option', () => {
+    const store = createStore(auth, PICTURE_ONLY);
 
     const { getByText } = render(
       <AllProviders customStore={store}>
         <SideNav />
       </AllProviders>
     );
-    const logoutButton = getByText('Logout');
+    const logoutButton = getByText(LOGOUT);
 
-    getByText('Cooper AL');
+    getByText(USERNAME);
 
     expect(logoutButton).toBeVisible();
-    // fireEvent.click(logoutButton);
+    fireEvent.click(logoutButton);
+  });
+
+  it('should display user avatar', () => {
+    const store = createStore(auth, AVATAR_ONLY);
+
+    const { getByText } = render(
+      <AllProviders customStore={store}>
+        <SideNav />
+      </AllProviders>
+    );
+
+    getByText(USERNAME);
   });
 });

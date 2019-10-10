@@ -86,7 +86,7 @@ const SideNav = ({ isAuthenticated, user, dispatch }) => {
 
   const handleLogout = () => {
     window.localStorage.setItem(LOGOUT, true);
-    dispatch(logOutUser());
+    logOutUser(dispatch);
   };
 
   const logoutAction = () => {

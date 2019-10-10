@@ -6,7 +6,7 @@ const setCurrentUser = user => ({
   user
 });
 
-const logOutUser = () => (dispatch) => {
+const logOutUser = (dispatch) => {
   localStorage.removeItem(TOKEN);
   localStorage.removeItem(PREVIOUS_LOCATION);
   dispatch(setCurrentUser({}));

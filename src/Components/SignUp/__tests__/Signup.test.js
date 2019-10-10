@@ -1,12 +1,14 @@
 import React from 'react';
-import wait from 'waait';
 
 import {
-  render, fireEvent, AllProviders, cleanup
+  render, fireEvent, AllProviders, cleanup, waitForTime
 } from 'test-utils';
-import { addUser } from 'queries/auth';
 
 import SignUp from '..';
+import {
+  PASSWORD_LENGTH_ERROR, PASSWORD_LABEL, SIGNUP_BUTTON, SIGNUP_MUTATION_MOCK,
+  EMAIL_INVALID
+} from './constants';
 
 afterEach(cleanup);
 
@@ -18,39 +20,21 @@ describe('Signup container', () => {
       </AllProviders>
     );
 
-    fireEvent.change(getByLabelText('Password'), { target: { value: 'a' } });
-    await wait(1001);
-    getByText('The password must be at least 6 characters.');
+    fireEvent.change(getByLabelText(PASSWORD_LABEL), { target: { value: 'a' } });
+    await waitForTime(1001);
+    getByText(PASSWORD_LENGTH_ERROR);
   });
 
   it('should render form labels', async () => {
-    let signupMutationCalled = false;
-
-    const addUserData = { token };
-    const mocks = [
-      {
-        request: {
-          query: addUser,
-          variables: {
-            username: 'Cooper AL',
-            email: 'cooper.al@allcooper.com',
-            password: 'cooper--al'
-          },
-        },
-        result: () => {
-          signupMutationCalled = true;
-          return { data: { addUser: addUserData } };
-        },
-      },
-    ];
+    window.location.reload = jest.fn();
 
     const { getByLabelText, getByTestId } = render(
-      <AllProviders apolloMocks={mocks}>
+      <AllProviders apolloMocks={SIGNUP_MUTATION_MOCK}>
         <SignUp />
       </AllProviders>
     );
 
-    const signupButton = getByTestId('signup-button');
+    const signupButton = getByTestId(SIGNUP_BUTTON);
 
     const formGroupCase = [
       {
@@ -74,8 +58,11 @@ describe('Signup container', () => {
     fireEvent.click(signupButton);
     expect(signupButton).toBeDisabled();
 
-    await wait(0);
-    expect(signupMutationCalled).toBe(true);
+    await waitForTime(0);
+    expect(window.location.reload).toHaveBeenCalledTimes(1);
+    expect(signupButton).toBeEnabled();
+
+    window.location.reload.mockClear();
   });
 
   it('should trigger form validation error on submit', () => {
@@ -85,7 +72,7 @@ describe('Signup container', () => {
       </AllProviders>
     );
 
-    const signupButton = getByTestId('signup-button');
+    const signupButton = getByTestId(SIGNUP_BUTTON);
 
     const formGroupCase = [
       {
@@ -107,6 +94,6 @@ describe('Signup container', () => {
     });
 
     fireEvent.click(signupButton);
-    getByText('The email format is invalid.');
+    getByText(EMAIL_INVALID);
   });
 });

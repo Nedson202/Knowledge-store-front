@@ -90,6 +90,8 @@ class Login extends Component {
         },
         processing: false,
       });
+
+      window.location.reload();
     } catch (error) /* istanbul ignore next */{
       const messages = errorHandler(error);
 
