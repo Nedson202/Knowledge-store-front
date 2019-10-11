@@ -151,13 +151,8 @@ class BookCatalog extends Component {
   }
 
   render404Message = () => {
-    const { books, loadingBook } = this.props;
     const { networkError } = this.state;
     let message = NO_CONTENT;
-
-    if (!loadingBook && books.length) {
-      return;
-    }
 
     if (networkError) {
       message = BOOK_SERVER_ERROR;
@@ -172,11 +167,23 @@ class BookCatalog extends Component {
     );
   }
 
-  render() {
-    const { isNewContentLoading } = this.state;
-    const { books, loadingBook } = this.props;
+  renderAll = (loadingBook, books) => {
+    if (loadingBook) {
+      return <BookPreloader loadingBook={loadingBook} />;
+    }
 
     const hasProperty = books.length > 0;
+
+    if (!hasProperty) {
+      return this.render404Message();
+    }
+
+    return this.renderBooks(books);
+  }
+
+  render() {
+    const { isNewContentLoading } = this.state;
+    const { loadingBook, books } = this.props;
 
     return (
       <Fragment>
@@ -190,9 +197,7 @@ class BookCatalog extends Component {
 
         <div className="container-content">
           {this.renderPageHeader()}
-          {!loadingBook && hasProperty && this.renderBooks(books)}
-          {loadingBook && <BookPreloader loadingBook={loadingBook} />}
-          {this.render404Message()}
+          {this.renderAll(loadingBook, books)}
 
           <div
             className="text-center"
@@ -223,10 +228,10 @@ BookCatalog.defaultProps = {
   totalSearchResult: 0,
 };
 
-const mapStateToProps = state => ({
-  books: state.books.books,
-  loadingBook: state.books.isBookLoading,
-  totalSearchResult: state.books.totalSearchResult,
+const mapStateToProps = ({ books }) => ({
+  books: books.books,
+  loadingBook: books.isBookLoading,
+  totalSearchResult: books.totalSearchResult,
 });
 
 export default compose(
