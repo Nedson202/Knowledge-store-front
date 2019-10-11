@@ -13,7 +13,7 @@ import Favorites from './Views/Favorites';
 import MyBooks from './Views/MyBooks';
 
 import Header from './Components/Header';
-import SideNav from './Components/SideNav';
+// import SideNav from './Components/SideNav';
 import LeftSideBar from './Components/LeftSideBar';
 import NetworkDetector from './Components/Hoc/NetworkDetector';
 import AuthWrapper from './Components/Hoc/AuthWrapper';
@@ -27,7 +27,7 @@ const Routes = () => (
   <div>
     <Login />
     <SignUp />
-    <SideNav />
+    {/* <SideNav /> */}
     <MessageBanner />
     <Header />
     <LeftSideBar />

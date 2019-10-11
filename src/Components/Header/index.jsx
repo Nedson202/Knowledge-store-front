@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import SideNav from '../SideNav';
 import Avatar from '../ReviewCard/Avatar';
 import Search from '../Search';
 
 import { logOutUser } from '../../redux/actions/userActions';
 import {
-  CLICK, NONE, SIDE_NAV, LOGOUT, STORAGE, THEME, FLIP_THEME, LIGHT, THEME_ATTRIBUTE,
-  SIDE_NAV_WIDTH_270, SIDE_NAV_BOX_SHADOW
+  CLICK, LOGOUT, STORAGE, THEME, FLIP_THEME, LIGHT,
+  THEME_ATTRIBUTE,
 } from '../../settings';
 
 class Header extends Component {
@@ -19,6 +20,7 @@ class Header extends Component {
 
   componentDidMount() {
     this.loadTheme();
+
     window.addEventListener(STORAGE, this.registerStorageEvents);
   }
 
@@ -34,25 +36,14 @@ class Header extends Component {
 
   toggleMobileNav = () => {
     const { isSideNavOpen } = this.state;
-    const sideNavEL = document.getElementById(SIDE_NAV);
-    let sideNavWidth;
-    let sideNavBoxShadow;
+    if (typeof window.orientation === 'undefined') {
+      return;
+    }
 
     if (!isSideNavOpen) {
       document.addEventListener(CLICK, this.handleOutsideClick, false);
-
-      sideNavWidth = SIDE_NAV_WIDTH_270;
-      sideNavBoxShadow = SIDE_NAV_BOX_SHADOW;
     } else {
       document.removeEventListener(CLICK, this.handleOutsideClick, false);
-
-      sideNavWidth = '0';
-      sideNavBoxShadow = NONE;
-    }
-
-    if (sideNavEL) {
-      sideNavEL.style.width = sideNavWidth;
-      sideNavEL.style.boxShadow = sideNavBoxShadow;
     }
 
     this.setState(prevState => ({
@@ -196,55 +187,60 @@ class Header extends Component {
   }
 
   render() {
+    const { isSideNavOpen } = this.state;
+
     return (
-      <nav
-        className="navbar fixed-top navbar-expand-lg"
-        id="navbar"
-        ref={(node) => { this.node = node; }}
-      >
-        <div className="container">
-          <button
-            aria-label="Toggle navigation"
-            className="mobile-nav"
-            data-testid="mobile-menu"
-            onClick={this.toggleMobileNav}
-            type="button"
-          >
-            <ion-icon name="menu" />
-          </button>
-          <Link to="/">
-            <span className="navbar-brand">Loresters Bookstore</span>
-          </Link>
+      <Fragment>
+        <nav
+          className="navbar fixed-top navbar-expand-lg"
+          id="navbar"
+          ref={(node) => { this.node = node; }}
+        >
+          <div className="container">
+            <button
+              aria-label="Toggle navigation"
+              className="mobile-nav"
+              data-testid="mobile-menu"
+              onClick={this.toggleMobileNav}
+              type="button"
+            >
+              <ion-icon name="menu" />
+            </button>
+            <Link to="/">
+              <span className="navbar-brand">Loresters Bookstore</span>
+            </Link>
 
-          <button
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Search icon"
-            className="mobile-nav"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            type="button"
-          >
-            <ion-icon name="search" />
-          </button>
+            <button
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Search icon"
+              className="mobile-nav"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              type="button"
+            >
+              <ion-icon name="search" />
+            </button>
 
-          {this.renderThemeButton('mobile-nav')}
+            {this.renderThemeButton('mobile-nav')}
 
-          <div
-            className="collapse navbar-collapse"
-            id="navbarSupportedContent"
-          >
-            <Search />
-            <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-              {this.switchAuthButtonsAndUserAvatar()}
-            </ul>
+            <div
+              className="collapse navbar-collapse"
+              id="navbarSupportedContent"
+            >
+              <Search />
+              <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
+                {this.switchAuthButtonsAndUserAvatar()}
+              </ul>
 
-            <span className="desktop-and-tablet">
-              {this.renderThemeButton()}
-            </span>
+              <span className="desktop-and-tablet">
+                {this.renderThemeButton()}
+              </span>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+        { isSideNavOpen && <SideNav /> }
+      </Fragment>
     );
   }
 }

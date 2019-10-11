@@ -15,6 +15,7 @@ HTMLCanvasElement.prototype.getContext = jest.fn();
 console.warn = jest.fn();
 
 global.setQuery = jest.fn();
+global.toaster = jest.fn();
 
 global.token = FAKE_TOKEN;
 global.history = createMemoryHistory('/');

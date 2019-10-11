@@ -107,7 +107,11 @@ const SideNav = ({ isAuthenticated, user, dispatch }) => {
   };
 
   return (
-    <div id="mySidenav" className="sidenav">
+    <div
+      className="sidenav"
+      data-testid="sidenav"
+      id="mySidenav"
+    >
       {authNavLinks()}
       {userAvatar()}
       {renderNavLinks()}

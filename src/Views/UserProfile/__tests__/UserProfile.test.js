@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  render, fireEvent, AllProviders, waitForTime
+  render, fireEvent, AllProviders, waitForTime, cleanup
 } from 'test-utils';
 
 import UserProfile from '..';
@@ -10,6 +10,8 @@ import {
   EDIT_PROFILE_MOCK, UPDATE_PROFILE, ACCOUNT_UPDATE_FORM_CASE,
   VALIDATION_GROUP_CASE
 } from './contants';
+
+afterEach(cleanup);
 
 describe('UserProfile', () => {
   it('should trigger form validation error on change', async () => {

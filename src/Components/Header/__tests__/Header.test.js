@@ -74,9 +74,10 @@ describe('Header', () => {
   });
 
   it('should toggle mobile side bar', () => {
+    window.orientation = jest.fn();
     const store = createStore(auth, USER_VERIFIED_MOCK);
 
-    const { queryByTestId } = render(
+    const { queryByTestId, getByTestId } = render(
       <AllProviders
         customStore={store}
       >
@@ -84,8 +85,13 @@ describe('Header', () => {
       </AllProviders>
     );
 
+    expect(queryByTestId('sidenav')).toBeNull();
     const mobileMenuButton = queryByTestId('mobile-menu');
     fireEvent.click(mobileMenuButton);
+
+    getByTestId('sidenav');
+
+    window.orientation.mockClear();
   });
 
   it('should test theme mode', () => {

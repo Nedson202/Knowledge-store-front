@@ -97,7 +97,7 @@
     "build": "react-scripts build",
     "test": "kcd-scripts test --watchAll --coverage",
     "test:jest": "jest -c --watchAll=false --coverage",
-    "test:jest:watch": "jest -c --watch --coverage",
+    "test:jest:watch": "jest -c --runInBand --watch --coverage",
     "eject": "react-scripts eject",
     "heroku-postbuild": "yarn build"
   },

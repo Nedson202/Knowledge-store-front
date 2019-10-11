@@ -175,7 +175,6 @@ export const LEFT_SIDEBAR_NAV_LINKS = [
 
 export const SIDE_NAV_WIDTH_270 = '270px';
 export const SIDE_NAV_WIDTH_70 = '70px';
-export const SIDE_NAV_BOX_SHADOW = '0 1px 1px 100vw rgba(0, 0, 0, 0.6)';
 
 export const STOP_POLLING_AFTER = 5000;
 export const DESTROY_INTERNET_BANNER = 5000;
