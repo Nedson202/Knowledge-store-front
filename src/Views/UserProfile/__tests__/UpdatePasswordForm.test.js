@@ -3,15 +3,6 @@ import { render, fireEvent, AllProviders } from 'test-utils';
 
 import UpdatePasswordForm from '..';
 
-const mockProps = {
-  handleInputChange: () => {},
-  updatePassword: () => {},
-  formValues: {
-    oldPassword: '',
-    newPassword: '',
-  },
-};
-
 describe('UpdatePasswordForm', () => {
   it('should render form labels', () => {
     const {
@@ -56,24 +47,6 @@ describe('UpdatePasswordForm', () => {
       fireEvent.click(passwordToggleButton);
       expect(passwordInput.type).toBe('password');
     });
-  });
-
-  it('should render form errors', () => {
-    const extendProps = {
-      ...mockProps,
-      formErrors: {
-        oldPassword: ['Old password is required'],
-        newPassword: ['New password is required'],
-      }
-    };
-    render(
-      <AllProviders>
-        <UpdatePasswordForm {...extendProps} />
-      </AllProviders>
-    );
-
-    // getByText('Old password is required');
-    // getByText('New password is required');
   });
 
   it('should render action button', () => {

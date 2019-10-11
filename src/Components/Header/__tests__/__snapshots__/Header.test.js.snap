@@ -12,6 +12,7 @@ exports[`Header should render darkmode switch 1`] = `
       <button
         aria-label="Toggle navigation"
         class="mobile-nav"
+        data-testid="mobile-menu"
         type="button"
       >
         <ion-icon

@@ -38,6 +38,7 @@ const LoginForm = (props) => {
       </div>
       <button
         className="btn"
+        data-testid="google-auth"
         onClick={socialAuthentication('google')}
         type="button"
       >
@@ -45,6 +46,7 @@ const LoginForm = (props) => {
       </button>
       <button
         className="btn"
+        data-testid="facebook-auth"
         onClick={socialAuthentication('facebook')}
         type="button"
       >

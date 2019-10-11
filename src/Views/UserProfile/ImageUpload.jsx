@@ -12,8 +12,9 @@ const ImageUpload = (props) => {
   const renderDropzone = () => (
     <Fragment>
       <label
-        className="btn btn-primary bt-raised rounded-circle"
+        className="btn btn-primary btn-raised rounded-circle"
         id="image-upload"
+        htmlFor="image-upload"
       >
         <div>
           <div id="dropzone">
@@ -26,6 +27,7 @@ const ImageUpload = (props) => {
           name="image"
           onChange={handleImageChange}
           type="file"
+          id="image-upload"
         />
       </label>
     </Fragment>

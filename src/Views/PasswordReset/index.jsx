@@ -1,5 +1,6 @@
 import queryString from 'querystring';
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
 import { connect } from 'react-redux';
@@ -28,15 +29,19 @@ class PasswordReset extends Component {
 
   getResetToken() {
     const query = queryString.parse(window.location.search);
+    const tokenSignature = '?token';
+    const hasTokenProperty = Object.keys(query).includes(tokenSignature);
 
-    const token = Object.values(query)[0];
+    const token = query[tokenSignature];
 
-    if (!token) {
+    if (!hasTokenProperty) {
       setQuery({ token: '' });
+
       return localStorage.removeItem('token');
     }
 
     const decodedToken = tokenDecoder(token);
+
     if (decodedToken) {
       const { values } = this.state;
       const { id, email } = decodedToken;
@@ -62,8 +67,10 @@ class PasswordReset extends Component {
     const { resetPasswordQuery, history, dispatch } = this.props;
     const { values, values: { email } } = this.state;
 
-    if (!email.trim()) {
-      return toaster(TOASTR_ERROR, 'Check your email for password reset link');
+    if (!email || !email.trim()) {
+      toaster(TOASTR_ERROR, 'Check your email for password reset link');
+
+      return;
     }
 
     try {
@@ -84,11 +91,19 @@ class PasswordReset extends Component {
       setQuery({ token: '' });
 
       if (decodedToken.isVerified) {
-        return history.push(MY_BOOKS_PATH);
+        history.push({
+          ...history.location,
+          pathname: MY_BOOKS_PATH,
+        });
+
+        return;
       }
 
-      history.push('/');
-    } catch (error) {
+      history.push({
+        ...history.location,
+        pathname: '/',
+      });
+    } catch (error) /* istanbul ignore next */{
       console.error(error);
     }
   }
@@ -174,7 +189,7 @@ PasswordReset.defaultProps = {
   history: {},
 };
 
-export default compose(
+export default withRouter(compose(
   graphql(resetPassword, { name: RESET_PASSWORD_QUERY }),
   connect(),
-)(PasswordReset);
+)(PasswordReset));

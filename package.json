@@ -97,16 +97,16 @@
     "build": "react-scripts build",
     "test": "kcd-scripts test --watchAll --coverage",
     "test:jest": "jest -c --watchAll=false --coverage",
-    "test:jest:watch": "jest -c --watch --coverage",
+    "test:jest:watch": "jest -c --runInBand --watch --coverage",
     "eject": "react-scripts eject",
     "heroku-postbuild": "yarn build"
   },
   "devDependencies": {
     "eslint-plugin-jest": "^21.26.2",
+    "history": "^4.10.1",
     "husky": "^3.0.8",
     "node-sass": "^4.12.0",
-    "sass-loader": "^7.1.0",
-    "waait": "^1.0.5"
+    "sass-loader": "^7.1.0"
   },
   "babel": {
     "presets": [
@@ -123,6 +123,9 @@
     ],
     "setupFilesAfterEnv": [
       "<rootDir>/tests/setup-env"
+    ],
+    "testMatch": [
+      "**/?(*.)+(spec|test).[jt]s"
     ]
   },
   "browserslist": [

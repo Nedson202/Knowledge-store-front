@@ -6,8 +6,8 @@ import { ReactTitle } from 'react-meta-tags';
 
 import BookCard from '../../Components/BookCard';
 import AddBook from '../../Components/AddBook';
-import BookPreloader from '../BookCatalog/BookPreloader';
 import ApolloPolling from '../../Components/ApolloPolling';
+import BookPreloader from '../BookCatalog/BookPreloader';
 
 import { fetchUsersBooks, removeBook } from '../../queries/books';
 import { setBookToEdit } from '../../redux/actions/bookActions';
@@ -33,6 +33,7 @@ class MyBooks extends Component {
 
   setBookToRemove = id => async () => {
     const { removeBookQuery } = this.props;
+
     try {
       const response = await removeBookQuery({
         variables: {
@@ -44,7 +45,7 @@ class MyBooks extends Component {
       const { deleteBook: { message } } = response.data;
 
       toaster(SUCCESS, message);
-    } catch (error) {
+    } catch (error) /* istanbul ignore next */ {
       console.error(error);
     }
   }
@@ -62,11 +63,11 @@ class MyBooks extends Component {
       <div className="user-books__header">
         <h4>My Books</h4>
         <button
-          type="button"
           className="btn btn-primary btn-raised add-book"
-          data-toggle="modal"
           data-target="#AddBookModal"
+          data-toggle="modal"
           onClick={this.unSetBookToEdit}
+          type="button"
         >
           Add Book
         </button>

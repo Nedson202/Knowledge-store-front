@@ -3,60 +3,45 @@ import React from 'react';
 import { render, fireEvent, AllProviders } from 'test-utils';
 
 import LoginForm from '../LoginForm';
-
-const mockProps = {
-  values: {
-    username: '',
-    password: '',
-  },
-  formErrors: {
-    username: '',
-    password: '',
-  },
-  handleInputChange: () => {},
-  handleUserLogin: () => {},
-  processing: false,
-};
+import {
+  PASSWORD_LABEL, USERNAME_LABEL, MOCK_PROPS, FORM_ERROR_PROPS, LOGIN_BUTTON,
+  FORGOT_PASSWORD, VERIFY_EMAIL, LOGIN_MODAL, PASSWORD, TEXT, CLOSE,
+  USERNAME_ERROR_REXP, PASSWORD_ERROR_REXP, PASSWORD_TOGGLE, GOOGLE_AUTH_OPTION,
+  FACEBOOK_AUTH_OPTION
+} from './constants';
 
 describe('Login Form', () => {
   it('should render form labels', () => {
     const { getByText, container } = render(
       <AllProviders>
-        <LoginForm {...mockProps} />
+        <LoginForm {...MOCK_PROPS} />
       </AllProviders>
     );
 
-    getByText('Username');
-    getByText('Password');
+    getByText(USERNAME_LABEL);
+    getByText(PASSWORD_LABEL);
 
     expect(container).toBeInTheDocument();
   });
 
   it('should render form errors', () => {
-    const extendProps = {
-      ...mockProps,
-      formErrors: {
-        username: ['Username is required'],
-        password: ['Password is required'],
-      }
-    };
     const { getByText, rerender, queryByText } = render(
       <AllProviders>
-        <LoginForm {...extendProps} />
+        <LoginForm {...FORM_ERROR_PROPS} />
       </AllProviders>
     );
 
-    getByText(/Username is required/i);
-    getByText(/Password is required/i);
+    getByText(USERNAME_ERROR_REXP);
+    getByText(PASSWORD_ERROR_REXP);
 
     rerender(
       <AllProviders>
-        <LoginForm {...mockProps} />
+        <LoginForm {...MOCK_PROPS} />
       </AllProviders>
     );
 
-    const usernameError = queryByText(/Username is required/i);
-    const passwordError = queryByText(/Password is required/i);
+    const usernameError = queryByText(USERNAME_ERROR_REXP);
+    const passwordError = queryByText(PASSWORD_ERROR_REXP);
 
     expect(usernameError).toBeNull();
     expect(passwordError).toBeNull();
@@ -65,38 +50,38 @@ describe('Login Form', () => {
   it('simulate password type toggle', () => {
     const { getByTestId, getByLabelText } = render(
       <AllProviders>
-        <LoginForm {...mockProps} />
+        <LoginForm {...MOCK_PROPS} />
       </AllProviders>
     );
-    const passwordInput = getByLabelText('Password');
-    const passwordToggleButton = getByTestId(/login-password-icon/i);
+    const passwordInput = getByLabelText(PASSWORD_LABEL);
+    const passwordToggleButton = getByTestId(PASSWORD_TOGGLE);
 
     fireEvent.click(passwordToggleButton);
-    expect(passwordInput.type).toBe('text');
+    expect(passwordInput.type).toBe(TEXT);
     fireEvent.click(passwordToggleButton);
-    expect(passwordInput.type).toBe('password');
+    expect(passwordInput.type).toBe(PASSWORD);
   });
 
   it('should render action buttons', () => {
     const { getByText, getByTestId } = render(
       <AllProviders>
-        <LoginForm {...mockProps} />
+        <LoginForm {...MOCK_PROPS} />
       </AllProviders>
     );
 
-    getByText('Close');
-    getByTestId('login-button');
+    getByText(CLOSE);
+    getByTestId(LOGIN_BUTTON);
   });
 
   it('should render additional help options', () => {
     const { getByText } = render(
       <AllProviders>
-        <LoginForm {...mockProps} />
+        <LoginForm {...MOCK_PROPS} />
       </AllProviders>
     );
 
-    const forgotPasswordOption = getByText('Forgot password?');
-    const verifyMailOption = getByText('Verify email');
+    const forgotPasswordOption = getByText(FORGOT_PASSWORD);
+    const verifyMailOption = getByText(VERIFY_EMAIL);
 
     expect(forgotPasswordOption).toBeVisible();
     expect(verifyMailOption).toBeVisible();
@@ -108,10 +93,29 @@ describe('Login Form', () => {
   it('should render modal', () => {
     const { getByTestId } = render(
       <AllProviders>
-        <LoginForm {...mockProps} />
+        <LoginForm {...MOCK_PROPS} />
       </AllProviders>
     );
 
-    getByTestId('login-modal');
+    getByTestId(LOGIN_MODAL);
+  });
+
+  it('should trigger social authentication', () => {
+    window.location.replace = jest.fn();
+
+    const { getByTestId } = render(
+      <AllProviders>
+        <LoginForm {...MOCK_PROPS} />
+      </AllProviders>
+    );
+
+    const googleAuthOption = getByTestId(GOOGLE_AUTH_OPTION);
+    getByTestId(FACEBOOK_AUTH_OPTION);
+
+    fireEvent.click(googleAuthOption);
+
+    expect(window.location.replace).toHaveBeenCalledTimes(1);
+
+    window.location.replace.mockClear();
   });
 });

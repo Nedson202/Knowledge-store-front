@@ -89,6 +89,8 @@ class SignUp extends Component {
         },
         processing: false,
       });
+
+      window.location.reload();
     } catch (error) /* istanbul ignore next */ {
       const messages = errorHandler(error);
       messages.forEach(message => toaster(TOASTR_ERROR, message));

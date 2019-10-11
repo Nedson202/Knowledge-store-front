@@ -143,7 +143,11 @@ class ReviewForm extends Component {
 
   addReply = async (value) => {
     const { bookId } = this.state;
-    const { addReplyQuery } = this.props;
+    const { addReplyQuery, isAuthenticated } = this.props;
+
+    if (!isAuthenticated) {
+      return modalToggler('login-button');
+    }
 
     try {
       await addReplyQuery({

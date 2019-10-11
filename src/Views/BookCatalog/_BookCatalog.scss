@@ -5,7 +5,6 @@
   flex-wrap: wrap;
   padding: 100px 140px 0 140px;
   justify-content: space-between;
-  min-height: 100vh;
   height: 100%;
 
   .book__card {
@@ -87,7 +86,7 @@
       padding: 100px 15px 0 15px;
 
       .book__card {
-        margin-bottom: 50px;
+        margin-bottom: 20px;
 
         &--images {
           width: 150px;

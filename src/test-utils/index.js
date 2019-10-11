@@ -20,3 +20,5 @@ export const AllProviders = ({ children, customStore, apolloMocks }) => (
 );
 
 export * from '@testing-library/react';
+
+export const waitForTime = (waitFor = 0) => new Promise(resolve => setTimeout(resolve, waitFor));

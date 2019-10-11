@@ -86,7 +86,7 @@ const SideNav = ({ isAuthenticated, user, dispatch }) => {
 
   const handleLogout = () => {
     window.localStorage.setItem(LOGOUT, true);
-    dispatch(logOutUser());
+    logOutUser(dispatch);
   };
 
   const logoutAction = () => {
@@ -107,7 +107,11 @@ const SideNav = ({ isAuthenticated, user, dispatch }) => {
   };
 
   return (
-    <div id="mySidenav" className="sidenav">
+    <div
+      className="sidenav"
+      data-testid="sidenav"
+      id="mySidenav"
+    >
       {authNavLinks()}
       {userAvatar()}
       {renderNavLinks()}

@@ -1,8 +1,7 @@
 import React from 'react';
-import wait from 'waait';
 
 import {
-  render, fireEvent, AllProviders, cleanup
+  render, fireEvent, AllProviders, cleanup, waitForTime
 } from 'test-utils';
 import { filterUsers, toggleAdmin } from 'queries/users';
 
@@ -50,7 +49,7 @@ describe('Users', () => {
     queryAllByText('Add Admin');
     getByTestId('loading-indicator');
 
-    await wait(0);
+    await waitForTime(0);
 
     const loadingIndicator = queryByTestId('loading-indicator');
     expect(loadingIndicator).toBeNull();
@@ -115,7 +114,7 @@ describe('Users', () => {
     const addAdminButton = getByTestId('add-admin-button');
     addAdminButton.click();
 
-    await wait(0);
+    await waitForTime(0);
 
     getByText('Cooper AL');
     getByText('admin');
@@ -155,7 +154,7 @@ describe('Users', () => {
     const item = getByText('Super');
     fireEvent.click(item);
 
-    await wait(0);
+    await waitForTime(0);
   });
 
   it('should trigger user filter with no result', async () => {
@@ -185,6 +184,6 @@ describe('Users', () => {
     const item = getByText('Super');
     fireEvent.click(item);
 
-    await wait(0);
+    await waitForTime(0);
   });
 });

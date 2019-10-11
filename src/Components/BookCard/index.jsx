@@ -43,16 +43,16 @@ class BookCard extends Component {
 
     return (
       <Fragment>
-        {!imageLoaded && imageLoadingError.length === 0 && <BookImageLoader />}
-        {imageLoadingError.length !== 0 && (
+        {bookImage && !imageLoaded && imageLoadingError.length === 0 && <BookImageLoader />}
+        {!bookImage || imageLoadingError.length !== 0 ? (
           <div
             className="text-center book__card--error-placeholder"
           >
             {imageLoadingError}
           </div>
-        )}
+        ) : null}
 
-        {imageLoaded && imageLoadingError.length === 0 && (
+        {bookImage && imageLoaded && imageLoadingError.length === 0 && (
           <Link to={link}>
             <img
               src={toHTTPS(bookImage)}
@@ -63,7 +63,7 @@ class BookCard extends Component {
           </Link>
         )}
 
-        {!imageLoaded && (
+        {bookImage && !imageLoaded && (
           <img
             src={toHTTPS(image) || ''}
             className="hide"

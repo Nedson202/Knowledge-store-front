@@ -25,7 +25,7 @@ const AccountUpdateForm = (props) => {
         <form>
           <div className="form-group">
             <label
-              htmlFor="profile-name"
+              htmlFor="profile-username"
               className="bmd-label-floating"
             >
               Username

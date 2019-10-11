@@ -2,10 +2,14 @@ import React from 'react';
 import { createStore } from 'redux';
 
 import { render, fireEvent, AllProviders } from 'test-utils';
-import { LOGOUT } from 'settings';
 
 import auth from '../../../redux/reducers/auth';
 import Header from '..';
+import {
+  DARK_MODE_SWITCH, LOGOUT, NAV_BAR_BRAND, LOGIN, SIGNUP,
+  DATA_THEME, PROFILE, USER_VERIFIED_MOCK, COOPER_AL,
+  LOGOUT_PROPS, THEME_PROPS, DARK, LIGHT, STORAGE_EVENT,
+} from './constants';
 
 describe('Header', () => {
   it('should render darkmode switch', () => {
@@ -17,9 +21,9 @@ describe('Header', () => {
       </AllProviders>
     );
 
-    const darkModeSwitch = queryAllByTestId('dark-mode-switch');
+    const darkModeSwitch = queryAllByTestId(DARK_MODE_SWITCH);
 
-    getByText('Loresters Bookstore');
+    getByText(NAV_BAR_BRAND);
 
     expect(asFragment()).toMatchSnapshot();
     expect(container).toBeInTheDocument();
@@ -43,25 +47,14 @@ describe('Header', () => {
       </AllProviders>
     );
 
-    getByText('Login');
-    getByText('Signup');
+    getByText(LOGIN);
+    getByText(SIGNUP);
 
-    expect(queryByTestId('Logout')).toBeNull();
+    expect(queryByTestId(LOGOUT)).toBeNull();
   });
 
-  it('should display auth buttons if not signed in', () => {
-    const mockProps = {
-      auth: {
-        user: {
-          isVerified: true,
-          username: 'Cooper AL',
-          picture: 'https://image.url',
-          avatarColor: 'green',
-        },
-      }
-    };
-
-    const store = createStore(auth, mockProps);
+  it('should not display auth buttons if not signed in', () => {
+    const store = createStore(auth, USER_VERIFIED_MOCK);
 
     const { getByText, queryByTestId } = render(
       <AllProviders
@@ -71,11 +64,34 @@ describe('Header', () => {
       </AllProviders>
     );
 
-    getByText('Cooper AL');
-    getByText('Profile');
-    getByText('Logout');
+    getByText(COOPER_AL);
+    getByText(PROFILE);
+    getByText(LOGOUT);
 
-    expect(queryByTestId('Login')).toBeNull();
+    expect(queryByTestId(LOGIN)).toBeNull();
+
+    fireEvent.click(getByText(LOGOUT));
+  });
+
+  it('should toggle mobile side bar', () => {
+    window.orientation = jest.fn();
+    const store = createStore(auth, USER_VERIFIED_MOCK);
+
+    const { queryByTestId, getByTestId } = render(
+      <AllProviders
+        customStore={store}
+      >
+        <Header />
+      </AllProviders>
+    );
+
+    expect(queryByTestId('sidenav')).toBeNull();
+    const mobileMenuButton = queryByTestId('mobile-menu');
+    fireEvent.click(mobileMenuButton);
+
+    getByTestId('sidenav');
+
+    window.orientation.mockClear();
   });
 
   it('should test theme mode', () => {
@@ -85,17 +101,17 @@ describe('Header', () => {
       </AllProviders>
     );
 
-    const darkModeSwitch = queryAllByTestId('dark-mode-switch');
+    const darkModeSwitch = queryAllByTestId(DARK_MODE_SWITCH);
 
     fireEvent.click(darkModeSwitch[0]);
 
-    const darkThemeMode = window.document.documentElement.getAttribute('data-theme');
-    expect(darkThemeMode).toBe('dark');
+    const darkThemeMode = window.document.documentElement.getAttribute(DATA_THEME);
+    expect(darkThemeMode).toBe(DARK);
 
     fireEvent.click(darkModeSwitch[0]);
 
-    const lightThemeMode = window.document.documentElement.getAttribute('data-theme');
-    expect(lightThemeMode).toBe('light');
+    const lightThemeMode = window.document.documentElement.getAttribute(DATA_THEME);
+    expect(lightThemeMode).toBe(LIGHT);
   });
 
   it('should test theme toggle storage event', () => {
@@ -105,16 +121,13 @@ describe('Header', () => {
       </AllProviders>
     );
 
-    window.dispatchEvent(new StorageEvent('storage', {
-      key: 'theme',
-      newValue: 'light'
-    }));
+    window.dispatchEvent(new StorageEvent(STORAGE_EVENT, THEME_PROPS));
 
-    const lightThemeMode = window.document.documentElement.getAttribute('data-theme');
-    expect(lightThemeMode).toBe('light');
+    const lightThemeMode = window.document.documentElement.getAttribute(DATA_THEME);
+    expect(lightThemeMode).toBe(LIGHT);
   });
 
-  it('should test logout storage event', () => {
+  it('should trigger logout storage event', () => {
     window.location.reload = jest.fn();
 
     render(
@@ -123,10 +136,9 @@ describe('Header', () => {
       </AllProviders>
     );
 
-    window.dispatchEvent(new StorageEvent('storage', {
-      key: LOGOUT,
-      newValue: 'light'
-    }));
+    window.dispatchEvent(new StorageEvent(STORAGE_EVENT, LOGOUT_PROPS));
+
+    expect(window.location.reload).toHaveBeenCalledTimes(1);
 
     window.location.reload.mockClear();
   });

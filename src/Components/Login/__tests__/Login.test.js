@@ -1,10 +1,14 @@
 import React from 'react';
-import wait from 'waait';
 
-import { render, fireEvent, AllProviders } from 'test-utils';
-import { loginUser } from 'queries/auth';
+import {
+  render, fireEvent, AllProviders, waitForTime
+} from 'test-utils';
 
 import Login from '..';
+import {
+  PASSWORD_LABEL, PASSWORD_LENGTH_ERROR, LOGIN_MUTATION_MOCK, LOGIN_BUTTON,
+  PASSWORD_REQUIRED_ERROR
+} from './constants';
 
 describe('Login container', () => {
   it('should trigger form validation error on change', async () => {
@@ -14,38 +18,21 @@ describe('Login container', () => {
       </AllProviders>
     );
 
-    fireEvent.change(getByLabelText('Password'), { target: { value: 'a' } });
-    await wait(1001);
-    getByText('The password must be at least 6 characters.');
+    fireEvent.change(getByLabelText(PASSWORD_LABEL), { target: { value: 'a' } });
+    await waitForTime(1001);
+    getByText(PASSWORD_LENGTH_ERROR);
   });
 
-  it('should render form labels', async () => {
-    let loginMutationCalled = false;
-
-    const loginUserData = { token };
-    const mocks = [
-      {
-        request: {
-          query: loginUser,
-          variables: {
-            username: 'Cooper AL',
-            password: 'cooper--al'
-          },
-        },
-        result: () => {
-          loginMutationCalled = true;
-          return { data: { loginUser: loginUserData } };
-        },
-      },
-    ];
+  it('should render handle login query', async () => {
+    window.location.reload = jest.fn();
 
     const { getByLabelText, getByTestId } = render(
-      <AllProviders apolloMocks={mocks}>
+      <AllProviders apolloMocks={LOGIN_MUTATION_MOCK}>
         <Login />
       </AllProviders>
     );
 
-    const loginButton = getByTestId('login-button');
+    const loginButton = getByTestId(LOGIN_BUTTON);
 
     const formGroupCase = [
       {
@@ -65,8 +52,11 @@ describe('Login container', () => {
     fireEvent.click(loginButton);
     expect(loginButton).toBeDisabled();
 
-    await wait(0);
-    expect(loginMutationCalled).toBe(true);
+    await waitForTime(10);
+    expect(window.location.reload).toHaveBeenCalledTimes(1);
+    expect(loginButton).toBeEnabled();
+
+    window.location.reload.mockClear();
   });
 
   it('should trigger form validation error on submit', () => {
@@ -76,7 +66,7 @@ describe('Login container', () => {
       </AllProviders>
     );
 
-    const loginButton = getByTestId('login-button');
+    const loginButton = getByTestId(LOGIN_BUTTON);
 
     const formGroupCase = [
       {
@@ -94,6 +84,6 @@ describe('Login container', () => {
     });
 
     fireEvent.click(loginButton);
-    getByText('The password field is required.');
+    getByText(PASSWORD_REQUIRED_ERROR);
   });
 });

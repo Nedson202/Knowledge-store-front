@@ -12,7 +12,6 @@ const UpdatePasswordForm = (props) => {
     }
   } = props;
 
-
   const { oldPassword, newPassword } = formValues;
 
   return (

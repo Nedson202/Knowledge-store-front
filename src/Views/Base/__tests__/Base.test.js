@@ -1,11 +1,16 @@
 import React from 'react';
 import { createStore } from 'redux';
 
-import { AllProviders, render } from 'test-utils';
+import { AllProviders, render, waitForTime } from 'test-utils';
 
+import { MY_BOOKS_PATH } from 'settings';
 import auth from '../../../redux/reducers/auth';
 
 import App from '..';
+import {
+  LOGIN, SIGNUP, EXPLORE, BACKGROUND_LAYOUT, LOGIN_TEST_ID, SIGNUP_TEST_ID,
+  VERIFY_EMAIL_MOCK
+} from './constants';
 
 describe('App', () => {
   it('should render', () => {
@@ -17,11 +22,11 @@ describe('App', () => {
       </AllProviders>
     );
 
-    getByText('Login to get started');
-    getByText('Signup');
-    getByText('Explore');
+    getByText(LOGIN);
+    getByText(SIGNUP);
+    getByText(EXPLORE);
 
-    getByTestId('background-layout');
+    getByTestId(BACKGROUND_LAYOUT);
 
     expect(asFragment()).toMatchSnapshot();
     expect(container).toBeVisible();
@@ -32,7 +37,7 @@ describe('App', () => {
       auth: {
         isAuthenticated: true,
         user: {
-          isVerfied: true
+          isVerified: true
         }
       }
     };
@@ -45,10 +50,46 @@ describe('App', () => {
       </AllProviders>
     );
 
-    const loginButton = queryByTestId('index-login-button');
-    const signupButton = queryByTestId('index-signup-button');
+    const loginButton = queryByTestId(LOGIN_TEST_ID);
+    const signupButton = queryByTestId(SIGNUP_TEST_ID);
 
     expect(loginButton).toBeNull();
     expect(signupButton).toBeNull();
+
+    expect(window.location.pathname).toBe(MY_BOOKS_PATH);
+  });
+
+  it('should trigger social authentication', async () => {
+    window.history.pushState({}, 'Social Auth', `?token=${token}`);
+    window.location.replace = jest.fn();
+
+    render(
+      <AllProviders>
+        <App />
+      </AllProviders>
+    );
+
+    expect(localStorage.token).toBe(token);
+    expect(window.location.replace).toHaveBeenCalledTimes(1);
+
+    window.location.replace.mockClear();
+  });
+
+  it('should trigger email verification', async () => {
+    window.history.pushState({}, 'Email verification', `?verify-email=${token}`);
+    window.location.replace = jest.fn();
+
+    render(
+      <AllProviders apolloMocks={VERIFY_EMAIL_MOCK}>
+        <App />
+      </AllProviders>
+    );
+
+    await waitForTime(0);
+
+    expect(localStorage.token).toBe(token);
+    expect(window.location.replace).toHaveBeenCalledTimes(1);
+
+    window.location.replace.mockClear();
   });
 });
