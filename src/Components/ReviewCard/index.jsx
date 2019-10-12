@@ -329,8 +329,8 @@ class ReviewCard extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.auth.user
+const mapStateToProps = ({ auth }) => ({
+  user: auth.user
 });
 
 ReviewCard.propTypes = {

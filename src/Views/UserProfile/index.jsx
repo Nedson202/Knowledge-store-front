@@ -61,44 +61,46 @@ class UserProfile extends Component {
     const { files } = event.target;
     const file = files[0];
 
+    if (!file) {
+      return;
+    }
+
     if (file && /\.(jpe?g|png)$/i.test(file.name) === false) {
-      return toaster('error', 'Only a jpeg, jpg or png image is supported');
+      return toaster(TOASTR_ERROR, 'Only a jpeg, jpg or png image is supported');
     }
 
     if (file && file.size > 4000000) {
-      return toaster('error', 'Image size cannot be more than 4mb');
+      return toaster(TOASTR_ERROR, 'Image size cannot be more than 4mb');
     }
 
-    if (file) {
-      const reader = new FileReader();
+    const reader = new FileReader();
 
-      reader.onloadend = () => {
-        this.setState({
-          imagePreviewUrl: reader.result,
-          uploadingImage: true,
-        });
-      };
+    reader.onloadend = () => {
+      this.setState({
+        imagePreviewUrl: reader.result,
+        uploadingImage: true,
+      });
+    };
 
-      reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
 
-      const data = new FormData();
-      data.append(FILE, file);
-      data.append(FOLDER, BOOK_STORE);
-      data.append(UPLOAD_PRESET, process.env.REACT_APP_UPLOAD_PRESET);
+    const data = new FormData();
+    data.append(FILE, file);
+    data.append(FOLDER, BOOK_STORE);
+    data.append(UPLOAD_PRESET, process.env.REACT_APP_UPLOAD_PRESET);
 
-      try {
-        const uploadHandler = await axios.post(process.env.REACT_APP_CLOUDINARY_URL, data);
+    try {
+      const uploadHandler = await axios.post(process.env.REACT_APP_CLOUDINARY_URL, data);
 
-        const { values } = this.state;
-        const { secure_url: picture } = uploadHandler.data;
+      const { values } = this.state;
+      const { secure_url: picture } = uploadHandler.data;
 
-        values.picture = picture;
-        this.setState({ values, uploadingImage: false, });
+      values.picture = picture;
+      this.setState({ values, uploadingImage: false, });
 
-        await this.updateProfile('upload');
-      } catch (error) /* istanbul ignore next */ {
-        console.error(error);
-      }
+      await this.updateProfile('upload');
+    } catch (error) /* istanbul ignore next */ {
+      console.error(error);
     }
   }
 
@@ -144,6 +146,7 @@ class UserProfile extends Component {
       this.setState({
         imagePreviewUrl: '',
       });
+
       return dispatch(setCurrentUser(tokenDecoder(token)));
     } catch (error) /* istanbul ignore next */ {
       console.error(error);
@@ -223,8 +226,8 @@ class UserProfile extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.auth.user
+const mapStateToProps = ({ auth }) => ({
+  user: auth.user
 });
 
 UserProfile.propTypes = {

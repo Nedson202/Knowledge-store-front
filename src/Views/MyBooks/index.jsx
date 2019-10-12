@@ -157,8 +157,8 @@ MyBooks.defaultProps = {
   dispatch: {},
 };
 
-const mapStateToProps = state => ({
-  bookToEdit: state.books.bookToEdit
+const mapStateToProps = ({ books }) => ({
+  bookToEdit: books.bookToEdit
 });
 
 export default compose(

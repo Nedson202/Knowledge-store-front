@@ -70,15 +70,15 @@ describe('UserProfile', () => {
   });
 
   it('should trigger image select', () => {
-    const { getByLabelText } = render(
+    const { getByTestId } = render(
       <AllProviders>
         <UserProfile />
       </AllProviders>
     );
 
-    fireEvent.change(getByLabelText('Select image'), {
+    fireEvent.change(getByTestId('image-upload'), {
       target: {
-        files: [new File(['(⌐□_□)'], 'image-url.png', { type: 'image/png' })],
+        files: [new File(['(⌐□_□)'], 'bookstore.png', { type: 'image/png' })],
       }
     });
   });

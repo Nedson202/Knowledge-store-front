@@ -198,8 +198,8 @@ EmailGenerator.defaultProps = {
   client: {},
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = ({ auth }) => ({
+  auth
 });
 
 

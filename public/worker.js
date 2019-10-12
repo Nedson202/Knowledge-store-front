@@ -1,11 +1,16 @@
 const CACHE_NAME = 'pwa-task-manager';
 const urlsToCache = [
   '/',
-  '/completed'
+  '/books'
 ];
 
+// events
+const INSTALL = 'install';
+const FETCH = 'fetch';
+const ACTIVATE = 'activate';
+
 // Install a service worker
-self.addEventListener('install', (event) => {
+self.addEventListener(INSTALL, (event) => {
   // Perform install steps
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -17,7 +22,7 @@ self.addEventListener('install', (event) => {
 });
 
 // Cache and return requests
-self.addEventListener('fetch', (event) => {
+self.addEventListener(FETCH, (event) => {
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
@@ -31,11 +36,11 @@ self.addEventListener('fetch', (event) => {
 });
 
 // Update a service worker
-self.addEventListener('activate', (event) => {
+self.addEventListener(ACTIVATE, (event) => {
   const cacheWhitelist = ['pwa-task-manager'];
   event.waitUntil(
     caches.keys().then(cacheNames => Promise.all(
-      cacheNames.map((cacheName) => {
+      cacheNames.forEach((cacheName) => {
         if (cacheWhitelist.indexOf(cacheName) === -1) {
           return caches.delete(cacheName);
         }
