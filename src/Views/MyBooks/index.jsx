@@ -113,6 +113,7 @@ class MyBooks extends Component {
       <Query
         query={fetchUsersBooks}
         pollInterval={2000}
+        fetchPolicy="cache-and-network"
       >
         {({
           loading,
@@ -121,11 +122,6 @@ class MyBooks extends Component {
         }) => (
           <Fragment>
             <ReactTitle title="My Books" />
-
-            <AddBook
-              bookToEdit={bookToEdit}
-              editingBook={editingBook}
-            />
 
             <div className="container-content">
               {this.renderPageHeader()}
@@ -137,6 +133,11 @@ class MyBooks extends Component {
             <ApolloPolling
               startPolling={startPolling}
               stopPolling={stopPolling}
+            />
+
+            <AddBook
+              bookToEdit={bookToEdit}
+              editingBook={editingBook}
             />
           </Fragment>
         )}
@@ -157,8 +158,8 @@ MyBooks.defaultProps = {
   dispatch: {},
 };
 
-const mapStateToProps = state => ({
-  bookToEdit: state.books.bookToEdit
+const mapStateToProps = ({ books }) => ({
+  bookToEdit: books.bookToEdit
 });
 
 export default compose(

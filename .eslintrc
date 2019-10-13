@@ -25,7 +25,8 @@
     "should": true,
     "jest": true,
     "location": true,
-    "token": true
+    "token": true,
+    "self": true
   },
   "rules": {
     "one-var": 0,

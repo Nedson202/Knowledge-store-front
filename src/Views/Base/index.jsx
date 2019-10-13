@@ -162,8 +162,8 @@ App.defaultProps = {
   verifyEmailQuery: () => { },
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = ({ auth }) => ({
+  auth
 });
 
 export default withRouter(compose(

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  render, fireEvent, AllProviders, waitForTime
+  render, fireEvent, AllProviders, waitForTime, cleanup
 } from 'test-utils';
 
 import Login from '..';
@@ -9,6 +9,8 @@ import {
   PASSWORD_LABEL, PASSWORD_LENGTH_ERROR, LOGIN_MUTATION_MOCK, LOGIN_BUTTON,
   PASSWORD_REQUIRED_ERROR
 } from './constants';
+
+afterEach(cleanup);
 
 describe('Login container', () => {
   it('should trigger form validation error on change', async () => {

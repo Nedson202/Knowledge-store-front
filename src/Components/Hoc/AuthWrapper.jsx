@@ -13,7 +13,7 @@ export default function (ComposedComponent, adminProtected) {
       const { history, user: { isAuthenticated } } = nextProps;
 
       if (isAuthenticated) {
-        return;
+        return prevState;
       }
 
       history.goBack();

@@ -23,7 +23,7 @@ const errorHandler = (response) => {
 
     return ['There\'s an issue with the server, please try again'];
   } catch (error) {
-    console.log(error);
+    console.warn(error);
   }
 };
 

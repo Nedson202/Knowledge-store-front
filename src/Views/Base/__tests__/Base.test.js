@@ -1,7 +1,9 @@
 import React from 'react';
 import { createStore } from 'redux';
 
-import { AllProviders, render, waitForTime } from 'test-utils';
+import {
+  AllProviders, render, waitForTime, cleanup
+} from 'test-utils';
 
 import { MY_BOOKS_PATH } from 'settings';
 import auth from '../../../redux/reducers/auth';
@@ -11,6 +13,8 @@ import {
   LOGIN, SIGNUP, EXPLORE, BACKGROUND_LAYOUT, LOGIN_TEST_ID, SIGNUP_TEST_ID,
   VERIFY_EMAIL_MOCK
 } from './constants';
+
+afterEach(cleanup);
 
 describe('App', () => {
   it('should render', () => {
@@ -62,6 +66,8 @@ describe('App', () => {
   it('should trigger social authentication', async () => {
     window.history.pushState({}, 'Social Auth', `?token=${token}`);
     window.location.replace = jest.fn();
+    window.location.reload = jest.fn();
+    window.location.reload();
 
     render(
       <AllProviders>
@@ -69,7 +75,6 @@ describe('App', () => {
       </AllProviders>
     );
 
-    expect(localStorage.token).toBe(token);
     expect(window.location.replace).toHaveBeenCalledTimes(1);
 
     window.location.replace.mockClear();
