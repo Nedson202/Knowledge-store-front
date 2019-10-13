@@ -7,17 +7,17 @@
     height: 220px;
     width: 180px;
     border-radius: 5px;
-    border: 1px dashed;
     margin-top: 18px;
     margin-right: 30px;
   }
 
   .ant-input {
     width: 100% !important;
-    border: 1px solid transparent !important;
+    border: 1px solid transparent;
+    border-radius: 0;
 
     &:hover {
-      border-color: transparent !important;
+      border: transparent !important;
       border-right-width: 0 !important;
     }
   }
@@ -26,13 +26,12 @@
     width: 100% !important;
 
     .ant-input {
-      background: linear-gradient(0deg,$blue_2 1px,rgba(0,150,136,0) 0),
-      linear-gradient(0deg,rgba(0,0,0,.26) 1px,transparent 0);
       border-width: 1px;
       line-height: 1.5;
       height: 32px;
       font-family: Georgia, 'Times New Roman', Times, serif;
       font-size: 15px;
+      border-bottom: 1px solid $blue_2;
 
       &:focus {
         outline: 0;
@@ -43,9 +42,9 @@
   }
 
   .ant-select-selection {
-    border: 1px solid transparent !important;
-    background: linear-gradient(0deg,$blue_2 1px,rgba(0,150,136,0) 0),
-    linear-gradient(0deg,rgba(0,0,0,.26) 1px,transparent 0);
+    border: 1px solid transparent;
+    border-radius: 0;
+    border-bottom: 1px solid $blue_2;
     border-width: 1px;
     line-height: 1.5;
     font-family: Georgia, 'Times New Roman', Times, serif;

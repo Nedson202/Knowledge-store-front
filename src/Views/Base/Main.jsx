@@ -58,11 +58,11 @@ class Main extends Component {
       <Fragment>
         <h2 className="app-title">The Knowledge Store</h2>
         <blockquote>
-          <p className="quotation">
+          <p className="app-index-quote">
             Wisdom is not a product of schooling
             but of the lifelong attempt to acquire it.
           </p>
-          <footer>― Albert Einstein</footer>
+          <footer className="app-index-quote-author">― Albert Einstein</footer>
         </blockquote>
       </Fragment>
     );

@@ -22,16 +22,9 @@ class BackToTop extends React.PureComponent {
   }
 
   handlePageScroll = () => {
-    let displayBackToTop = false;
     const shouldDisplayBackToTop = window.scrollY > 300;
 
-    if (shouldDisplayBackToTop) {
-      displayBackToTop = true;
-    } else {
-      displayBackToTop = false;
-    }
-
-    this.setState({ displayBackToTop });
+    this.setState({ displayBackToTop: shouldDisplayBackToTop });
   };
 
   scrollToTop = () => {

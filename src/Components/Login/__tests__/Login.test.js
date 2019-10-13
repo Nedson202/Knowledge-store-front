@@ -25,6 +25,34 @@ describe('Login container', () => {
     getByText(PASSWORD_LENGTH_ERROR);
   });
 
+  it('should trigger form validation error on submit', () => {
+    const { getByLabelText, getByTestId, getByText } = render(
+      <AllProviders>
+        <Login />
+      </AllProviders>
+    );
+
+    const loginButton = getByTestId(LOGIN_BUTTON);
+
+    const formGroupCase = [
+      {
+        name: 'Username',
+        value: 'Cooper AL'
+      },
+      {
+        name: 'Password',
+        value: ''
+      },
+    ];
+
+    formGroupCase.forEach(({ name, value }) => {
+      fireEvent.change(getByLabelText(name), { target: { value } });
+    });
+
+    fireEvent.click(loginButton);
+    getByText(PASSWORD_REQUIRED_ERROR);
+  });
+
   it('should render handle login query', async () => {
     window.location.reload = jest.fn();
 
@@ -59,33 +87,5 @@ describe('Login container', () => {
     expect(loginButton).toBeEnabled();
 
     window.location.reload.mockClear();
-  });
-
-  it('should trigger form validation error on submit', () => {
-    const { getByLabelText, getByTestId, getByText } = render(
-      <AllProviders>
-        <Login />
-      </AllProviders>
-    );
-
-    const loginButton = getByTestId(LOGIN_BUTTON);
-
-    const formGroupCase = [
-      {
-        name: 'Username',
-        value: 'Cooper AL'
-      },
-      {
-        name: 'Password',
-        value: ''
-      },
-    ];
-
-    formGroupCase.forEach(({ name, value }) => {
-      fireEvent.change(getByLabelText(name), { target: { value } });
-    });
-
-    fireEvent.click(loginButton);
-    getByText(PASSWORD_REQUIRED_ERROR);
   });
 });

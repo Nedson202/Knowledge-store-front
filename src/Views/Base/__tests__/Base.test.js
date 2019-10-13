@@ -36,6 +36,23 @@ describe('App', () => {
     expect(container).toBeVisible();
   });
 
+  it('should trigger social authentication', async () => {
+    window.history.pushState({}, 'Social Auth', `?token=${token}`);
+    window.location.replace = jest.fn();
+    window.location.reload = jest.fn();
+    window.location.reload();
+
+    render(
+      <AllProviders>
+        <App />
+      </AllProviders>
+    );
+
+    expect(window.location.replace).toHaveBeenCalledTimes(1);
+
+    window.location.replace.mockClear();
+  });
+
   it('should not render auth buttons if signed in', () => {
     const props = {
       auth: {
@@ -61,23 +78,6 @@ describe('App', () => {
     expect(signupButton).toBeNull();
 
     expect(window.location.pathname).toBe(MY_BOOKS_PATH);
-  });
-
-  it('should trigger social authentication', async () => {
-    window.history.pushState({}, 'Social Auth', `?token=${token}`);
-    window.location.replace = jest.fn();
-    window.location.reload = jest.fn();
-    window.location.reload();
-
-    render(
-      <AllProviders>
-        <App />
-      </AllProviders>
-    );
-
-    expect(window.location.replace).toHaveBeenCalledTimes(1);
-
-    window.location.replace.mockClear();
   });
 
   it('should trigger email verification', async () => {

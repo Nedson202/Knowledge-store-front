@@ -18,7 +18,7 @@ exports[`Main should render action buttons 1`] = `
         </h2>
         <blockquote>
           <p
-            class="quotation"
+            class="app-index-quote"
           >
             Wisdom is not a product of schooling but of the lifelong attempt to acquire it.
           </p>

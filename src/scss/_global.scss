@@ -6,6 +6,7 @@ $font_family_1: georgia, sans-serif;
 
 html, body {
   color: $black_2;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1,
@@ -44,6 +45,10 @@ a {
     border-color: $blue_2;
     padding: 10px 20px;
     border-radius: 5px;
+
+    &:hover {
+      background-color: $blue_2;
+    }
   }
 
   .btn-raised {

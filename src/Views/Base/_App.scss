@@ -110,6 +110,7 @@
   .modal {
     .modal-header {
       background-color: $white_1;
+      padding-top: 14px;
       padding-bottom: 10px;
       border-bottom: 1px solid $grey_8;
       border-top-left-radius: 15px;
@@ -258,7 +259,7 @@
   .custom-file-control,
   .is-focused
   .form-control {
-    background-image: linear-gradient(0deg, $blue_2 2px,rgba(0,150,136,0) 0),
+    background-image: linear-gradient(0deg, $blue_2 1px,rgba(0,150,136,0) 0),
       linear-gradient(0deg,rgba(0,0,0,.2) 1px,transparent 0);
     color: $black_2;
   }
@@ -284,7 +285,7 @@
   box-shadow: $box_shadow_1;
 }
 
-.quotation {
+.app-index-quote {
 	font-size: 30px;
 	margin: 0 auto;
 	quotes: "\201C""\201D""\2018""\2019";
@@ -312,6 +313,11 @@
 		color: $grey_1;
 		font-size: 3em;
 	}
+}
+
+.app-index-quote {
+  font-size: 20px;
+  font-weight: 900;
 }
 
 .btn-outline-success {
@@ -449,7 +455,7 @@
       }
     }
 
-    .quotation {
+    .app-index-quote {
       font-size: 22px;
     }
 

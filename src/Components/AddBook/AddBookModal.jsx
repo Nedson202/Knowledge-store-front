@@ -29,7 +29,7 @@ class AddBookModal extends Component {
     return (
       <Fragment>
         <label
-          className="btn btn-primary bt-raised"
+          className="btn btn-primary"
           id="image-upload"
         >
           <div>

@@ -17,6 +17,8 @@ import { tokenDecoder } from './utils';
 import { PRODUCTION, LOGOUT } from './settings';
 import store from './redux';
 
+import 'antd/dist/antd.css';
+
 import registerServiceWorker from './registerServiceWorker';
 
 const serverUrl = process.env.REACT_APP_NODE_ENV.match(PRODUCTION)
@@ -80,7 +82,6 @@ const renderDOM = () => {
     ), document.getElementById('root')
   );
 };
-
 
 (async () => {
   await persistCache({
