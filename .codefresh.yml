@@ -1,0 +1,22 @@
+version: '1.0'
+stages:
+  - prepare
+  - test
+  - build
+steps:
+  main_clone:
+    title: Cloning main repository...
+    stage: prepare
+    type: git-clone
+    repo: 'nedson202/the-knowledge-store-front'
+    revision: master
+    git: github
+  RunTests:
+    title: Test integration
+    stage: test
+    image: node:8.16
+    commands:
+      - yarn install
+      - yarn test
+    environment:
+      - CI=true
