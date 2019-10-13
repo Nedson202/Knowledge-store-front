@@ -13,7 +13,6 @@ import Favorites from './Views/Favorites';
 import MyBooks from './Views/MyBooks';
 
 import Header from './Components/Header';
-// import SideNav from './Components/SideNav';
 import LeftSideBar from './Components/LeftSideBar';
 import NetworkDetector from './Components/Hoc/NetworkDetector';
 import AuthWrapper from './Components/Hoc/AuthWrapper';
@@ -25,12 +24,10 @@ import MessageBanner from './Components/MessageBanner/MessageBanner';
 
 const Routes = () => (
   <div>
-    <Login />
-    <SignUp />
-    {/* <SideNav /> */}
     <MessageBanner />
     <Header />
     <LeftSideBar />
+
     <Switch>
       <Route path="/" component={NetworkDetector(App)} exact />
       <Route path="/books/:id" component={NetworkDetector(BookProfile)} exact />
@@ -43,6 +40,9 @@ const Routes = () => (
       <Route path="/users" component={NetworkDetector(AuthWrapper(Users, true))} exact />
       <Route component={NotFound} />
     </Switch>
+
+    <Login />
+    <SignUp />
   </div>
 );
 

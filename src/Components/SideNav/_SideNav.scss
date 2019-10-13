@@ -61,3 +61,14 @@
     }
   }
 }
+
+
+.sidenav +
+.navbar,
+
+.sidenav +
+.navbar +
+.leftsidebar +
+.container-content {
+  pointer-events: none;
+}

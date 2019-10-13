@@ -191,6 +191,7 @@ class Header extends Component {
 
     return (
       <Fragment>
+        { isSideNavOpen && <SideNav /> }
         <nav
           className="navbar fixed-top navbar-expand-lg"
           id="navbar"
@@ -239,7 +240,6 @@ class Header extends Component {
             </div>
           </div>
         </nav>
-        { isSideNavOpen && <SideNav /> }
       </Fragment>
     );
   }

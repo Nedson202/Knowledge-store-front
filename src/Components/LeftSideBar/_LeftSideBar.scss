@@ -45,16 +45,6 @@
   }
 }
 
-@media screen and (max-width: 758px) {
-  .leftsidebar {
-    display: none;
-  }
-
-  .navbar {
-    padding: .5rem 1rem !important;
-  }
-}
-
 .dropdown-item.active {
   border-left: 3px solid $blue_2;
   background-color: transparent;

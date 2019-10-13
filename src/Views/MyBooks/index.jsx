@@ -123,11 +123,6 @@ class MyBooks extends Component {
           <Fragment>
             <ReactTitle title="My Books" />
 
-            <AddBook
-              bookToEdit={bookToEdit}
-              editingBook={editingBook}
-            />
-
             <div className="container-content">
               {this.renderPageHeader()}
               {usersBooks && this.renderBooks(usersBooks)}
@@ -138,6 +133,11 @@ class MyBooks extends Component {
             <ApolloPolling
               startPolling={startPolling}
               stopPolling={stopPolling}
+            />
+
+            <AddBook
+              bookToEdit={bookToEdit}
+              editingBook={editingBook}
             />
           </Fragment>
         )}
