@@ -113,6 +113,7 @@ class MyBooks extends Component {
       <Query
         query={fetchUsersBooks}
         pollInterval={2000}
+        fetchPolicy="cache-and-network"
       >
         {({
           loading,

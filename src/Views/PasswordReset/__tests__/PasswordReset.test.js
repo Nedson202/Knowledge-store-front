@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  render, fireEvent, AllProviders, waitForTime
+  render, fireEvent, AllProviders, waitForTime, cleanup
 } from 'test-utils';
 import { MY_BOOKS_PATH } from 'settings';
 
@@ -10,6 +10,8 @@ import {
   EMAIL_LABEL, NEW_PASSWORD_LABEL, TEXT, PASSWORD, PASSWORD_TOGGLE,
   SAVE_BUTTON, FORM_GROUP_CASE, PASSWORD_REST_MOCK
 } from './constants';
+
+afterEach(cleanup);
 
 describe('PasswordReset', () => {
   it('should render form labels', () => {
@@ -71,7 +73,7 @@ describe('PasswordReset', () => {
 
     savePasswordButton.click();
 
-    await waitForTime(10);
+    await waitForTime(100);
 
     expect(localStorage.token).toBe(token);
     expect(window.location.pathname).toBe(MY_BOOKS_PATH);
