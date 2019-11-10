@@ -1,7 +1,10 @@
-# The Knowledge Store
-
+<h1 align="center">The Knowledge Store</h1>
+<p align="center">
 The knowledge store is a book archive project leveraging the Google Books API to introduce you to thousands of books. On this platform, you can search and filter books using full text search, bookmark books, make your book visible, leave reviews etc.
+</p>
+<p align="center">
 There is also support for theme switching betwen light and dark mode.
+</p>
 
 <p align="center">
   <img width="400" height="250" src="./.github/assets/readme-screenshot-1.png">
@@ -20,13 +23,16 @@ There is also support for theme switching betwen light and dark mode.
 * [Features](https://github.com/Nedson202/Knowledge-store-front#features)
 * [Technologies](https://github.com/Nedson202/Knowledge-store-front#technologies)
 * [Installation Setup](https://github.com/Nedson202/Knowledge-store-front#installation-setup)
+* [Testing](https://github.com/Nedson202/Knowledge-store-front#testing)
+* [Language](https://github.com/Nedson202/Knowledge-store-front#language)
 * [Coding style](https://github.com/Nedson202/Knowledge-store-front#style-guide)
 * [Dependencies](https://github.com/Nedson202/Knowledge-store-front#dependencies)
-* [Language](https://github.com/Nedson202/Knowledge-store-front#language)
 * [License](https://github.com/Nedson202/Knowledge-store-front#license)
 
 ## Demo
 Here is a working live demo: https://lorester-bookstore.netlify.com
+
+The server project is located at https://github.com/Nedson202/Knowledge-store-back
 
 ## Features
 * Login
@@ -99,14 +105,27 @@ Here is a working live demo: https://lorester-bookstore.netlify.com
   * Create a .env file in the root directory of the codebase
   * Copy the content of the .env-sample file and add their corresponding values appropriately.
 
+## Testing
+React-testing-library and Jest powers the tests written on this codebase.
+
+```
+  Run tests without watching for new changes to test with:
+
+  $ yarn test
+
+  Watch for changes with:
+
+  $ yarn: test:jest:watch
+```
+
+## Language
+* Javascript
+
 ## Style Guide
 * Airbnb style guide
 
 ## Dependencies
 > Click [here](https://github.com/Nedson202/Knowledge-store-front/blob/develop/package.json) to view all dependencies.
-
-## Language
-* Javascript
 
 ## License
 
