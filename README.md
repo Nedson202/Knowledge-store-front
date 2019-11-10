@@ -1,68 +1,116 @@
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
-
 # The Knowledge Store
 
-The knowledge store is a book archive project leveraging the google books api to introduce you to thousands of books. On this platform, you can search and filter books using full text search, bookmark books, make your book visible, leave reviews etc.
+The knowledge store is a book archive project leveraging the Google Books API to introduce you to thousands of books. On this platform, you can search and filter books using full text search, bookmark books, make your book visible, leave reviews etc.
+There is also support for theme switching betwen light and dark mode.
+
+<p align="center">
+  <img width="400" height="250" src="./.github/assets/readme-screenshot-1.png">
+  &nbsp;
+  &nbsp;
+  &nbsp;
+  &nbsp;
+  &nbsp;
+  <img width="400" height="250" src="./.github/assets/readme-screenshot-2.png">
+</p>
+
+---
 
 # Table of Contents
+* [Demo](https://github.com/Nedson202/Knowledge-store-front#demo)
+* [Features](https://github.com/Nedson202/Knowledge-store-front#features)
 * [Technologies](https://github.com/Nedson202/Knowledge-store-front#technologies)
 * [Installation Setup](https://github.com/Nedson202/Knowledge-store-front#installation-setup)
-* [Api documentation](https://github.com/Nedson202/Knowledge-store-front#api-documentation)
-* [Coding style](https://github.com/Nedson202/Knowledge-store-front#coding-style)
+* [Coding style](https://github.com/Nedson202/Knowledge-store-front#style-guide)
 * [Dependencies](https://github.com/Nedson202/Knowledge-store-front#dependencies)
 * [Language](https://github.com/Nedson202/Knowledge-store-front#language)
-* [Author](https://github.com/Nedson202/Knowledge-store-front#author)
 * [License](https://github.com/Nedson202/Knowledge-store-front#license)
 
+## Demo
+Here is a working live demo: https://lorester-bookstore.netlify.com
+
+## Features
+* Login
+* Sign up
+* View book catalog and book profiles
+* Add and remove reviews and replies
+* Like reviews
+* Add books
+* Mark books as favorites
+* Remove book and multiple books from favorites
+* View your books and those marked as favorites
+* Update profile information
+* Reset password
+* Upload profile image
+* PWA support
+* Full-text search support for fields like book title, publication year, authors, genre, etc.
 
 ## Technologies
 * React
 * Redux
-* Bootstrap material design - [Fezvastra](https://fezvrasta.github.io/bootstrap-material-design/docs/4.0/getting-started/introduction/)
-* Ant Design
-* Apollo Client
+* Apollo-client
+* Ant Design - A design system with values of Nature and Determinacy for better user experience of enterprise applications. https://ant.design
 
 ## Installation Setup
 
-* **Clone this repo:** Open **cmd(command prompt)** for windows users, or any other terminal you use. 
+* **Clone repo:**
 
-      git clone https://github.com/Nedson202/Knowledge-store-front
+  Open **CMD(command prompt)** for windows users, or any other terminal you use.
 
-* **Install project dependencies:** Enter the following in your terminal/cmd to change into the directory of the cloned repo and install all app dependencies
+  ```
+    git clone https://github.com/Nedson202/Knowledge-store-front
+  ```
 
-      npm i -g yarn     -    Installs the yarn package manager if you don't have it(optional).
+* **Install project dependencies:**
 
-      cd Knowledge-store-front     -     Change directory to cloned repo (Knowledge-store-front)
+  This codebase uses the yarn package manager.
 
-      yarn     -      Install all dependencies
+  Enter the following on your Terminal/CMD to change into the directory of the cloned repo and install all app dependencies
 
-  This codebases uses the yarn package manager.
+  ```
+    Install the yarn package manager if you don't have it(optional).
+
+    $ npm i -g yarn
+
+
+    Change directory to cloned repo (Knowledge-store-front)
+
+    $ cd Knowledge-store-front
+
+    Install all dependencies
+
+    $ yarn
+  ```
+
 
 * **Start the app:** Enter the following on your terminal/cmd to start the app
 
-      yarn start
+  ```
+    $ yarn start
+  ```
 
 * **Open browser**
 
-      Run http://localhost:3000 on the address bar
+  ```
+    Navigate to http://localhost:3000 on the browser
+  ```
 
-* **Additional setup:** This app uses the dotenv npm package to load environment variables. For more info visit [dotenv](https://www.npmjs.com/package/dotenv).
+* **Additional setup:** This app uses the dotenv package to load environment variables. For more info visit [dotenv](https://www.npmjs.com/package/dotenv).
 
-      Create a .env file in the root directory of the codebase
-      Copy the content of the .env-example file and provide values for it appropriately
+  * Create a .env file in the root directory of the codebase
+  * Copy the content of the .env-sample file and add their corresponding values appropriately.
 
-## Coding Style
+## Style Guide
 * Airbnb style guide
 
 ## Dependencies
-Click [here](https://github.com/Nedson202/Knowledge-store-front/blob/develop/package.json) to view all dependencies.
+> Click [here](https://github.com/Nedson202/Knowledge-store-front/blob/develop/package.json) to view all dependencies.
 
 ## Language
 * Javascript
 
-## Author
-  Samson Negedu
-
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/Nedson202/Knowledge-store-front/blob/develop//LICENSE) file for details
+> You can check out the full license [here](https://github.com/Nedson202/Knowledge-store-front/blob/develop/LICENSE)
+
+This project is licensed under the terms of the MIT license.
+
