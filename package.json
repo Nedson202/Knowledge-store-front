@@ -47,7 +47,7 @@
     "jest": "^24.9.0",
     "jest-canvas-mock": "^2.1.1",
     "jsonwebtoken": "^8.3.0",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
     "object-assign": "4.1.1",
     "path-to-regexp": "1.7.0",
