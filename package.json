@@ -20,7 +20,7 @@
     "babel-core": "6.26.0",
     "babel-eslint": "10.0.3",
     "babel-jest": "^24.9.0",
-    "browserslist": "^4.6.6",
+    "browserslist": "^4.16.5",
     "caniuse-lite": "^1.0.30000989",
     "canvas": "^2.6.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
